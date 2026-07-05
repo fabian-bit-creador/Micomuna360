@@ -41,6 +41,16 @@ página (RSC) ──► lib/repositories ──► lib/data (mocks)   ← hoy
 página (RSC) ──► lib/repositories ──► Supabase (RLS)     ← Fase 3
 ```
 
+## Enfoque: la comunidad primero
+
+Decisión de producto (jul 2026): el MVP se centra en la **capa ciudadana
+pública** — un portal comunal usable sin login donde el vecino encuentra
+noticias, beneficios, trámites, actividades, teléfonos útiles, datos, mapa y
+un formulario simple de reporte. El route group `(admin)` se conserva como
+estructura preparada y demo secundaria con acceso discreto (p. ej. enlace en
+el footer), y no vuelve a ser protagonista hasta la Fase 4, condicionado a la
+validación del piloto ciudadano.
+
 ## Roles (MVP: simulados)
 
 - **vecino**: crea solicitudes, ve contenido público.

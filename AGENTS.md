@@ -11,6 +11,10 @@ Plataforma web comunal para municipios y vecinos en Chile. Dos capas: ciudadana
 
 ## Reglas del proyecto
 
+- **Enfoque**: la comunidad primero. El producto principal es el portal
+  ciudadano público, usable sin iniciar sesión. El panel municipal
+  (`(admin)`) se mantiene como estructura/demo secundaria y su acceso en la
+  UI debe ser discreto (no protagonista de la navegación) hasta la Fase 4.
 - **Idioma**: UI, contenido, commits y docs en español (Chile). Código
   (identificadores) en inglés.
 - **Datos**: solo datos ficticios hasta la Fase 3. Nunca datos personales
