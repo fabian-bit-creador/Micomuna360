@@ -69,8 +69,8 @@ ciudadano valida el valor social del proyecto.
 | Fase | Alcance | Estado |
 | --- | --- | --- |
 | 0 | Arquitectura, scaffold, identidad visual, tipos | ✅ |
-| 1 | **Portal ciudadano informativo**: rediseño 2.0, noticias y beneficios, agenda de actividades/talleres/deportes, trámites, teléfonos útiles, datos comunales | 🔜 |
-| 2 | **Participación ciudadana**: formulario de reporte/solicitud simple, mapa comunal con datos demo, resumen público de gestión | — |
+| 1 | **Portal ciudadano informativo**: rediseño 2.0, noticias y beneficios, agenda de actividades/talleres/deportes, trámites, teléfonos útiles, datos comunales | ✅ |
+| 2 | **Participación ciudadana**: formulario de reporte/solicitud simple, mapa comunal con datos demo, resumen público de gestión | 🔜 |
 | 3 | Supabase: auth, tablas, storage, RLS | — |
 | 4 | Panel municipal completo: derivaciones, exportación, auditoría (hasta aquí, solo estructura/demo discreta) | — |
 | 5 | IA y fuentes de datos oficiales (SINIM, INE, CEAD) | — |

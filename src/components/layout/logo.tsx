@@ -7,10 +7,16 @@ interface LogoProps {
   className?: string;
   /** Muestra solo el isotipo, sin el nombre. */
   iconOnly?: boolean;
+  /** Sobre fondos oscuros (footer, panel) usa el wordmark claro. */
+  variant?: "default" | "inverse";
 }
 
 /** Logo de MiComuna360: isotipo (círculo 360° + pin) y wordmark. */
-export function Logo({ className, iconOnly = false }: LogoProps) {
+export function Logo({
+  className,
+  iconOnly = false,
+  variant = "default",
+}: LogoProps) {
   return (
     <Link
       href="/"
@@ -23,11 +29,20 @@ export function Logo({ className, iconOnly = false }: LogoProps) {
         width={36}
         height={36}
         priority
-        className="size-9"
+        className={cn(
+          "size-9",
+          variant === "inverse" && "rounded-full bg-brand-ivory p-0.5"
+        )}
       />
       {!iconOnly && (
-        <span className="text-xl font-extrabold tracking-tight">
-          <span className="text-brand-navy dark:text-brand-ivory">
+        <span className="font-display text-xl font-bold tracking-tight">
+          <span
+            className={
+              variant === "inverse"
+                ? "text-brand-ivory"
+                : "text-brand-navy dark:text-brand-ivory"
+            }
+          >
             MiComuna
           </span>
           <span className="text-brand-teal">360</span>

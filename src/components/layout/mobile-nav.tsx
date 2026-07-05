@@ -14,7 +14,7 @@ import { mainNav } from "@/config/nav";
 
 export function MobileNav() {
   return (
-    <div className="md:hidden">
+    <div className="lg:hidden">
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
           <Button variant="outline" size="icon" aria-label="Abrir menú">

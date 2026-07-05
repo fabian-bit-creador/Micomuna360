@@ -123,6 +123,44 @@ export interface Indicator {
   source: string;
 }
 
+export type ProcedureCategory =
+  | "certificados"
+  | "beneficios"
+  | "permisos"
+  | "social";
+
+export interface Procedure {
+  id: string;
+  title: string;
+  slug: string;
+  summary: string;
+  category: ProcedureCategory;
+  /** Requisitos que debe reunir el vecino. */
+  requirements: string[];
+  /** Pasos en orden (secuencia real del trámite). */
+  steps: string[];
+  cost: string;
+  duration: string;
+  place: string;
+  schedule: string;
+}
+
+export type PhoneCategory =
+  | "emergencia"
+  | "municipal"
+  | "salud"
+  | "apoyo";
+
+export interface UsefulPhone {
+  id: string;
+  name: string;
+  number: string;
+  description: string;
+  category: PhoneCategory;
+  /** Horario de atención, p. ej. "24 horas" o "L-V 8:30–14:00". */
+  available: string;
+}
+
 export interface AuditLogEntry {
   id: string;
   actorId: string;
