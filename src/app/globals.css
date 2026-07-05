@@ -1,0 +1,137 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+
+@custom-variant dark (&:is(.dark *));
+
+/*
+ * Identidad visual MiComuna360 / MuniApp
+ * Azul profundo   #17375E  Confianza / seguridad
+ * Turquesa cívico #1E8E89  Cercanía / participación
+ * Celeste suave   #67B7D1  Información / claridad
+ * Rojo terracota  #C95B5B  Acento / inspiración sutil en Chile
+ * Blanco marfil   #F7F7F2  Fondo / limpieza
+ * Gris pizarra    #4B5563  Texto / equilibrio
+ */
+
+:root {
+  --radius: 0.75rem;
+
+  /* Paleta de marca */
+  --brand-navy: #17375e;
+  --brand-teal: #1e8e89;
+  --brand-sky: #67b7d1;
+  --brand-terracotta: #c95b5b;
+  --brand-ivory: #f7f7f2;
+  --brand-slate: #4b5563;
+  --brand-amber: #e9b949;
+
+  /* Tokens shadcn/ui */
+  --background: #f7f7f2;
+  --foreground: #374151;
+  --card: #ffffff;
+  --card-foreground: #374151;
+  --popover: #ffffff;
+  --popover-foreground: #374151;
+  --primary: #17375e;
+  --primary-foreground: #f7f7f2;
+  --secondary: #1e8e89;
+  --secondary-foreground: #ffffff;
+  --muted: #eceee7;
+  --muted-foreground: #6b7280;
+  --accent: #e6f2f7;
+  --accent-foreground: #17375e;
+  --destructive: #c95b5b;
+  --destructive-foreground: #ffffff;
+  --border: #e3e4dc;
+  --input: #d8dad1;
+  --ring: #67b7d1;
+  --chart-1: #17375e;
+  --chart-2: #1e8e89;
+  --chart-3: #67b7d1;
+  --chart-4: #c95b5b;
+  --chart-5: #e9b949;
+}
+
+.dark {
+  --background: #0f2038;
+  --foreground: #e5e7eb;
+  --card: #17375e;
+  --card-foreground: #e5e7eb;
+  --popover: #17375e;
+  --popover-foreground: #e5e7eb;
+  --primary: #67b7d1;
+  --primary-foreground: #0f2038;
+  --secondary: #1e8e89;
+  --secondary-foreground: #ffffff;
+  --muted: #1c3a5e;
+  --muted-foreground: #9ca3af;
+  --accent: #1c3a5e;
+  --accent-foreground: #e5e7eb;
+  --destructive: #d98282;
+  --destructive-foreground: #0f2038;
+  --border: rgba(229, 231, 235, 0.12);
+  --input: rgba(229, 231, 235, 0.18);
+  --ring: #67b7d1;
+  --chart-1: #67b7d1;
+  --chart-2: #34b3ad;
+  --chart-3: #8ecbe0;
+  --chart-4: #d98282;
+  --chart-5: #e9b949;
+}
+
+@theme inline {
+  --font-sans: var(--font-nunito), ui-sans-serif, system-ui, sans-serif;
+
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --color-chart-1: var(--chart-1);
+  --color-chart-2: var(--chart-2);
+  --color-chart-3: var(--chart-3);
+  --color-chart-4: var(--chart-4);
+  --color-chart-5: var(--chart-5);
+
+  --color-brand-navy: var(--brand-navy);
+  --color-brand-teal: var(--brand-teal);
+  --color-brand-sky: var(--brand-sky);
+  --color-brand-terracotta: var(--brand-terracotta);
+  --color-brand-ivory: var(--brand-ivory);
+  --color-brand-slate: var(--brand-slate);
+  --color-brand-amber: var(--brand-amber);
+
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+  body {
+    @apply bg-background text-foreground font-sans;
+  }
+  h1,
+  h2,
+  h3,
+  h4 {
+    @apply text-primary;
+  }
+}
