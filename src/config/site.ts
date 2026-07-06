@@ -5,11 +5,11 @@ export const siteConfig = {
   lema: "Tu comuna en un solo lugar",
   sublema: "Conecta, participa y transforma tu entorno.",
   description:
-    "MiComuna360 es una plataforma digital que conecta vecinos, municipios y datos comunales en un solo lugar. Permite informarse, realizar solicitudes, reportar problemas, visualizar indicadores, conocer beneficios y participar activamente en el desarrollo del territorio.",
+    "MiComuna360 es una plataforma digital que conecta vecinos, municipios y datos comunales en un solo lugar. Hoy permite informarse sobre noticias, actividades, trámites, teléfonos útiles y datos de tu comuna; en sus próximas etapas permitirá reportar problemas, hacer solicitudes con seguimiento y participar activamente en el desarrollo del territorio.",
   porQueExiste:
     "Muchas oportunidades, beneficios y servicios existen, pero no siempre llegan a las personas de forma clara, simple y oportuna. MiComuna360 busca cerrar esa brecha, conectando información, comunidad y gestión pública para que cada vecino pueda participar mejor en el desarrollo de su comuna.",
   mision:
-    "Acercar la gestión municipal a las personas mediante tecnología, datos e inteligencia artificial, creando una plataforma cercana, accesible y transparente donde vecinos, municipios y organizaciones puedan informarse, participar, colaborar y tomar mejores decisiones para el desarrollo de sus comunas.",
+    "Acercar la gestión municipal a las personas mediante tecnología, datos y herramientas digitales, creando una plataforma cercana, accesible y transparente donde vecinos, municipios y organizaciones puedan informarse, participar, colaborar y tomar mejores decisiones para el desarrollo de sus comunas.",
   vision:
     "Ser una plataforma referente en Chile en gestión comunal inteligente, promoviendo municipios más transparentes, eficientes y cercanos, y ciudadanos más educados, empoderados y protagonistas del desarrollo de sus territorios, avanzando hacia una cobertura que permita llegar a todo Chile.",
   historia: [
