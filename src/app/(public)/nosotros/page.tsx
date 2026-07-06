@@ -1,9 +1,12 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import {
+  BuildingIcon,
   CompassIcon,
   EyeIcon,
   HandshakeIcon,
+  MessageSquarePlusIcon,
+  NewspaperIcon,
   ScaleIcon,
 } from "lucide-react";
 
@@ -30,6 +33,33 @@ const roleColors: Record<string, string> = {
   sky: "border-t-brand-sky",
   terracotta: "border-t-brand-terracotta",
 };
+
+const howItWorks = [
+  {
+    icon: NewspaperIcon,
+    chip: "bg-brand-teal/15 text-brand-teal",
+    title: "Infórmate hoy",
+    description:
+      "Noticias, actividades, trámites explicados simple, teléfonos útiles y datos de tu comuna, ya disponibles sin registro.",
+    available: true,
+  },
+  {
+    icon: MessageSquarePlusIcon,
+    chip: "bg-brand-sky/20 text-brand-navy dark:text-brand-sky",
+    title: "Participa y reporta",
+    description:
+      "Reportes vecinales con foto, ubicación y seguimiento. Se activa en la próxima etapa del piloto.",
+    available: false,
+  },
+  {
+    icon: BuildingIcon,
+    chip: "bg-brand-terracotta/15 text-brand-terracotta",
+    title: "Tu municipio responde",
+    description:
+      "Cada reporte llegará ordenado al equipo municipal, con responsable, estado y aviso al vecino al resolverse.",
+    available: false,
+  },
+];
 
 export default function NosotrosPage() {
   return (
@@ -97,8 +127,51 @@ export default function NosotrosPage() {
         </div>
       </section>
 
-      {/* Valores */}
+      {/* Así funciona, en simple */}
       <section className="mx-auto max-w-6xl px-4 py-14">
+        <SectionHeader
+          eyebrow="Así funciona"
+          title="En simple, paso a paso"
+          description="Con total honestidad: esto es lo que ya puedes usar hoy y lo que viene en las próximas etapas del piloto."
+        />
+        <div className="grid gap-4 md:grid-cols-3">
+          {howItWorks.map((step, i) => (
+            <Card key={step.title} className="gap-2 py-5">
+              <CardHeader className="gap-2">
+                <div className="flex items-center justify-between">
+                  <div
+                    className={cn(
+                      "flex size-11 items-center justify-center rounded-xl",
+                      step.chip
+                    )}
+                  >
+                    <step.icon className="size-6" />
+                  </div>
+                  <Badge
+                    variant="secondary"
+                    className={cn(
+                      step.available
+                        ? "bg-brand-teal/15 text-brand-teal"
+                        : "bg-brand-amber/25 text-yellow-800"
+                    )}
+                  >
+                    {step.available ? "Disponible hoy" : "Próximamente"}
+                  </Badge>
+                </div>
+                <CardTitle className="text-lg">
+                  {i + 1}. {step.title}
+                </CardTitle>
+                <CardDescription className="text-sm leading-relaxed">
+                  {step.description}
+                </CardDescription>
+              </CardHeader>
+            </Card>
+          ))}
+        </div>
+      </section>
+
+      {/* Valores */}
+      <section className="mx-auto max-w-6xl border-t px-4 py-14">
         <SectionHeader
           eyebrow="Lo que nos guía"
           title="Nuestros valores, en la práctica"

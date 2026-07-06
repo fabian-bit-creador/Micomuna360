@@ -12,6 +12,9 @@ import {
 import { RingMeter } from "@/components/data/ring-meter";
 import { StatTile } from "@/components/data/stat-tile";
 import { EventCard } from "@/components/events/event-card";
+import { NeighborJourney } from "@/components/home/neighbor-journey";
+import { PhoneMockup } from "@/components/home/phone-mockup";
+import { SectorsStrip } from "@/components/home/sectors-strip";
 import { SectionHeader } from "@/components/layout/section-header";
 import { NewsCard } from "@/components/news/news-card";
 import { Badge } from "@/components/ui/badge";
@@ -31,80 +34,49 @@ const accesos = [
     description: "Emergencias y servicios, a un toque.",
     href: "/telefonos",
     icon: PhoneCallIcon,
+    chip: "bg-brand-terracotta/15 text-brand-terracotta group-hover:bg-brand-terracotta",
   },
   {
     title: "Trámites y beneficios",
     description: "Guías paso a paso, sin letra chica.",
     href: "/tramites",
     icon: FileTextIcon,
+    chip: "bg-brand-sky/20 text-brand-navy group-hover:bg-brand-sky dark:text-brand-sky",
   },
   {
     title: "Actividades",
     description: "Talleres, deportes y encuentros.",
     href: "/actividades",
     icon: CalendarDaysIcon,
+    chip: "bg-brand-teal/15 text-brand-teal group-hover:bg-brand-teal",
   },
   {
     title: "Noticias",
     description: "Anuncios y beneficios al día.",
     href: "/noticias",
     icon: MegaphoneIcon,
+    chip: "bg-brand-navy/10 text-brand-navy group-hover:bg-brand-navy dark:bg-brand-sky/15 dark:text-brand-sky",
   },
   {
     title: "Datos comunales",
     description: "Tu comuna en cifras simples.",
     href: "/datos",
     icon: BarChart3Icon,
+    chip: "bg-brand-sky/20 text-brand-navy group-hover:bg-brand-sky dark:text-brand-sky",
   },
   {
     title: "Reportar un problema",
     description: "Tu reporte, con seguimiento.",
     href: "/reportar",
     icon: MessageSquarePlusIcon,
+    chip: "bg-brand-teal/15 text-brand-teal group-hover:bg-brand-teal",
   },
 ];
-
-/** Arco 360° decorativo del hero (firma de marca). */
-function HeroArc() {
-  return (
-    <svg
-      viewBox="0 0 400 400"
-      className="pointer-events-none absolute top-1/2 -right-24 hidden w-[26rem] -translate-y-1/2 lg:block xl:-right-8"
-      aria-hidden="true"
-    >
-      <path
-        d="M60 260 A150 150 0 0 1 170 55"
-        fill="none"
-        stroke="var(--brand-teal)"
-        strokeWidth="22"
-        strokeLinecap="round"
-        opacity="0.16"
-      />
-      <path
-        d="M230 55 A150 150 0 0 1 340 260"
-        fill="none"
-        stroke="var(--brand-sky)"
-        strokeWidth="22"
-        strokeLinecap="round"
-        opacity="0.2"
-      />
-      <path
-        d="M310 310 A150 150 0 0 1 90 310"
-        fill="none"
-        stroke="var(--brand-terracotta)"
-        strokeWidth="22"
-        strokeLinecap="round"
-        opacity="0.14"
-      />
-      <circle cx="200" cy="200" r="10" fill="var(--brand-teal)" opacity="0.25" />
-    </svg>
-  );
-}
 
 export default async function HomePage() {
   const [news, events, indicators] = await Promise.all([
     getLatestNews(3),
-    getUpcomingEvents(4),
+    getUpcomingEvents(2),
     getIndicators(),
   ]);
   const byId = (id: string) => indicators.find((i) => i.id === id);
@@ -117,9 +89,8 @@ export default async function HomePage() {
     <>
       {/* Hero */}
       <section className="relative overflow-hidden border-b bg-gradient-to-b from-accent to-background">
-        <div className="relative mx-auto max-w-6xl px-4 py-16 md:py-24">
-          <HeroArc />
-          <div className="relative max-w-2xl">
+        <div className="relative mx-auto grid max-w-6xl items-center gap-10 px-4 py-16 md:py-20 lg:grid-cols-[1fr_auto]">
+          <div className="max-w-2xl">
             <Badge variant="secondary" className="mb-4">
               Portal ciudadano · piloto con datos de demostración
             </Badge>
@@ -146,6 +117,7 @@ export default async function HomePage() {
               </Button>
             </div>
           </div>
+          <PhoneMockup className="mx-auto hidden md:block lg:mr-4" />
         </div>
       </section>
 
@@ -160,7 +132,12 @@ export default async function HomePage() {
             <Link key={acceso.href} href={acceso.href} className="group">
               <Card className="h-full gap-0 py-5 transition-all group-hover:-translate-y-0.5 group-hover:shadow-md">
                 <CardContent className="flex items-center gap-4 px-5">
-                  <div className="flex size-12 shrink-0 items-center justify-center rounded-xl bg-accent text-brand-teal transition-colors group-hover:bg-brand-teal group-hover:text-white">
+                  <div
+                    className={cn(
+                      "flex size-12 shrink-0 items-center justify-center rounded-xl transition-colors group-hover:text-white",
+                      acceso.chip
+                    )}
+                  >
                     <acceso.icon className="size-6" />
                   </div>
                   <div>
@@ -176,8 +153,11 @@ export default async function HomePage() {
         </div>
       </section>
 
+      {/* El viaje de un vecino */}
+      <NeighborJourney />
+
       {/* Pulso comunal */}
-      <section className="border-y bg-card">
+      <section className="border-b bg-background">
         <div className="mx-auto max-w-6xl px-4 py-12">
           <SectionHeader
             eyebrow="Pulso comunal"
@@ -202,7 +182,7 @@ export default async function HomePage() {
                   value={indicator.value}
                   unit={indicator.unit}
                   detail={indicator.period}
-                  className="border-0 bg-background shadow-none"
+                  className="border-0 bg-card shadow-none"
                 />
               ))}
             </div>
@@ -210,8 +190,11 @@ export default async function HomePage() {
         </div>
       </section>
 
+      {/* Territorio: sectores */}
+      <SectorsStrip />
+
       {/* Noticias */}
-      <section className="mx-auto max-w-6xl px-4 py-14">
+      <section className="mx-auto max-w-6xl border-t px-4 py-14">
         <SectionHeader
           eyebrow="Al día"
           title="Últimas noticias"
