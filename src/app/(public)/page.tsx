@@ -1,5 +1,6 @@
 import Link from "next/link";
 import {
+  ArrowRightIcon,
   BarChart3Icon,
   CalendarDaysIcon,
   FileTextIcon,
@@ -22,6 +23,7 @@ import {
   getLatestNews,
   getUpcomingEvents,
 } from "@/lib/repositories";
+import { cn } from "@/lib/utils";
 
 const accesos = [
   {
@@ -237,19 +239,86 @@ export default async function HomePage() {
       </section>
 
       {/* Por qué existe */}
-      <section className="mx-auto max-w-6xl px-4 pb-16">
-        <div className="rounded-2xl bg-accent px-6 py-10 text-center md:px-16">
-          <h2 className="text-2xl font-bold md:text-3xl">
-            ¿Por qué existe {siteConfig.name}?
-          </h2>
-          <p className="mx-auto mt-4 max-w-3xl text-muted-foreground">
-            {siteConfig.porQueExiste}
-          </p>
-          <p className="mt-6 font-display text-lg font-bold text-brand-teal">
-            {siteConfig.sublema}
-          </p>
+      <section className="border-t bg-card">
+        <div className="mx-auto max-w-6xl px-4 py-16">
+          <div className="grid items-start gap-10 lg:grid-cols-2">
+            <div>
+              <SectionHeader
+                eyebrow="Nuestro propósito"
+                title={`¿Por qué existe ${siteConfig.name}?`}
+                className="mb-4"
+              />
+              <p className="text-lg leading-relaxed text-muted-foreground">
+                Las oportunidades de tu comuna existen: el taller, el
+                subsidio, la hora médica, el fondo concursable. Pero no
+                siempre llegan a tiempo, ni de forma clara, ni a quienes más
+                las necesitan.{" "}
+                <span className="font-semibold text-foreground">
+                  {siteConfig.name} existe para cerrar esa brecha
+                </span>
+                : que la información de tu comuna te encuentre a ti, y no al
+                revés.
+              </p>
+              <p className="mt-4 leading-relaxed text-muted-foreground">
+                {siteConfig.noReemplaza}
+              </p>
+              <Button variant="outline" className="mt-6" asChild>
+                <Link href="/nosotros">
+                  Conoce nuestra historia
+                  <ArrowRightIcon />
+                </Link>
+              </Button>
+            </div>
+            <div className="grid gap-3">
+              {siteConfig.roles.map((rol) => (
+                <div
+                  key={rol.name}
+                  className={cn(
+                    "rounded-xl border border-l-4 bg-background p-5",
+                    roleBorders[rol.color]
+                  )}
+                >
+                  <h3 className="font-bold text-primary">{rol.name}</h3>
+                  <p className="mt-0.5 text-sm text-muted-foreground">
+                    {rol.description}
+                  </p>
+                </div>
+              ))}
+              <p className="px-1 pt-2 text-sm text-muted-foreground">
+                Sin colores políticos: una herramienta al servicio de las
+                personas y los territorios.{" "}
+                <Link
+                  href="/nosotros"
+                  className="font-semibold text-brand-teal hover:underline"
+                >
+                  Lee nuestro compromiso
+                </Link>
+              </p>
+            </div>
+          </div>
         </div>
+      </section>
+
+      {/* Cierre */}
+      <section className="mx-auto max-w-6xl px-4 py-16 text-center">
+        <p className="font-display text-2xl font-bold text-primary md:text-3xl">
+          {siteConfig.sublema}
+        </p>
+        <p className="mx-auto mt-3 max-w-xl text-muted-foreground">
+          Este piloto usa datos ficticios de la comuna demo{" "}
+          {siteConfig.demoComuna.name}. ¿Te gustaría verlo con los datos de tu
+          comuna?
+        </p>
+        <Button size="lg" className="mt-6" asChild>
+          <Link href="/nosotros">Conoce el proyecto</Link>
+        </Button>
       </section>
     </>
   );
 }
+
+const roleBorders: Record<string, string> = {
+  teal: "border-l-brand-teal",
+  sky: "border-l-brand-sky",
+  terracotta: "border-l-brand-terracotta",
+};

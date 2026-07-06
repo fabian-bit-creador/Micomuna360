@@ -32,6 +32,11 @@ export const mainNav: NavItem[] = [
     href: "/datos",
     description: "Indicadores y avances comunales",
   },
+  {
+    title: "Nosotros",
+    href: "/nosotros",
+    description: "Qué es MiComuna360 y por qué existe",
+  },
 ];
 
 /**
