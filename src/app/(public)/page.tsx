@@ -12,9 +12,9 @@ import {
 import { RingMeter } from "@/components/data/ring-meter";
 import { StatTile } from "@/components/data/stat-tile";
 import { EventCard } from "@/components/events/event-card";
+import { DemoMap } from "@/components/home/demo-map";
 import { NeighborJourney } from "@/components/home/neighbor-journey";
 import { PhoneMockup } from "@/components/home/phone-mockup";
-import { SectorsStrip } from "@/components/home/sectors-strip";
 import { SectionHeader } from "@/components/layout/section-header";
 import { NewsCard } from "@/components/news/news-card";
 import { Badge } from "@/components/ui/badge";
@@ -190,11 +190,11 @@ export default async function HomePage() {
         </div>
       </section>
 
-      {/* Territorio: sectores */}
-      <SectorsStrip />
+      {/* Territorio: plano demo + sectores */}
+      <DemoMap />
 
       {/* Noticias */}
-      <section className="mx-auto max-w-6xl border-t px-4 py-14">
+      <section className="mx-auto max-w-6xl px-4 py-14">
         <SectionHeader
           eyebrow="Al día"
           title="Últimas noticias"
