@@ -15,6 +15,7 @@ export const metadata: Metadata = {
 
 const filters: { label: string; value?: NewsType }[] = [
   { label: "Todo" },
+  { label: "Buenas noticias", value: "buena_noticia" },
   { label: "Noticias", value: "noticia" },
   { label: "Anuncios", value: "anuncio" },
   { label: "Talleres", value: "taller" },

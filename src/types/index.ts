@@ -21,7 +21,12 @@ export type RequestPriority = "baja" | "media" | "alta" | "urgente";
 
 export type TaskStatus = "pendiente" | "en_proceso" | "completada";
 
-export type NewsType = "noticia" | "anuncio" | "taller" | "beneficio";
+export type NewsType =
+  | "noticia"
+  | "anuncio"
+  | "taller"
+  | "beneficio"
+  | "buena_noticia";
 
 export type LocationType = "sector" | "barrio" | "unidad";
 
@@ -159,6 +164,51 @@ export interface UsefulPhone {
   category: PhoneCategory;
   /** Horario de atención, p. ej. "24 horas" o "L-V 8:30–14:00". */
   available: string;
+}
+
+export type PlaceCategory =
+  | "municipal"
+  | "salud"
+  | "educacion"
+  | "deporte"
+  | "comunitario"
+  | "medioambiente";
+
+/** Lugar o servicio útil del directorio comunal. */
+export interface Place {
+  id: string;
+  name: string;
+  category: PlaceCategory;
+  description: string;
+  address: string;
+  sectorId: string;
+  schedule: string;
+  phone: string | null;
+  /** Nombre de ícono del kit cívico (components/shared/civic-icon). */
+  icon: string;
+}
+
+export type OrganizationType =
+  | "junta_vecinos"
+  | "club_deportivo"
+  | "comite_vivienda"
+  | "fundacion"
+  | "cultural"
+  | "adulto_mayor"
+  | "medioambiente";
+
+/** Organización comunitaria del territorio. */
+export interface Organization {
+  id: string;
+  name: string;
+  type: OrganizationType;
+  sectorId: string;
+  description: string;
+  /** Cuándo/dónde se reúnen o actividad principal. */
+  meetingInfo: string;
+  /** Contacto institucional demo (nunca datos personales). */
+  contact: string | null;
+  icon: string;
 }
 
 export interface AuditLogEntry {

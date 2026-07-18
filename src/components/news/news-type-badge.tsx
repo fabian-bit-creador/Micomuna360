@@ -19,6 +19,10 @@ const typeConfig: Record<NewsType, { label: string; className: string }> = {
     label: "Beneficio",
     className: "bg-brand-amber/25 text-yellow-800 dark:text-brand-amber",
   },
+  buena_noticia: {
+    label: "Buena noticia",
+    className: "bg-emerald-600/15 text-emerald-700 dark:text-emerald-400",
+  },
 };
 
 export function NewsTypeBadge({ type }: { type: NewsType }) {

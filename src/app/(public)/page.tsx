@@ -4,9 +4,11 @@ import {
   BarChart3Icon,
   CalendarDaysIcon,
   FileTextIcon,
+  MapPinIcon,
   MegaphoneIcon,
   MessageSquarePlusIcon,
   PhoneCallIcon,
+  UsersIcon,
 } from "lucide-react";
 
 import { RingMeter } from "@/components/data/ring-meter";
@@ -58,6 +60,20 @@ const accesos = [
     chip: "bg-brand-navy/10 text-brand-navy group-hover:bg-brand-navy dark:bg-brand-sky/15 dark:text-brand-sky",
   },
   {
+    title: "Comunidad",
+    description: "Organizaciones y buenas noticias.",
+    href: "/comunidad",
+    icon: UsersIcon,
+    chip: "bg-brand-teal/15 text-brand-teal group-hover:bg-brand-teal",
+  },
+  {
+    title: "Directorio comunal",
+    description: "Lugares que sirven, con horario.",
+    href: "/directorio",
+    icon: MapPinIcon,
+    chip: "bg-brand-terracotta/15 text-brand-terracotta group-hover:bg-brand-terracotta",
+  },
+  {
     title: "Datos comunales",
     description: "Tu comuna en cifras simples.",
     href: "/datos",
@@ -69,7 +85,7 @@ const accesos = [
     description: "Tu reporte, con seguimiento.",
     href: "/reportar",
     icon: MessageSquarePlusIcon,
-    chip: "bg-brand-teal/15 text-brand-teal group-hover:bg-brand-teal",
+    chip: "bg-brand-navy/10 text-brand-navy group-hover:bg-brand-navy dark:bg-brand-sky/15 dark:text-brand-sky",
   },
 ];
 
@@ -127,7 +143,7 @@ export default async function HomePage() {
           eyebrow="Para tu día a día"
           title="¿Qué necesitas hoy?"
         />
-        <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+        <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
           {accesos.map((acceso) => (
             <Link key={acceso.href} href={acceso.href} className="group">
               <Card className="h-full gap-0 py-5 transition-all group-hover:-translate-y-0.5 group-hover:shadow-md">
@@ -289,7 +305,7 @@ export default async function HomePage() {
         </p>
         <p className="mx-auto mt-3 max-w-xl text-muted-foreground">
           Este piloto usa datos ficticios de la comuna demo{" "}
-          {siteConfig.demoComuna.name}. ¿Te gustaría verlo con los datos de tu
+          {siteConfig.comuna.name}. ¿Te gustaría verlo con los datos de tu
           comuna?
         </p>
         <Button size="lg" className="mt-6" asChild>

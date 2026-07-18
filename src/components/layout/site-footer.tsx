@@ -48,7 +48,7 @@ export function SiteFooter() {
             </p>
             <p className="text-brand-ivory/70">
               Versión de demostración con datos ficticios de la comuna{" "}
-              {siteConfig.demoComuna.name}. Ninguna solicitud ingresada aquí
+              {siteConfig.comuna.name}. Ninguna solicitud ingresada aquí
               llega aún a un municipio real.
             </p>
           </div>

@@ -1,7 +1,31 @@
 import type { NewsArticle } from "@/types";
 
-/** Noticias, anuncios, talleres y beneficios ficticios para el MVP. */
+/** Noticias, anuncios, talleres, beneficios y buenas noticias (ficticios). */
 export const news: NewsArticle[] = [
+  {
+    id: "news-7",
+    title: "El Club Los Aromos FC es campeón regional infantil",
+    slug: "club-los-aromos-campeon-regional",
+    summary:
+      "Los niños del club deportivo comunal ganaron la final regional sub-12 y clasificaron al nacional. ¡Orgullo de toda la comuna!",
+    body: "El Club Deportivo Los Aromos FC se coronó campeón regional en la categoría sub-12 tras vencer en una final vibrante disputada este fin de semana.\n\nEl equipo, formado íntegramente por niños de la comuna, clasificó al campeonato nacional de octubre. La municipalidad y la comunidad organizarán actividades para apoyar el viaje de la delegación.\n\n¿Conoces otro logro de la comuna que merezca contarse? Pronto podrás compartirlo en esta plataforma.",
+    coverImage: null,
+    type: "buena_noticia",
+    publishedAt: "2026-07-04T10:00:00Z",
+    authorId: "user-funcionario",
+  },
+  {
+    id: "news-8",
+    title: "Vecinos recuperan la ex plazoleta del canal",
+    slug: "vecinos-recuperan-plazoleta",
+    summary:
+      "Lo que era un microbasural en El Estero Norte hoy es una plazoleta con juegos y bancas, gracias a una iniciativa vecinal apoyada por el municipio.",
+    body: "Tras meses de trabajo conjunto entre la junta de vecinos, la Brigada Ecológica y cuadrillas municipales, la ex plazoleta del canal en El Estero Norte fue recuperada por completo: juegos infantiles, bancas, iluminación y árboles nativos.\n\nLa iniciativa nació de un grupo de vecinas que se organizó para postular a fondos concursables. Hoy el espacio es punto de encuentro del sector.\n\nHistorias como esta son el corazón de MiComuna360: cuando la comunidad y el municipio se conectan, el territorio cambia.",
+    coverImage: null,
+    type: "buena_noticia",
+    publishedAt: "2026-06-27T09:00:00Z",
+    authorId: "user-admin",
+  },
   {
     id: "news-1",
     title: "Comienza el plan de recambio de luminarias LED",

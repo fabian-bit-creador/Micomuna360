@@ -18,6 +18,11 @@ export const mainNav: NavItem[] = [
     description: "Agenda de talleres, deportes y encuentros",
   },
   {
+    title: "Comunidad",
+    href: "/comunidad",
+    description: "Organizaciones, directorio y buenas noticias",
+  },
+  {
     title: "Trámites",
     href: "/tramites",
     description: "Guías paso a paso de trámites y beneficios",
