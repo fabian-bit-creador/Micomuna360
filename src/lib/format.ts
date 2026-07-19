@@ -1,11 +1,19 @@
 const TIME_ZONE = "America/Santiago";
 
+/**
+ * Los strings de solo-fecha ("2026-07-19") se interpretan como medianoche
+ * UTC; anclamos al mediodía de Chile para no retroceder un día al formatear.
+ */
+function toDate(iso: string): Date {
+  return new Date(iso.length === 10 ? `${iso}T12:00:00-04:00` : iso);
+}
+
 /** "5 de julio de 2026" */
 export function formatDate(iso: string): string {
   return new Intl.DateTimeFormat("es-CL", {
     dateStyle: "long",
     timeZone: TIME_ZONE,
-  }).format(new Date(iso));
+  }).format(toDate(iso));
 }
 
 /** "sáb 26 jul" */

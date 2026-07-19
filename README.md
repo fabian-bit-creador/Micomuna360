@@ -30,28 +30,29 @@ npm run build     # build de producción
 npm run lint      # ESLint
 ```
 
-## Estructura
+## Estructura (multicomuna)
 
 ```
 src/
 ├── app/
-│   ├── (public)/      # Capa ciudadana: inicio, reportar, mapa, noticias, datos
-│   └── (admin)/admin/ # Capa municipal: panel y gestión de solicitudes
-├── components/
-│   ├── ui/            # shadcn/ui
-│   └── layout/        # Header, footer, logo, navegación
-├── config/            # Identidad de marca y navegación
-├── lib/
-│   ├── data/          # Datos ficticios del MVP
-│   ├── repositories/  # Acceso a datos (mock hoy, Supabase en Fase 3)
-│   └── supabase/      # Clientes Supabase (Fase 3)
-└── types/             # Tipos de dominio (espejo del modelo de datos)
-supabase/migrations/   # SQL versionado (Fase 3)
-docs/                  # Arquitectura y modelo de datos
+│   ├── (public)/
+│   │   ├── (portal)/    # Nivel plataforma: selector de comunas y /nosotros
+│   │   └── [comuna]/    # Un solo set de páginas para todas las comunas
+│   └── (admin)/admin/   # Capa municipal (estructura, Fase 4)
+├── components/          # ui/ (shadcn), layout/, home/, shared/ (kit cívico)
+├── config/
+│   ├── communes/        # Registro de comunas (demo Los Aromos, piloto La Pintana)
+│   └── site.ts          # Identidad de marca
+├── data/communes/       # Dataset por comuna (demo ficticio / piloto verificado)
+├── lib/repositories/    # Acceso a datos por comuna (mock hoy, Supabase en Fase 3)
+└── types/               # Tipos de dominio
+docs/                    # Arquitectura, modelo de datos, fuentes del piloto
 ```
 
-Regla clave: la UI **nunca** importa `lib/data` directamente; siempre pasa por
-`lib/repositories`. Así, conectar Supabase en Fase 3 no requiere tocar la UI.
+Reglas clave: la UI **nunca** importa datos directamente (siempre vía
+`lib/repositories`, que reciben la comuna), y **jamás** se mezclan datos
+ficticios de la demo con datos reales del piloto. Ver
+`docs/arquitectura-multicomuna.md`.
 
 ## Enfoque del producto
 

@@ -280,10 +280,10 @@ function MapCanvas() {
  * actividades y servicios, más los sectores como leyenda compacta.
  * SVG/CSS puro — el mapa interactivo real llega en la Fase 2.
  */
-export async function DemoMap() {
+export async function DemoMap({ communeId }: { communeId: string }) {
   const [locations, requests] = await Promise.all([
-    getLocations(),
-    getPublicRequests(),
+    getLocations(communeId),
+    getPublicRequests(communeId),
   ]);
   const sectors = locations.map((location, i) => ({
     location,

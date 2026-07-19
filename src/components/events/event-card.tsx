@@ -15,9 +15,15 @@ const categoryLabels: Record<string, string> = {
   taller: "Taller",
 };
 
-export async function EventCard({ event }: { event: CommunalEvent }) {
+export async function EventCard({
+  event,
+  communeId,
+}: {
+  event: CommunalEvent;
+  communeId: string;
+}) {
   const location = event.locationId
-    ? await getLocationById(event.locationId)
+    ? await getLocationById(communeId, event.locationId)
     : null;
 
   return (

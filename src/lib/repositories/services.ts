@@ -1,5 +1,4 @@
-import { phones } from "@/lib/data/phones";
-import { procedures } from "@/lib/data/procedures";
+import { getCommuneData } from "@/data/communes";
 import type {
   PhoneCategory,
   Procedure,
@@ -7,26 +6,29 @@ import type {
   UsefulPhone,
 } from "@/types";
 
-/** Repositorio de trámites y teléfonos útiles. Mock en MVP. */
+/** Repositorio de trámites y teléfonos útiles por comuna. */
 
 export async function getProcedures(
+  communeId: string,
   category?: ProcedureCategory
 ): Promise<Procedure[]> {
-  return category
-    ? procedures.filter((p) => p.category === category)
-    : [...procedures];
+  const all = getCommuneData(communeId).procedures;
+  return category ? all.filter((p) => p.category === category) : [...all];
 }
 
 export async function getProcedureBySlug(
+  communeId: string,
   slug: string
 ): Promise<Procedure | null> {
-  return procedures.find((p) => p.slug === slug) ?? null;
+  return (
+    getCommuneData(communeId).procedures.find((p) => p.slug === slug) ?? null
+  );
 }
 
 export async function getUsefulPhones(
+  communeId: string,
   category?: PhoneCategory
 ): Promise<UsefulPhone[]> {
-  return category
-    ? phones.filter((p) => p.category === category)
-    : [...phones];
+  const all = getCommuneData(communeId).phones;
+  return category ? all.filter((p) => p.category === category) : [...all];
 }

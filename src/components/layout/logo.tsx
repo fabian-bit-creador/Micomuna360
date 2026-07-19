@@ -9,6 +9,8 @@ interface LogoProps {
   iconOnly?: boolean;
   /** Sobre fondos oscuros (footer, panel) usa el wordmark claro. */
   variant?: "default" | "inverse";
+  /** Destino del enlace (por defecto, el portal raíz). */
+  href?: string;
 }
 
 /** Logo de MiComuna360: isotipo (círculo 360° + pin) y wordmark. */
@@ -16,10 +18,11 @@ export function Logo({
   className,
   iconOnly = false,
   variant = "default",
+  href = "/",
 }: LogoProps) {
   return (
     <Link
-      href="/"
+      href={href}
       className={cn("flex items-center gap-2", className)}
       aria-label="MiComuna360 — Inicio"
     >

@@ -1,5 +1,4 @@
-import { organizations } from "@/lib/data/organizations";
-import { places } from "@/lib/data/places";
+import { getCommuneData } from "@/data/communes";
 import type {
   Organization,
   OrganizationType,
@@ -7,18 +6,20 @@ import type {
   PlaceCategory,
 } from "@/types";
 
-/** Repositorio de comunidad: directorio y organizaciones. Mock en MVP. */
+/** Repositorio de comunidad por comuna: directorio y organizaciones. */
 
-export async function getPlaces(category?: PlaceCategory): Promise<Place[]> {
-  return category
-    ? places.filter((p) => p.category === category)
-    : [...places];
+export async function getPlaces(
+  communeId: string,
+  category?: PlaceCategory
+): Promise<Place[]> {
+  const all = getCommuneData(communeId).places;
+  return category ? all.filter((p) => p.category === category) : [...all];
 }
 
 export async function getOrganizations(
+  communeId: string,
   type?: OrganizationType
 ): Promise<Organization[]> {
-  return type
-    ? organizations.filter((o) => o.type === type)
-    : [...organizations];
+  const all = getCommuneData(communeId).organizations;
+  return type ? all.filter((o) => o.type === type) : [...all];
 }

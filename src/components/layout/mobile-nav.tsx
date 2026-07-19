@@ -8,11 +8,14 @@ import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
+  DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { mainNav } from "@/config/nav";
+import type { CommuneConfig } from "@/config/communes";
+import { communeNav } from "@/config/nav";
 
-export function MobileNav() {
+export function MobileNav({ commune }: { commune: CommuneConfig }) {
+  const nav = communeNav(commune);
   return (
     <div className="lg:hidden">
       <DropdownMenu>
@@ -21,12 +24,19 @@ export function MobileNav() {
             <MenuIcon />
           </Button>
         </DropdownMenuTrigger>
-        <DropdownMenuContent align="end" className="w-48">
-          {mainNav.map((item) => (
+        <DropdownMenuContent align="end" className="w-52">
+          {nav.map((item) => (
             <DropdownMenuItem key={item.href} asChild>
               <Link href={item.href}>{item.title}</Link>
             </DropdownMenuItem>
           ))}
+          <DropdownMenuSeparator />
+          <DropdownMenuItem asChild>
+            <Link href="/nosotros">Nosotros</Link>
+          </DropdownMenuItem>
+          <DropdownMenuItem asChild>
+            <Link href="/">Cambiar comuna</Link>
+          </DropdownMenuItem>
         </DropdownMenuContent>
       </DropdownMenu>
     </div>

@@ -11,9 +11,18 @@ import {
 import { formatDate } from "@/lib/format";
 import type { NewsArticle } from "@/types";
 
-export function NewsCard({ article }: { article: NewsArticle }) {
+export function NewsCard({
+  article,
+  communeSlug,
+}: {
+  article: NewsArticle;
+  communeSlug: string;
+}) {
   return (
-    <Link href={`/noticias/${article.slug}`} className="group block h-full">
+    <Link
+      href={`/${communeSlug}/noticias/${article.slug}`}
+      className="group block h-full"
+    >
       <Card className="h-full gap-3 transition-all group-hover:-translate-y-0.5 group-hover:shadow-md">
         <CardHeader className="gap-2">
           <div className="flex items-center justify-between gap-2">

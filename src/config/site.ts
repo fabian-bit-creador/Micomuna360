@@ -70,21 +70,4 @@ export const siteConfig = {
       color: "terracotta",
     },
   ],
-  /**
-   * Configuración de la comuna activa. El objetivo es que una futura
-   * versión real (p. ej. La Pintana) sea un cambio de esta configuración
-   * más sus datos verificados — no una reescritura de la aplicación.
-   * Mientras isDemo sea true, la UI debe señalar el carácter ficticio.
-   */
-  comuna: {
-    id: "los-aromos",
-    name: "Los Aromos",
-    isDemo: true,
-    /** Centro aproximado del mapa (zona sur de Santiago, ficticio). */
-    center: { lat: -33.58, lng: -70.632 },
-    zoom: 14,
-  },
 } as const;
-
-/** Alias de compatibilidad (usos antiguos de demoComuna). */
-export const demoComuna = siteConfig.comuna;
