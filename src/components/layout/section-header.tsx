@@ -10,6 +10,8 @@ interface SectionHeaderProps {
   /** Enlace "ver todo" opcional a la derecha. */
   action?: { label: string; href: string };
   className?: string;
+  /** "h1" cuando el encabezado es el título de la página. */
+  level?: "h1" | "h2";
 }
 
 /** Arco 360° en miniatura: firma visual de la marca como eyebrow de sección. */
@@ -47,7 +49,9 @@ export function SectionHeader({
   description,
   action,
   className,
+  level = "h2",
 }: SectionHeaderProps) {
+  const Heading = level;
   return (
     <div
       className={cn(
@@ -60,9 +64,9 @@ export function SectionHeader({
           <ArcMark />
           {eyebrow}
         </p>
-        <h2 className="text-2xl font-bold tracking-tight md:text-3xl">
+        <Heading className="text-2xl font-bold tracking-tight md:text-3xl">
           {title}
-        </h2>
+        </Heading>
         {description && (
           <p className="mt-2 text-muted-foreground">{description}</p>
         )}

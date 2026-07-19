@@ -50,6 +50,7 @@ export default async function TramitesPage({
   return (
     <div className="mx-auto max-w-6xl px-4 py-12">
       <SectionHeader
+        level="h1"
         eyebrow="Sin vueltas"
         title="Trámites y beneficios, explicados simple"
         description="Qué necesitas, cuánto cuesta y dónde ir. Guías paso a paso escritas para personas, no para expedientes."

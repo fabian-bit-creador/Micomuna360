@@ -81,6 +81,7 @@ export default async function ComunidadPage({
   return (
     <div className="mx-auto max-w-6xl px-4 py-12">
       <SectionHeader
+        level="h1"
         eyebrow="Comunidad"
         title="La comuna la hacen sus vecinos"
         description="Organizaciones, lugares que sirven y buenas noticias del territorio. Esta es la capa viva de MiComuna360."

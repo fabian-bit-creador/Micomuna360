@@ -57,6 +57,7 @@ export default async function ReportarPage({
   return (
     <div className="mx-auto max-w-4xl px-4 py-12">
       <SectionHeader
+        level="h1"
         eyebrow="Tu voz"
         title="Reporta un problema, sin filas ni papeleo"
         description="Así funcionará el reporte vecinal cuando se active en la próxima etapa del piloto."

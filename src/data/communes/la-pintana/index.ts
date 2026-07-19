@@ -1,4 +1,7 @@
 import type { CommuneData } from "../types";
+import { places } from "./places";
+import { services } from "./services";
+import { sources } from "./sources";
 
 /**
  * Dataset del piloto La Pintana.
@@ -20,6 +23,8 @@ export const laPintanaData: CommuneData = {
   indicators: [],
   procedures: [],
   phones: [],
-  places: [],
+  places,
   organizations: [],
+  services,
+  sources,
 };

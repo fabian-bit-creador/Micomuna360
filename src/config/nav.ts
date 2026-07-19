@@ -15,6 +15,24 @@ export function communeNav(commune: CommuneConfig): NavItem[] {
   const items: (NavItem & { enabled: boolean })[] = [
     { title: "Inicio", href: base, enabled: true },
     {
+      title: "Servicios",
+      href: `${base}/servicios`,
+      description: "Trámites y servicios con enlace oficial",
+      enabled: commune.features.services,
+    },
+    {
+      title: "Directorio",
+      href: `${base}/directorio`,
+      description: "Lugares útiles de la comuna",
+      enabled: commune.features.directory && !commune.features.community,
+    },
+    {
+      title: "Buscar",
+      href: `${base}/buscar`,
+      description: "Buscador ciudadano",
+      enabled: commune.features.search,
+    },
+    {
       title: "Noticias",
       href: `${base}/noticias`,
       description: "Noticias, anuncios, talleres y beneficios",

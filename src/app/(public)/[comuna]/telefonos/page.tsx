@@ -71,6 +71,7 @@ export default async function TelefonosPage({
   return (
     <div className="mx-auto max-w-4xl px-4 py-12">
       <SectionHeader
+        level="h1"
         eyebrow="A un toque"
         title="Teléfonos útiles"
         description="Toca cualquier número para llamar. Los números nacionales de emergencia son oficiales; los municipales corresponden a la comuna demo."

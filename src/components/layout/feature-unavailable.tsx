@@ -29,7 +29,9 @@ export function FeatureUnavailable({
           <Badge variant="secondary" className="mx-auto mb-2">
             {commune.name} · en preparación
           </Badge>
-          <CardTitle className="text-2xl text-primary">{title}</CardTitle>
+          <CardTitle asChild className="text-2xl text-primary">
+            <h1>{title}</h1>
+          </CardTitle>
           <CardDescription className="text-base">
             Esta sección aún no está habilitada para {commune.name}. El piloto
             avanza por etapas: publicamos cada módulo solo cuando su

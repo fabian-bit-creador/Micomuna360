@@ -1,4 +1,5 @@
 import {
+  ArrowRightIcon,
   CalendarDaysIcon,
   ExternalLinkIcon,
   FileTextIcon,
@@ -6,10 +7,12 @@ import {
   MapPinIcon,
   PhoneCallIcon,
   ScaleIcon,
-  SearchIcon,
 } from "lucide-react";
 
+import Link from "next/link";
+
 import { SectionHeader } from "@/components/layout/section-header";
+import { SearchBox } from "@/components/search/search-box";
 import { Badge } from "@/components/ui/badge";
 import {
   Card,
@@ -21,26 +24,26 @@ import {
 import type { CommuneConfig } from "@/config/communes";
 import { siteConfig } from "@/config/site";
 import { formatDate } from "@/lib/format";
+import { buildSearchIndex } from "@/lib/search";
 
-const upcoming = [
+const available = [
   {
     icon: FileTextIcon,
     title: "Servicios y trámites",
     description:
-      "Tarjetas de tarea con requisitos claros y enlace directo al sitio oficial de cada trámite.",
-  },
-  {
-    icon: SearchIcon,
-    title: "Buscador ciudadano",
-    description:
-      "Encuentra servicios, teléfonos, lugares y actividades de la comuna en un solo buscador.",
+      "Pagos, licencias, apoyos sociales y más, cada uno con su sitio oficial.",
+    href: "/servicios",
   },
   {
     icon: MapPinIcon,
     title: "Directorio territorial",
     description:
-      "Municipalidad, salud, educación, deporte y cultura: dónde queda y cuándo atiende, con fuente verificada.",
+      "Municipalidad y recintos con dirección verificada y su fuente a la vista.",
+    href: "/directorio",
   },
+];
+
+const upcoming = [
   {
     icon: CalendarDaysIcon,
     title: "Agenda comunal",
@@ -62,7 +65,9 @@ const upcoming = [
 ];
 
 /** Home del piloto informativo: solo información verificada, con fuentes. */
-export function PilotoHome({ commune }: { commune: CommuneConfig }) {
+export async function PilotoHome({ commune }: { commune: CommuneConfig }) {
+  const searchEntries = buildSearchIndex(commune);
+  const base = `/${commune.id}`;
   return (
     <>
       {/* Hero piloto */}
@@ -90,6 +95,42 @@ export function PilotoHome({ commune }: { commune: CommuneConfig }) {
               oficial correspondiente.
             </span>
           </p>
+          <div className="mt-8">
+            <SearchBox
+              entries={searchEntries}
+              placeholder={`Busca un trámite o lugar de ${commune.name}…`}
+            />
+          </div>
+        </div>
+      </section>
+
+      {/* Disponible hoy */}
+      <section className="mx-auto max-w-6xl px-4 pt-14">
+        <SectionHeader
+          eyebrow="Disponible hoy"
+          title="Empieza por aquí"
+        />
+        <div className="grid gap-4 sm:grid-cols-2">
+          {available.map((item) => (
+            <Link key={item.title} href={`${base}${item.href}`} className="group">
+              <Card className="h-full gap-0 py-5 transition-all group-hover:-translate-y-0.5 group-hover:shadow-md">
+                <CardContent className="flex items-start gap-4 px-5">
+                  <span className="flex size-11 shrink-0 items-center justify-center rounded-xl bg-brand-teal/15 text-brand-teal">
+                    <item.icon className="size-6" />
+                  </span>
+                  <div className="min-w-0 flex-1">
+                    <h3 className="flex items-center justify-between font-bold text-primary">
+                      {item.title}
+                      <ArrowRightIcon className="size-4 text-muted-foreground transition-transform group-hover:translate-x-0.5" />
+                    </h3>
+                    <p className="mt-0.5 text-sm text-muted-foreground">
+                      {item.description}
+                    </p>
+                  </div>
+                </CardContent>
+              </Card>
+            </Link>
+          ))}
         </div>
       </section>
 
@@ -97,7 +138,7 @@ export function PilotoHome({ commune }: { commune: CommuneConfig }) {
       <section className="mx-auto max-w-6xl px-4 py-14">
         <SectionHeader
           eyebrow="En preparación"
-          title="Lo que este piloto tendrá, etapa por etapa"
+          title="Lo que viene, etapa por etapa"
           description="Cada módulo se publica solo cuando su información está verificada. Sin datos inventados, sin promesas vacías."
         />
         <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
@@ -125,7 +166,7 @@ export function PilotoHome({ commune }: { commune: CommuneConfig }) {
           <SectionHeader
             eyebrow="Mientras tanto"
             title="Los sitios oficiales de la comuna, en un solo lugar"
-            description="El ecosistema digital de La Pintana está repartido en varios sitios. Aquí están todos, verificados y con fecha."
+            description={`El ecosistema digital de ${commune.name} está repartido en varios sitios. Aquí reunimos los principales sitios oficiales, verificados y con fecha.`}
           />
           <div className="grid gap-4 sm:grid-cols-2">
             {commune.officialSources.map((source) => (

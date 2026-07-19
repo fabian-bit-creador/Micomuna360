@@ -14,7 +14,7 @@ import { listCommunes } from "@/config/communes";
 import { siteConfig } from "@/config/site";
 
 export const metadata: Metadata = {
-  title: "MiComuna360 — Tu comuna en un solo lugar",
+  title: { absolute: "MiComuna360 — Tu comuna en un solo lugar" },
   description:
     "Plataforma ciudadana multicomuna: información útil de tu comuna, con fuentes verificadas y lenguaje simple.",
 };

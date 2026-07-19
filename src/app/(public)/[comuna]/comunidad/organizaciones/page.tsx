@@ -59,6 +59,7 @@ export default async function OrganizacionesPage({
       </Link>
 
       <SectionHeader
+        level="h1"
         eyebrow="Tejido social"
         title="Organizaciones comunitarias"
         description="Las agrupaciones que le dan vida al territorio: juntas de vecinos, clubes, comités, fundaciones y voluntariados."

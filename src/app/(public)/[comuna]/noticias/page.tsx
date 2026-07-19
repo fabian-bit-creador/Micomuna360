@@ -43,6 +43,7 @@ export default async function NoticiasPage({
   return (
     <div className="mx-auto max-w-6xl px-4 py-12">
       <SectionHeader
+        level="h1"
         eyebrow="Al día"
         title="Noticias y anuncios de tu comuna"
         description={`Lo que está pasando en ${commune.name}: noticias, anuncios, talleres y beneficios${commune.isDemo ? " con datos de demostración" : ""}.`}

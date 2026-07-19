@@ -24,4 +24,6 @@ export const losAromosData: CommuneData = {
   phones,
   places,
   organizations,
+  services: [],
+  sources: [],
 };

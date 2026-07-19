@@ -28,6 +28,7 @@ export default async function ActividadesPage({
   return (
     <div className="mx-auto max-w-6xl px-4 py-12">
       <SectionHeader
+        level="h1"
         eyebrow="Agenda comunal"
         title="Actividades para participar"
         description="Talleres, deportes, ferias y encuentros vecinales del mes. Todas las actividades son gratuitas salvo que se indique lo contrario."

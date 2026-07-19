@@ -22,7 +22,9 @@ export function ComingSoon({ title, description, fase }: ComingSoonProps) {
           <Badge variant="secondary" className="mx-auto mb-2">
             En construcción · {fase}
           </Badge>
-          <CardTitle className="text-2xl text-primary">{title}</CardTitle>
+          <CardTitle asChild className="text-2xl text-primary">
+            <h1>{title}</h1>
+          </CardTitle>
           <CardDescription className="text-base">
             {description}
           </CardDescription>

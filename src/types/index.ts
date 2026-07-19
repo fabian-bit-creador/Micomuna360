@@ -166,6 +166,58 @@ export interface UsefulPhone {
   available: string;
 }
 
+/* ── Procedencia de datos (piloto multicomuna) ──────────────────────────── */
+
+export type SourceStatus =
+  | "verificado"
+  | "pendiente"
+  | "enlace_caido"
+  | "archivado";
+
+/**
+ * Fuente de un dato publicado en una comuna real. Todo dato del piloto debe
+ * referenciar una fuente; la fuente y la fecha se muestran al ciudadano.
+ */
+export interface DataSource {
+  id: string;
+  /** Institución responsable de la información. */
+  institution: string;
+  /** Nombre de la página o documento consultado. */
+  pageName: string;
+  url: string;
+  /** Fecha de publicación del contenido original, si se conoce. */
+  publishedAt: string | null;
+  /** Fecha de consulta y verificación (YYYY-MM-DD). */
+  verifiedAt: string;
+  status: SourceStatus;
+  /** Hasta cuándo se considera vigente sin nueva revisión (YYYY-MM-DD). */
+  validUntil: string | null;
+  /** Observaciones: método de verificación, advertencias, pendientes. */
+  notes: string | null;
+}
+
+/** Servicio/trámite ciudadano que se resuelve en un sitio oficial externo. */
+export interface CitizenService {
+  id: string;
+  title: string;
+  category:
+    | "pagos"
+    | "tramites"
+    | "social"
+    | "empleo"
+    | "deporte_cultura"
+    | "transparencia";
+  /** Qué puede hacer la persona (en lenguaje ciudadano). */
+  description: string;
+  /** Pasos o requisitos mínimos, si se conocen de la fuente. */
+  steps: string[];
+  institution: string;
+  externalUrl: string;
+  /** Nombre de ícono del kit cívico. */
+  icon: string;
+  sourceId: string;
+}
+
 export type PlaceCategory =
   | "municipal"
   | "salud"
@@ -181,11 +233,15 @@ export interface Place {
   category: PlaceCategory;
   description: string;
   address: string;
-  sectorId: string;
-  schedule: string;
+  /** Sector; null cuando la comuna aún no define unidades territoriales. */
+  sectorId: string | null;
+  /** Horario de atención; null si no está verificado (nunca inventar). */
+  schedule: string | null;
   phone: string | null;
   /** Nombre de ícono del kit cívico (components/shared/civic-icon). */
   icon: string;
+  /** Fuente de procedencia (pilotos con datos reales). */
+  sourceId?: string | null;
 }
 
 export type OrganizationType =

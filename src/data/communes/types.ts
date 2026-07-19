@@ -1,7 +1,9 @@
 import type {
   Category,
   CitizenRequest,
+  CitizenService,
   CommunalEvent,
+  DataSource,
   Indicator,
   Location,
   NewsArticle,
@@ -25,4 +27,8 @@ export interface CommuneData {
   phones: UsefulPhone[];
   places: Place[];
   organizations: Organization[];
+  /** Servicios ciudadanos con enlace oficial (pilotos). */
+  services: CitizenService[];
+  /** Registro de fuentes de la comuna (pilotos). */
+  sources: DataSource[];
 }

@@ -14,7 +14,8 @@ import { SectionHeader } from "@/components/layout/section-header";
 import { getCommune } from "@/config/communes";
 import { CivicIconChip, type CivicChipColor } from "@/components/shared/civic-icon";
 import { Card, CardContent } from "@/components/ui/card";
-import { getLocations, getPlaces } from "@/lib/repositories";
+import { SourceBadge } from "@/components/shared/source-badge";
+import { getDataSource, getLocations, getPlaces } from "@/lib/repositories";
 import type { PlaceCategory } from "@/types";
 
 export const metadata: Metadata = {
@@ -46,7 +47,7 @@ export default async function DirectorioPage({
   const { comuna } = await params;
   const commune = getCommune(comuna);
   if (!commune) notFound();
-  if (!commune.features.community) {
+  if (!commune.features.directory) {
     return <FeatureUnavailable commune={commune} title="Directorio comunal" />;
   }
 
@@ -54,23 +55,37 @@ export default async function DirectorioPage({
     getPlaces(commune.id),
     getLocations(commune.id),
   ]);
+  const placeSources = new Map(
+    await Promise.all(
+      places.map(
+        async (p) =>
+          [
+            p.id,
+            p.sourceId ? await getDataSource(commune.id, p.sourceId) : null,
+          ] as const
+      )
+    )
+  );
   const sectorName = (id: string) =>
     locations.find((l) => l.id === id)?.name ?? "";
 
   return (
     <div className="mx-auto max-w-6xl px-4 py-12">
-      <Link
-        href={`/${commune.id}/comunidad`}
-        className="mb-6 flex w-fit items-center gap-1 text-sm font-semibold text-brand-teal hover:text-primary"
-      >
-        <ArrowLeftIcon className="size-4" />
-        Volver a Comunidad
-      </Link>
+      {commune.features.community && (
+        <Link
+          href={`/${commune.id}/comunidad`}
+          className="mb-6 flex w-fit items-center gap-1 text-sm font-semibold text-brand-teal hover:text-primary"
+        >
+          <ArrowLeftIcon className="size-4" />
+          Volver a Comunidad
+        </Link>
+      )}
 
       <SectionHeader
+        level="h1"
         eyebrow="Lugares que sirven"
         title="Directorio comunal"
-        description="Dónde queda, cuándo atiende y cómo contactar cada lugar útil de la comuna demo."
+        description={`Dónde queda y cómo llegar a cada lugar útil de ${commune.name}. Solo publicamos horarios y teléfonos verificados.`}
       />
 
       <div className="space-y-10">
@@ -97,13 +112,24 @@ export default async function DirectorioPage({
                         <div className="space-y-1 pt-1.5 text-xs text-muted-foreground">
                           <p className="flex items-start gap-1.5">
                             <MapPinIcon className="mt-0.5 size-3.5 shrink-0 text-brand-terracotta" />
-                            {place.address} · {sectorName(place.sectorId)}
+                            {place.address}
+                            {place.sectorId
+                              ? ` · ${sectorName(place.sectorId)}`
+                              : ""}
                           </p>
-                          <p className="flex items-center gap-1.5">
-                            <ClockIcon className="size-3.5 shrink-0 text-brand-sky" />
-                            {place.schedule}
-                          </p>
+                          {place.schedule && (
+                            <p className="flex items-center gap-1.5">
+                              <ClockIcon className="size-3.5 shrink-0 text-brand-sky" />
+                              {place.schedule}
+                            </p>
+                          )}
                         </div>
+                        {placeSources.get(place.id) && (
+                          <SourceBadge
+                            source={placeSources.get(place.id)!}
+                            className="pt-2"
+                          />
+                        )}
                         {place.phone && (
                           <a
                             href={telHref(place.phone)}
@@ -124,9 +150,9 @@ export default async function DirectorioPage({
       </div>
 
       <p className="mt-10 rounded-lg bg-muted px-4 py-3 text-sm text-muted-foreground">
-        Lugares, direcciones y teléfonos ficticios (comuna demo Los Aromos).
-        En la versión real de cada comuna, este directorio se construye solo
-        con información oficial verificada.
+        {commune.isDemo
+          ? "Lugares, direcciones y teléfonos ficticios (comuna demo). En la versión real de cada comuna, este directorio se construye solo con información oficial verificada."
+          : "Directorio en construcción: cada lugar se publica con su fuente y fecha de verificación. Si un horario o teléfono no aparece, es porque aún no está verificado."}
       </p>
     </div>
   );

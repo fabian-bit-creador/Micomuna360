@@ -1,10 +1,29 @@
 import { getCommuneData } from "@/data/communes";
 import type {
+  CitizenService,
+  DataSource,
   PhoneCategory,
   Procedure,
   ProcedureCategory,
   UsefulPhone,
 } from "@/types";
+
+/** Servicios ciudadanos con enlace oficial (pilotos). */
+export async function getCitizenServices(
+  communeId: string
+): Promise<CitizenService[]> {
+  return [...getCommuneData(communeId).services];
+}
+
+/** Fuente de procedencia por id, dentro de una comuna. */
+export async function getDataSource(
+  communeId: string,
+  sourceId: string
+): Promise<DataSource | null> {
+  return (
+    getCommuneData(communeId).sources.find((s) => s.id === sourceId) ?? null
+  );
+}
 
 /** Repositorio de trámites y teléfonos útiles por comuna. */
 

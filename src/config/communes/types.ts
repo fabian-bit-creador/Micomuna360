@@ -28,8 +28,14 @@ export interface CommuneFeatures {
   phones: boolean;
   /** Indicadores comunales. */
   dataPage: boolean;
-  /** Hub comunidad (organizaciones, directorio). */
+  /** Hub comunidad (organizaciones, buenas noticias). */
   community: boolean;
+  /** Directorio territorial de lugares. */
+  directory: boolean;
+  /** Hub de servicios con enlaces oficiales. */
+  services: boolean;
+  /** Buscador ciudadano. */
+  search: boolean;
   /** Página de reportes (demo/explicativa). */
   reports: boolean;
   /** Plano ilustrado demo en la home. */
