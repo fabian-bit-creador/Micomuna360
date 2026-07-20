@@ -71,7 +71,11 @@ export default async function ServiciosPage({
                 {groupServices.map((service) => {
                   const source = sources.get(service.sourceId) ?? null;
                   return (
-                    <Card key={service.id} className="gap-0 py-5">
+                    <Card
+                      key={service.id}
+                      id={service.id}
+                      className="scroll-mt-24 gap-0 py-5"
+                    >
                       <CardContent className="px-5">
                         <div className="flex items-start gap-4">
                           <CivicIconChip name={service.icon} color="teal" />

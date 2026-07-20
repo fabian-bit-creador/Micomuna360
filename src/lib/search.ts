@@ -25,7 +25,7 @@ export function buildSearchIndex(commune: CommuneConfig): SearchEntry[] {
       entries.push({
         title: s.title,
         description: `${s.institution} · ${s.description}`,
-        href: `${base}/servicios`,
+        href: `${base}/servicios#${s.id}`,
         group: "Servicios",
         external: false,
       });
@@ -97,10 +97,10 @@ export function buildSearchIndex(commune: CommuneConfig): SearchEntry[] {
       });
     }
   }
-  // Sitios oficiales de la comuna (siempre, si existen)
-  for (const src of commune.officialSources) {
+  // Sitios oficiales destacados (registro único de fuentes de la comuna)
+  for (const src of data.sources.filter((s) => s.featured)) {
     entries.push({
-      title: src.name,
+      title: src.pageName,
       description: src.description,
       href: src.url,
       group: "Sitios oficiales",

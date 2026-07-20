@@ -12,16 +12,17 @@ export const services: CitizenService[] = [
     title: "Pagar el permiso de circulación",
     category: "pagos",
     description:
-      "Paga en línea el permiso anual de tu vehículo con tu RUT y la patente. El comprobante llega a tu correo.",
+      "Paga en línea el permiso anual de tu vehículo con tu RUT y la patente. Después del pago puedes descargar el permiso en formato PDF.",
     steps: [
       "Ten a mano la patente y el RUT del propietario.",
       "Revisa que la revisión técnica y el SOAP estén vigentes.",
       "Paga con tarjeta en la plataforma municipal.",
+      "Descarga tu permiso en formato PDF.",
     ],
     institution: "Municipalidad de La Pintana",
     externalUrl: "https://pintana.cl/?page_id=4122",
     icon: "FileText",
-    sourceId: "lp-muni-pagos",
+    sourceId: "lp-muni-permisos",
   },
   {
     id: "svc-licencia-conducir",
@@ -116,14 +117,12 @@ export const services: CitizenService[] = [
     title: "Transparencia Activa municipal",
     category: "transparencia",
     description:
-      "Consulta la información pública que la municipalidad publica por ley: dotación, contratos, presupuesto y más.",
-    steps: [
-      "Entra al Portal de Transparencia del Estado.",
-      "Busca «Municipalidad de La Pintana».",
-    ],
-    institution: "Consejo para la Transparencia",
-    externalUrl: "https://www.portaltransparencia.cl/",
+      "Consulta la información pública que la Municipalidad de La Pintana publica por ley: dotación, contratos, presupuesto y más, directamente en su ficha oficial.",
+    steps: [],
+    institution: "Municipalidad de La Pintana · Portal de Transparencia",
+    externalUrl:
+      "https://www.portaltransparencia.cl/PortalPdT/pdtta?codOrganismo=MU124",
     icon: "BookOpen",
-    sourceId: "cl-portal-transparencia",
+    sourceId: "lp-transparencia-directa",
   },
 ];

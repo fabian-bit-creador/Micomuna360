@@ -24,7 +24,9 @@ import {
 import type { CommuneConfig } from "@/config/communes";
 import { siteConfig } from "@/config/site";
 import { formatDate } from "@/lib/format";
+import { getOfficialSites } from "@/lib/repositories";
 import { buildSearchIndex } from "@/lib/search";
+import { getSourceFreshness } from "@/lib/sources";
 
 const available = [
   {
@@ -67,6 +69,7 @@ const upcoming = [
 /** Home del piloto informativo: solo información verificada, con fuentes. */
 export async function PilotoHome({ commune }: { commune: CommuneConfig }) {
   const searchEntries = buildSearchIndex(commune);
+  const officialSites = await getOfficialSites(commune.id);
   const base = `/${commune.id}`;
   return (
     <>
@@ -169,36 +172,43 @@ export async function PilotoHome({ commune }: { commune: CommuneConfig }) {
             description={`El ecosistema digital de ${commune.name} está repartido en varios sitios. Aquí reunimos los principales sitios oficiales, verificados y con fecha.`}
           />
           <div className="grid gap-4 sm:grid-cols-2">
-            {commune.officialSources.map((source) => (
-              <a
-                key={source.url}
-                href={source.url}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="group block h-full"
-              >
-                <Card className="h-full gap-2 py-5 transition-all group-hover:-translate-y-0.5 group-hover:shadow-md">
-                  <CardHeader className="gap-1.5">
-                    <div className="flex items-start justify-between gap-2">
-                      <CardTitle className="text-primary group-hover:underline group-hover:decoration-brand-teal group-hover:underline-offset-4">
-                        {source.name}
-                      </CardTitle>
-                      <ExternalLinkIcon className="mt-1 size-4 shrink-0 text-muted-foreground" />
-                    </div>
-                    <CardDescription>{source.description}</CardDescription>
-                    <p className="pt-1 text-xs text-muted-foreground">
-                      <Badge
-                        variant="outline"
-                        className="mr-2 text-brand-teal"
-                      >
-                        Sitio oficial externo
-                      </Badge>
-                      Enlace verificado el {formatDate(source.verifiedAt)}
-                    </p>
-                  </CardHeader>
-                </Card>
-              </a>
-            ))}
+            {officialSites.map((source) => {
+              const freshness = getSourceFreshness(source);
+              return (
+                <a
+                  key={source.id}
+                  href={source.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="group block h-full"
+                >
+                  <Card className="h-full gap-2 py-5 transition-all group-hover:-translate-y-0.5 group-hover:shadow-md">
+                    <CardHeader className="gap-1.5">
+                      <div className="flex items-start justify-between gap-2">
+                        <CardTitle className="text-primary group-hover:underline group-hover:decoration-brand-teal group-hover:underline-offset-4">
+                          {source.pageName}
+                        </CardTitle>
+                        <ExternalLinkIcon className="mt-1 size-4 shrink-0 text-muted-foreground" />
+                      </div>
+                      <CardDescription>{source.description}</CardDescription>
+                      <p className="pt-1 text-xs text-muted-foreground">
+                        <Badge
+                          variant="outline"
+                          className="mr-2 text-brand-teal"
+                        >
+                          Sitio oficial externo
+                        </Badge>
+                        {freshness === "verificado"
+                          ? `Enlace verificado el ${formatDate(source.verifiedAt)}`
+                          : freshness === "revision_vencida"
+                            ? `Revisión vencida — última verificación el ${formatDate(source.verifiedAt)}`
+                            : `Pendiente de revisión — consultado el ${formatDate(source.verifiedAt)}`}
+                      </p>
+                    </CardHeader>
+                  </Card>
+                </a>
+              );
+            })}
           </div>
           <p className="mt-6 rounded-lg bg-muted px-4 py-3 text-sm text-muted-foreground">
             {siteConfig.name} no administra estos trámites ni servicios: cada

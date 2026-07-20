@@ -14,7 +14,6 @@ export const losAromos: CommuneConfig = {
   center: { lat: -33.58, lng: -70.632 },
   zoom: 14,
   updatedAt: "2026-07-19",
-  officialSources: [],
   features: {
     news: true,
     events: true,

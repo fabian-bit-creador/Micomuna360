@@ -184,6 +184,10 @@ export interface DataSource {
   institution: string;
   /** Nombre de la página o documento consultado. */
   pageName: string;
+  /** Qué aporta esta fuente, en lenguaje ciudadano. */
+  description: string;
+  /** true: se muestra en la portada de la comuna como sitio oficial. */
+  featured: boolean;
   url: string;
   /** Fecha de publicación del contenido original, si se conoce. */
   publishedAt: string | null;

@@ -15,6 +15,13 @@ export async function getCitizenServices(
   return [...getCommuneData(communeId).services];
 }
 
+/** Sitios oficiales destacados de la comuna (registro único de fuentes). */
+export async function getOfficialSites(
+  communeId: string
+): Promise<DataSource[]> {
+  return getCommuneData(communeId).sources.filter((s) => s.featured);
+}
+
 /** Fuente de procedencia por id, dentro de una comuna. */
 export async function getDataSource(
   communeId: string,

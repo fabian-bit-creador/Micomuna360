@@ -9,6 +9,8 @@ la fuente de verdad que consume la aplicación). Reglas:
 - No se completa información faltante con supuestos: si un dato (horario,
   teléfono, coordenada) no está verificado, no se publica.
 
+**Totales del registro (2026-07-19):** 16 fuentes — 16 verificadas, 0 pendientes. (Al cierre de P2 el registro tenía 16 fuentes: 15 verificadas y 1 pendiente; la ficha de Transparencia Activa pasó a verificada con el enlace directo entregado desde pintana.cl.)
+
 **Método de verificación de esta etapa (2026-07-19):** revisión de los
 sitios oficiales y de su contenido indexado por buscadores, ya que el
 entorno de desarrollo en la nube no permite navegación directa a estos
@@ -32,7 +34,7 @@ presentar el piloto a terceros.
 | cl-chileatiende | ChileAtiende | [chileatiende.gob.cl](https://www.chileatiende.gob.cl/) | verificado | 2026-07-19 | 2027-01-19 | Sin logo hasta verificar condiciones de uso |
 | cl-registro-social | MDSF | [registrosocial.gob.cl](https://www.registrosocial.gob.cl/) | verificado | 2026-07-19 | 2027-01-19 | — |
 | cl-portal-transparencia | Consejo para la Transparencia | [portaltransparencia.cl](https://www.portaltransparencia.cl/) | verificado | 2026-07-19 | 2027-01-19 | Entrada a Transparencia Activa municipal |
-| lp-transparencia-directa | Municipalidad | Ficha La Pintana en Portal Transparencia | **pendiente** | 2026-07-19 | — | Confirmar URL exacta antes de publicar enlace directo |
+| lp-transparencia-directa | Municipalidad | [Ficha La Pintana en Portal Transparencia](https://www.portaltransparencia.cl/PortalPdT/pdtta?codOrganismo=MU124) | verificado | 2026-07-19 | 2026-10-19 | Enlace directo obtenido desde el acceso «Ley de Transparencia» de pintana.cl |
 
 ## Datos pendientes de verificación (no publicados)
 
@@ -48,3 +50,10 @@ presentar el piloto a terceros.
 
 El análisis presupuestario ("Transparencia ciudadana y presupuesto
 abierto") es un módulo P3 independiente: aquí solo se registra la fuente.
+
+**Nota de arquitectura:** este registro (`sources.ts`) es la única fuente de
+verdad de fuentes oficiales. La portada, el buscador, los servicios y los
+futuros módulos consumen el mismo registro (las fuentes con `featured:
+true` aparecen como sitios oficiales en la portada de la comuna). Una
+verificación con `validUntil` vencida se muestra como «Revisión vencida»,
+nunca como verificada vigente.

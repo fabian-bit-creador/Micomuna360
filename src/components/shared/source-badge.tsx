@@ -2,21 +2,28 @@ import {
   ArchiveIcon,
   CircleCheckIcon,
   CircleHelpIcon,
+  ClockAlertIcon,
   UnlinkIcon,
 } from "lucide-react";
 
 import { formatDate } from "@/lib/format";
+import { getSourceFreshness, type SourceFreshness } from "@/lib/sources";
 import { cn } from "@/lib/utils";
-import type { DataSource, SourceStatus } from "@/types";
+import type { DataSource } from "@/types";
 
 const statusConfig: Record<
-  SourceStatus,
+  SourceFreshness,
   { label: string; icon: typeof CircleCheckIcon; className: string }
 > = {
   verificado: {
     label: "Verificado",
     icon: CircleCheckIcon,
     className: "text-brand-teal",
+  },
+  revision_vencida: {
+    label: "Revisión vencida",
+    icon: ClockAlertIcon,
+    className: "text-yellow-700",
   },
   pendiente: {
     label: "Pendiente de revisión",
@@ -36,8 +43,9 @@ const statusConfig: Record<
 };
 
 /**
- * Procedencia visible de un dato del piloto: institución, estado y fecha de
- * verificación, con enlace a la fuente original.
+ * Procedencia visible de un dato del piloto: institución, estado efectivo
+ * (una verificación vencida nunca aparece como vigente) y fecha de consulta,
+ * con enlace a la fuente original.
  */
 export function SourceBadge({
   source,
@@ -46,7 +54,7 @@ export function SourceBadge({
   source: DataSource;
   className?: string;
 }) {
-  const config = statusConfig[source.status];
+  const config = statusConfig[getSourceFreshness(source)];
   return (
     <p
       className={cn(

@@ -7,15 +7,6 @@
 
 export type CommuneStatus = "demo" | "piloto" | "activa";
 
-export interface OfficialSource {
-  name: string;
-  url: string;
-  /** Qué aporta esta fuente. */
-  description: string;
-  /** Última fecha en que se verificó que el enlace funciona (YYYY-MM-DD). */
-  verifiedAt: string;
-}
-
 /** Funcionalidades activas por comuna (las páginas se ocultan si están off). */
 export interface CommuneFeatures {
   /** Noticias y anuncios. */
@@ -59,7 +50,5 @@ export interface CommuneConfig {
   zoom: number;
   /** Última actualización general del dataset (YYYY-MM-DD). */
   updatedAt: string;
-  /** Fuentes oficiales del ecosistema digital de la comuna. */
-  officialSources: OfficialSource[];
   features: CommuneFeatures;
 }
