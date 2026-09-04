@@ -1,7 +1,12 @@
 @import "tailwindcss";
 @import "tw-animate-css";
 
-@custom-variant dark (&:is(.dark *));
+/*
+ * Modo oscuro: se usa el variante `dark` por defecto de Tailwind 4, que
+ * responde a la preferencia del sistema (prefers-color-scheme). No hay
+ * selector de tema manual: la plataforma respeta lo que el vecino ya
+ * configuró en su teléfono o computador.
+ */
 
 /*
  * Identidad visual MiComuna360 / MuniApp
@@ -52,31 +57,34 @@
   --chart-5: #e9b949;
 }
 
-.dark {
-  --background: #0f2038;
-  --foreground: #e5e7eb;
-  --card: #17375e;
-  --card-foreground: #e5e7eb;
-  --popover: #17375e;
-  --popover-foreground: #e5e7eb;
-  --primary: #67b7d1;
-  --primary-foreground: #0f2038;
-  --secondary: #1e8e89;
-  --secondary-foreground: #ffffff;
-  --muted: #1c3a5e;
-  --muted-foreground: #9ca3af;
-  --accent: #1c3a5e;
-  --accent-foreground: #e5e7eb;
-  --destructive: #d98282;
-  --destructive-foreground: #0f2038;
-  --border: rgba(229, 231, 235, 0.12);
-  --input: rgba(229, 231, 235, 0.18);
-  --ring: #67b7d1;
-  --chart-1: #67b7d1;
-  --chart-2: #34b3ad;
-  --chart-3: #8ecbe0;
-  --chart-4: #d98282;
-  --chart-5: #e9b949;
+@media (prefers-color-scheme: dark) {
+  :root {
+    color-scheme: dark;
+    --background: #0f2038;
+    --foreground: #e5e7eb;
+    --card: #17375e;
+    --card-foreground: #e5e7eb;
+    --popover: #17375e;
+    --popover-foreground: #e5e7eb;
+    --primary: #67b7d1;
+    --primary-foreground: #0f2038;
+    --secondary: #1e8e89;
+    --secondary-foreground: #ffffff;
+    --muted: #1c3a5e;
+    --muted-foreground: #9ca3af;
+    --accent: #1c3a5e;
+    --accent-foreground: #e5e7eb;
+    --destructive: #d98282;
+    --destructive-foreground: #0f2038;
+    --border: rgba(229, 231, 235, 0.12);
+    --input: rgba(229, 231, 235, 0.18);
+    --ring: #67b7d1;
+    --chart-1: #67b7d1;
+    --chart-2: #34b3ad;
+    --chart-3: #8ecbe0;
+    --chart-4: #d98282;
+    --chart-5: #e9b949;
+  }
 }
 
 @theme inline {

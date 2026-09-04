@@ -152,7 +152,7 @@ export default function NosotrosPage() {
                     className={cn(
                       step.available
                         ? "bg-brand-teal/15 text-brand-teal"
-                        : "bg-brand-amber/25 text-yellow-800"
+                        : "bg-brand-amber/25 text-yellow-800 dark:text-brand-amber"
                     )}
                   >
                     {step.available ? "Disponible hoy" : "Próximamente"}

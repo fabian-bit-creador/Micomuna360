@@ -117,7 +117,7 @@ const markers: DemoMarker[] = [
     icon: RecycleIcon,
     x: 87,
     y: 42,
-    chip: "text-emerald-600 ring-emerald-600/40",
+    chip: "text-emerald-600 ring-emerald-600/40 dark:text-emerald-400",
   },
 ];
 

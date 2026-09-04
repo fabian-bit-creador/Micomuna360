@@ -1,3 +1,14 @@
+/**
+ * URL pública del sitio. Se usa como `metadataBase` para que las imágenes y
+ * enlaces de vista previa (WhatsApp, redes) apunten a URLs absolutas.
+ * En Vercel se toma el dominio de producción del propio despliegue.
+ */
+export const siteUrl = process.env.NEXT_PUBLIC_SITE_URL
+  ? process.env.NEXT_PUBLIC_SITE_URL
+  : process.env.VERCEL_PROJECT_PRODUCTION_URL
+    ? `https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}`
+    : "https://micomuna360.vercel.app";
+
 /** Identidad y textos oficiales de la marca (ver docs/identidad y design-brief). */
 export const siteConfig = {
   name: "MiComuna360",

@@ -43,7 +43,7 @@ export function PhoneMockup({ className }: { className?: string }) {
           <div className="space-y-3 px-4 py-4">
             {/* Categoría y título */}
             <div className="flex items-center gap-2">
-              <span className="flex size-8 items-center justify-center rounded-lg bg-brand-amber/25 text-yellow-700">
+              <span className="flex size-8 items-center justify-center rounded-lg bg-brand-amber/25 text-yellow-700 dark:text-brand-amber">
                 <LightbulbIcon className="size-4.5" />
               </span>
               <div className="leading-tight">

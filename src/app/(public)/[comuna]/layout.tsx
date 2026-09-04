@@ -19,7 +19,9 @@ export default async function CommuneLayout({
   return (
     <>
       <SiteHeader commune={commune} />
-      <main className="flex-1">{children}</main>
+      <main id="contenido" className="flex-1">
+        {children}
+      </main>
       <SiteFooter commune={commune} />
     </>
   );

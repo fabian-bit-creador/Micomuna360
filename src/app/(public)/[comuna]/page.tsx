@@ -11,9 +11,16 @@ export async function generateMetadata({
   const { comuna } = await params;
   const commune = getCommune(comuna);
   if (!commune) return {};
+  const title = `${commune.name} — Tu comuna en un solo lugar`;
+  const description = commune.isDemo
+    ? `${commune.tagline}. Datos ficticios de demostración.`
+    : `Información pública de ${commune.name} con fuente y fecha de verificación: servicios, trámites y lugares útiles.`;
   return {
-    title: `${commune.name} — Tu comuna en un solo lugar`,
-    description: commune.tagline,
+    title,
+    description,
+    alternates: { canonical: `/${commune.id}` },
+    openGraph: { title, description, url: `/${commune.id}` },
+    twitter: { card: "summary_large_image", title, description },
   };
 }
 

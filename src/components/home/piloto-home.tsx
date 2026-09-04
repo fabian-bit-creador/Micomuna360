@@ -89,7 +89,7 @@ export async function PilotoHome({ commune }: { commune: CommuneConfig }) {
             verificación, para que la encuentres simple y sin vueltas.
           </p>
           <p className="mt-4 flex max-w-2xl items-start gap-2 rounded-lg border border-brand-sky/40 bg-brand-sky/10 px-4 py-3 text-sm">
-            <ScaleIcon className="mt-0.5 size-4 shrink-0 text-brand-navy" />
+            <ScaleIcon className="mt-0.5 size-4 shrink-0 text-brand-navy dark:text-brand-sky" />
             <span>
               <strong>{siteConfig.name} es un sitio ciudadano
               independiente</strong>

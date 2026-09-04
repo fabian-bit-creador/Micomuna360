@@ -11,7 +11,7 @@ import { cn } from "@/lib/utils";
 const journey = [
   {
     icon: LampIcon,
-    color: "bg-brand-amber/25 text-yellow-700",
+    color: "bg-brand-amber/25 text-yellow-700 dark:text-brand-amber",
     title: "Doña María ve el problema",
     description:
       "La luminaria de su pasaje lleva semanas apagada y de noche da miedo salir.",

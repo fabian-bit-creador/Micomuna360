@@ -66,7 +66,7 @@ export default async function ComunidadPage({
       description: `${goodNews.length} historias positivas de la comunidad: logros, espacios recuperados y vecinos que se organizan.`,
       href: `${base}/noticias?tipo=buena_noticia`,
       icon: PartyPopperIcon,
-      chip: "bg-emerald-600/15 text-emerald-700",
+      chip: "bg-emerald-600/15 text-emerald-700 dark:text-emerald-400",
     },
     {
       title: "Actividades y encuentros",

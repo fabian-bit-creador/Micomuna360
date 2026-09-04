@@ -64,8 +64,8 @@ export const civicChips = {
   sky: "bg-brand-sky/20 text-brand-navy dark:text-brand-sky",
   navy: "bg-brand-navy/10 text-brand-navy dark:bg-brand-sky/15 dark:text-brand-sky",
   terracotta: "bg-brand-terracotta/15 text-brand-terracotta",
-  amber: "bg-brand-amber/25 text-yellow-700",
-  green: "bg-emerald-600/15 text-emerald-700",
+  amber: "bg-brand-amber/25 text-yellow-700 dark:text-brand-amber",
+  green: "bg-emerald-600/15 text-emerald-700 dark:text-emerald-400",
 } as const;
 
 export type CivicChipColor = keyof typeof civicChips;

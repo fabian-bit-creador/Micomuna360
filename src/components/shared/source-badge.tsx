@@ -23,12 +23,12 @@ const statusConfig: Record<
   revision_vencida: {
     label: "Revisión vencida",
     icon: ClockAlertIcon,
-    className: "text-yellow-700",
+    className: "text-yellow-700 dark:text-brand-amber",
   },
   pendiente: {
     label: "Pendiente de revisión",
     icon: CircleHelpIcon,
-    className: "text-yellow-700",
+    className: "text-yellow-700 dark:text-brand-amber",
   },
   enlace_caido: {
     label: "Enlace caído",
