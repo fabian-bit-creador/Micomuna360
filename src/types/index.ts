@@ -223,6 +223,25 @@ export interface CitizenService {
 }
 
 /**
+ * Documento financiero publicado por el municipio en Transparencia Activa
+ * (balance, estado de resultado, situación presupuestaria, etc.).
+ */
+export interface FinancialReport {
+  id: string;
+  /** Año del ejercicio contable al que corresponde el documento. */
+  year: number;
+  /** Fecha del informe publicado (YYYY-MM-DD). */
+  reportDate: string;
+  /** Nombre del documento tal como lo publica el municipio. */
+  name: string;
+  /** Qué muestra el documento, en lenguaje ciudadano. */
+  summary: string;
+  /** Enlace oficial al documento. */
+  url: string;
+  sourceId: string;
+}
+
+/**
  * Línea de presupuesto municipal publicada. Los montos van en pesos
  * chilenos y siempre provienen de un informe oficial (sourceId).
  */

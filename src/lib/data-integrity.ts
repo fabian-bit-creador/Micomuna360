@@ -60,6 +60,16 @@ const budgetSchema = z.object({
   sourceId: z.string().min(1),
 });
 
+const financialReportSchema = z.object({
+  id: z.string().min(1),
+  year: z.number().int().min(2000).max(2100),
+  reportDate: isoDate,
+  name: z.string().min(1),
+  summary: z.string().min(1),
+  url: httpsUrl,
+  sourceId: z.string().min(1),
+});
+
 function duplicates(ids: string[]): string[] {
   const seen = new Set<string>();
   return ids.filter((id) => (seen.has(id) ? true : (seen.add(id), false)));
@@ -142,6 +152,22 @@ export function validateCommuneData(
     if (!sourceIds.has(line.sourceId)) {
       fail(
         `presupuesto "${line.id}" referencia la fuente inexistente "${line.sourceId}"`
+      );
+    }
+  }
+
+  for (const report of data.financialReports) {
+    const result = financialReportSchema.safeParse(report);
+    if (!result.success) {
+      fail(
+        `documento financiero "${report.id}": ${result.error.issues
+          .map((i) => `${i.path.join(".")} ${i.message}`)
+          .join("; ")}`
+      );
+    }
+    if (!sourceIds.has(report.sourceId)) {
+      fail(
+        `documento financiero "${report.id}" referencia la fuente inexistente "${report.sourceId}"`
       );
     }
   }

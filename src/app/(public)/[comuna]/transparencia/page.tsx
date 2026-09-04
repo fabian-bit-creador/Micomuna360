@@ -5,6 +5,7 @@ import {
   CoinsIcon,
   ExternalLinkIcon,
   FileSearchIcon,
+  FileTextIcon,
   ScaleIcon,
   ShieldCheckIcon,
 } from "lucide-react";
@@ -17,7 +18,12 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { getCommune } from "@/config/communes";
 import { siteConfig } from "@/config/site";
-import { getBudget, getDataSource } from "@/lib/repositories";
+import { formatDate } from "@/lib/format";
+import {
+  getBudget,
+  getDataSource,
+  getFinancialReports,
+} from "@/lib/repositories";
 
 export const metadata: Metadata = {
   title: "Transparencia",
@@ -59,11 +65,15 @@ export default async function TransparenciaPage({
     return <FeatureUnavailable commune={commune} title="Transparencia" />;
   }
 
-  const [budget, legalSource, portalSource] = await Promise.all([
+  const [budget, reports, legalSource, portalSource] = await Promise.all([
     getBudget(commune.id),
+    getFinancialReports(commune.id),
     getDataSource(commune.id, "cl-consejo-transparencia"),
     getDataSource(commune.id, "lp-transparencia-directa"),
   ]);
+  const reportsSource = reports.length
+    ? await getDataSource(commune.id, reports[0].sourceId)
+    : null;
 
   return (
     <div className="mx-auto max-w-6xl px-4 py-12">
@@ -158,6 +168,55 @@ export default async function TransparenciaPage({
         {legalSource && <SourceBadge source={legalSource} className="mt-4" />}
       </section>
 
+      {/* Estados financieros publicados */}
+      {reports.length > 0 && (
+        <section className="mt-12">
+          <h2 className="text-xl font-bold">
+            Las cuentas del municipio, documento por documento
+          </h2>
+          <p className="mt-2 max-w-3xl text-sm text-muted-foreground">
+            Estos son los estados financieros del ejercicio{" "}
+            {reports[0].year} que la municipalidad publica en su Transparencia
+            Activa. Te explicamos qué muestra cada uno y te llevamos al
+            documento oficial.
+          </p>
+          <div className="mt-4 grid gap-4 md:grid-cols-2">
+            {reports.map((report) => (
+              <Card key={report.id} className="gap-0 py-5">
+                <CardContent className="flex items-start gap-4 px-5">
+                  <span className="flex size-11 shrink-0 items-center justify-center rounded-xl bg-brand-navy/10 text-brand-navy dark:bg-brand-sky/15 dark:text-brand-sky">
+                    <FileTextIcon className="size-6" />
+                  </span>
+                  <div className="min-w-0">
+                    <h3 className="font-bold text-primary">{report.name}</h3>
+                    <p className="mt-0.5 text-sm text-muted-foreground">
+                      {report.summary}
+                    </p>
+                    <p className="mt-2 text-xs text-muted-foreground">
+                      Ejercicio {report.year} · informe del{" "}
+                      {formatDate(report.reportDate)}
+                    </p>
+                    <Button asChild size="sm" variant="outline" className="mt-3">
+                      <a
+                        href={report.url}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                      >
+                        Abrir documento oficial
+                        <ExternalLinkIcon />
+                      </a>
+                    </Button>
+                  </div>
+                </CardContent>
+              </Card>
+            ))}
+          </div>
+          {reportsSource && (
+            <SourceBadge source={reportsSource} className="mt-4" />
+          )}
+        </section>
+      )}
+
       {/* Presupuesto abierto */}
       <section className="mt-12">
         <h2 className="text-xl font-bold">El presupuesto, en simple</h2>
@@ -181,10 +240,10 @@ export default async function TransparenciaPage({
                   <strong className="text-foreground">
                     Todavía no publicamos cifras
                   </strong>{" "}
-                  porque solo mostramos números tomados de los informes
-                  oficiales de ejecución presupuestaria, citando el documento y
-                  su fecha. Mientras tanto, puedes consultarlos directamente en
-                  la ficha oficial del municipio.
+                  porque solo mostramos números leídos de los informes
+                  oficiales, citando el documento y su fecha. Mientras tanto,
+                  los documentos completos están más arriba, listos para
+                  descargar.
                 </p>
               </div>
             </CardContent>

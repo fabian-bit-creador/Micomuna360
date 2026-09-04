@@ -1,6 +1,7 @@
 import type {
   BudgetLine,
   Category,
+  FinancialReport,
   CitizenRequest,
   CitizenService,
   CommunalEvent,
@@ -34,4 +35,6 @@ export interface CommuneData {
   sources: DataSource[];
   /** Presupuesto municipal publicado (pilotos). */
   budget: BudgetLine[];
+  /** Estados financieros publicados en Transparencia Activa (pilotos). */
+  financialReports: FinancialReport[];
 }

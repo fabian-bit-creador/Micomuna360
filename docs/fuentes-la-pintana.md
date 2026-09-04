@@ -9,7 +9,7 @@ la fuente de verdad que consume la aplicación). Reglas:
 - No se completa información faltante con supuestos: si un dato (horario,
   teléfono, coordenada) no está verificado, no se publica.
 
-**Totales del registro (2026-09-04):** 17 fuentes — 17 verificadas, 0 pendientes. (Al cierre de P2 el registro tenía 16 fuentes: 15 verificadas y 1 pendiente; la ficha de Transparencia Activa pasó a verificada con el enlace directo entregado desde pintana.cl.)
+**Totales del registro (2026-09-04):** 18 fuentes — 18 verificadas, 0 pendientes. (Al cierre de P2 el registro tenía 16 fuentes: 15 verificadas y 1 pendiente; la ficha de Transparencia Activa pasó a verificada con el enlace directo entregado desde pintana.cl.)
 
 **Método de verificación de esta etapa (2026-07-19):** revisión de los
 sitios oficiales y de su contenido indexado por buscadores, ya que el
@@ -34,6 +34,7 @@ presentar el piloto a terceros.
 | cl-chileatiende | ChileAtiende | [chileatiende.gob.cl](https://www.chileatiende.gob.cl/) | verificado | 2026-07-19 | 2027-01-19 | Sin logo hasta verificar condiciones de uso |
 | cl-registro-social | MDSF | [registrosocial.gob.cl](https://www.registrosocial.gob.cl/) | verificado | 2026-07-19 | 2027-01-19 | — |
 | cl-portal-transparencia | Consejo para la Transparencia | [portaltransparencia.cl](https://www.portaltransparencia.cl/) | verificado | 2026-07-19 | 2027-01-19 | Entrada a Transparencia Activa municipal |
+| lp-ta-estados-financieros | Municipalidad de La Pintana | Estados financieros — Transparencia Activa (ficha MU124) | verificado | 2026-09-04 | 2027-03-16 | Índice CSV de 6 documentos del ejercicio 2025 (informe 16-03-2026) aportado por el responsable del proyecto; archivos alojados en cloud.pintana.cl |
 | cl-consejo-transparencia | Consejo para la Transparencia | [consejotransparencia.cl](https://www.consejotransparencia.cl/) | verificado | 2026-09-04 | 2027-03-04 | Fuente de los plazos del derecho de acceso (20 días hábiles, prórroga de 10, amparo en 15) |
 | lp-transparencia-directa | Municipalidad | [Ficha La Pintana en Portal Transparencia](https://www.portaltransparencia.cl/PortalPdT/pdtta?codOrganismo=MU124) | verificado | 2026-07-19 | 2026-10-19 | Enlace directo obtenido desde el acceso «Ley de Transparencia» de pintana.cl |
 
@@ -55,8 +56,10 @@ El proxy de red del entorno de desarrollo bloquea `pintana.cl`,
 `portaltransparencia.cl`, `geopintana` y las teselas de OpenStreetMap. Por
 eso dos insumos de P3 deben aportarse manualmente:
 
-1. **Informe de ejecución presupuestaria** (ficha MU124 del Portal de
-   Transparencia) → alimenta `budget` en el dataset de la comuna.
+1. **Cifras de ejecución presupuestaria** → alimentan `budget`. El índice de
+   documentos ya está incorporado (`financial-reports.ts`), pero los archivos
+   viven en `cloud.pintana.cl`, también bloqueado: para graficar las cifras hay
+   que aportar el contenido del "Estado de Situación Presupuestaria".
 2. **Coordenadas de lugares** (geoportal comunal, CSV/GeoJSON) → completa
    `lat`/`lng` en `places` y enciende el flag `realMap`.
 

@@ -8,7 +8,7 @@ import type { DataSource } from "@/types";
  * buscadores (el entorno de desarrollo no permite navegación directa).
  * Nada con status distinto de "verificado" se muestra como vigente.
  *
- * Totales: 17 fuentes registradas — 17 verificadas, 0 pendientes
+ * Totales: 18 fuentes registradas — 18 verificadas, 0 pendientes
  * (la ficha de Transparencia Activa pasó de pendiente a verificada el
  * 2026-07-19 con el enlace directo entregado desde pintana.cl).
  */
@@ -229,6 +229,21 @@ export const sources: DataSource[] = [
     validUntil: "2027-01-19",
     notes:
       "Punto de entrada a la Transparencia Activa municipal. El enlace directo a la sección de La Pintana queda pendiente de verificación.",
+  },
+  {
+    id: "lp-ta-estados-financieros",
+    institution: "Municipalidad de La Pintana",
+    pageName: "Estados financieros — Transparencia Activa",
+    description:
+      "Balance, estado de resultado y situación presupuestaria del ejercicio contable 2025.",
+    featured: false,
+    url: "https://www.portaltransparencia.cl/PortalPdT/pdtta?codOrganismo=MU124",
+    publishedAt: "2026-03-16",
+    verifiedAt: "2026-09-04",
+    status: "verificado",
+    validUntil: "2027-03-16",
+    notes:
+      "Índice de 6 documentos del ejercicio 2025 descargado en CSV desde la Transparencia Activa municipal por el responsable del proyecto. Los archivos se alojan en cloud.pintana.cl. MiComuna360 enlaza los documentos, no reproduce su contenido.",
   },
   {
     id: "cl-consejo-transparencia",

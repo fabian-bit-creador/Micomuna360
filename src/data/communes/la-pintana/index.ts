@@ -1,5 +1,6 @@
 import type { CommuneData } from "../types";
 import { places } from "./places";
+import { financialReports } from "./financial-reports";
 import { services } from "./services";
 import { sources } from "./sources";
 
@@ -27,6 +28,7 @@ export const laPintanaData: CommuneData = {
   organizations: [],
   services,
   sources,
-  /* Pendiente: informes de ejecución presupuestaria del Portal de Transparencia. */
+  /* Pendiente: cifras de ejecución presupuestaria (requiere leer los informes). */
   budget: [],
+  financialReports,
 };

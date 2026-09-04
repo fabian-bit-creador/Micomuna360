@@ -1,5 +1,5 @@
 import { getCommuneData } from "@/data/communes";
-import type { BudgetLine } from "@/types";
+import type { BudgetLine, FinancialReport } from "@/types";
 
 /** Repositorio de transparencia: presupuesto municipal publicado. */
 
@@ -10,6 +10,15 @@ export async function getBudget(
 ): Promise<BudgetLine[]> {
   const all = getCommuneData(communeId).budget;
   return year ? all.filter((b) => b.year === year) : [...all];
+}
+
+/** Estados financieros publicados, del año más reciente al más antiguo. */
+export async function getFinancialReports(
+  communeId: string
+): Promise<FinancialReport[]> {
+  return [...getCommuneData(communeId).financialReports].sort(
+    (a, b) => b.year - a.year
+  );
 }
 
 /** Años con presupuesto publicado, del más reciente al más antiguo. */
