@@ -56,3 +56,28 @@ export function formatTime(iso: string): string {
 export function formatNumber(value: number): string {
   return new Intl.NumberFormat("es-CL").format(value);
 }
+
+/** "$310.686.761" — monto exacto en pesos chilenos. */
+export function formatClp(amount: number): string {
+  return new Intl.NumberFormat("es-CL", {
+    style: "currency",
+    currency: "CLP",
+    maximumFractionDigits: 0,
+  }).format(amount);
+}
+
+/**
+ * "$310,7 millones" — monto redondeado para lectura rápida. El valor exacto
+ * siempre debe quedar disponible en la tabla o en el título del elemento.
+ */
+export function formatClpCompact(amount: number): string {
+  const millones = amount / 1_000_000;
+  if (Math.abs(millones) >= 1000) {
+    const miles = millones / 1000;
+    return `$${miles.toLocaleString("es-CL", { maximumFractionDigits: 1 })} mil millones`;
+  }
+  if (Math.abs(millones) >= 1) {
+    return `$${millones.toLocaleString("es-CL", { maximumFractionDigits: 1 })} millones`;
+  }
+  return formatClp(amount);
+}

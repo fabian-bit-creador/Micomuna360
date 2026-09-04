@@ -242,6 +242,66 @@ export interface FinancialReport {
 }
 
 /**
+ * Fila del inventario de informes de ejecución presupuestaria publicados en
+ * Transparencia Activa. Es un enlace a un documento, NO una cifra.
+ */
+export interface BudgetDocumentIndexRow {
+  id: string;
+  /** "municipal" o "salud". */
+  area: string;
+  year: number;
+  monthNumber: number;
+  monthName: string;
+  /** "ingresos" o "gastos". */
+  flowType: string;
+  /** Fecha en que el portal publicó el documento (YYYY-MM-DD). */
+  publicationDate: string;
+  /** Fecha de corte declarada en el informe (YYYY-MM-DD). */
+  reportEndDate: string;
+  description: string;
+  url: string;
+  sourceId: string;
+}
+
+/**
+ * Fila del informe "Pasivos" publicado por el municipio. Los prefijos 215 y
+ * 115 son familias contables distintas y no deben sumarse entre sí.
+ */
+export interface ReportedLiabilityRow {
+  id: string;
+  accountCode: string;
+  accountPrefix: string;
+  /** Denominación tal como fue publicada (se conservan truncados y erratas). */
+  accountName: string;
+  amountClp: number;
+  /** Período del informe, formato AAAA-MM. */
+  period: string;
+  sourcePage: number;
+  sourceId: string;
+}
+
+/**
+ * Fila del balance de comprobación y saldos (partida doble). Sus columnas no
+ * equivalen a presupuesto, gasto ejecutado ni pagos.
+ */
+export interface AccountingBalanceRow {
+  id: string;
+  accountCode: string;
+  /** Primer dígito del código; no reemplaza una clasificación oficial. */
+  accountClass: string;
+  accountName: string;
+  openingDebitClp: number;
+  openingCreditClp: number;
+  periodDebitsClp: number;
+  periodCreditsClp: number;
+  endingDebitClp: number;
+  endingCreditClp: number;
+  period: string;
+  sourcePage: number;
+  sourceId: string;
+}
+
+/**
  * Línea de presupuesto municipal publicada. Los montos van en pesos
  * chilenos y siempre provienen de un informe oficial (sourceId).
  */

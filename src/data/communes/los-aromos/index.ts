@@ -28,4 +28,7 @@ export const losAromosData: CommuneData = {
   sources: [],
   budget: [],
   financialReports: [],
+  budgetDocumentIndex: [],
+  reportedLiabilities: [],
+  accountingBalance: [],
 };

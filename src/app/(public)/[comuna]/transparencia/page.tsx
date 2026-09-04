@@ -13,6 +13,9 @@ import {
 import { FeatureUnavailable } from "@/components/layout/feature-unavailable";
 import { SectionHeader } from "@/components/layout/section-header";
 import { SourceBadge } from "@/components/shared/source-badge";
+import { BalanceSection } from "@/components/transparency/balance-section";
+import { BudgetIndexSection } from "@/components/transparency/budget-index-section";
+import { LiabilitiesPreview } from "@/components/transparency/liabilities-preview";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
@@ -20,9 +23,12 @@ import { getCommune } from "@/config/communes";
 import { siteConfig } from "@/config/site";
 import { formatDate } from "@/lib/format";
 import {
+  getAccountingBalance,
   getBudget,
+  getBudgetDocumentIndex,
   getDataSource,
   getFinancialReports,
+  getReportedLiabilities,
 } from "@/lib/repositories";
 
 export const metadata: Metadata = {
@@ -65,11 +71,28 @@ export default async function TransparenciaPage({
     return <FeatureUnavailable commune={commune} title="Transparencia" />;
   }
 
-  const [budget, reports, legalSource, portalSource] = await Promise.all([
+  const [
+    budget,
+    reports,
+    budgetIndex,
+    liabilities,
+    balance,
+    legalSource,
+    portalSource,
+    indexSource,
+    liabilitiesSource,
+    balanceSource,
+  ] = await Promise.all([
     getBudget(commune.id),
     getFinancialReports(commune.id),
+    getBudgetDocumentIndex(commune.id),
+    getReportedLiabilities(commune.id),
+    getAccountingBalance(commune.id),
     getDataSource(commune.id, "cl-consejo-transparencia"),
     getDataSource(commune.id, "lp-transparencia-directa"),
+    getDataSource(commune.id, "lp-ta-indice-ejecucion-2026"),
+    getDataSource(commune.id, "lp-ta-pasivos-julio-2026"),
+    getDataSource(commune.id, "lp-ta-balance-julio-2026"),
   ]);
   const reportsSource = reports.length
     ? await getDataSource(commune.id, reports[0].sourceId)
@@ -168,6 +191,10 @@ export default async function TransparenciaPage({
         {legalSource && <SourceBadge source={legalSource} className="mt-4" />}
       </section>
 
+      <LiabilitiesPreview rows={liabilities} source={liabilitiesSource} />
+
+      <BudgetIndexSection rows={budgetIndex} source={indexSource} />
+
       {/* Estados financieros publicados */}
       {reports.length > 0 && (
         <section className="mt-12">
@@ -217,6 +244,8 @@ export default async function TransparenciaPage({
         </section>
       )}
 
+      <BalanceSection rows={balance} source={balanceSource} />
+
       {/* Presupuesto abierto */}
       <section className="mt-12">
         <h2 className="text-xl font-bold">El presupuesto, en simple</h2>
@@ -238,12 +267,12 @@ export default async function TransparenciaPage({
                 </p>
                 <p className="mt-3 text-sm text-muted-foreground">
                   <strong className="text-foreground">
-                    Todavía no publicamos cifras
-                  </strong>{" "}
-                  porque solo mostramos números leídos de los informes
-                  oficiales, citando el documento y su fecha. Mientras tanto,
-                  los documentos completos están más arriba, listos para
-                  descargar.
+                    Todavía no podemos decir qué porcentaje del presupuesto se
+                    ha ejecutado
+                  </strong>
+                  : esa cifra sale de leer y conciliar los informes mensuales de
+                  ingresos y gastos, que por ahora publicamos como enlaces. No
+                  la vamos a estimar.
                 </p>
               </div>
             </CardContent>

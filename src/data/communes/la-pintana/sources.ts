@@ -8,7 +8,8 @@ import type { DataSource } from "@/types";
  * buscadores (el entorno de desarrollo no permite navegación directa).
  * Nada con status distinto de "verificado" se muestra como vigente.
  *
- * Totales: 18 fuentes registradas — 18 verificadas, 0 pendientes
+ * Totales: 21 fuentes registradas — 20 verificadas, 1 pendiente de clasificación
+ * (el informe de pasivos, cuya clasificación contable falta confirmar)
  * (la ficha de Transparencia Activa pasó de pendiente a verificada el
  * 2026-07-19 con el enlace directo entregado desde pintana.cl).
  */
@@ -244,6 +245,52 @@ export const sources: DataSource[] = [
     validUntil: "2027-03-16",
     notes:
       "Índice de 6 documentos del ejercicio 2025 descargado en CSV desde la Transparencia Activa municipal por el responsable del proyecto. Los archivos se alojan en cloud.pintana.cl. MiComuna360 enlaza los documentos, no reproduce su contenido.",
+  },
+  {
+    id: "lp-ta-indice-ejecucion-2026",
+    institution: "Municipalidad de La Pintana",
+    pageName: "Balances de ejecución presupuestaria 2026 — Transparencia Activa",
+    description:
+      "Informes mensuales de ingresos y gastos de enero a julio de 2026, áreas municipal y salud.",
+    featured: false,
+    url: "https://www.portaltransparencia.cl/PortalPdT/pdtta?codOrganismo=MU124",
+    publishedAt: "2026-08-14",
+    verifiedAt: "2026-09-04",
+    status: "verificado",
+    validUntil: "2027-03-04",
+    notes:
+      "Inventario de 28 documentos (14 municipales y 14 de salud) normalizado desde los CSV del portal. Son enlaces: el contenido de los informes aún no se ha leído, por lo que de aquí no se derivan cifras de ejecución.",
+  },
+  {
+    id: "lp-ta-balance-julio-2026",
+    institution: "Municipalidad de La Pintana",
+    pageName:
+      "Balance de comprobación y saldos, julio 2026, área municipal",
+    description:
+      "Balance contable de partida doble con 109 cuentas del mes de julio de 2026.",
+    featured: false,
+    url: "https://www.portaltransparencia.cl/PortalPdT/pdtta?codOrganismo=MU124",
+    publishedAt: null,
+    verifiedAt: "2026-09-04",
+    status: "verificado",
+    validUntil: "2027-03-04",
+    notes:
+      "Extracción de 109 filas conciliada contra los seis totales impresos en el PDF original. Sus totales no equivalen a presupuesto, gasto ejecutado ni pagos. Algunos nombres de cuenta vienen truncados en el origen y se conservan tal cual.",
+  },
+  {
+    id: "lp-ta-pasivos-julio-2026",
+    institution: "Municipalidad de La Pintana",
+    pageName: "Informe de pasivos, julio 2026, área municipal",
+    description:
+      "Montos por cuenta registrados en el informe de pasivos del mes de julio de 2026.",
+    featured: false,
+    url: "https://www.portaltransparencia.cl/PortalPdT/pdtta?codOrganismo=MU124",
+    publishedAt: null,
+    verifiedAt: "2026-09-04",
+    status: "pendiente",
+    validUntil: null,
+    notes:
+      "PENDIENTE DE CLASIFICACIÓN: el informe incluye 58 cuentas con prefijo 215 y 9 con prefijo 115, que son familias contables distintas. La suma mecánica de ambas no es un indicador válido y falta confirmar la clasificación oficial de cada familia.",
   },
   {
     id: "cl-consejo-transparencia",

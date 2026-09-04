@@ -1,7 +1,10 @@
 import type {
+  AccountingBalanceRow,
+  BudgetDocumentIndexRow,
   BudgetLine,
   Category,
   FinancialReport,
+  ReportedLiabilityRow,
   CitizenRequest,
   CitizenService,
   CommunalEvent,
@@ -37,4 +40,10 @@ export interface CommuneData {
   budget: BudgetLine[];
   /** Estados financieros publicados en Transparencia Activa (pilotos). */
   financialReports: FinancialReport[];
+  /** Inventario de informes de ejecución presupuestaria (enlaces, no cifras). */
+  budgetDocumentIndex: BudgetDocumentIndexRow[];
+  /** Filas del informe "Pasivos" publicado. */
+  reportedLiabilities: ReportedLiabilityRow[];
+  /** Balance de comprobación y saldos (vista técnica). */
+  accountingBalance: AccountingBalanceRow[];
 }

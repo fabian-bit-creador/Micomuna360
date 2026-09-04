@@ -70,6 +70,47 @@ const financialReportSchema = z.object({
   sourceId: z.string().min(1),
 });
 
+const budgetIndexSchema = z.object({
+  id: z.string().min(1),
+  area: z.enum(["municipal", "salud"]),
+  year: z.number().int().min(2000).max(2100),
+  monthNumber: z.number().int().min(1).max(12),
+  flowType: z.enum(["ingresos", "gastos"]),
+  publicationDate: isoDate,
+  reportEndDate: isoDate,
+  url: httpsUrl,
+  sourceId: z.string().min(1),
+});
+
+const liabilitySchema = z.object({
+  id: z.string().min(1),
+  accountCode: z.string().min(1),
+  /* Solo las dos familias del informe; nunca deben sumarse entre sí. */
+  accountPrefix: z.enum(["115", "215"]),
+  accountName: z.string().min(1),
+  amountClp: z.number().int(),
+  period: z.string().regex(/^\d{4}-\d{2}$/, "debe tener formato AAAA-MM"),
+  sourceId: z.string().min(1),
+});
+
+/*
+ * Los montos pueden ser negativos: el balance original incluye asientos de
+ * reversa (p. ej. una recaudación pendiente de aplicación con crédito
+ * negativo). Se conservan tal como los publica el municipio.
+ */
+const balanceRowSchema = z.object({
+  id: z.string().min(1),
+  accountCode: z.string().min(1),
+  accountName: z.string().min(1),
+  openingDebitClp: z.number().int(),
+  openingCreditClp: z.number().int(),
+  periodDebitsClp: z.number().int(),
+  periodCreditsClp: z.number().int(),
+  endingDebitClp: z.number().int(),
+  endingCreditClp: z.number().int(),
+  sourceId: z.string().min(1),
+});
+
 function duplicates(ids: string[]): string[] {
   const seen = new Set<string>();
   return ids.filter((id) => (seen.has(id) ? true : (seen.add(id), false)));
@@ -169,6 +210,30 @@ export function validateCommuneData(
       fail(
         `documento financiero "${report.id}" referencia la fuente inexistente "${report.sourceId}"`
       );
+    }
+  }
+
+  const traceables: [string, { id: string; sourceId: string }[], z.ZodType][] =
+    [
+      ["informe presupuestario", data.budgetDocumentIndex, budgetIndexSchema],
+      ["pasivo reportado", data.reportedLiabilities, liabilitySchema],
+      ["cuenta del balance", data.accountingBalance, balanceRowSchema],
+    ];
+  for (const [label, rows, schema] of traceables) {
+    for (const row of rows) {
+      const result = schema.safeParse(row);
+      if (!result.success) {
+        fail(
+          `${label} "${row.id}": ${result.error.issues
+            .map((i) => `${i.path.join(".")} ${i.message}`)
+            .join("; ")}`
+        );
+      }
+      if (!sourceIds.has(row.sourceId)) {
+        fail(
+          `${label} "${row.id}" referencia la fuente inexistente "${row.sourceId}"`
+        );
+      }
     }
   }
 
