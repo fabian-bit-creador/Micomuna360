@@ -222,6 +222,25 @@ export interface CitizenService {
   sourceId: string;
 }
 
+/**
+ * Línea de presupuesto municipal publicada. Los montos van en pesos
+ * chilenos y siempre provienen de un informe oficial (sourceId).
+ */
+export interface BudgetLine {
+  id: string;
+  /** Año presupuestario, p. ej. 2026. */
+  year: number;
+  /** Partida o área en lenguaje ciudadano, p. ej. "Salud". */
+  category: string;
+  /** Presupuesto vigente, en pesos. */
+  budgeted: number;
+  /** Ejecutado a la fecha del informe, en pesos. */
+  executed: number;
+  /** Período del informe, p. ej. "primer trimestre 2026". */
+  period: string;
+  sourceId: string;
+}
+
 export type PlaceCategory =
   | "municipal"
   | "salud"
@@ -244,6 +263,12 @@ export interface Place {
   phone: string | null;
   /** Nombre de ícono del kit cívico (components/shared/civic-icon). */
   icon: string;
+  /**
+   * Coordenadas verificadas. Solo se completan con una fuente geográfica
+   * confiable: sin ellas, el lugar no aparece en el mapa.
+   */
+  lat?: number | null;
+  lng?: number | null;
   /** Fuente de procedencia (pilotos con datos reales). */
   sourceId?: string | null;
 }

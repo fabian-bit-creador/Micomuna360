@@ -27,6 +27,18 @@ export function communeNav(commune: CommuneConfig): NavItem[] {
       enabled: commune.features.directory && !commune.features.community,
     },
     {
+      title: "Mapa",
+      href: `${base}/mapa`,
+      description: "Lugares de la comuna en el mapa",
+      enabled: commune.features.realMap,
+    },
+    {
+      title: "Transparencia",
+      href: `${base}/transparencia`,
+      description: "Tu derecho a saber, explicado en simple",
+      enabled: commune.features.transparency,
+    },
+    {
       title: "Buscar",
       href: `${base}/buscar`,
       description: "Buscador ciudadano",

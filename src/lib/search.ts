@@ -31,6 +31,16 @@ export function buildSearchIndex(commune: CommuneConfig): SearchEntry[] {
       });
     }
   }
+  if (commune.features.transparency) {
+    entries.push({
+      title: "Transparencia y presupuesto municipal",
+      description:
+        "Qué publica el municipio por ley, qué puedes pedir tú y en qué plazos deben responderte.",
+      href: `${base}/transparencia`,
+      group: "Transparencia",
+      external: false,
+    });
+  }
   if (commune.features.directory) {
     for (const p of data.places) {
       entries.push({

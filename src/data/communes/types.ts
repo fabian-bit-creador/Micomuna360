@@ -1,4 +1,5 @@
 import type {
+  BudgetLine,
   Category,
   CitizenRequest,
   CitizenService,
@@ -31,4 +32,6 @@ export interface CommuneData {
   services: CitizenService[];
   /** Registro de fuentes de la comuna (pilotos). */
   sources: DataSource[];
+  /** Presupuesto municipal publicado (pilotos). */
+  budget: BudgetLine[];
 }

@@ -27,6 +27,8 @@ export interface CommuneFeatures {
   services: boolean;
   /** Buscador ciudadano. */
   search: boolean;
+  /** Transparencia ciudadana y presupuesto abierto. */
+  transparency: boolean;
   /** Página de reportes (demo/explicativa). */
   reports: boolean;
   /** Plano ilustrado demo en la home. */

@@ -50,6 +50,16 @@ const placeSchema = z.object({
   sourceId: z.string().nullable().optional(),
 });
 
+const budgetSchema = z.object({
+  id: z.string().min(1),
+  year: z.number().int().min(2000).max(2100),
+  category: z.string().min(1),
+  budgeted: z.number().min(0),
+  executed: z.number().min(0),
+  period: z.string().min(1),
+  sourceId: z.string().min(1),
+});
+
 function duplicates(ids: string[]): string[] {
   const seen = new Set<string>();
   return ids.filter((id) => (seen.has(id) ? true : (seen.add(id), false)));
@@ -117,6 +127,22 @@ export function validateCommuneData(
     // Regla de oro: en una comuna real, ningún dato se publica sin fuente.
     if (!isDemo && !place.sourceId) {
       fail(`lugar "${place.id}" no declara fuente (obligatorio fuera de la demo)`);
+    }
+  }
+
+  for (const line of data.budget) {
+    const result = budgetSchema.safeParse(line);
+    if (!result.success) {
+      fail(
+        `presupuesto "${line.id}": ${result.error.issues
+          .map((i) => `${i.path.join(".")} ${i.message}`)
+          .join("; ")}`
+      );
+    }
+    if (!sourceIds.has(line.sourceId)) {
+      fail(
+        `presupuesto "${line.id}" referencia la fuente inexistente "${line.sourceId}"`
+      );
     }
   }
 

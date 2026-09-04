@@ -9,7 +9,7 @@ la fuente de verdad que consume la aplicación). Reglas:
 - No se completa información faltante con supuestos: si un dato (horario,
   teléfono, coordenada) no está verificado, no se publica.
 
-**Totales del registro (2026-07-19):** 16 fuentes — 16 verificadas, 0 pendientes. (Al cierre de P2 el registro tenía 16 fuentes: 15 verificadas y 1 pendiente; la ficha de Transparencia Activa pasó a verificada con el enlace directo entregado desde pintana.cl.)
+**Totales del registro (2026-09-04):** 17 fuentes — 17 verificadas, 0 pendientes. (Al cierre de P2 el registro tenía 16 fuentes: 15 verificadas y 1 pendiente; la ficha de Transparencia Activa pasó a verificada con el enlace directo entregado desde pintana.cl.)
 
 **Método de verificación de esta etapa (2026-07-19):** revisión de los
 sitios oficiales y de su contenido indexado por buscadores, ya que el
@@ -34,6 +34,7 @@ presentar el piloto a terceros.
 | cl-chileatiende | ChileAtiende | [chileatiende.gob.cl](https://www.chileatiende.gob.cl/) | verificado | 2026-07-19 | 2027-01-19 | Sin logo hasta verificar condiciones de uso |
 | cl-registro-social | MDSF | [registrosocial.gob.cl](https://www.registrosocial.gob.cl/) | verificado | 2026-07-19 | 2027-01-19 | — |
 | cl-portal-transparencia | Consejo para la Transparencia | [portaltransparencia.cl](https://www.portaltransparencia.cl/) | verificado | 2026-07-19 | 2027-01-19 | Entrada a Transparencia Activa municipal |
+| cl-consejo-transparencia | Consejo para la Transparencia | [consejotransparencia.cl](https://www.consejotransparencia.cl/) | verificado | 2026-09-04 | 2027-03-04 | Fuente de los plazos del derecho de acceso (20 días hábiles, prórroga de 10, amparo en 15) |
 | lp-transparencia-directa | Municipalidad | [Ficha La Pintana en Portal Transparencia](https://www.portaltransparencia.cl/PortalPdT/pdtta?codOrganismo=MU124) | verificado | 2026-07-19 | 2026-10-19 | Enlace directo obtenido desde el acceso «Ley de Transparencia» de pintana.cl |
 
 ## Datos pendientes de verificación (no publicados)
@@ -48,8 +49,19 @@ presentar el piloto a terceros.
 - Organizaciones comunitarias (requieren autorización escrita).
 - Horarios y teléfonos de los recintos deportivos.
 
-El análisis presupuestario ("Transparencia ciudadana y presupuesto
-abierto") es un módulo P3 independiente: aquí solo se registra la fuente.
+## Datos que este entorno no puede descargar
+
+El proxy de red del entorno de desarrollo bloquea `pintana.cl`,
+`portaltransparencia.cl`, `geopintana` y las teselas de OpenStreetMap. Por
+eso dos insumos de P3 deben aportarse manualmente:
+
+1. **Informe de ejecución presupuestaria** (ficha MU124 del Portal de
+   Transparencia) → alimenta `budget` en el dataset de la comuna.
+2. **Coordenadas de lugares** (geoportal comunal, CSV/GeoJSON) → completa
+   `lat`/`lng` en `places` y enciende el flag `realMap`.
+
+Mientras no lleguen, la sección de presupuesto y el mapa muestran un estado
+"en preparación" explícito, nunca cifras ni pines aproximados.
 
 **Nota de arquitectura:** este registro (`sources.ts`) es la única fuente de
 verdad de fuentes oficiales. La portada, el buscador, los servicios y los

@@ -29,6 +29,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     const sections: [boolean, string, number][] = [
       [features.services, "servicios", 0.9],
       [features.directory, "directorio", 0.8],
+      [features.transparency, "transparencia", 0.8],
       [features.search, "buscar", 0.7],
       [features.news, "noticias", 0.8],
       [features.events, "actividades", 0.8],
@@ -38,7 +39,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       [features.community, "comunidad", 0.7],
       [features.community, "comunidad/organizaciones", 0.6],
       [features.reports, "reportar", 0.6],
-      [commune.isDemo, "mapa", 0.4],
+      [commune.isDemo || features.realMap, "mapa", 0.6],
     ];
     for (const [enabled, path, priority] of sections) {
       if (!enabled) continue;

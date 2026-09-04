@@ -27,4 +27,6 @@ export const laPintanaData: CommuneData = {
   organizations: [],
   services,
   sources,
+  /* Pendiente: informes de ejecución presupuestaria del Portal de Transparencia. */
+  budget: [],
 };

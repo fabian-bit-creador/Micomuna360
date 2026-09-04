@@ -31,6 +31,7 @@ export const laPintana: CommuneConfig = {
     community: false,
     directory: true,
     services: true,
+    transparency: true,
     search: true,
     reports: false,
     demoMap: false,

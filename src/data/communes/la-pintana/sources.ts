@@ -8,7 +8,7 @@ import type { DataSource } from "@/types";
  * buscadores (el entorno de desarrollo no permite navegación directa).
  * Nada con status distinto de "verificado" se muestra como vigente.
  *
- * Totales: 16 fuentes registradas — 16 verificadas, 0 pendientes
+ * Totales: 17 fuentes registradas — 17 verificadas, 0 pendientes
  * (la ficha de Transparencia Activa pasó de pendiente a verificada el
  * 2026-07-19 con el enlace directo entregado desde pintana.cl).
  */
@@ -229,6 +229,21 @@ export const sources: DataSource[] = [
     validUntil: "2027-01-19",
     notes:
       "Punto de entrada a la Transparencia Activa municipal. El enlace directo a la sección de La Pintana queda pendiente de verificación.",
+  },
+  {
+    id: "cl-consejo-transparencia",
+    institution: "Consejo para la Transparencia",
+    pageName: "Consejo para la Transparencia",
+    description:
+      "Organismo que fiscaliza la Ley de Transparencia y resuelve los reclamos (amparos) de los ciudadanos.",
+    featured: false,
+    url: "https://www.consejotransparencia.cl/",
+    publishedAt: null,
+    verifiedAt: "2026-09-04",
+    status: "verificado",
+    validUntil: "2027-03-04",
+    notes:
+      "Fuente de los plazos del derecho de acceso a la información (Ley 20.285): respuesta en 20 días hábiles, prórroga excepcional de 10 y amparo dentro de 15 días hábiles.",
   },
   {
     id: "lp-transparencia-directa",

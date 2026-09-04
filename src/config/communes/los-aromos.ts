@@ -23,6 +23,7 @@ export const losAromos: CommuneConfig = {
     community: true,
     directory: true,
     services: false,
+    transparency: false,
     search: false,
     reports: true,
     demoMap: true,
