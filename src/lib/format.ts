@@ -81,3 +81,18 @@ export function formatClpCompact(amount: number): string {
   }
   return formatClp(amount);
 }
+
+const MONTHS = [
+  "enero", "febrero", "marzo", "abril", "mayo", "junio",
+  "julio", "agosto", "septiembre", "octubre", "noviembre", "diciembre",
+];
+
+/**
+ * "2026-07" → "julio de 2026". Los textos de las páginas derivan el período
+ * del propio dato, para que no queden desfasados al cargar otro mes.
+ */
+export function formatPeriod(period: string): string {
+  const [year, month] = period.split("-");
+  const name = MONTHS[Number(month) - 1];
+  return name ? `${name} de ${year}` : period;
+}

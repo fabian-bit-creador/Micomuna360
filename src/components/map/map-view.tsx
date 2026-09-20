@@ -108,7 +108,7 @@ export default function MapView({
             <strong style="display:block;font-size:14px">${escapeHtml(place.name)}</strong>
             <span style="display:block;margin-top:2px;color:#4b5563">${escapeHtml(place.address)}</span>
             <span style="display:flex;flex-direction:column;gap:4px;margin-top:8px">
-              <a href="${place.href}" style="color:#1e8e89;font-weight:700">Ver ficha en MiComuna360</a>
+              <a href="${escapeHtml(place.href)}" style="color:#1e8e89;font-weight:700">Ver ficha en MiComuna360</a>
               <a href="${urls.ver}" target="_blank" rel="noopener noreferrer">Ver en Google Maps ↗</a>
               <a href="${urls.llegar}" target="_blank" rel="noopener noreferrer">Cómo llegar ↗</a>
             </span>

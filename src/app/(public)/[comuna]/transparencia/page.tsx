@@ -6,7 +6,6 @@ import {
   ExternalLinkIcon,
   FileSearchIcon,
   FileTextIcon,
-  ScaleIcon,
   ShieldCheckIcon,
 } from "lucide-react";
 
@@ -15,6 +14,7 @@ import { SectionHeader } from "@/components/layout/section-header";
 import { SourceBadge } from "@/components/shared/source-badge";
 import { BalanceSection } from "@/components/transparency/balance-section";
 import { BudgetIndexSection } from "@/components/transparency/budget-index-section";
+import { BudgetSection } from "@/components/transparency/budget-section";
 import { LiabilitiesPreview } from "@/components/transparency/liabilities-preview";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -96,6 +96,9 @@ export default async function TransparenciaPage({
   ]);
   const reportsSource = reports.length
     ? await getDataSource(commune.id, reports[0].sourceId)
+    : null;
+  const budgetSource = budget.length
+    ? await getDataSource(commune.id, budget[0].sourceId)
     : null;
 
   return (
@@ -246,39 +249,7 @@ export default async function TransparenciaPage({
 
       <BalanceSection rows={balance} source={balanceSource} />
 
-      {/* Presupuesto abierto */}
-      <section className="mt-12">
-        <h2 className="text-xl font-bold">El presupuesto, en simple</h2>
-        {budget.length === 0 ? (
-          <Card className="mt-4 border-brand-sky/40 bg-brand-sky/5 py-6">
-            <CardContent className="flex items-start gap-4 px-6">
-              <span className="flex size-11 shrink-0 items-center justify-center rounded-xl bg-brand-sky/20 text-brand-navy dark:text-brand-sky">
-                <ScaleIcon className="size-6" />
-              </span>
-              <div>
-                <Badge variant="secondary" className="mb-2">
-                  En preparación
-                </Badge>
-                <p className="text-sm text-muted-foreground">
-                  Estamos preparando una vista clara de en qué se gasta el
-                  presupuesto municipal: cuánto se presupuestó y cuánto se ha
-                  ejecutado por área, con gráficos simples y comparables entre
-                  períodos.
-                </p>
-                <p className="mt-3 text-sm text-muted-foreground">
-                  <strong className="text-foreground">
-                    Todavía no podemos decir qué porcentaje del presupuesto se
-                    ha ejecutado
-                  </strong>
-                  : esa cifra sale de leer y conciliar los informes mensuales de
-                  ingresos y gastos, que por ahora publicamos como enlaces. No
-                  la vamos a estimar.
-                </p>
-              </div>
-            </CardContent>
-          </Card>
-        ) : null}
-      </section>
+      <BudgetSection lines={budget} source={budgetSource} />
 
       <p className="mt-12 rounded-lg bg-muted px-4 py-3 text-sm text-muted-foreground">
         {siteConfig.name} no tramita solicitudes de información ni recibe

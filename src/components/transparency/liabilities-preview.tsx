@@ -4,7 +4,7 @@ import { BarRanking } from "@/components/data/bar-ranking";
 import { SourceBadge } from "@/components/shared/source-badge";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent } from "@/components/ui/card";
-import { formatClp, formatClpCompact } from "@/lib/format";
+import { formatClp, formatClpCompact, formatPeriod } from "@/lib/format";
 import type { DataSource, ReportedLiabilityRow } from "@/types";
 
 /** Convierte "SERVICIOS MANTENCION DE JARDINES" en "Servicios mantención de jardines". */
@@ -38,9 +38,9 @@ export function LiabilitiesPreview({
 
   const top = family215.slice(0, topCount);
   const total215 = family215.reduce((sum, r) => sum + r.amountClp, 0);
-  const topShare = Math.round(
-    (top.reduce((sum, r) => sum + r.amountClp, 0) / total215) * 100
-  );
+  const topTotal = top.reduce((sum, r) => sum + r.amountClp, 0);
+  const topShare = total215 > 0 ? Math.round((topTotal / total215) * 100) : 0;
+  const period = formatPeriod(family215[0].period);
 
   return (
     <section className="mt-12">
@@ -51,7 +51,7 @@ export function LiabilitiesPreview({
         <Badge variant="secondary">Vista preliminar</Badge>
       </div>
       <p className="mt-2 max-w-3xl text-sm text-muted-foreground">
-        El informe de pasivos de julio de 2026 (área municipal) registra montos
+        El informe de pasivos de {period} (área municipal) registra montos
         repartidos en {family215.length + family115.length} cuentas contables.
         Estas son las {top.length} cuentas con mayor monto dentro de la familia
         215, que agrupa {family215.length} de ellas y suma{" "}
@@ -64,8 +64,9 @@ export function LiabilitiesPreview({
       <Card className="mt-4 py-6">
         <CardContent className="px-6">
           <BarRanking
-            caption={`Las ${top.length} cuentas con mayor monto publicado en el informe de pasivos de julio de 2026, área municipal, familia contable 215.`}
+            caption={`Las ${top.length} cuentas con mayor monto publicado en el informe de pasivos de ${period}, área municipal, familia contable 215.`}
             items={top.map((row) => ({
+              id: row.id,
               label: sentenceCase(row.accountName),
               value: row.amountClp,
               detail: `Cuenta ${row.accountCode}`,
@@ -80,7 +81,7 @@ export function LiabilitiesPreview({
             <div className="mt-3 overflow-x-auto">
               <table className="w-full text-left text-sm">
                 <caption className="sr-only">
-                  Todas las cuentas del informe de pasivos de julio de 2026,
+                  Todas las cuentas del informe de pasivos de {period},
                   separadas por familia contable.
                 </caption>
                 <thead className="text-xs text-muted-foreground uppercase">

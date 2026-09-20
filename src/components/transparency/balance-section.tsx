@@ -1,7 +1,7 @@
 import { SourceBadge } from "@/components/shared/source-badge";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent } from "@/components/ui/card";
-import { formatClp } from "@/lib/format";
+import { formatClp, formatPeriod } from "@/lib/format";
 import type { AccountingBalanceRow, DataSource } from "@/types";
 
 interface BalanceSectionProps {
@@ -16,6 +16,7 @@ interface BalanceSectionProps {
 export function BalanceSection({ rows, source }: BalanceSectionProps) {
   if (rows.length === 0) return null;
 
+  const period = formatPeriod(rows[0].period);
   const sum = (field: keyof AccountingBalanceRow) =>
     rows.reduce((total, row) => total + (row[field] as number), 0);
 
@@ -39,7 +40,7 @@ export function BalanceSection({ rows, source }: BalanceSectionProps) {
         veces.
       </p>
       <p className="mt-2 max-w-3xl text-sm text-muted-foreground">
-        Publicamos las {rows.length} cuentas de julio de 2026 tal como fueron
+        Publicamos las {rows.length} cuentas de {period} tal como fueron
         extraídas del documento oficial. Verificamos la extracción sumando cada
         columna y comparándola con los totales impresos en el informe: todas
         calzan exactamente.
@@ -54,7 +55,7 @@ export function BalanceSection({ rows, source }: BalanceSectionProps) {
             <div className="mt-3 max-h-[32rem] overflow-auto">
               <table className="w-full text-left text-xs">
                 <caption className="sr-only">
-                  Balance de comprobación y saldos de julio de 2026, área
+                  Balance de comprobación y saldos de {period}, área
                   municipal, con saldos iniciales, movimientos del mes y saldos
                   finales por cuenta.
                 </caption>
