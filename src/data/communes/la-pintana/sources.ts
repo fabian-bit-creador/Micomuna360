@@ -8,7 +8,7 @@ import type { DataSource } from "@/types";
  * buscadores (el entorno de desarrollo no permite navegación directa).
  * Nada con status distinto de "verificado" se muestra como vigente.
  *
- * Totales: 21 fuentes registradas — 20 verificadas, 1 pendiente de clasificación
+ * Totales: 24 fuentes registradas — 23 verificadas, 1 pendiente de clasificación
  * (el informe de pasivos, cuya clasificación contable falta confirmar)
  * (la ficha de Transparencia Activa pasó de pendiente a verificada el
  * 2026-07-19 con el enlace directo entregado desde pintana.cl).
@@ -291,6 +291,45 @@ export const sources: DataSource[] = [
     validUntil: null,
     notes:
       "PENDIENTE DE CLASIFICACIÓN: el informe incluye 58 cuentas con prefijo 215 y 9 con prefijo 115, que son familias contables distintas. La suma mecánica de ambas no es un indicador válido y falta confirmar la clasificación oficial de cada familia.",
+  },
+  {
+    id: "cl-bne",
+    institution: "Bolsa Nacional de Empleo",
+    pageName: "Bolsa Nacional de Empleo",
+    description: "Plataforma pública de ofertas de trabajo del Estado.",
+    featured: false,
+    url: "https://www.bne.cl/",
+    publishedAt: null,
+    verifiedAt: "2026-09-20",
+    status: "verificado",
+    validUntil: "2027-03-20",
+    notes: null,
+  },
+  {
+    id: "cl-sence",
+    institution: "SENCE",
+    pageName: "SENCE — Personas",
+    description: "Cursos y capacitación gratuita financiada por el Estado.",
+    featured: false,
+    url: "https://www.sence.gob.cl/personas",
+    publishedAt: null,
+    verifiedAt: "2026-09-20",
+    status: "verificado",
+    validUntil: "2027-03-20",
+    notes: null,
+  },
+  {
+    id: "cl-sercotec",
+    institution: "SERCOTEC",
+    pageName: "SERCOTEC",
+    description: "Fondos y asesorías para emprendedores y pequeñas empresas.",
+    featured: false,
+    url: "https://www.sercotec.cl/",
+    publishedAt: null,
+    verifiedAt: "2026-09-20",
+    status: "verificado",
+    validUntil: "2027-03-20",
+    notes: null,
   },
   {
     id: "cl-consejo-transparencia",

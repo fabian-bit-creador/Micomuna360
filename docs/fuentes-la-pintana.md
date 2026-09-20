@@ -9,7 +9,7 @@ la fuente de verdad que consume la aplicación). Reglas:
 - No se completa información faltante con supuestos: si un dato (horario,
   teléfono, coordenada) no está verificado, no se publica.
 
-**Totales del registro (2026-09-04):** 21 fuentes — 20 verificadas y 1 pendiente de clasificación (el informe de pasivos). (Al cierre de P2 el registro tenía 16 fuentes: 15 verificadas y 1 pendiente; la ficha de Transparencia Activa pasó a verificada con el enlace directo entregado desde pintana.cl.)
+**Totales del registro (2026-09-20):** 24 fuentes — 23 verificadas y 1 pendiente de clasificación (el informe de pasivos). (Al cierre de P2 el registro tenía 16 fuentes: 15 verificadas y 1 pendiente; la ficha de Transparencia Activa pasó a verificada con el enlace directo entregado desde pintana.cl. El 2026-09-20 se sumaron las tres fuentes nacionales que usa el orientador «¿A qué puedo postular?».)
 
 **Método de verificación de esta etapa (2026-07-19):** revisión de los
 sitios oficiales y de su contenido indexado por buscadores, ya que el
@@ -38,6 +38,9 @@ presentar el piloto a terceros.
 | lp-ta-indice-ejecucion-2026 | Municipalidad de La Pintana | Balances de ejecución presupuestaria 2026 (28 enlaces) | verificado | 2026-09-04 | 2027-03-04 | 14 informes municipales + 14 de salud, enero–julio 2026. Son enlaces, no cifras |
 | lp-ta-balance-julio-2026 | Municipalidad de La Pintana | Balance de comprobación y saldos, julio 2026, área municipal | verificado | 2026-09-04 | 2027-03-04 | 109 cuentas; extracción conciliada contra los seis totales impresos |
 | lp-ta-pasivos-julio-2026 | Municipalidad de La Pintana | Informe de pasivos, julio 2026, área municipal | **pendiente** | 2026-09-04 | — | 67 filas (58 con prefijo 215, 9 con 115). Falta confirmar la clasificación contable; las familias no se suman entre sí |
+| cl-bne | Bolsa Nacional de Empleo | [bne.cl](https://www.bne.cl/) | verificado | 2026-09-20 | 2027-03-20 | Usada por el orientador de beneficios; enlazamos al catálogo, no a ofertas puntuales |
+| cl-sence | SENCE | [sence.gob.cl/personas](https://www.sence.gob.cl/personas) | verificado | 2026-09-20 | 2027-03-20 | Usada por el orientador de beneficios; no se afirman requisitos ni cupos |
+| cl-sercotec | SERCOTEC | [sercotec.cl](https://www.sercotec.cl/) | verificado | 2026-09-20 | 2027-03-20 | Usada por el orientador de beneficios; las convocatorias cambian, por eso solo enlazamos |
 | cl-consejo-transparencia | Consejo para la Transparencia | [consejotransparencia.cl](https://www.consejotransparencia.cl/) | verificado | 2026-09-04 | 2027-03-04 | Fuente de los plazos del derecho de acceso (20 días hábiles, prórroga de 10, amparo en 15) |
 | lp-transparencia-directa | Municipalidad | [Ficha La Pintana en Portal Transparencia](https://www.portaltransparencia.cl/PortalPdT/pdtta?codOrganismo=MU124) | verificado | 2026-07-19 | 2026-10-19 | Enlace directo obtenido desde el acceso «Ley de Transparencia» de pintana.cl |
 

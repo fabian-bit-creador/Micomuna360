@@ -111,6 +111,17 @@ const balanceRowSchema = z.object({
   sourceId: z.string().min(1),
 });
 
+const benefitSchema = z.object({
+  id: z.string().min(1),
+  title: z.string().min(1),
+  summary: z.string().min(1),
+  institution: z.string().min(1),
+  triggers: z.array(z.string()),
+  url: httpsUrl,
+  icon: z.string().min(1),
+  sourceId: z.string().min(1),
+});
+
 function duplicates(ids: string[]): string[] {
   const seen = new Set<string>();
   return ids.filter((id) => (seen.has(id) ? true : (seen.add(id), false)));
@@ -218,6 +229,7 @@ export function validateCommuneData(
       ["informe presupuestario", data.budgetDocumentIndex, budgetIndexSchema],
       ["pasivo reportado", data.reportedLiabilities, liabilitySchema],
       ["cuenta del balance", data.accountingBalance, balanceRowSchema],
+      ["beneficio", data.benefits, benefitSchema],
     ];
   for (const [label, rows, schema] of traceables) {
     for (const row of rows) {

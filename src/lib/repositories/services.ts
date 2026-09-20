@@ -1,5 +1,6 @@
 import { getCommuneData } from "@/data/communes";
 import type {
+  BenefitOrientation,
   CitizenService,
   DataSource,
   PhoneCategory,
@@ -13,6 +14,13 @@ export async function getCitizenServices(
   communeId: string
 ): Promise<CitizenService[]> {
   return [...getCommuneData(communeId).services];
+}
+
+/** Orientaciones de beneficios para el orientador ciudadano. */
+export async function getBenefitOrientations(
+  communeId: string
+): Promise<BenefitOrientation[]> {
+  return [...getCommuneData(communeId).benefits];
 }
 
 /** Sitios oficiales destacados de la comuna (registro único de fuentes). */

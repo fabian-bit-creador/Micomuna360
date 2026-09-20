@@ -29,6 +29,8 @@ export interface CommuneFeatures {
   search: boolean;
   /** Transparencia ciudadana y presupuesto abierto. */
   transparency: boolean;
+  /** Orientador de beneficios ("¿a qué puedo postular?"). */
+  benefits: boolean;
   /** Página de reportes (demo/explicativa). */
   reports: boolean;
   /** Plano ilustrado demo en la home. */

@@ -21,6 +21,12 @@ export function communeNav(commune: CommuneConfig): NavItem[] {
       enabled: commune.features.services,
     },
     {
+      title: "Beneficios",
+      href: `${base}/beneficios`,
+      description: "Orientador: ¿a qué puedo postular?",
+      enabled: commune.features.benefits,
+    },
+    {
       title: "Directorio",
       href: `${base}/directorio`,
       description: "Lugares útiles de la comuna",

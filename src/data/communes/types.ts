@@ -1,6 +1,7 @@
 import type {
   AccountingBalanceRow,
   BudgetDocumentIndexRow,
+  BenefitOrientation,
   BudgetLine,
   Category,
   FinancialReport,
@@ -46,4 +47,6 @@ export interface CommuneData {
   reportedLiabilities: ReportedLiabilityRow[];
   /** Balance de comprobación y saldos (vista técnica). */
   accountingBalance: AccountingBalanceRow[];
+  /** Orientaciones de beneficios para el orientador ciudadano. */
+  benefits: BenefitOrientation[];
 }

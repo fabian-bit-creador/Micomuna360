@@ -28,6 +28,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
 
     const sections: [boolean, string, number][] = [
       [features.services, "servicios", 0.9],
+      [features.benefits, "beneficios", 0.9],
       [features.directory, "directorio", 0.8],
       [features.transparency, "transparencia", 0.8],
       [features.search, "buscar", 0.7],

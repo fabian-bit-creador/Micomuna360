@@ -223,6 +223,32 @@ export interface CitizenService {
 }
 
 /**
+ * Orientación sobre un beneficio o programa al que una persona podría
+ * postular según su situación.
+ *
+ * IMPORTANTE: orienta, no decide. Los requisitos y la resolución están
+ * siempre en la institución responsable; MiComuna360 no evalúa postulaciones
+ * ni pide datos personales.
+ */
+export interface BenefitOrientation {
+  id: string;
+  title: string;
+  /** Qué es, en lenguaje ciudadano. */
+  summary: string;
+  institution: string;
+  /** Situaciones que hacen relevante esta orientación. */
+  triggers: string[];
+  /** true: se muestra siempre, sin importar las respuestas. */
+  always?: boolean;
+  url: string;
+  /** Qué buscar cuando el enlace lleva a un catálogo y no a la ficha. */
+  searchHint?: string | null;
+  /** Nombre de ícono del kit cívico. */
+  icon: string;
+  sourceId: string;
+}
+
+/**
  * Documento financiero publicado por el municipio en Transparencia Activa
  * (balance, estado de resultado, situación presupuestaria, etc.).
  */

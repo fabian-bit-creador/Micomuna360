@@ -7,6 +7,7 @@ import {
   MapPinIcon,
   PhoneCallIcon,
   ScaleIcon,
+  SearchCheckIcon,
 } from "lucide-react";
 
 import Link from "next/link";
@@ -28,22 +29,47 @@ import { getOfficialSites } from "@/lib/repositories";
 import { buildSearchIndex } from "@/lib/search";
 import { getSourceFreshness } from "@/lib/sources";
 
-const available = [
-  {
-    icon: FileTextIcon,
-    title: "Servicios y trámites",
-    description:
-      "Pagos, licencias, apoyos sociales y más, cada uno con su sitio oficial.",
-    href: "/servicios",
-  },
-  {
-    icon: MapPinIcon,
-    title: "Directorio territorial",
-    description:
-      "Municipalidad y recintos con dirección verificada y su fuente a la vista.",
-    href: "/directorio",
-  },
-];
+/*
+ * Lo publicado se arma desde las feature flags de la comuna: cuando un módulo
+ * se enciende aparece aquí solo, sin que haya que acordarse de esta lista.
+ */
+function availableFor(commune: CommuneConfig) {
+  const { features } = commune;
+  return [
+    {
+      icon: FileTextIcon,
+      title: "Servicios y trámites",
+      description:
+        "Pagos, licencias, apoyos sociales y más, cada uno con su sitio oficial.",
+      href: "/servicios",
+      enabled: features.services,
+    },
+    {
+      icon: SearchCheckIcon,
+      title: "¿A qué puedo postular?",
+      description:
+        "Marca tu situación y te mostramos qué beneficios revisar. Sin RUT ni clave.",
+      href: "/beneficios",
+      enabled: features.benefits,
+    },
+    {
+      icon: ScaleIcon,
+      title: "Transparencia municipal",
+      description:
+        "En qué se gasta la plata de la comuna y qué puedes pedirle al municipio.",
+      href: "/transparencia",
+      enabled: features.transparency,
+    },
+    {
+      icon: MapPinIcon,
+      title: "Directorio territorial",
+      description:
+        "Municipalidad y recintos con dirección verificada y su fuente a la vista.",
+      href: "/directorio",
+      enabled: features.directory,
+    },
+  ].filter((item) => item.enabled);
+}
 
 const upcoming = [
   {
@@ -71,6 +97,7 @@ export async function PilotoHome({ commune }: { commune: CommuneConfig }) {
   const searchEntries = buildSearchIndex(commune);
   const officialSites = await getOfficialSites(commune.id);
   const base = `/${commune.id}`;
+  const available = availableFor(commune);
   return (
     <>
       {/* Hero piloto */}

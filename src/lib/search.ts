@@ -31,6 +31,27 @@ export function buildSearchIndex(commune: CommuneConfig): SearchEntry[] {
       });
     }
   }
+  if (commune.features.benefits) {
+    entries.push({
+      title: "¿A qué puedo postular?",
+      description:
+        "Marca tu situación y te mostramos qué beneficios revisar y dónde se postula. Sin RUT ni clave.",
+      href: `${base}/beneficios`,
+      group: "Beneficios",
+      external: false,
+    });
+    for (const b of data.benefits) {
+      /* Llega con su situación ya marcada; el orientador lee ?s= al cargar. */
+      const query = b.triggers.length > 0 ? `?s=${b.triggers[0]}` : "";
+      entries.push({
+        title: b.title,
+        description: `${b.institution} · ${b.summary}`,
+        href: `${base}/beneficios${query}`,
+        group: "Beneficios",
+        external: false,
+      });
+    }
+  }
   if (commune.features.transparency) {
     entries.push({
       title: "Transparencia y presupuesto municipal",

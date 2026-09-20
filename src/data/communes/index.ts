@@ -39,6 +39,7 @@ const empty: CommuneData = {
   budgetDocumentIndex: [],
   reportedLiabilities: [],
   accountingBalance: [],
+  benefits: [],
 };
 
 /** Dataset de una comuna; comuna desconocida devuelve dataset vacío. */

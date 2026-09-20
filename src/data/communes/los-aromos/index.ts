@@ -31,4 +31,5 @@ export const losAromosData: CommuneData = {
   budgetDocumentIndex: [],
   reportedLiabilities: [],
   accountingBalance: [],
+  benefits: [],
 };
