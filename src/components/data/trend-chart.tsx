@@ -167,7 +167,7 @@ export function TrendChart({
           viewBox={`0 0 ${W} ${H}`}
           width={W}
           height={H}
-          className="block h-auto w-full touch-none overflow-visible"
+          className="block h-auto w-full touch-pan-y overflow-visible"
           role="img"
           aria-hidden="true"
           onPointerMove={onPointer}

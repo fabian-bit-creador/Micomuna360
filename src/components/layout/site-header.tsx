@@ -1,34 +1,33 @@
 import Link from "next/link";
 
+import { CommuneSwitcher } from "@/components/layout/commune-switcher";
 import { Logo } from "@/components/layout/logo";
 import { MobileNav } from "@/components/layout/mobile-nav";
 import { NavLink } from "@/components/layout/nav-link";
 import { SkipLink } from "@/components/layout/skip-link";
-import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import type { CommuneConfig } from "@/config/communes";
+import { listCommunes, type CommuneConfig } from "@/config/communes";
 import { communeNav, reportHref } from "@/config/nav";
 
 export function SiteHeader({ commune }: { commune: CommuneConfig }) {
   const nav = communeNav(commune);
   const report = reportHref(commune);
+  const option = (c: CommuneConfig) => ({
+    id: c.id,
+    name: c.name,
+    isDemo: c.isDemo,
+  });
 
   return (
     <header className="sticky top-0 z-40 w-full border-b bg-background/90 backdrop-blur">
       <SkipLink />
       <div className="mx-auto flex h-16 max-w-6xl items-center justify-between gap-3 px-4">
         <div className="flex min-w-0 items-center gap-2.5">
-          <Logo href={`/${commune.id}`} />
-          <Badge
-            variant="secondary"
-            className={
-              commune.isDemo
-                ? "hidden bg-brand-teal/15 text-brand-teal-ink sm:inline-flex"
-                : "hidden bg-brand-terracotta/15 text-brand-terracotta-ink sm:inline-flex"
-            }
-          >
-            {commune.name} · {commune.isDemo ? "demo" : "piloto"}
-          </Badge>
+          <Logo href={`/${commune.id}`} compactOnMobile />
+          <CommuneSwitcher
+            current={option(commune)}
+            communes={listCommunes().map(option)}
+          />
         </div>
         <nav
           className="hidden items-center gap-0.5 lg:flex"

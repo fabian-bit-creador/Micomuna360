@@ -152,6 +152,7 @@ export async function PilotoHome({ commune }: { commune: CommuneConfig }) {
           <div className="mt-8">
             <SearchBox
               entries={searchEntries}
+              limit={6}
               placeholder={`Busca un trámite o lugar de ${commune.name}…`}
             />
           </div>

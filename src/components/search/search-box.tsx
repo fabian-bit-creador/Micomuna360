@@ -18,7 +18,7 @@ function normalize(text: string): string {
 interface SearchBoxProps {
   entries: SearchEntry[];
   placeholder?: string;
-  /** Máximo de resultados visibles. */
+  /** Resultados visibles antes de "ver todos". */
   limit?: number;
 }
 
@@ -32,9 +32,10 @@ export function SearchBox({
   limit = 12,
 }: SearchBoxProps) {
   const [query, setQuery] = useState("");
+  const [showAll, setShowAll] = useState(false);
   const resultsId = useId();
 
-  const results = useMemo(() => {
+  const matches = useMemo(() => {
     const q = normalize(query.trim());
     if (q.length < 2) return [];
     return entries
@@ -46,11 +47,12 @@ export function SearchBox({
       })
       .filter((r) => r.score > 0)
       .sort((a, b) => b.score - a.score)
-      .slice(0, limit)
       .map((r) => r.entry);
-  }, [entries, query, limit]);
+  }, [entries, query]);
 
-  const showEmpty = query.trim().length >= 2 && results.length === 0;
+  const results = showAll ? matches : matches.slice(0, limit);
+  const hidden = matches.length - results.length;
+  const showEmpty = query.trim().length >= 2 && matches.length === 0;
 
   return (
     <div className="w-full max-w-xl">
@@ -65,13 +67,20 @@ export function SearchBox({
           aria-label="Buscador ciudadano"
           aria-controls={resultsId}
           value={query}
-          onChange={(e) => setQuery(e.target.value)}
+          onChange={(e) => {
+            setQuery(e.target.value);
+            setShowAll(false);
+          }}
           placeholder={placeholder}
           className="h-12 rounded-xl bg-card pl-10 text-base shadow-sm"
         />
       </div>
 
-      <div id={resultsId} aria-live="polite">
+      <div id={resultsId}>
+        <p aria-live="polite" className="sr-only">
+          {matches.length > 0 &&
+            `${matches.length} ${matches.length === 1 ? "resultado" : "resultados"}`}
+        </p>
         {results.length > 0 && (
           <ul className="mt-2 divide-y overflow-hidden rounded-xl border bg-card shadow-md">
             {results.map((entry) => (
@@ -95,6 +104,20 @@ export function SearchBox({
                 )}
               </li>
             ))}
+            {hidden > 0 && (
+              <li className="flex flex-wrap items-center justify-between gap-2 bg-muted/60 px-4 py-2.5 text-sm text-muted-foreground">
+                <span>
+                  Mostrando {results.length} de {matches.length} resultados
+                </span>
+                <button
+                  type="button"
+                  onClick={() => setShowAll(true)}
+                  className="min-h-9 rounded-md px-2 font-semibold text-brand-teal-ink underline-offset-4 hover:underline focus-visible:ring-[3px] focus-visible:ring-ring/50 focus-visible:outline-none"
+                >
+                  Ver los {matches.length}
+                </button>
+              </li>
+            )}
           </ul>
         )}
         {showEmpty && (

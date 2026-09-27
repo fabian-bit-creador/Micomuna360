@@ -11,6 +11,8 @@ interface LogoProps {
   variant?: "default" | "inverse";
   /** Destino del enlace (por defecto, el portal raíz). */
   href?: string;
+  /** En pantallas angostas muestra solo el isotipo (deja espacio a la comuna). */
+  compactOnMobile?: boolean;
 }
 
 /** Logo de MiComuna360: isotipo (círculo 360° + pin) y wordmark. */
@@ -19,6 +21,7 @@ export function Logo({
   iconOnly = false,
   variant = "default",
   href = "/",
+  compactOnMobile = false,
 }: LogoProps) {
   return (
     <Link
@@ -38,7 +41,12 @@ export function Logo({
         )}
       />
       {!iconOnly && (
-        <span className="font-display text-xl font-bold tracking-tight">
+        <span
+          className={cn(
+            "font-display text-xl font-bold tracking-tight",
+            compactOnMobile && "hidden sm:inline"
+          )}
+        >
           <span
             className={
               variant === "inverse"

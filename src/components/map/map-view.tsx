@@ -86,6 +86,17 @@ export default function MapView({
       zoom,
       // Evita capturar el scroll de la página al pasar por encima.
       scrollWheelZoom: false,
+      zoomControl: false,
+    });
+    // Controles y botones en español (Leaflet los trae en inglés).
+    L.control
+      .zoom({ zoomInTitle: "Acercar", zoomOutTitle: "Alejar" })
+      .addTo(map);
+    map.on("popupopen", (e) => {
+      e.popup
+        .getElement()
+        ?.querySelector(".leaflet-popup-close-button")
+        ?.setAttribute("aria-label", "Cerrar ficha");
     });
     L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png", {
       maxZoom: 19,

@@ -163,3 +163,16 @@
     @apply text-primary font-display;
   }
 }
+
+/* Quien pide menos movimiento en su sistema no ve desplazamientos ni
+   animaciones (tarjetas que se elevan, menús que se deslizan). */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  ::before,
+  ::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
