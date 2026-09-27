@@ -131,7 +131,8 @@ Hay dos tipos de ícono, y cada uno tiene su lugar:
 
 ### Pedido para íconos de sección en relieve
 
-Sirve para ChatGPT o para Higgsfield. Adjuntar
+Sirve para Canva (así se hicieron los nueve actuales), ChatGPT o
+Higgsfield (este último requiere el plan Basic o superior). Adjuntar
 `docs/marca/fuentes/MiComuna360-logo-original-3D-2048.png` como referencia.
 
 ```

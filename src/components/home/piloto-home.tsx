@@ -1,15 +1,7 @@
 import {
   ArrowRightIcon,
-  CalendarDaysIcon,
-  ChartLineIcon,
   ExternalLinkIcon,
-  FileTextIcon,
-  MapIcon,
-  MapPinIcon,
-  MedalIcon,
-  PhoneCallIcon,
   ScaleIcon,
-  SearchCheckIcon,
 } from "lucide-react";
 
 import Link from "next/link";
@@ -17,6 +9,10 @@ import Link from "next/link";
 import { BrandMark3D } from "@/components/layout/brand-mark-3d";
 import { SectionHeader } from "@/components/layout/section-header";
 import { SearchBox } from "@/components/search/search-box";
+import {
+  SectionIcon,
+  type SectionIconName,
+} from "@/components/shared/section-icon";
 import { Badge } from "@/components/ui/badge";
 import {
   Card,
@@ -41,72 +37,72 @@ function availableFor(commune: CommuneConfig) {
   const { features } = commune;
   return [
     {
-      icon: FileTextIcon,
       title: "Servicios y trámites",
+      art: "servicios" as SectionIconName,
       description:
         "Pagos, licencias, apoyos sociales y más, cada uno con su sitio oficial.",
       href: "/servicios",
       enabled: features.services,
     },
     {
-      icon: SearchCheckIcon,
       title: "¿A qué puedo postular?",
+      art: "beneficios" as SectionIconName,
       description:
         "Marca tu situación y te mostramos qué beneficios revisar. Sin RUT ni clave.",
       href: "/beneficios",
       enabled: features.benefits,
     },
     {
-      icon: MedalIcon,
       title: "Deporte en tu barrio",
+      art: "deportes" as SectionIconName,
       description:
         "Escuelas y talleres deportivos: qué días, a qué hora y dónde, con cómo inscribirse.",
       href: "/deportes",
       enabled: features.sports,
     },
     {
-      icon: PhoneCallIcon,
       title: "Teléfonos útiles",
+      art: "telefonos" as SectionIconName,
       description:
         "Emergencias, oficinas municipales, CESFAM y líneas de apoyo, para llamar con un toque.",
       href: "/telefonos",
       enabled: features.phones,
     },
     {
-      icon: CalendarDaysIcon,
       title: "Agenda comunal",
+      art: "agenda" as SectionIconName,
       description:
         "Teatro, deporte y actividades para la familia, con fecha, lugar y cómo entrar.",
       href: "/actividades",
       enabled: features.events,
     },
     {
-      icon: ScaleIcon,
       title: "Transparencia municipal",
+      art: "transparencia" as SectionIconName,
       description:
         "En qué se gasta la plata de la comuna y qué puedes pedirle al municipio.",
       href: "/transparencia",
       enabled: features.transparency,
     },
     {
-      icon: ChartLineIcon,
       title: `${commune.name} en cifras`,
+      art: "datos" as SectionIconName,
       description:
         "Salud, educación y finanzas municipales, comparadas con la historia de la comuna y con la región.",
       href: "/datos",
       enabled: features.dataPage,
     },
     {
-      icon: MapPinIcon,
       title: "Directorio territorial",
+      art: "directorio" as SectionIconName,
       description:
         "Municipio, centros de salud, recintos deportivos y emergencias, con dirección verificada y cómo llegar.",
       href: "/directorio",
       enabled: features.directory,
     },
     {
-      icon: MapIcon,
       title: "Mapa de la comuna",
+      art: "mapa" as SectionIconName,
       description:
         "Los mismos lugares sobre el mapa, con coordenadas del geoportal municipal.",
       href: "/mapa",
@@ -177,9 +173,7 @@ export async function PilotoHome({ commune }: { commune: CommuneConfig }) {
             <Link key={item.title} href={`${base}${item.href}`} className="group">
               <Card className="h-full gap-0 py-5 transition-all group-hover:-translate-y-0.5 group-hover:shadow-md">
                 <CardContent className="flex items-start gap-4 px-5">
-                  <span className="flex size-11 shrink-0 items-center justify-center rounded-xl bg-brand-teal/15 text-brand-teal-ink">
-                    <item.icon className="size-6" />
-                  </span>
+                  <SectionIcon name={item.art} />
                   <div className="min-w-0 flex-1">
                     <h3 className="flex items-center justify-between font-bold text-primary">
                       {item.title}
