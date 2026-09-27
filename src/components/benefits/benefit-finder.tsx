@@ -44,13 +44,18 @@ const situations = [
 ];
 
 /*
- * El buscador ciudadano enlaza aquí con ?s=<situación> para que el vecino
- * llegue con su caso ya marcado. La URL se lee después de hidratar (el
- * servidor entrega "" ), así la página se sigue prerenderizando estática.
+ * El buscador ciudadano enlaza aquí con #s=<situación> para que el vecino
+ * llegue con su caso ya marcado. Va en el fragmento (#) y no en la consulta
+ * (?) porque el navegador no envía el fragmento al servidor: la situación no
+ * queda en registros de acceso. Se lee después de hidratar (el servidor
+ * entrega ""), así la página se sigue prerenderizando estática.
  */
-const noSubscribe = () => () => {};
-const readQuery = () => window.location.search;
-const readServerQuery = () => "";
+const subscribeHash = (onChange: () => void) => {
+  window.addEventListener("hashchange", onChange);
+  return () => window.removeEventListener("hashchange", onChange);
+};
+const readHash = () => window.location.hash.slice(1);
+const readServerHash = () => "";
 
 /**
  * Orientador de beneficios: marca tu situación y te muestra qué revisar.
@@ -65,7 +70,7 @@ export function BenefitFinder({
   items: BenefitOrientation[];
   sources: Record<string, DataSource>;
 }) {
-  const query = useSyncExternalStore(noSubscribe, readQuery, readServerQuery);
+  const query = useSyncExternalStore(subscribeHash, readHash, readServerHash);
   const fromUrl = useMemo(
     () =>
       new URLSearchParams(query)

@@ -41,8 +41,9 @@ export function buildSearchIndex(commune: CommuneConfig): SearchEntry[] {
       external: false,
     });
     for (const b of data.benefits) {
-      /* Llega con su situación ya marcada; el orientador lee ?s= al cargar. */
-      const query = b.triggers.length > 0 ? `?s=${b.triggers[0]}` : "";
+      /* Llega con su situación ya marcada. Va en el fragmento (#s=), que el
+         navegador no envía al servidor. */
+      const query = b.triggers.length > 0 ? `#s=${b.triggers[0]}` : "";
       entries.push({
         title: b.title,
         description: `${b.institution} · ${b.summary}`,
