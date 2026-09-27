@@ -61,6 +61,9 @@ indicadores) con la fuente y la fecha de verificación de cada dato. El
   comuna, URL canónica, vista previa con imagen de `/og/<comuna>`. La comuna
   de demostración y las secciones desactivadas llevan `noindex` y quedan
   fuera de `app/sitemap.ts`.
+- **Imágenes**: un lugar o negocio real se muestra con su foto real (propia,
+  con licencia libre o con permiso) y su crédito; las ilustraciones con IA
+  solo para temas generales y rotuladas. Detalle en `docs/imagenes.md`.
 - **Mapas**: Leaflet se carga solo en el cliente (`next/dynamic` con
   `ssr: false`) sobre teselas de OpenStreetMap, con lista alternativa.
 
