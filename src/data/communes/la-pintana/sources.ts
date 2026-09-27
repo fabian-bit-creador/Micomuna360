@@ -3,12 +3,13 @@ import type { DataSource } from "@/types";
 /**
  * Registro de fuentes del piloto La Pintana.
  *
- * Espejo legible en docs/fuentes-la-pintana.md. Método de verificación de
- * esta etapa: revisión de los sitios y de su contenido indexado por
- * buscadores (el entorno de desarrollo no permite navegación directa).
+ * Espejo legible en docs/fuentes-la-pintana.md. Método de verificación:
+ * navegación directa a cada sitio y revisión de su contenido (desde el
+ * 2026-09-27; antes, contenido indexado por buscadores). Vigencia: 3 meses
+ * para sitios municipales, 6 para nacionales.
  * Nada con status distinto de "verificado" se muestra como vigente.
  *
- * Totales: 24 fuentes registradas — 23 verificadas, 1 pendiente de clasificación
+ * Totales: 25 fuentes registradas — 24 verificadas, 1 pendiente de clasificación
  * (el informe de pasivos, cuya clasificación contable falta confirmar)
  * (la ficha de Transparencia Activa pasó de pendiente a verificada el
  * 2026-07-19 con el enlace directo entregado desde pintana.cl).
@@ -23,9 +24,9 @@ export const sources: DataSource[] = [
     featured: true,
     url: "https://pintana.cl/",
     publishedAt: null,
-    verifiedAt: "2026-07-19",
+    verifiedAt: "2026-09-27",
     status: "verificado",
-    validUntil: "2026-10-19",
+    validUntil: "2026-12-27",
     notes: null,
   },
   {
@@ -37,11 +38,11 @@ export const sources: DataSource[] = [
     featured: false,
     url: "https://pintana.cl/?page_id=7033",
     publishedAt: null,
-    verifiedAt: "2026-07-19",
+    verifiedAt: "2026-09-27",
     status: "verificado",
-    validUntil: "2026-10-19",
+    validUntil: "2026-12-27",
     notes:
-      "Dirección del edificio consistorial (Avda. Santa Rosa N°12.975) y horarios confirmados en contenido indexado del sitio oficial.",
+      "Dirección del edificio consistorial (Avda. Santa Rosa N°12.975) y horarios (L–J 8:30–14:00 y 15:00–17:00 · V 8:30–14:00 y 15:00–16:00) confirmados navegando directo el sitio oficial el 2026-09-27.",
   },
   {
     id: "lp-muni-tramites",
@@ -52,9 +53,9 @@ export const sources: DataSource[] = [
     featured: false,
     url: "https://pintana.cl/?page_id=2460",
     publishedAt: null,
-    verifiedAt: "2026-07-19",
+    verifiedAt: "2026-09-27",
     status: "verificado",
-    validUntil: "2026-10-19",
+    validUntil: "2026-12-27",
     notes: null,
   },
   {
@@ -66,9 +67,9 @@ export const sources: DataSource[] = [
     featured: true,
     url: "https://pintana.cl/?page_id=4122",
     publishedAt: null,
-    verifiedAt: "2026-07-19",
+    verifiedAt: "2026-09-27",
     status: "verificado",
-    validUntil: "2026-10-19",
+    validUntil: "2026-12-27",
     notes:
       "Permite pagar el permiso de circulación con RUT y patente; el pago ocurre íntegramente en la plataforma municipal.",
   },
@@ -81,9 +82,9 @@ export const sources: DataSource[] = [
     featured: false,
     url: "https://pintana.cl/?page_id=7910",
     publishedAt: null,
-    verifiedAt: "2026-07-19",
+    verifiedAt: "2026-09-27",
     status: "verificado",
-    validUntil: "2026-10-19",
+    validUntil: "2026-12-27",
     notes: null,
   },
   {
@@ -95,9 +96,9 @@ export const sources: DataSource[] = [
     featured: false,
     url: "https://pintana.cl/?page_id=8115",
     publishedAt: null,
-    verifiedAt: "2026-07-19",
+    verifiedAt: "2026-09-27",
     status: "verificado",
-    validUntil: "2026-10-19",
+    validUntil: "2026-12-27",
     notes:
       "La reserva se realiza en la plataforma externa e-com utilizada por el municipio; los cupos se abren el primer día hábil de cada mes.",
   },
@@ -110,9 +111,9 @@ export const sources: DataSource[] = [
     featured: true,
     url: "https://www.dideco.cl/",
     publishedAt: null,
-    verifiedAt: "2026-07-19",
+    verifiedAt: "2026-09-27",
     status: "verificado",
-    validUntil: "2026-10-19",
+    validUntil: "2026-12-27",
     notes: null,
   },
   {
@@ -124,10 +125,11 @@ export const sources: DataSource[] = [
     featured: true,
     url: "https://www.lapintana.smartdideco.cl/",
     publishedAt: null,
-    verifiedAt: "2026-07-19",
+    verifiedAt: "2026-09-27",
     status: "verificado",
-    validUntil: "2026-10-19",
-    notes: "Plataforma digital de programas y atenciones DIDECO.",
+    validUntil: "2026-12-27",
+    notes:
+      "Enlace vigente según dideco.cl (verificado directo el 2026-09-27). El servidor de SmartDIDECO rechaza conexiones desde fuera de Chile, así que no se pudo abrir desde el entorno de verificación.",
   },
   {
     id: "lp-deportes",
@@ -138,9 +140,9 @@ export const sources: DataSource[] = [
     featured: true,
     url: "https://www.pintanadeportes.cl/",
     publishedAt: null,
-    verifiedAt: "2026-07-19",
+    verifiedAt: "2026-09-27",
     status: "verificado",
-    validUntil: "2026-10-19",
+    validUntil: "2026-12-27",
     notes:
       "Incluye páginas propias por recinto (Polideportivo, Club de Campo, talleres).",
   },
@@ -153,11 +155,11 @@ export const sources: DataSource[] = [
     featured: false,
     url: "https://www.pintanadeportes.cl/",
     publishedAt: null,
-    verifiedAt: "2026-07-19",
+    verifiedAt: "2026-09-27",
     status: "verificado",
-    validUntil: "2026-10-19",
+    validUntil: "2026-12-27",
     notes:
-      "Direcciones de Estadio Municipal, Club de Campo, Polideportivo y Complejo Las Rosas tomadas del contenido del sitio oficial. Horarios y teléfonos no publicados aquí por no estar verificados.",
+      "Direcciones de Estadio Municipal, Club de Campo, Polideportivo y Complejo Las Rosas tomadas del contenido del sitio oficial y re-confirmadas navegando directo el 2026-09-27. Horarios y teléfonos no publicados aquí por no estar verificados.",
   },
   {
     id: "lp-cultura",
@@ -168,9 +170,9 @@ export const sources: DataSource[] = [
     featured: true,
     url: "https://www.culturapintana.cl/",
     publishedAt: null,
-    verifiedAt: "2026-07-19",
+    verifiedAt: "2026-09-27",
     status: "verificado",
-    validUntil: "2026-10-19",
+    validUntil: "2026-12-27",
     notes: null,
   },
   {
@@ -182,9 +184,9 @@ export const sources: DataSource[] = [
     featured: true,
     url: "https://geopintana-lapintana.hub.arcgis.com/",
     publishedAt: null,
-    verifiedAt: "2026-07-19",
+    verifiedAt: "2026-09-27",
     status: "verificado",
-    validUntil: "2026-10-19",
+    validUntil: "2026-12-27",
     notes:
       "Fuente candidata de coordenadas oficiales para el mapa (etapa P4).",
   },
@@ -197,9 +199,9 @@ export const sources: DataSource[] = [
     featured: true,
     url: "https://www.chileatiende.gob.cl/",
     publishedAt: null,
-    verifiedAt: "2026-07-19",
+    verifiedAt: "2026-09-27",
     status: "verificado",
-    validUntil: "2027-01-19",
+    validUntil: "2027-03-27",
     notes: null,
   },
   {
@@ -211,9 +213,9 @@ export const sources: DataSource[] = [
     featured: false,
     url: "https://www.registrosocial.gob.cl/",
     publishedAt: null,
-    verifiedAt: "2026-07-19",
+    verifiedAt: "2026-09-27",
     status: "verificado",
-    validUntil: "2027-01-19",
+    validUntil: "2027-03-27",
     notes: null,
   },
   {
@@ -225,11 +227,11 @@ export const sources: DataSource[] = [
     featured: false,
     url: "https://www.portaltransparencia.cl/",
     publishedAt: null,
-    verifiedAt: "2026-07-19",
+    verifiedAt: "2026-09-27",
     status: "verificado",
-    validUntil: "2027-01-19",
+    validUntil: "2027-03-27",
     notes:
-      "Punto de entrada a la Transparencia Activa municipal. El enlace directo a la sección de La Pintana queda pendiente de verificación.",
+      "Punto de entrada a la Transparencia Activa municipal. El enlace directo a la ficha de La Pintana está en lp-transparencia-directa.",
   },
   {
     id: "lp-ta-estados-financieros",
@@ -259,7 +261,23 @@ export const sources: DataSource[] = [
     status: "verificado",
     validUntil: "2027-03-04",
     notes:
-      "Inventario de 28 documentos (14 municipales y 14 de salud) normalizado desde los CSV del portal. Son enlaces: el contenido de los informes aún no se ha leído, por lo que de aquí no se derivan cifras de ejecución.",
+      "Inventario de 28 documentos (14 municipales y 14 de salud) normalizado desde los CSV del portal. Las cifras de ejecución se leyeron de los informes de junio (ver lp-ta-ejecucion-junio-2026); el resto se publica como enlace.",
+  },
+  {
+    id: "lp-ta-ejecucion-junio-2026",
+    institution: "Municipalidad de La Pintana",
+    pageName:
+      "Balances presupuestarios de gastos e ingresos al 30 de junio de 2026",
+    description:
+      "Presupuesto inicial y vigente, lo comprometido y lo pagado por subtítulo, áreas municipal y salud.",
+    featured: false,
+    url: "https://www.portaltransparencia.cl/PortalPdT/pdtta?codOrganismo=MU124",
+    publishedAt: "2026-07-07",
+    verifiedAt: "2026-09-27",
+    status: "verificado",
+    validUntil: "2027-03-27",
+    notes:
+      "Cuatro PDF escaneados descargados de Transparencia Activa. Se transcribieron las filas de total, subtítulo y tres ítems clave (en miles de pesos) y se verificaron contra el propio informe: saldo impreso fila por fila, suma de subtítulos contra el total (±1 mil pesos por redondeo), continuidad mayo–junio y cruce entre el aporte municipal a salud y lo recibido por salud. No se usa la columna «devengado» de gastos porque no calza entre informes consecutivos.",
   },
   {
     id: "lp-ta-balance-julio-2026",
@@ -355,9 +373,9 @@ export const sources: DataSource[] = [
     featured: true,
     url: "https://www.portaltransparencia.cl/PortalPdT/pdtta?codOrganismo=MU124",
     publishedAt: null,
-    verifiedAt: "2026-07-19",
+    verifiedAt: "2026-09-27",
     status: "verificado",
-    validUntil: "2026-10-19",
+    validUntil: "2026-12-27",
     notes:
       "Enlace directo obtenido desde el acceso «Ley de Transparencia» del sitio oficial pintana.cl (verificado por el responsable del proyecto).",
   },

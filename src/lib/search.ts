@@ -54,13 +54,23 @@ export function buildSearchIndex(commune: CommuneConfig): SearchEntry[] {
   }
   if (commune.features.transparency) {
     entries.push({
-      title: "Transparencia y presupuesto municipal",
+      title: "Transparencia municipal",
       description:
         "Qué publica el municipio por ley, qué puedes pedir tú y en qué plazos deben responderte.",
       href: `${base}/transparencia`,
       group: "Transparencia",
       external: false,
     });
+    if (data.budget.length > 0) {
+      entries.push({
+        title: "Presupuesto municipal: en qué se usa y de dónde viene",
+        description:
+          "Cuánto se ha comprometido y pagado, el Fondo Común Municipal y el presupuesto de salud.",
+        href: `${base}/transparencia#presupuesto`,
+        group: "Transparencia",
+        external: false,
+      });
+    }
   }
   if (commune.features.directory) {
     for (const p of data.places) {

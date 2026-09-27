@@ -3,6 +3,7 @@ import { places } from "./places";
 import { benefits } from "./benefits";
 import { financialReports } from "./financial-reports";
 import { accountingBalance } from "./transparency/accounting-balance";
+import { budgetExecution } from "./transparency/budget-execution";
 import { budgetDocumentIndex } from "./transparency/budget-index";
 import { reportedLiabilities } from "./transparency/liabilities";
 import { services } from "./services";
@@ -15,8 +16,6 @@ import { sources } from "./sources";
  * (ver docs/fuentes-la-pintana.md). Mientras una sección no tenga datos
  * verificados, su arreglo permanece vacío y la funcionalidad se mantiene
  * desactivada en la configuración de la comuna.
- *
- * Etapa P1: dataset vacío a propósito. Se llena en la etapa P2.
  */
 export const laPintanaData: CommuneData = {
   categories: [],
@@ -32,8 +31,8 @@ export const laPintanaData: CommuneData = {
   organizations: [],
   services,
   sources,
-  /* Pendiente: cifras de ejecución presupuestaria (requiere leer los informes). */
-  budget: [],
+  /* Ejecución al 30 de junio de 2026, conciliada contra los informes. */
+  budget: budgetExecution,
   financialReports,
   budgetDocumentIndex,
   reportedLiabilities,

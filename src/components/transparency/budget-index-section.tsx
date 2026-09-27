@@ -15,8 +15,8 @@ interface BudgetIndexSectionProps {
 }
 
 /**
- * Informes mensuales de ingresos y gastos, mes por mes. Son enlaces a los
- * documentos oficiales: de aquí no se derivan cifras ni porcentajes.
+ * Informes mensuales de ingresos y gastos, mes por mes, con enlace al
+ * documento oficial. Las cifras resumidas viven en BudgetSection.
  */
 export function BudgetIndexSection({ rows, source }: BudgetIndexSectionProps) {
   if (rows.length === 0) return null;
@@ -96,10 +96,12 @@ export function BudgetIndexSection({ rows, source }: BudgetIndexSectionProps) {
       </div>
 
       <p className="mt-4 rounded-lg bg-muted px-4 py-3 text-sm text-muted-foreground">
-        Todavía no resumimos estos informes en cifras ni gráficos: para eso hay
-        que leer los {rows.length} documentos y conciliar sus totales. Mientras
-        tanto te dejamos el acceso directo, que es lo que el municipio publica
-        hoy.
+        El informe acumulado más reciente ya está resumido en cifras en{" "}
+        <a href="#presupuesto" className="font-semibold text-brand-teal underline underline-offset-2">
+          el presupuesto, en simple
+        </a>
+        . Los demás informes los dejamos con acceso directo al documento
+        oficial.
       </p>
 
       {source && <SourceBadge source={source} className="mt-3" />}

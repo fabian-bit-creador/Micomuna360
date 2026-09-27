@@ -5,9 +5,9 @@ import type { BudgetDocumentIndexRow } from "@/types";
  * Municipalidad de La Pintana publica en Transparencia Activa (enero a julio
  * de 2026, áreas municipal y salud, ingresos y gastos).
  *
- * IMPORTANTE: son enlaces a documentos, no cifras. El contenido de estos 28
- * informes todavía no se ha leído, así que de aquí no se derivan montos,
- * porcentajes de ejecución ni tendencias.
+ * Son enlaces a documentos, no cifras. Las cifras de ejecución se leyeron de
+ * los informes acumulados de junio y viven en budget-execution.ts, con su
+ * propia conciliación.
  */
 export const budgetDocumentIndex: BudgetDocumentIndexRow[] = [
   {

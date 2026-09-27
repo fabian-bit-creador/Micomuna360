@@ -328,21 +328,46 @@ export interface AccountingBalanceRow {
 }
 
 /**
- * Línea de presupuesto municipal publicada. Los montos van en pesos
- * chilenos y siempre provienen de un informe oficial (sourceId).
+ * Una fila del balance presupuestario mensual del municipio, tal como la
+ * imprime el informe oficial: acumulada a la fecha de corte y en MILES de
+ * pesos (la UI convierte a pesos). Se guarda el saldo impreso para que la
+ * transcripción se pueda verificar fila por fila.
  */
 export interface BudgetLine {
   id: string;
-  /** Año presupuestario, p. ej. 2026. */
+  /** Presupuesto del área municipal o del área de salud (son distintos). */
+  area: "municipal" | "salud";
+  flow: "gastos" | "ingresos";
   year: number;
-  /** Partida o área en lenguaje ciudadano, p. ej. "Salud". */
-  category: string;
-  /** Presupuesto vigente, en pesos. */
-  budgeted: number;
-  /** Ejecutado a la fecha del informe, en pesos. */
-  executed: number;
-  /** Período del informe, p. ej. "primer trimestre 2026". */
-  period: string;
+  /** Fecha de corte del informe (YYYY-MM-DD); los montos son acumulados. */
+  cutoffDate: string;
+  /**
+   * Código del clasificador: "215"/"115" para el total, "215-21" para un
+   * subtítulo y "115-08-03" para un ítem de detalle.
+   */
+  code: string;
+  level: "total" | "subtitulo" | "item";
+  /** Denominación oficial del clasificador presupuestario. */
+  officialName: string;
+  /** La misma partida en lenguaje ciudadano. */
+  label: string;
+  /** Presupuesto inicial (aprobado), en miles de pesos. */
+  initialK: number;
+  /** Presupuesto vigente (con modificaciones), en miles de pesos. */
+  currentK: number;
+  /**
+   * Gastos: obligado acumulado (lo comprometido).
+   * Ingresos: devengado acumulado (lo que se tiene derecho a cobrar).
+   */
+  committedK: number;
+  /** Gastos: pagado acumulado. Ingresos: percibido acumulado. */
+  paidK: number;
+  /** Saldo presupuestario impreso: vigente menos `committedK`. */
+  balanceK: number;
+  /** Aclaración ciudadana cuando la fila se presta a confusión. */
+  note: string | null;
+  /** Informe del inventario (`BudgetDocumentIndexRow.id`) de donde sale. */
+  documentId: string;
   sourceId: string;
 }
 

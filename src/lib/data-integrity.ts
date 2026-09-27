@@ -50,13 +50,27 @@ const placeSchema = z.object({
   sourceId: z.string().nullable().optional(),
 });
 
+/*
+ * Montos en miles de pesos, enteros como en el informe. El saldo puede ser
+ * negativo (se recaudó más de lo presupuestado), los demás no.
+ */
 const budgetSchema = z.object({
   id: z.string().min(1),
+  area: z.enum(["municipal", "salud"]),
+  flow: z.enum(["gastos", "ingresos"]),
   year: z.number().int().min(2000).max(2100),
-  category: z.string().min(1),
-  budgeted: z.number().min(0),
-  executed: z.number().min(0),
-  period: z.string().min(1),
+  cutoffDate: isoDate,
+  code: z.string().regex(/^(115|215)(-\d{2,3})*$/, "código de clasificador inválido"),
+  level: z.enum(["total", "subtitulo", "item"]),
+  officialName: z.string().min(1),
+  label: z.string().min(1),
+  initialK: z.number().int().min(0),
+  currentK: z.number().int().min(0),
+  committedK: z.number().int().min(0),
+  paidK: z.number().int().min(0),
+  balanceK: z.number().int(),
+  note: z.string().min(1).nullable(),
+  documentId: z.string().min(1),
   sourceId: z.string().min(1),
 });
 
@@ -192,6 +206,7 @@ export function validateCommuneData(
     }
   }
 
+  const documentIds = new Set(data.budgetDocumentIndex.map((d) => d.id));
   for (const line of data.budget) {
     const result = budgetSchema.safeParse(line);
     if (!result.success) {
@@ -204,6 +219,11 @@ export function validateCommuneData(
     if (!sourceIds.has(line.sourceId)) {
       fail(
         `presupuesto "${line.id}" referencia la fuente inexistente "${line.sourceId}"`
+      );
+    }
+    if (!documentIds.has(line.documentId)) {
+      fail(
+        `presupuesto "${line.id}" referencia el informe inexistente "${line.documentId}"`
       );
     }
   }

@@ -77,7 +77,8 @@ export function formatClpCompact(amount: number): string {
     return `$${miles.toLocaleString("es-CL", { maximumFractionDigits: 1 })} mil millones`;
   }
   if (Math.abs(millones) >= 1) {
-    return `$${millones.toLocaleString("es-CL", { maximumFractionDigits: 1 })} millones`;
+    const shown = millones.toLocaleString("es-CL", { maximumFractionDigits: 1 });
+    return `$${shown} ${shown === "1" ? "millón" : "millones"}`;
   }
   return formatClp(amount);
 }

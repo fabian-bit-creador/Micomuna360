@@ -21,7 +21,7 @@ export const laPintana: CommuneConfig = {
    */
   center: { lat: -33.583, lng: -70.634 },
   zoom: 13,
-  updatedAt: "2026-07-19",
+  updatedAt: "2026-09-27",
   features: {
     news: false,
     events: false,

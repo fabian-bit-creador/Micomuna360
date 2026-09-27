@@ -1,0 +1,40 @@
+informe,codigo,nivel,denominacion_oficial,presupuesto_inicial_miles,presupuesto_vigente_miles,saldo_impreso_miles,comprometido_o_devengado_miles,pagado_o_percibido_miles
+MU124-municipal-2026-06-gastos,215,total,Gastos,47865315,64287585,29902245,34385340,25715041
+MU124-municipal-2026-06-gastos,215-21,subtitulo,Gastos en personal,17242647,17934875,10066172,7868703,7868703
+MU124-municipal-2026-06-gastos,215-22,subtitulo,Bienes y servicios de consumo,19907341,23239817,5320783,17919034,9105324
+MU124-municipal-2026-06-gastos,215-23,subtitulo,Prestaciones de seguridad social,920000,920000,529122,390878,390878
+MU124-municipal-2026-06-gastos,215-24,subtitulo,Transferencias corrientes,6320041,6907657,2233020,4674637,4104339
+MU124-municipal-2026-06-gastos,215-24-03-101,item,A servicios incorporados a su gestión,1905055,1847240,610847,1236393,1236393
+MU124-municipal-2026-06-gastos,215-25,subtitulo,Íntegros al fisco,0,2982340,2325929,656411,656411
+MU124-municipal-2026-06-gastos,215-26,subtitulo,Otros gastos corrientes,939063,1068783,355069,713714,713714
+MU124-municipal-2026-06-gastos,215-29,subtitulo,Adquisición de activos no financieros,445932,794406,411988,382418,270977
+MU124-municipal-2026-06-gastos,215-31,subtitulo,Iniciativas de inversión,2035291,8905332,7175689,1729643,1113707
+MU124-municipal-2026-06-gastos,215-33,subtitulo,Transferencias de capital,55000,80000,30098,49902,49902
+MU124-municipal-2026-06-gastos,215-34,subtitulo,Servicio de la deuda,0,1454375,1454375,0,1441087
+MU124-municipal-2026-06-ingresos,115,total,Ingresos,47865315,64287585,23718535,40569050,39448486
+MU124-municipal-2026-06-ingresos,115-03,subtitulo,Tributos sobre el uso de bienes y la realización de actividades,7476500,7556500,2983290,4573210,4500327
+MU124-municipal-2026-06-ingresos,115-05,subtitulo,Transferencias corrientes,1279000,1279000,428776,850224,850224
+MU124-municipal-2026-06-ingresos,115-06,subtitulo,Rentas de la propiedad,640000,650000,284411,365589,365589
+MU124-municipal-2026-06-ingresos,115-07,subtitulo,Ingresos de operación,0,0,-18311,18311,18311
+MU124-municipal-2026-06-ingresos,115-08,subtitulo,Otros ingresos corrientes,37063315,36032556,18908088,17124468,16820104
+MU124-municipal-2026-06-ingresos,115-08-03,item,Participación del Fondo Común Municipal,35707015,34661256,18647650,16013606,15907961
+MU124-municipal-2026-06-ingresos,115-12,subtitulo,Recuperación de préstamos,605000,898040,1,898039,154722
+MU124-municipal-2026-06-ingresos,115-13,subtitulo,Transferencias para gastos de capital,1500,1535006,1132280,402726,402726
+MU124-municipal-2026-06-ingresos,115-15,subtitulo,Saldo inicial de caja,800000,16336483,0,16336483,16336483
+MU124-salud-2026-06-gastos,215,total,Gastos,46620125,49880898,27044947,22835951,22396160
+MU124-salud-2026-06-gastos,215-21,subtitulo,Gastos en personal,35768487,36102470,19783903,16318567,16307747
+MU124-salud-2026-06-gastos,215-22,subtitulo,Bienes y servicios de consumo,7554578,9183191,4821832,4361359,3018694
+MU124-salud-2026-06-gastos,215-23,subtitulo,Prestaciones de seguridad social,518448,1296728,106516,1190212,1190212
+MU124-salud-2026-06-gastos,215-24,subtitulo,Transferencias corrientes,1000,1000,1000,0,0
+MU124-salud-2026-06-gastos,215-26,subtitulo,Otros gastos corrientes,673765,918365,909190,9175,9069
+MU124-salud-2026-06-gastos,215-29,subtitulo,Adquisición de activos no financieros,932759,1330182,373544,956638,822171
+MU124-salud-2026-06-gastos,215-34,subtitulo,Servicio de la deuda,900000,1048962,1048962,0,1048267
+MU124-salud-2026-06-gastos,215-35,subtitulo,Saldo final de caja,271088,0,0,0,0
+MU124-salud-2026-06-ingresos,115,total,Ingresos,46620125,49880898,15906443,33974455,27963595
+MU124-salud-2026-06-ingresos,115-05,subtitulo,Transferencias corrientes,41485831,41617962,15048062,26569900,20802946
+MU124-salud-2026-06-ingresos,115-05-03-006,item,Del Servicio de Salud,38275379,38404818,13522792,24882026,19121688
+MU124-salud-2026-06-ingresos,115-05-03-101,item,De la Municipalidad a servicios incorporados a su gestión,1894209,1916310,679917,1236393,1236393
+MU124-salud-2026-06-ingresos,115-06,subtitulo,Rentas de la propiedad,146471,146471,5630,140841,140841
+MU124-salud-2026-06-ingresos,115-08,subtitulo,Otros ingresos corrientes,1802104,1802104,852751,949353,705446
+MU124-salud-2026-06-ingresos,115-12,subtitulo,Recuperación de préstamos,482266,201486,0,201486,201486
+MU124-salud-2026-06-ingresos,115-15,subtitulo,Saldo inicial de caja,2703453,6112875,0,6112875,6112875

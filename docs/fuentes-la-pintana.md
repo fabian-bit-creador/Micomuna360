@@ -9,40 +9,46 @@ la fuente de verdad que consume la aplicación). Reglas:
 - No se completa información faltante con supuestos: si un dato (horario,
   teléfono, coordenada) no está verificado, no se publica.
 
-**Totales del registro (2026-09-20):** 24 fuentes — 23 verificadas y 1 pendiente de clasificación (el informe de pasivos). (Al cierre de P2 el registro tenía 16 fuentes: 15 verificadas y 1 pendiente; la ficha de Transparencia Activa pasó a verificada con el enlace directo entregado desde pintana.cl. El 2026-09-20 se sumaron las tres fuentes nacionales que usa el orientador «¿A qué puedo postular?».)
+**Totales del registro (2026-09-27):** 25 fuentes — 24 verificadas y 1 pendiente de clasificación (el informe de pasivos). (Al cierre de P2 el registro tenía 16 fuentes: 15 verificadas y 1 pendiente; la ficha de Transparencia Activa pasó a verificada con el enlace directo entregado desde pintana.cl. El 2026-09-20 se sumaron las tres fuentes nacionales que usa el orientador «¿A qué puedo postular?», y el 2026-09-27 la ejecución presupuestaria de junio.)
 
-**Método de verificación de esta etapa (2026-07-19):** revisión de los
-sitios oficiales y de su contenido indexado por buscadores, ya que el
-entorno de desarrollo en la nube no permite navegación directa a estos
-dominios. Recomendado: re-verificación navegando directamente antes de
-presentar el piloto a terceros.
+**Método de verificación (desde 2026-09-27):** navegación directa a cada
+sitio y revisión de su contenido (dirección, horarios, enlaces de pago y de
+reserva). La primera verificación (2026-07-19) se hizo sobre contenido
+indexado por buscadores porque el entorno no alcanzaba estos dominios; la
+re-verificación directa confirmó todos los datos publicados sin cambios.
+Vigencia: 3 meses para sitios municipales y 6 para nacionales.
+
+Dos sitios rechazan conexiones desde fuera de Chile (SmartDIDECO y la Bolsa
+Nacional de Empleo). SmartDIDECO se da por vigente porque dideco.cl lo
+enlaza hoy; conviene abrir ambos desde Chile en la próxima revisión.
 
 | ID | Institución | Página/documento | Estado | Verificado | Vigencia | Observaciones |
 |---|---|---|---|---|---|---|
-| lp-muni-home | Municipalidad de La Pintana | [Sitio oficial](https://pintana.cl/) | verificado | 2026-07-19 | 2026-10-19 | — |
-| lp-muni-direcciones | Municipalidad | [Direcciones Municipales](https://pintana.cl/?page_id=7033) | verificado | 2026-07-19 | 2026-10-19 | Dirección Santa Rosa 12.975 y horarios confirmados en contenido indexado del sitio oficial |
-| lp-muni-tramites | Municipalidad | [Trámites](https://pintana.cl/?page_id=2460) | verificado | 2026-07-19 | 2026-10-19 | — |
-| lp-muni-pagos | Municipalidad | [Pagos online](https://pintana.cl/?page_id=4122) | verificado | 2026-07-19 | 2026-10-19 | Pago permiso circulación con RUT + patente |
-| lp-muni-permisos | Municipalidad | [Permisos de circulación](https://pintana.cl/?page_id=7910) | verificado | 2026-07-19 | 2026-10-19 | — |
-| lp-muni-licencias | Municipalidad | [Licencias de conducir](https://pintana.cl/?page_id=8115) | verificado | 2026-07-19 | 2026-10-19 | Reserva en plataforma externa e-com; cupos el 1er día hábil del mes |
-| lp-dideco | DIDECO | [dideco.cl](https://www.dideco.cl/) | verificado | 2026-07-19 | 2026-10-19 | — |
-| lp-smartdideco | DIDECO | [SmartDIDECO](https://www.lapintana.smartdideco.cl/) | verificado | 2026-07-19 | 2026-10-19 | Plataforma de programas y atenciones |
-| lp-deportes | Corp. de Deportes | [pintanadeportes.cl](https://www.pintanadeportes.cl/) | verificado | 2026-07-19 | 2026-10-19 | — |
-| lp-deportes-recintos | Corp. de Deportes | Recintos (direcciones) | verificado | 2026-07-19 | 2026-10-19 | Direcciones de 4 recintos desde el sitio oficial; horarios/teléfonos NO publicados (no verificados) |
-| lp-cultura | Corp. Cultural | [culturapintana.cl](https://www.culturapintana.cl/) | verificado | 2026-07-19 | 2026-10-19 | — |
-| lp-geoportal | Municipalidad | [GeoPintana](https://geopintana-lapintana.hub.arcgis.com/) | verificado | 2026-07-19 | 2026-10-19 | Fuente candidata de coordenadas (etapa mapa) |
-| cl-chileatiende | ChileAtiende | [chileatiende.gob.cl](https://www.chileatiende.gob.cl/) | verificado | 2026-07-19 | 2027-01-19 | Sin logo hasta verificar condiciones de uso |
-| cl-registro-social | MDSF | [registrosocial.gob.cl](https://www.registrosocial.gob.cl/) | verificado | 2026-07-19 | 2027-01-19 | — |
-| cl-portal-transparencia | Consejo para la Transparencia | [portaltransparencia.cl](https://www.portaltransparencia.cl/) | verificado | 2026-07-19 | 2027-01-19 | Entrada a Transparencia Activa municipal |
+| lp-muni-home | Municipalidad de La Pintana | [Sitio oficial](https://pintana.cl/) | verificado | 2026-09-27 | 2026-12-27 | — |
+| lp-muni-direcciones | Municipalidad | [Direcciones Municipales](https://pintana.cl/?page_id=7033) | verificado | 2026-09-27 | 2026-12-27 | Dirección Santa Rosa 12.975 y horarios confirmados navegando directo el 2026-09-27 |
+| lp-muni-tramites | Municipalidad | [Trámites](https://pintana.cl/?page_id=2460) | verificado | 2026-09-27 | 2026-12-27 | — |
+| lp-muni-pagos | Municipalidad | [Pagos online](https://pintana.cl/?page_id=4122) | verificado | 2026-09-27 | 2026-12-27 | Pago permiso circulación con RUT + patente |
+| lp-muni-permisos | Municipalidad | [Permisos de circulación](https://pintana.cl/?page_id=7910) | verificado | 2026-09-27 | 2026-12-27 | — |
+| lp-muni-licencias | Municipalidad | [Licencias de conducir](https://pintana.cl/?page_id=8115) | verificado | 2026-09-27 | 2026-12-27 | Reserva en plataforma externa e-com; cupos el 1er día hábil del mes |
+| lp-dideco | DIDECO | [dideco.cl](https://www.dideco.cl/) | verificado | 2026-09-27 | 2026-12-27 | — |
+| lp-smartdideco | DIDECO | [SmartDIDECO](https://www.lapintana.smartdideco.cl/) | verificado | 2026-09-27 | 2026-12-27 | Plataforma de programas y atenciones. Vigente según el enlace publicado en dideco.cl; el servidor rechaza conexiones desde fuera de Chile |
+| lp-deportes | Corp. de Deportes | [pintanadeportes.cl](https://www.pintanadeportes.cl/) | verificado | 2026-09-27 | 2026-12-27 | — |
+| lp-deportes-recintos | Corp. de Deportes | Recintos (direcciones) | verificado | 2026-09-27 | 2026-12-27 | Direcciones de 4 recintos desde el sitio oficial; horarios/teléfonos NO publicados (no verificados) |
+| lp-cultura | Corp. Cultural | [culturapintana.cl](https://www.culturapintana.cl/) | verificado | 2026-09-27 | 2026-12-27 | — |
+| lp-geoportal | Municipalidad | [GeoPintana](https://geopintana-lapintana.hub.arcgis.com/) | verificado | 2026-09-27 | 2026-12-27 | Fuente candidata de coordenadas (etapa mapa) |
+| cl-chileatiende | ChileAtiende | [chileatiende.gob.cl](https://www.chileatiende.gob.cl/) | verificado | 2026-09-27 | 2027-03-27 | Sin logo hasta verificar condiciones de uso |
+| cl-registro-social | MDSF | [registrosocial.gob.cl](https://www.registrosocial.gob.cl/) | verificado | 2026-09-27 | 2027-03-27 | — |
+| cl-portal-transparencia | Consejo para la Transparencia | [portaltransparencia.cl](https://www.portaltransparencia.cl/) | verificado | 2026-09-27 | 2027-03-27 | Entrada a Transparencia Activa municipal |
 | lp-ta-estados-financieros | Municipalidad de La Pintana | Estados financieros — Transparencia Activa (ficha MU124) | verificado | 2026-09-04 | 2027-03-16 | Índice CSV de 6 documentos del ejercicio 2025 (informe 16-03-2026) aportado por el responsable del proyecto; archivos alojados en cloud.pintana.cl |
-| lp-ta-indice-ejecucion-2026 | Municipalidad de La Pintana | Balances de ejecución presupuestaria 2026 (28 enlaces) | verificado | 2026-09-04 | 2027-03-04 | 14 informes municipales + 14 de salud, enero–julio 2026. Son enlaces, no cifras |
+| lp-ta-indice-ejecucion-2026 | Municipalidad de La Pintana | Balances de ejecución presupuestaria 2026 (28 enlaces) | verificado | 2026-09-04 | 2027-03-04 | 14 informes municipales + 14 de salud, enero–julio 2026. Las cifras se leyeron de los informes de junio (fila siguiente) |
+| lp-ta-ejecucion-junio-2026 | Municipalidad de La Pintana | Balances presupuestarios de gastos e ingresos al 30 de junio de 2026 (municipal y salud) | verificado | 2026-09-27 | 2027-03-27 | 39 filas transcritas de PDF escaneados, en miles de pesos, conciliadas por código (ver `docs/fuentes/la-pintana-ejecucion-junio-2026/`) |
 | lp-ta-balance-julio-2026 | Municipalidad de La Pintana | Balance de comprobación y saldos, julio 2026, área municipal | verificado | 2026-09-04 | 2027-03-04 | 109 cuentas; extracción conciliada contra los seis totales impresos |
 | lp-ta-pasivos-julio-2026 | Municipalidad de La Pintana | Informe de pasivos, julio 2026, área municipal | **pendiente** | 2026-09-04 | — | 67 filas (58 con prefijo 215, 9 con 115). Falta confirmar la clasificación contable; las familias no se suman entre sí |
 | cl-bne | Bolsa Nacional de Empleo | [bne.cl](https://www.bne.cl/) | verificado | 2026-09-20 | 2027-03-20 | Usada por el orientador de beneficios; enlazamos al catálogo, no a ofertas puntuales |
 | cl-sence | SENCE | [sence.gob.cl/personas](https://www.sence.gob.cl/personas) | verificado | 2026-09-20 | 2027-03-20 | Usada por el orientador de beneficios; no se afirman requisitos ni cupos |
 | cl-sercotec | SERCOTEC | [sercotec.cl](https://www.sercotec.cl/) | verificado | 2026-09-20 | 2027-03-20 | Usada por el orientador de beneficios; las convocatorias cambian, por eso solo enlazamos |
 | cl-consejo-transparencia | Consejo para la Transparencia | [consejotransparencia.cl](https://www.consejotransparencia.cl/) | verificado | 2026-09-04 | 2027-03-04 | Fuente de los plazos del derecho de acceso (20 días hábiles, prórroga de 10, amparo en 15) |
-| lp-transparencia-directa | Municipalidad | [Ficha La Pintana en Portal Transparencia](https://www.portaltransparencia.cl/PortalPdT/pdtta?codOrganismo=MU124) | verificado | 2026-07-19 | 2026-10-19 | Enlace directo obtenido desde el acceso «Ley de Transparencia» de pintana.cl |
+| lp-transparencia-directa | Municipalidad | [Ficha La Pintana en Portal Transparencia](https://www.portaltransparencia.cl/PortalPdT/pdtta?codOrganismo=MU124) | verificado | 2026-09-27 | 2026-12-27 | Enlace directo obtenido desde el acceso «Ley de Transparencia» de pintana.cl |
 
 ## Datos pendientes de verificación (no publicados)
 
@@ -56,23 +62,24 @@ presentar el piloto a terceros.
 - Organizaciones comunitarias (requieren autorización escrita).
 - Horarios y teléfonos de los recintos deportivos.
 
-## Datos que este entorno no puede descargar
+## Acceso directo a las fuentes (desde 2026-09-27)
 
-El proxy de red del entorno de desarrollo bloquea `pintana.cl`,
-`portaltransparencia.cl`, `geopintana` y las teselas de OpenStreetMap. Por
-eso dos insumos de P3 deben aportarse manualmente:
+Hasta septiembre, el proxy de red del entorno de desarrollo bloqueaba
+`pintana.cl`, `portaltransparencia.cl`, `geopintana` y las teselas de
+OpenStreetMap, así que varios insumos debían aportarse a mano. Desde el
+2026-09-27 esos dominios responden y el trabajo se hace directo contra la
+fuente:
 
-1. **Cifras de ejecución presupuestaria** → alimentan `budget`. Los 28
-   informes mensuales de ingresos y gastos ya están inventariados y enlazados
-   (`transparency/budget-index.ts`), pero su contenido no se ha leído: viven en
-   `portaltransparencia.cl` y `cloud.pintana.cl`, ambos bloqueados. Sin ese
-   contenido no se puede afirmar porcentaje de ejecución, gasto por área ni
-   comparación interanual, y no se estima.
-2. **Coordenadas de lugares** (geoportal comunal, CSV/GeoJSON) → completa
-   `lat`/`lng` en `places` y enciende el flag `realMap`.
+1. **Ejecución presupuestaria** → hecho. Se descargaron los 28 informes y se
+   publicaron las cifras acumuladas al 30 de junio, conciliadas por código
+   (`transparency/budget-execution.ts` y
+   `docs/fuentes/la-pintana-ejecucion-junio-2026/`).
+2. **Coordenadas de lugares** → en curso desde el geoportal comunal; el flag
+   `realMap` se enciende solo con coordenadas verificadas.
 
-Mientras no lleguen, la sección de presupuesto y el mapa muestran un estado
-"en preparación" explícito, nunca cifras ni pines aproximados.
+Siguen fuera de alcance desde este entorno: SmartDIDECO y la Bolsa Nacional
+de Empleo (rechazan conexiones desde fuera de Chile) y el portal de
+estadísticas delictuales del CEAD (no responde).
 
 ## Paquete de trabajo incorporado (julio 2026)
 

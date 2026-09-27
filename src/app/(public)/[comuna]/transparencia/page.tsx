@@ -34,7 +34,7 @@ import {
 export const metadata: Metadata = {
   title: "Transparencia",
   description:
-    "Qué información pública puedes consultar y pedir a tu municipio, explicado en simple y con plazos claros.",
+    "En qué se usa el presupuesto municipal, de dónde viene la plata y qué información puedes pedir a tu municipio, explicado en simple.",
 };
 
 /** Pasos del derecho de acceso a la información (Ley de Transparencia). */
@@ -171,6 +171,12 @@ export default async function TransparenciaPage({
         </Card>
       </section>
 
+      <BudgetSection
+        lines={budget}
+        documents={budgetIndex}
+        source={budgetSource}
+      />
+
       {/* Derechos y plazos */}
       <section className="mt-12">
         <h2 className="text-xl font-bold">Lo que la ley te garantiza</h2>
@@ -248,8 +254,6 @@ export default async function TransparenciaPage({
       )}
 
       <BalanceSection rows={balance} source={balanceSource} />
-
-      <BudgetSection lines={budget} source={budgetSource} />
 
       <p className="mt-12 rounded-lg bg-muted px-4 py-3 text-sm text-muted-foreground">
         {siteConfig.name} no tramita solicitudes de información ni recibe
