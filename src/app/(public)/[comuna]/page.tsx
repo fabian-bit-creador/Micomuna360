@@ -4,6 +4,7 @@ import { notFound } from "next/navigation";
 import { DemoHome } from "@/components/home/demo-home";
 import { PilotoHome } from "@/components/home/piloto-home";
 import { getCommune } from "@/config/communes";
+import { communeMetadata } from "@/lib/seo";
 
 export async function generateMetadata({
   params,
@@ -11,17 +12,13 @@ export async function generateMetadata({
   const { comuna } = await params;
   const commune = getCommune(comuna);
   if (!commune) return {};
-  const title = `${commune.name} — Tu comuna en un solo lugar`;
-  const description = commune.isDemo
-    ? `${commune.tagline}. Datos ficticios de demostración.`
-    : `Información pública de ${commune.name} con fuente y fecha de verificación: servicios, trámites y lugares útiles.`;
-  return {
-    title,
-    description,
-    alternates: { canonical: `/${commune.id}` },
-    openGraph: { title, description, url: `/${commune.id}` },
-    twitter: { card: "summary_large_image", title, description },
-  };
+  return communeMetadata(comuna, {
+    path: "",
+    title: commune.name,
+    description: commune.isDemo
+      ? `${commune.tagline}.`
+      : `Información pública de ${commune.name} con fuente y fecha de verificación: servicios, beneficios, lugares, presupuesto y datos de la comuna.`,
+  });
 }
 
 export default async function CommuneHomePage({

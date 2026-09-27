@@ -12,12 +12,20 @@ import { Badge } from "@/components/ui/badge";
 import { Card, CardContent } from "@/components/ui/card";
 import { getLocations, getOrganizations } from "@/lib/repositories";
 import type { OrganizationType } from "@/types";
+import { communeMetadata } from "@/lib/seo";
 
-export const metadata: Metadata = {
-  title: "Organizaciones comunitarias",
-  description:
-    "Juntas de vecinos, clubes deportivos, comités de vivienda, fundaciones y agrupaciones de la comuna.",
-};
+export async function generateMetadata({
+  params,
+}: PageProps<"/[comuna]/comunidad/organizaciones">): Promise<Metadata> {
+  const { comuna } = await params;
+  return communeMetadata(comuna, {
+    path: "/comunidad/organizaciones",
+    title: "Organizaciones comunitarias",
+    description:
+      "Juntas de vecinos, clubes deportivos, comités de vivienda, fundaciones y agrupaciones de la comuna.",
+    feature: "community",
+  });
+}
 
 const typeLabels: Record<OrganizationType, string> = {
   junta_vecinos: "Junta de vecinos",

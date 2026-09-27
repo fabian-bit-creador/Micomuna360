@@ -1,9 +1,15 @@
+import type { Metadata } from "next";
 import Link from "next/link";
 
 import { Logo } from "@/components/layout/logo";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { adminNav } from "@/config/nav";
+
+/* Pantallas de ejemplo de la capa municipal: no se ofrecen a buscadores. */
+export const metadata: Metadata = {
+  robots: { index: false, follow: false },
+};
 
 /**
  * Layout de la capa municipal.

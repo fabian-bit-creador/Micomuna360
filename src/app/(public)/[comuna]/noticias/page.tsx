@@ -9,12 +9,20 @@ import { getCommune } from "@/config/communes";
 import { cn } from "@/lib/utils";
 import { getNews } from "@/lib/repositories";
 import type { NewsType } from "@/types";
+import { communeMetadata } from "@/lib/seo";
 
-export const metadata: Metadata = {
-  title: "Noticias",
-  description:
-    "Noticias, anuncios, talleres y beneficios de tu comuna en un solo lugar.",
-};
+export async function generateMetadata({
+  params,
+}: PageProps<"/[comuna]/noticias">): Promise<Metadata> {
+  const { comuna } = await params;
+  return communeMetadata(comuna, {
+    path: "/noticias",
+    title: "Noticias",
+    description:
+      "Noticias, anuncios, talleres y beneficios de tu comuna en un solo lugar.",
+    feature: "news",
+  });
+}
 
 const filters: { label: string; value?: NewsType }[] = [
   { label: "Todo" },

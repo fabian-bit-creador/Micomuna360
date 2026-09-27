@@ -19,12 +19,20 @@ import { Card, CardContent } from "@/components/ui/card";
 import { SourceBadge } from "@/components/shared/source-badge";
 import { getDataSource, getLocations, getPlaces } from "@/lib/repositories";
 import type { PlaceCategory } from "@/types";
+import { communeMetadata } from "@/lib/seo";
 
-export const metadata: Metadata = {
-  title: "Directorio comunal",
-  description:
-    "Lugares y servicios útiles de tu comuna: municipio, salud, deporte, seguridad y espacios comunitarios, con cómo llegar.",
-};
+export async function generateMetadata({
+  params,
+}: PageProps<"/[comuna]/directorio">): Promise<Metadata> {
+  const { comuna } = await params;
+  return communeMetadata(comuna, {
+    path: "/directorio",
+    title: "Directorio comunal",
+    description:
+      "Lugares y servicios útiles de tu comuna: municipio, salud, deporte, seguridad y espacios comunitarios, con cómo llegar.",
+    feature: "directory",
+  });
+}
 
 const groups: {
   category: PlaceCategory;

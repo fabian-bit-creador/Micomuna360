@@ -2,13 +2,17 @@ import { ImageResponse } from "next/og";
 
 import { siteConfig } from "@/config/site";
 
-export const alt =
-  "MiComuna360 — Tu comuna en un solo lugar. Plataforma ciudadana multicomuna.";
-export const size = { width: 1200, height: 630 };
-export const contentType = "image/png";
+const size = { width: 1200, height: 630 };
 
-/** Tarjeta de vista previa del portal (identidad de marca, sin fotos). */
-export default function Image() {
+/* Imagen fija: se genera una vez en el build. */
+export const dynamic = "force-static";
+
+/**
+ * Tarjeta de vista previa del portal (identidad de marca, sin fotos). Vive
+ * en una URL estable (/og) para que cada página la declare en sus metadatos
+ * (ver lib/seo.ts).
+ */
+export function GET() {
   return new ImageResponse(
     (
       <div

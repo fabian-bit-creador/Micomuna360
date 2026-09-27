@@ -6,12 +6,20 @@ import { SectionHeader } from "@/components/layout/section-header";
 import { SearchBox } from "@/components/search/search-box";
 import { getCommune } from "@/config/communes";
 import { buildSearchIndex } from "@/lib/search";
+import { communeMetadata } from "@/lib/seo";
 
-export const metadata: Metadata = {
-  title: "Buscar",
-  description:
-    "Buscador ciudadano: encuentra servicios, lugares y sitios oficiales de tu comuna.",
-};
+export async function generateMetadata({
+  params,
+}: PageProps<"/[comuna]/buscar">): Promise<Metadata> {
+  const { comuna } = await params;
+  return communeMetadata(comuna, {
+    path: "/buscar",
+    title: "Buscar",
+    description:
+      "Buscador ciudadano: encuentra servicios, lugares y sitios oficiales de tu comuna.",
+    feature: "search",
+  });
+}
 
 export default async function BuscarPage({
   params,

@@ -7,6 +7,7 @@ import { NewsTypeBadge } from "@/components/news/news-type-badge";
 import { getCommune, listCommunes } from "@/config/communes";
 import { formatDate } from "@/lib/format";
 import { getNews, getNewsBySlug } from "@/lib/repositories";
+import { communeMetadata } from "@/lib/seo";
 
 export async function generateStaticParams() {
   const all: { comuna: string; slug: string }[] = [];
@@ -24,8 +25,13 @@ export async function generateMetadata({
 }: PageProps<"/[comuna]/noticias/[slug]">): Promise<Metadata> {
   const { comuna, slug } = await params;
   const article = await getNewsBySlug(comuna, slug);
-  if (!article) return { title: "Publicación no encontrada" };
-  return { title: article.title, description: article.summary };
+  if (!article) return { title: "Publicación no encontrada", robots: { index: false } };
+  return communeMetadata(comuna, {
+    path: `/noticias/${slug}`,
+    title: article.title,
+    description: article.summary,
+    feature: "news",
+  });
 }
 
 export default async function NoticiaDetallePage({

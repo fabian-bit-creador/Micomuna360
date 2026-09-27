@@ -2,9 +2,10 @@ import { ImageResponse } from "next/og";
 
 import { getCommune, listCommunes } from "@/config/communes";
 
-export const alt = "MiComuna360 — información de tu comuna en un solo lugar";
-export const size = { width: 1200, height: 630 };
-export const contentType = "image/png";
+const size = { width: 1200, height: 630 };
+
+/* Solo comunas registradas; cada tarjeta se genera en el build. */
+export const dynamicParams = false;
 
 export function generateStaticParams() {
   return listCommunes().map((c) => ({ comuna: c.id }));
@@ -12,13 +13,13 @@ export function generateStaticParams() {
 
 /**
  * Tarjeta de vista previa por comuna: deja claro desde el enlace compartido
- * si se trata del piloto informativo o de la comuna de demostración.
+ * si se trata del piloto informativo o de la comuna de demostración. Vive en
+ * una URL estable (/og/<comuna>) que declara cada página (ver lib/seo.ts).
  */
-export default async function Image({
-  params,
-}: {
-  params: Promise<{ comuna: string }>;
-}) {
+export async function GET(
+  _request: Request,
+  { params }: RouteContext<"/og/[comuna]">
+) {
   const { comuna } = await params;
   const commune = getCommune(comuna);
   const name = commune?.name ?? "MiComuna360";

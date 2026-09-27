@@ -16,12 +16,20 @@ import { getCommune } from "@/config/communes";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
+import { communeMetadata } from "@/lib/seo";
 
-export const metadata: Metadata = {
-  title: "Reportar",
-  description:
-    "Pronto podrás reportar problemas y hacer solicitudes a tu municipio con foto y ubicación.",
-};
+export async function generateMetadata({
+  params,
+}: PageProps<"/[comuna]/reportar">): Promise<Metadata> {
+  const { comuna } = await params;
+  return communeMetadata(comuna, {
+    path: "/reportar",
+    title: "Reportar",
+    description:
+      "Pronto podrás reportar problemas y hacer solicitudes a tu municipio con foto y ubicación.",
+    feature: "reports",
+  });
+}
 
 const flow = [
   {

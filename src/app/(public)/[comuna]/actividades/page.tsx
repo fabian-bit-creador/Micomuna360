@@ -6,12 +6,20 @@ import { FeatureUnavailable } from "@/components/layout/feature-unavailable";
 import { SectionHeader } from "@/components/layout/section-header";
 import { getCommune } from "@/config/communes";
 import { getUpcomingEvents } from "@/lib/repositories";
+import { communeMetadata } from "@/lib/seo";
 
-export const metadata: Metadata = {
-  title: "Actividades",
-  description:
-    "Agenda comunal: talleres, deportes, ferias, cultura y encuentros vecinales.",
-};
+export async function generateMetadata({
+  params,
+}: PageProps<"/[comuna]/actividades">): Promise<Metadata> {
+  const { comuna } = await params;
+  return communeMetadata(comuna, {
+    path: "/actividades",
+    title: "Actividades",
+    description:
+      "Agenda comunal: talleres, deportes, ferias, cultura y encuentros vecinales.",
+    feature: "events",
+  });
+}
 
 export default async function ActividadesPage({
   params,

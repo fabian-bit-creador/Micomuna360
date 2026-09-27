@@ -21,12 +21,20 @@ import {
 } from "@/components/ui/card";
 import { getProcedures } from "@/lib/repositories";
 import type { ProcedureCategory } from "@/types";
+import { communeMetadata } from "@/lib/seo";
 
-export const metadata: Metadata = {
-  title: "Trámites y beneficios",
-  description:
-    "Guías simples, paso a paso, de los trámites y beneficios municipales.",
-};
+export async function generateMetadata({
+  params,
+}: PageProps<"/[comuna]/tramites">): Promise<Metadata> {
+  const { comuna } = await params;
+  return communeMetadata(comuna, {
+    path: "/tramites",
+    title: "Trámites y beneficios",
+    description:
+      "Guías simples, paso a paso, de los trámites y beneficios municipales.",
+    feature: "procedures",
+  });
+}
 
 const categoryLabels: Record<ProcedureCategory, string> = {
   certificados: "Certificados",

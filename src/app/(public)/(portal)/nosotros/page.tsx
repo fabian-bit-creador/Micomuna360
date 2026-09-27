@@ -21,12 +21,14 @@ import {
 } from "@/components/ui/card";
 import { siteConfig } from "@/config/site";
 import { cn } from "@/lib/utils";
+import { portalMetadata } from "@/lib/seo";
 
-export const metadata: Metadata = {
+export const metadata: Metadata = portalMetadata({
+  path: "/nosotros",
   title: "Nosotros",
   description:
     "Qué es MiComuna360, por qué existe y cuál es su compromiso con las comunidades.",
-};
+});
 
 const roleColors: Record<string, string> = {
   teal: "border-t-brand-teal",

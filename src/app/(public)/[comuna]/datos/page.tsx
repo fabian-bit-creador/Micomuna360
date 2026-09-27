@@ -14,12 +14,20 @@ import {
   getEnrollment,
   getIndicators,
 } from "@/lib/repositories";
+import { communeMetadata } from "@/lib/seo";
 
-export const metadata: Metadata = {
-  title: "Datos comunales",
-  description:
-    "Indicadores de tu comuna en contexto: salud, educación y finanzas municipales, comparados con su historia y con la región.",
-};
+export async function generateMetadata({
+  params,
+}: PageProps<"/[comuna]/datos">): Promise<Metadata> {
+  const { comuna } = await params;
+  return communeMetadata(comuna, {
+    path: "/datos",
+    title: "Datos comunales",
+    description:
+      "Indicadores de tu comuna en contexto: salud, educación y finanzas municipales, comparados con su historia y con la región.",
+    feature: "dataPage",
+  });
+}
 
 const areaLabels: Record<string, string> = {
   demografía: "Nuestra comuna",

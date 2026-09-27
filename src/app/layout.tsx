@@ -30,7 +30,6 @@ export const metadata: Metadata = {
     locale: "es_CL",
     title: "MiComuna360 — Tu comuna en un solo lugar",
     description: siteConfig.sublema,
-    url: "/",
   },
   twitter: {
     card: "summary_large_image",

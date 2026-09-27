@@ -9,12 +9,20 @@ import { getCommune } from "@/config/communes";
 import { siteConfig } from "@/config/site";
 import { getBenefitOrientations, getDataSource } from "@/lib/repositories";
 import type { DataSource } from "@/types";
+import { communeMetadata } from "@/lib/seo";
 
-export const metadata: Metadata = {
-  title: "¿A qué puedo postular?",
-  description:
-    "Marca tu situación y te mostramos qué beneficios conviene revisar y en qué sitio oficial se postula. Sin RUT, sin clave y sin guardar nada.",
-};
+export async function generateMetadata({
+  params,
+}: PageProps<"/[comuna]/beneficios">): Promise<Metadata> {
+  const { comuna } = await params;
+  return communeMetadata(comuna, {
+    path: "/beneficios",
+    title: "¿A qué puedo postular?",
+    description:
+      "Marca tu situación y te mostramos qué beneficios conviene revisar y en qué sitio oficial se postula. Sin RUT, sin clave y sin guardar nada.",
+    feature: "benefits",
+  });
+}
 
 export default async function BeneficiosPage({
   params,

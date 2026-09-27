@@ -6,7 +6,9 @@ import { getNews, getProcedures } from "@/lib/repositories";
 
 /**
  * Mapa del sitio: se construye desde el registro de comunas y sus
- * funcionalidades activas, así que una comuna nueva entra sola.
+ * funcionalidades activas, así que una comuna nueva entra sola. Solo incluye
+ * comunas con datos reales: la comuna de demostración y las secciones
+ * desactivadas quedan fuera (y llevan noindex, ver lib/seo.ts).
  */
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const entries: MetadataRoute.Sitemap = [
@@ -14,7 +16,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     { url: `${siteUrl}/nosotros`, changeFrequency: "monthly", priority: 0.6 },
   ];
 
-  for (const commune of listCommunes()) {
+  for (const commune of listCommunes().filter((c) => !c.isDemo)) {
     const base = `${siteUrl}/${commune.id}`;
     const lastModified = new Date(`${commune.updatedAt}T12:00:00-04:00`);
     const { features } = commune;
@@ -40,7 +42,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       [features.community, "comunidad", 0.7],
       [features.community, "comunidad/organizaciones", 0.6],
       [features.reports, "reportar", 0.6],
-      [commune.isDemo || features.realMap, "mapa", 0.6],
+      [features.realMap, "mapa", 0.6],
     ];
     for (const [enabled, path, priority] of sections) {
       if (!enabled) continue;

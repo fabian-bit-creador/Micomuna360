@@ -14,6 +14,7 @@ import { Badge } from "@/components/ui/badge";
 import { Card, CardContent } from "@/components/ui/card";
 import { getCommune, listCommunes } from "@/config/communes";
 import { getProcedures, getProcedureBySlug } from "@/lib/repositories";
+import { communeMetadata } from "@/lib/seo";
 
 export async function generateStaticParams() {
   const all: { comuna: string; slug: string }[] = [];
@@ -31,8 +32,13 @@ export async function generateMetadata({
 }: PageProps<"/[comuna]/tramites/[slug]">): Promise<Metadata> {
   const { comuna, slug } = await params;
   const procedure = await getProcedureBySlug(comuna, slug);
-  if (!procedure) return { title: "Trámite no encontrado" };
-  return { title: procedure.title, description: procedure.summary };
+  if (!procedure) return { title: "Trámite no encontrado", robots: { index: false } };
+  return communeMetadata(comuna, {
+    path: `/tramites/${slug}`,
+    title: procedure.title,
+    description: procedure.summary,
+    feature: "procedures",
+  });
 }
 
 export default async function TramiteDetallePage({

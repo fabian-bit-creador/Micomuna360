@@ -14,12 +14,20 @@ import { SectionHeader } from "@/components/layout/section-header";
 import { getCommune } from "@/config/communes";
 import { getUsefulPhones } from "@/lib/repositories";
 import type { PhoneCategory, UsefulPhone } from "@/types";
+import { communeMetadata } from "@/lib/seo";
 
-export const metadata: Metadata = {
-  title: "Teléfonos útiles",
-  description:
-    "Emergencias, servicios municipales, salud y líneas de apoyo, listos para llamar con un toque.",
-};
+export async function generateMetadata({
+  params,
+}: PageProps<"/[comuna]/telefonos">): Promise<Metadata> {
+  const { comuna } = await params;
+  return communeMetadata(comuna, {
+    path: "/telefonos",
+    title: "Teléfonos útiles",
+    description:
+      "Emergencias, servicios municipales, salud y líneas de apoyo, listos para llamar con un toque.",
+    feature: "phones",
+  });
+}
 
 const groups: {
   category: PhoneCategory;

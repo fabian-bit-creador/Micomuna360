@@ -10,8 +10,20 @@ import { Badge } from "@/components/ui/badge";
 import { Card, CardContent } from "@/components/ui/card";
 import { getCommune } from "@/config/communes";
 import { getCommuneBoundary, getPlaces } from "@/lib/repositories";
+import { communeMetadata } from "@/lib/seo";
 
-export const metadata: Metadata = { title: "Mapa" };
+export async function generateMetadata({
+  params,
+}: PageProps<"/[comuna]/mapa">): Promise<Metadata> {
+  const { comuna } = await params;
+  return communeMetadata(comuna, {
+    path: "/mapa",
+    title: "Mapa",
+    description:
+      "Lugares y servicios de la comuna sobre el mapa, con su ficha y cómo llegar.",
+    feature: "realMap",
+  });
+}
 
 export default async function MapaPage({
   params,

@@ -22,12 +22,20 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { getNews, getOrganizations, getPlaces } from "@/lib/repositories";
+import { communeMetadata } from "@/lib/seo";
 
-export const metadata: Metadata = {
-  title: "Comunidad",
-  description:
-    "Organizaciones, lugares útiles y buenas noticias: la vida comunitaria de tu comuna en un solo lugar.",
-};
+export async function generateMetadata({
+  params,
+}: PageProps<"/[comuna]/comunidad">): Promise<Metadata> {
+  const { comuna } = await params;
+  return communeMetadata(comuna, {
+    path: "/comunidad",
+    title: "Comunidad",
+    description:
+      "Organizaciones, lugares útiles y buenas noticias: la vida comunitaria de tu comuna en un solo lugar.",
+    feature: "community",
+  });
+}
 
 export default async function ComunidadPage({
   params,

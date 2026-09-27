@@ -30,12 +30,20 @@ import {
   getFinancialReports,
   getReportedLiabilities,
 } from "@/lib/repositories";
+import { communeMetadata } from "@/lib/seo";
 
-export const metadata: Metadata = {
-  title: "Transparencia",
-  description:
-    "En qué se usa el presupuesto municipal, de dónde viene la plata y qué información puedes pedir a tu municipio, explicado en simple.",
-};
+export async function generateMetadata({
+  params,
+}: PageProps<"/[comuna]/transparencia">): Promise<Metadata> {
+  const { comuna } = await params;
+  return communeMetadata(comuna, {
+    path: "/transparencia",
+    title: "Transparencia",
+    description:
+      "En qué se usa el presupuesto municipal, de dónde viene la plata y qué información puedes pedir a tu municipio, explicado en simple.",
+    feature: "transparency",
+  });
+}
 
 /** Pasos del derecho de acceso a la información (Ley de Transparencia). */
 const rights = [

@@ -12,11 +12,16 @@ import {
 } from "@/components/ui/card";
 import { listCommunes } from "@/config/communes";
 import { siteConfig } from "@/config/site";
+import { portalMetadata } from "@/lib/seo";
 
 export const metadata: Metadata = {
+  ...portalMetadata({
+    path: "/",
+    title: "MiComuna360 — Tu comuna en un solo lugar",
+    description:
+      "Plataforma ciudadana multicomuna: información útil de tu comuna, con fuentes verificadas y lenguaje simple.",
+  }),
   title: { absolute: "MiComuna360 — Tu comuna en un solo lugar" },
-  description:
-    "Plataforma ciudadana multicomuna: información útil de tu comuna, con fuentes verificadas y lenguaje simple.",
 };
 
 export default function PortalPage() {

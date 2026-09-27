@@ -13,12 +13,20 @@ import { getCommune } from "@/config/communes";
 import { siteConfig } from "@/config/site";
 import { getCitizenServices, getDataSource } from "@/lib/repositories";
 import type { CitizenService } from "@/types";
+import { communeMetadata } from "@/lib/seo";
 
-export const metadata: Metadata = {
-  title: "Servicios",
-  description:
-    "Trámites y servicios ciudadanos con enlace directo al sitio oficial de cada institución.",
-};
+export async function generateMetadata({
+  params,
+}: PageProps<"/[comuna]/servicios">): Promise<Metadata> {
+  const { comuna } = await params;
+  return communeMetadata(comuna, {
+    path: "/servicios",
+    title: "Servicios",
+    description:
+      "Trámites y servicios ciudadanos con enlace directo al sitio oficial de cada institución.",
+    feature: "services",
+  });
+}
 
 const groups: { category: CitizenService["category"]; title: string }[] = [
   { category: "pagos", title: "Pagos" },

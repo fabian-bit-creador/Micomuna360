@@ -56,6 +56,11 @@ indicadores) con la fuente y la fecha de verificación de cada dato. El
   íconos y gráficos, y las tintas (`brand-*-ink`, `muted-foreground`) para
   texto, que cumplen WCAG AA en claro y oscuro. Gráficos propios en
   HTML/SVG en `src/components/data`, con tabla alternativa.
+- **Metadatos y buscadores**: cada página declara sus metadatos con
+  `communeMetadata` o `portalMetadata` (`src/lib/seo.ts`): título con la
+  comuna, URL canónica, vista previa con imagen de `/og/<comuna>`. La comuna
+  de demostración y las secciones desactivadas llevan `noindex` y quedan
+  fuera de `app/sitemap.ts`.
 - **Mapas**: Leaflet se carga solo en el cliente (`next/dynamic` con
   `ssr: false`) sobre teselas de OpenStreetMap, con lista alternativa.
 
