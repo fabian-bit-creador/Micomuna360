@@ -1,4 +1,4 @@
-import { getCommuneData } from "@/data/communes";
+import { getCommuneData, type CommuneBoundary } from "@/data/communes";
 import type {
   Organization,
   OrganizationType,
@@ -14,6 +14,13 @@ export async function getPlaces(
 ): Promise<Place[]> {
   const all = getCommuneData(communeId).places;
   return category ? all.filter((p) => p.category === category) : [...all];
+}
+
+/** Límite comunal oficial para el mapa (null si no está verificado). */
+export async function getCommuneBoundary(
+  communeId: string
+): Promise<CommuneBoundary | null> {
+  return getCommuneData(communeId).boundary;
 }
 
 export async function getOrganizations(

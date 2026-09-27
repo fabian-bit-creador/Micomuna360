@@ -3,7 +3,9 @@ import Link from "next/link";
 import {
   ArrowLeftIcon,
   ClockIcon,
+  MapIcon,
   MapPinIcon,
+  NavigationIcon,
   PhoneCallIcon,
 } from "lucide-react";
 
@@ -21,7 +23,7 @@ import type { PlaceCategory } from "@/types";
 export const metadata: Metadata = {
   title: "Directorio comunal",
   description:
-    "Lugares y servicios útiles de tu comuna: salud, deporte, educación, reciclaje y espacios comunitarios.",
+    "Lugares y servicios útiles de tu comuna: municipio, salud, deporte, seguridad y espacios comunitarios, con cómo llegar.",
 };
 
 const groups: {
@@ -35,6 +37,7 @@ const groups: {
   { category: "deporte", title: "Deporte", color: "terracotta" },
   { category: "comunitario", title: "Espacios comunitarios", color: "teal" },
   { category: "medioambiente", title: "Medioambiente", color: "green" },
+  { category: "seguridad", title: "Seguridad y emergencias", color: "slate" },
 ];
 
 function telHref(number: string) {
@@ -64,6 +67,17 @@ export default async function DirectorioPage({
             p.sourceId ? await getDataSource(commune.id, p.sourceId) : null,
           ] as const
       )
+    )
+  );
+  /* Fuente de la ubicación, cuando no es la misma de la ficha. */
+  const coordsSources = new Map(
+    await Promise.all(
+      places
+        .filter((p) => p.coordsSourceId && p.coordsSourceId !== p.sourceId)
+        .map(
+          async (p) =>
+            [p.id, await getDataSource(commune.id, p.coordsSourceId!)] as const
+        )
     )
   );
   const sectorName = (id: string) =>
@@ -99,7 +113,11 @@ export default async function DirectorioPage({
               <h2 className="mb-4 text-xl font-bold">{group.title}</h2>
               <div className="grid gap-4 md:grid-cols-2">
                 {groupPlaces.map((place) => (
-                  <Card key={place.id} className="gap-0 py-5">
+                  <Card
+                    key={place.id}
+                    id={place.id}
+                    className="scroll-mt-24 gap-0 py-5 target:ring-2 target:ring-brand-teal"
+                  >
                     <CardContent className="flex gap-4 px-5">
                       <CivicIconChip name={place.icon} color={group.color} />
                       <div className="min-w-0 space-y-1">
@@ -130,15 +148,52 @@ export default async function DirectorioPage({
                             className="pt-2"
                           />
                         )}
-                        {place.phone && (
-                          <a
-                            href={telHref(place.phone)}
-                            className="mt-2 inline-flex min-h-9 items-center gap-1.5 rounded-full bg-brand-teal/10 px-3.5 py-1 text-sm font-bold text-brand-teal transition-colors hover:bg-brand-teal hover:text-white"
-                          >
-                            <PhoneCallIcon className="size-3.5" />
-                            {place.phone}
-                          </a>
+                        {coordsSources.get(place.id) && (
+                          <p className="text-xs text-muted-foreground">
+                            Ubicación en el mapa:{" "}
+                            <a
+                              href={coordsSources.get(place.id)!.url}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="underline decoration-dotted underline-offset-2 hover:text-foreground"
+                            >
+                              {coordsSources.get(place.id)!.pageName}
+                            </a>
+                          </p>
                         )}
+                        <div className="flex flex-wrap gap-2 pt-1">
+                          {place.phone && (
+                            <a
+                              href={telHref(place.phone)}
+                              className="inline-flex min-h-9 items-center gap-1.5 rounded-full bg-brand-teal/10 px-3.5 py-1 text-sm font-bold text-brand-teal transition-colors hover:bg-brand-teal hover:text-white"
+                            >
+                              <PhoneCallIcon className="size-3.5" />
+                              {place.phone}
+                            </a>
+                          )}
+                          {typeof place.lat === "number" &&
+                            typeof place.lng === "number" && (
+                              <a
+                                href={`https://www.google.com/maps/dir/?api=1&destination=${place.lat},${place.lng}`}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="inline-flex min-h-9 items-center gap-1.5 rounded-full border px-3.5 py-1 text-sm font-semibold text-muted-foreground transition-colors hover:bg-accent hover:text-accent-foreground"
+                              >
+                                <NavigationIcon className="size-3.5" />
+                                Cómo llegar
+                              </a>
+                            )}
+                          {typeof place.lat === "number" &&
+                            commune.features.realMap && (
+                              <Link
+                                href={`/${commune.id}/mapa#${place.id}`}
+                                className="inline-flex min-h-9 items-center gap-1.5 rounded-full border px-3.5 py-1 text-sm font-semibold text-muted-foreground transition-colors hover:bg-accent hover:text-accent-foreground"
+                              >
+                                <MapIcon className="size-3.5" />
+                                Ver en el mapa
+                              </Link>
+                            )}
+                        </div>
                       </div>
                     </CardContent>
                   </Card>

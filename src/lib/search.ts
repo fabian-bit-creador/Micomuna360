@@ -77,7 +77,7 @@ export function buildSearchIndex(commune: CommuneConfig): SearchEntry[] {
       entries.push({
         title: p.name,
         description: `${p.address} · ${p.description}`,
-        href: `${base}/directorio`,
+        href: `${base}/directorio#${p.id}`,
         group: "Lugares",
         external: false,
       });

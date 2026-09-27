@@ -9,7 +9,7 @@ import type { DataSource } from "@/types";
  * para sitios municipales, 6 para nacionales.
  * Nada con status distinto de "verificado" se muestra como vigente.
  *
- * Totales: 25 fuentes registradas — 24 verificadas, 1 pendiente de clasificación
+ * Totales: 29 fuentes registradas — 28 verificadas, 1 pendiente de clasificación
  * (el informe de pasivos, cuya clasificación contable falta confirmar)
  * (la ficha de Transparencia Activa pasó de pendiente a verificada el
  * 2026-07-19 con el enlace directo entregado desde pintana.cl).
@@ -189,6 +189,66 @@ export const sources: DataSource[] = [
     validUntil: "2026-12-27",
     notes:
       "Fuente candidata de coordenadas oficiales para el mapa (etapa P4).",
+  },
+  {
+    id: "lp-muni-salud",
+    institution: "Municipalidad de La Pintana",
+    pageName: "Centros de Salud Familiar",
+    description:
+      "Los CESFAM de la comuna: dirección, teléfono, horario y requisitos de inscripción.",
+    featured: false,
+    url: "https://pintana.cl/?page_id=7115",
+    publishedAt: null,
+    verifiedAt: "2026-09-27",
+    status: "verificado",
+    validUntil: "2026-12-27",
+    notes:
+      "Siete CESFAM con dirección y teléfono. El CESFAM Juan Pablo II figura con la aclaración de que no pertenece a la red municipal, sino a la Red Áncora UC. No se publican nombres ni correos de directivos.",
+  },
+  {
+    id: "lp-muni-salud-servicios",
+    institution: "Municipalidad de La Pintana",
+    pageName: "Programas y servicios de salud",
+    description:
+      "COSAM, rehabilitación, unidad oftalmológica, SAPU y SAR: qué atienden, horarios y teléfonos.",
+    featured: false,
+    url: "https://pintana.cl/?page_id=5229",
+    publishedAt: null,
+    verifiedAt: "2026-09-27",
+    status: "verificado",
+    validUntil: "2026-12-27",
+    notes:
+      "Horarios del SAPU y del SAR confirmados aquí. Las direcciones de cada SAPU no figuran en esta página: provienen del geoportal comunal.",
+  },
+  {
+    id: "lp-geo-equipamiento",
+    institution: "Municipalidad de La Pintana",
+    pageName: "GeoPintana — capas de equipamiento comunal",
+    description:
+      "Capas públicas del geoportal municipal con la ubicación de centros de salud, servicios, recintos deportivos y seguridad.",
+    featured: false,
+    url: "https://services7.arcgis.com/Jc7ZuHKHcN6HGMlG/arcgis/rest/services",
+    publishedAt: "2026-09-07",
+    verifiedAt: "2026-09-27",
+    status: "verificado",
+    validUntil: "2026-12-27",
+    notes:
+      "Capas usadas: EQUIPAMIENTO_SALUD (editada 2025-11-24), EQUIPAMIENTO_SERVICIOS (2025-12-04), EQUIPAMIENTO_SEGURIDAD (2025-11-20), EQUIPAMIENTO_DEPORTIVO (2026-09-07) y LIMITE_COMUNAL (2025-01-27). Se contrastaron con OpenStreetMap: donde ambos tienen el lugar, la diferencia es de 1 a 125 metros. No se usan capas con datos personales o tributarios (base predial, patentes, catastros sociales).",
+  },
+  {
+    id: "osm-la-pintana",
+    institution: "OpenStreetMap",
+    pageName: "OpenStreetMap — La Pintana",
+    description:
+      "Mapa abierto y colaborativo. Se usa como mapa base y, solo cuando el geoportal no tiene el lugar, como fuente de coordenadas.",
+    featured: false,
+    url: "https://www.openstreetmap.org/way/1036662021",
+    publishedAt: null,
+    verifiedAt: "2026-09-27",
+    status: "verificado",
+    validUntil: "2027-03-27",
+    notes:
+      "Coordenadas del Polideportivo de La Pintana (way 1036662021, con dirección Patagonia 12980, la misma que publica la Corporación de Deportes). Datos © colaboradores de OpenStreetMap, licencia ODbL.",
   },
   {
     id: "cl-chileatiende",

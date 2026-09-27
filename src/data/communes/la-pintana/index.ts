@@ -1,6 +1,7 @@
 import type { CommuneData } from "../types";
 import { places } from "./places";
 import { benefits } from "./benefits";
+import { boundary } from "./boundary";
 import { financialReports } from "./financial-reports";
 import { accountingBalance } from "./transparency/accounting-balance";
 import { budgetExecution } from "./transparency/budget-execution";
@@ -38,4 +39,5 @@ export const laPintanaData: CommuneData = {
   reportedLiabilities,
   accountingBalance,
   benefits,
+  boundary,
 };

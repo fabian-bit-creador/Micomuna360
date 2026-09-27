@@ -52,6 +52,11 @@ export interface CommuneConfig {
   /** Centro y zoom del mapa. */
   center: { lat: number; lng: number };
   zoom: number;
+  /**
+   * Rectángulo que contiene el límite comunal oficial. Toda coordenada
+   * publicada debe caer dentro: un punto fuera es un error de datos.
+   */
+  bounds?: { south: number; west: number; north: number; east: number };
   /** Última actualización general del dataset (YYYY-MM-DD). */
   updatedAt: string;
   features: CommuneFeatures;

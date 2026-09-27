@@ -9,7 +9,7 @@ la fuente de verdad que consume la aplicación). Reglas:
 - No se completa información faltante con supuestos: si un dato (horario,
   teléfono, coordenada) no está verificado, no se publica.
 
-**Totales del registro (2026-09-27):** 25 fuentes — 24 verificadas y 1 pendiente de clasificación (el informe de pasivos). (Al cierre de P2 el registro tenía 16 fuentes: 15 verificadas y 1 pendiente; la ficha de Transparencia Activa pasó a verificada con el enlace directo entregado desde pintana.cl. El 2026-09-20 se sumaron las tres fuentes nacionales que usa el orientador «¿A qué puedo postular?», y el 2026-09-27 la ejecución presupuestaria de junio.)
+**Totales del registro (2026-09-27):** 29 fuentes — 28 verificadas y 1 pendiente de clasificación (el informe de pasivos). (Al cierre de P2 el registro tenía 16 fuentes: 15 verificadas y 1 pendiente; la ficha de Transparencia Activa pasó a verificada con el enlace directo entregado desde pintana.cl. El 2026-09-20 se sumaron las tres fuentes nacionales que usa el orientador «¿A qué puedo postular?», y el 2026-09-27 la ejecución presupuestaria de junio, las dos páginas de salud de pintana.cl, las capas de equipamiento del geoportal y OpenStreetMap.)
 
 **Método de verificación (desde 2026-09-27):** navegación directa a cada
 sitio y revisión de su contenido (dirección, horarios, enlaces de pago y de
@@ -36,6 +36,10 @@ enlaza hoy; conviene abrir ambos desde Chile en la próxima revisión.
 | lp-deportes-recintos | Corp. de Deportes | Recintos (direcciones) | verificado | 2026-09-27 | 2026-12-27 | Direcciones de 4 recintos desde el sitio oficial; horarios/teléfonos NO publicados (no verificados) |
 | lp-cultura | Corp. Cultural | [culturapintana.cl](https://www.culturapintana.cl/) | verificado | 2026-09-27 | 2026-12-27 | — |
 | lp-geoportal | Municipalidad | [GeoPintana](https://geopintana-lapintana.hub.arcgis.com/) | verificado | 2026-09-27 | 2026-12-27 | Fuente candidata de coordenadas (etapa mapa) |
+| lp-muni-salud | Municipalidad | [Centros de Salud Familiar](https://pintana.cl/?page_id=7115) | verificado | 2026-09-27 | 2026-12-27 | 7 CESFAM con dirección y teléfono; Juan Pablo II es de la Red Áncora UC. No se publican nombres ni correos de directivos |
+| lp-muni-salud-servicios | Municipalidad | [Programas y servicios de salud](https://pintana.cl/?page_id=5229) | verificado | 2026-09-27 | 2026-12-27 | COSAM, CCR, UAPO, horarios de SAPU y SAR |
+| lp-geo-equipamiento | Municipalidad | [GeoPintana — capas de equipamiento](https://services7.arcgis.com/Jc7ZuHKHcN6HGMlG/arcgis/rest/services) | verificado | 2026-09-27 | 2026-12-27 | Coordenadas de 23 lugares y límite comunal. Contrastado con OSM (1–125 m). Nunca se usan capas con datos personales o tributarios |
+| osm-la-pintana | OpenStreetMap | [way 1036662021](https://www.openstreetmap.org/way/1036662021) | verificado | 2026-09-27 | 2027-03-27 | Solo coordenadas del Polideportivo (no está en el geoportal). ODbL |
 | cl-chileatiende | ChileAtiende | [chileatiende.gob.cl](https://www.chileatiende.gob.cl/) | verificado | 2026-09-27 | 2027-03-27 | Sin logo hasta verificar condiciones de uso |
 | cl-registro-social | MDSF | [registrosocial.gob.cl](https://www.registrosocial.gob.cl/) | verificado | 2026-09-27 | 2027-03-27 | — |
 | cl-portal-transparencia | Consejo para la Transparencia | [portaltransparencia.cl](https://www.portaltransparencia.cl/) | verificado | 2026-09-27 | 2027-03-27 | Entrada a Transparencia Activa municipal |
@@ -53,14 +57,13 @@ enlaza hoy; conviene abrir ambos desde Chile en la próxima revisión.
 ## Datos pendientes de verificación (no publicados)
 
 - Teléfono de la mesa central municipal (visto solo en sitios de terceros).
-- CESFAM y centros de salud: nombres, direcciones, horarios (fuente: DEIS
-  MINSAL + pintana.cl/salud).
 - Establecimientos educacionales (fuente: directorio oficial MINEDUC).
-- Bibliotecas, puntos limpios, ferias libres.
-- Coordenadas geográficas de todos los lugares (fuente: GeoPintana/OSM).
+- Bibliotecas, puntos limpios, ferias libres (el geoportal tiene una capa de ferias; falta contrastarla).
 - Sectores/unidades territoriales con capa geográfica confiable.
 - Organizaciones comunitarias (requieren autorización escrita).
 - Horarios y teléfonos de los recintos deportivos.
+- Teléfonos de cada SAPU (el geoportal los trae, pintana.cl no los confirma).
+- Horario del CESFAM Juan Pablo II (no pertenece a la red municipal).
 
 ## Acceso directo a las fuentes (desde 2026-09-27)
 
@@ -74,8 +77,10 @@ fuente:
    publicaron las cifras acumuladas al 30 de junio, conciliadas por código
    (`transparency/budget-execution.ts` y
    `docs/fuentes/la-pintana-ejecucion-junio-2026/`).
-2. **Coordenadas de lugares** → en curso desde el geoportal comunal; el flag
-   `realMap` se enciende solo con coordenadas verificadas.
+2. **Coordenadas de lugares** → hecho. 24 lugares con coordenadas (23 del
+   geoportal comunal, 1 de OpenStreetMap) y el límite comunal oficial. El
+   validador exige fuente de las coordenadas y rechaza cualquier punto fuera
+   del polígono comunal. `realMap` encendido.
 
 Siguen fuera de alcance desde este entorno: SmartDIDECO y la Bolsa Nacional
 de Empleo (rechazan conexiones desde fuera de Chile) y el portal de

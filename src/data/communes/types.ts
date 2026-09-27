@@ -20,6 +20,12 @@ import type {
   UsefulPhone,
 } from "@/types";
 
+/** Límite comunal oficial, como anillo de puntos [lat, lng]. */
+export interface CommuneBoundary {
+  coordinates: [number, number][];
+  sourceId: string;
+}
+
 /** Dataset completo de una comuna. Los repositorios leen de aquí. */
 export interface CommuneData {
   categories: Category[];
@@ -49,4 +55,6 @@ export interface CommuneData {
   accountingBalance: AccountingBalanceRow[];
   /** Orientaciones de beneficios para el orientador ciudadano. */
   benefits: BenefitOrientation[];
+  /** Límite comunal oficial para el mapa; null si no está verificado. */
+  boundary: CommuneBoundary | null;
 }

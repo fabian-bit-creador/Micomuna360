@@ -32,4 +32,5 @@ export const losAromosData: CommuneData = {
   reportedLiabilities: [],
   accountingBalance: [],
   benefits: [],
+  boundary: null,
 };

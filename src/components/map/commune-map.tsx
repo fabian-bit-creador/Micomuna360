@@ -16,14 +16,23 @@ const MapView = dynamic(() => import("./map-view"), {
   ),
 });
 
-/** Color de marca por categoría de lugar (coherente con el kit cívico). */
+/*
+ * Color por categoría. Los marcadores van sobre el mapa base claro de
+ * OpenStreetMap (que no cambia con el tema), así que la paleta se validó en
+ * modo claro y con todos los pares (un mapa es un gráfico de dispersión):
+ * municipal, salud, deporte y seguridad pasan las seis comprobaciones del
+ * validador de dataviz. El resto de categorías aún no aparece en ningún
+ * mapa real; al sumarlas hay que volver a validar. Cada marcador lleva
+ * además un glifo propio, así que el color nunca es la única pista.
+ */
 const categoryColors: Record<string, string> = {
-  municipal: "#17375e",
-  salud: "#67b7d1",
-  educacion: "#e9b949",
-  deporte: "#c95b5b",
-  comunitario: "#1e8e89",
-  medioambiente: "#3f9142",
+  municipal: "#2a78d6",
+  deporte: "#eb6834",
+  salud: "#1baf7a",
+  seguridad: "#4a3aa7",
+  educacion: "#eda100",
+  comunitario: "#e87ba4",
+  medioambiente: "#008300",
 };
 
 const categoryLabels: Record<string, string> = {
@@ -33,16 +42,24 @@ const categoryLabels: Record<string, string> = {
   deporte: "Deporte",
   comunitario: "Comunitario",
   medioambiente: "Medioambiente",
+  seguridad: "Seguridad",
 };
 
 interface CommuneMapProps {
   places: MapPlace[];
   center: { lat: number; lng: number };
   zoom: number;
+  /** Límite comunal oficial [lat, lng]; se dibuja como contorno. */
+  boundary?: [number, number][] | null;
 }
 
 /** Mapa con filtros por categoría y leyenda accesible. */
-export function CommuneMap({ places, center, zoom }: CommuneMapProps) {
+export function CommuneMap({
+  places,
+  center,
+  zoom,
+  boundary = null,
+}: CommuneMapProps) {
   const categories = useMemo(
     () => [...new Set(places.map((p) => p.category))],
     [places]
@@ -102,6 +119,7 @@ export function CommuneMap({ places, center, zoom }: CommuneMapProps) {
         center={center}
         zoom={zoom}
         colors={categoryColors}
+        boundary={boundary}
       />
 
       {/* Alternativa accesible: la misma información como lista. */}

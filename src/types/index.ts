@@ -377,7 +377,8 @@ export type PlaceCategory =
   | "educacion"
   | "deporte"
   | "comunitario"
-  | "medioambiente";
+  | "medioambiente"
+  | "seguridad";
 
 /** Lugar o servicio útil del directorio comunal. */
 export interface Place {
@@ -399,6 +400,12 @@ export interface Place {
    */
   lat?: number | null;
   lng?: number | null;
+  /**
+   * Fuente de las coordenadas, que puede ser distinta de la del resto de la
+   * ficha (p. ej. la dirección sale de pintana.cl y el punto del geoportal).
+   * Obligatoria fuera de la demo cuando hay coordenadas.
+   */
+  coordsSourceId?: string | null;
   /** Fuente de procedencia (pilotos con datos reales). */
   sourceId?: string | null;
 }

@@ -48,6 +48,9 @@ const placeSchema = z.object({
   schedule: z.string().nullable(),
   phone: z.string().nullable(),
   sourceId: z.string().nullable().optional(),
+  lat: z.number().min(-90).max(90).nullable().optional(),
+  lng: z.number().min(-180).max(180).nullable().optional(),
+  coordsSourceId: z.string().nullable().optional(),
 });
 
 /*
@@ -136,6 +139,22 @@ const benefitSchema = z.object({
   sourceId: z.string().min(1),
 });
 
+/** Punto dentro de un anillo [lat, lng] (algoritmo de trazado de rayos). */
+function insideRing(lat: number, lng: number, ring: [number, number][]): boolean {
+  let inside = false;
+  for (let i = 0, j = ring.length - 1; i < ring.length; j = i++) {
+    const [latI, lngI] = ring[i];
+    const [latJ, lngJ] = ring[j];
+    if (
+      latI > lat !== latJ > lat &&
+      lng < ((lngJ - lngI) * (lat - latI)) / (latJ - latI) + lngI
+    ) {
+      inside = !inside;
+    }
+  }
+  return inside;
+}
+
 function duplicates(ids: string[]): string[] {
   const seen = new Set<string>();
   return ids.filter((id) => (seen.has(id) ? true : (seen.add(id), false)));
@@ -148,7 +167,8 @@ function duplicates(ids: string[]): string[] {
 export function validateCommuneData(
   communeId: string,
   data: CommuneData,
-  isDemo: boolean
+  isDemo: boolean,
+  bounds?: { south: number; west: number; north: number; east: number }
 ): void {
   const problems: string[] = [];
   const fail = (msg: string) => problems.push(msg);
@@ -203,6 +223,33 @@ export function validateCommuneData(
     // Regla de oro: en una comuna real, ningún dato se publica sin fuente.
     if (!isDemo && !place.sourceId) {
       fail(`lugar "${place.id}" no declara fuente (obligatorio fuera de la demo)`);
+    }
+    // Coordenadas: las dos o ninguna, dentro de la comuna y con su fuente.
+    const hasLat = typeof place.lat === "number";
+    const hasLng = typeof place.lng === "number";
+    if (hasLat !== hasLng) {
+      fail(`lugar "${place.id}" tiene solo una de sus dos coordenadas`);
+    }
+    if (hasLat && hasLng) {
+      const lat = place.lat as number;
+      const lng = place.lng as number;
+      if (
+        bounds &&
+        (lat < bounds.south || lat > bounds.north || lng < bounds.west || lng > bounds.east)
+      ) {
+        fail(`lugar "${place.id}" tiene coordenadas fuera del límite comunal (${lat}, ${lng})`);
+      }
+      if (data.boundary && !insideRing(lat, lng, data.boundary.coordinates)) {
+        fail(`lugar "${place.id}" cae fuera del límite comunal oficial (${lat}, ${lng})`);
+      }
+      if (!isDemo && !place.coordsSourceId) {
+        fail(`lugar "${place.id}" tiene coordenadas sin fuente (obligatorio fuera de la demo)`);
+      }
+      if (place.coordsSourceId && !sourceIds.has(place.coordsSourceId)) {
+        fail(
+          `lugar "${place.id}" referencia la fuente de coordenadas inexistente "${place.coordsSourceId}"`
+        );
+      }
     }
   }
 
@@ -266,6 +313,23 @@ export function validateCommuneData(
           `${label} "${row.id}" referencia la fuente inexistente "${row.sourceId}"`
         );
       }
+    }
+  }
+
+  if (data.boundary) {
+    const ring = data.boundary.coordinates;
+    if (ring.length < 4) fail("el límite comunal tiene menos de 4 puntos");
+    if (!sourceIds.has(data.boundary.sourceId)) {
+      fail(`el límite comunal referencia la fuente inexistente "${data.boundary.sourceId}"`);
+    }
+    if (
+      bounds &&
+      ring.some(
+        ([lat, lng]) =>
+          lat < bounds.south || lat > bounds.north || lng < bounds.west || lng > bounds.east
+      )
+    ) {
+      fail("el límite comunal se sale del rectángulo declarado en la configuración");
     }
   }
 

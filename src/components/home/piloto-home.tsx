@@ -64,33 +64,47 @@ function availableFor(commune: CommuneConfig) {
       icon: MapPinIcon,
       title: "Directorio territorial",
       description:
-        "Municipalidad y recintos con dirección verificada y su fuente a la vista.",
+        "Municipio, centros de salud, recintos deportivos y emergencias, con dirección verificada y cómo llegar.",
       href: "/directorio",
       enabled: features.directory,
+    },
+    {
+      icon: MapIcon,
+      title: "Mapa de la comuna",
+      description:
+        "Los mismos lugares sobre el mapa, con coordenadas del geoportal municipal.",
+      href: "/mapa",
+      enabled: features.realMap,
     },
   ].filter((item) => item.enabled);
 }
 
-const upcoming = [
-  {
-    icon: CalendarDaysIcon,
-    title: "Agenda comunal",
-    description:
-      "Actividades de deporte, cultura y comunidad, reunidas desde los canales oficiales.",
-  },
-  {
-    icon: PhoneCallIcon,
-    title: "Teléfonos útiles",
-    description:
-      "Emergencias y servicios comunales, llamables con un toque desde el celular.",
-  },
-  {
-    icon: MapIcon,
-    title: "Mapa de la comuna",
-    description:
-      "Lugares con coordenadas verificadas y cómo llegar a cada uno.",
-  },
-];
+function upcomingFor(commune: CommuneConfig) {
+  const { features } = commune;
+  return [
+    {
+      icon: CalendarDaysIcon,
+      title: "Agenda comunal",
+      description:
+        "Actividades de deporte, cultura y comunidad, reunidas desde los canales oficiales.",
+      pending: !features.events,
+    },
+    {
+      icon: PhoneCallIcon,
+      title: "Teléfonos útiles",
+      description:
+        "Emergencias y servicios comunales, llamables con un toque desde el celular.",
+      pending: !features.phones,
+    },
+    {
+      icon: MapIcon,
+      title: "Mapa de la comuna",
+      description:
+        "Lugares con coordenadas verificadas y cómo llegar a cada uno.",
+      pending: !features.realMap,
+    },
+  ].filter((item) => item.pending);
+}
 
 /** Home del piloto informativo: solo información verificada, con fuentes. */
 export async function PilotoHome({ commune }: { commune: CommuneConfig }) {
@@ -98,6 +112,7 @@ export async function PilotoHome({ commune }: { commune: CommuneConfig }) {
   const officialSites = await getOfficialSites(commune.id);
   const base = `/${commune.id}`;
   const available = availableFor(commune);
+  const upcoming = upcomingFor(commune);
   return (
     <>
       {/* Hero piloto */}
@@ -165,30 +180,32 @@ export async function PilotoHome({ commune }: { commune: CommuneConfig }) {
       </section>
 
       {/* Qué viene en el piloto */}
-      <section className="mx-auto max-w-6xl px-4 py-14">
-        <SectionHeader
-          eyebrow="En preparación"
-          title="Lo que viene, etapa por etapa"
-          description="Cada módulo se publica solo cuando su información está verificada. Sin datos inventados, sin promesas vacías."
-        />
-        <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-          {upcoming.map((item) => (
-            <Card key={item.title} className="gap-0 py-5">
-              <CardContent className="flex items-start gap-4 px-5">
-                <span className="flex size-11 shrink-0 items-center justify-center rounded-xl bg-accent text-brand-teal">
-                  <item.icon className="size-6" />
-                </span>
-                <div>
-                  <h3 className="font-bold text-primary">{item.title}</h3>
-                  <p className="mt-0.5 text-sm text-muted-foreground">
-                    {item.description}
-                  </p>
-                </div>
-              </CardContent>
-            </Card>
-          ))}
-        </div>
-      </section>
+      {upcoming.length > 0 && (
+        <section className="mx-auto max-w-6xl px-4 py-14">
+          <SectionHeader
+            eyebrow="En preparación"
+            title="Lo que viene, etapa por etapa"
+            description="Cada módulo se publica solo cuando su información está verificada. Sin datos inventados, sin promesas vacías."
+          />
+          <div className="grid gap-4 sm:grid-cols-2">
+            {upcoming.map((item) => (
+              <Card key={item.title} className="gap-0 py-5">
+                <CardContent className="flex items-start gap-4 px-5">
+                  <span className="flex size-11 shrink-0 items-center justify-center rounded-xl bg-accent text-brand-teal">
+                    <item.icon className="size-6" />
+                  </span>
+                  <div>
+                    <h3 className="font-bold text-primary">{item.title}</h3>
+                    <p className="mt-0.5 text-sm text-muted-foreground">
+                      {item.description}
+                    </p>
+                  </div>
+                </CardContent>
+              </Card>
+            ))}
+          </div>
+        </section>
+      )}
 
       {/* Fuentes oficiales */}
       <section className="border-y bg-card">

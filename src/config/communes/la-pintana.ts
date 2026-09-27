@@ -16,11 +16,13 @@ export const laPintana: CommuneConfig = {
   isDemo: false,
   tagline: "Piloto informativo: información pública, con fuente y fecha",
   /**
-   * Centro referencial de la comuna. PENDIENTE de verificación fina con
-   * OSM/geoportal antes de activar el mapa real (etapa 3).
+   * Centroide y rectángulo del límite comunal oficial (capa LIMITE_COMUNAL
+   * del geoportal GeoPintana, editada el 2025-01-27). El rectángulo se
+   * redondea hacia afuera, para que contenga todo el límite.
    */
-  center: { lat: -33.583, lng: -70.634 },
+  center: { lat: -33.5875, lng: -70.6371 },
   zoom: 13,
+  bounds: { south: -33.628, west: -70.671, north: -33.554, east: -70.605 },
   updatedAt: "2026-09-27",
   features: {
     news: false,
@@ -36,6 +38,6 @@ export const laPintana: CommuneConfig = {
     search: true,
     reports: false,
     demoMap: false,
-    realMap: false,
+    realMap: true,
   },
 };

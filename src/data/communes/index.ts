@@ -5,7 +5,7 @@ import { laPintanaData } from "./la-pintana";
 import { losAromosData } from "./los-aromos";
 import type { CommuneData } from "./types";
 
-export type { CommuneData } from "./types";
+export type { CommuneBoundary, CommuneData } from "./types";
 
 const datasets: Record<string, CommuneData> = {
   "los-aromos": losAromosData,
@@ -17,7 +17,8 @@ const datasets: Record<string, CommuneData> = {
  * inexistente o una fecha mal formada rompen el build en vez de publicarse.
  */
 for (const [id, data] of Object.entries(datasets)) {
-  validateCommuneData(id, data, getCommune(id)?.isDemo ?? true);
+  const commune = getCommune(id);
+  validateCommuneData(id, data, commune?.isDemo ?? true, commune?.bounds);
 }
 
 const empty: CommuneData = {
@@ -40,6 +41,7 @@ const empty: CommuneData = {
   reportedLiabilities: [],
   accountingBalance: [],
   benefits: [],
+  boundary: null,
 };
 
 /** Dataset de una comuna; comuna desconocida devuelve dataset vacío. */
