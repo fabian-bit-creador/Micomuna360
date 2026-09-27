@@ -30,6 +30,16 @@
   --brand-slate: #4b5563;
   --brand-amber: #e9b949;
 
+  /*
+   * Tintas de texto: los colores de marca sirven para fondos, íconos grandes
+   * y gráficos; para texto se usan estas variantes, que cumplen WCAG AA
+   * (≥4,5:1) sobre blanco, marfil y los fondos suaves de la marca.
+   */
+  --brand-teal-ink: #136a66;
+  --brand-terracotta-ink: #a94444;
+  --brand-sky-ink: #2a7494;
+  --brand-amber-ink: #8a5a06;
+
   /* Tokens shadcn/ui */
   --background: #f7f7f2;
   --foreground: #374151;
@@ -39,10 +49,10 @@
   --popover-foreground: #374151;
   --primary: #17375e;
   --primary-foreground: #f7f7f2;
-  --secondary: #1e8e89;
+  --secondary: #156e6a;
   --secondary-foreground: #ffffff;
   --muted: #eceee7;
-  --muted-foreground: #6b7280;
+  --muted-foreground: #5b6270;
   --accent: #e6f2f7;
   --accent-foreground: #17375e;
   --destructive: #c95b5b;
@@ -68,10 +78,10 @@
     --popover-foreground: #e5e7eb;
     --primary: #67b7d1;
     --primary-foreground: #0f2038;
-    --secondary: #1e8e89;
+    --secondary: #156e6a;
     --secondary-foreground: #ffffff;
     --muted: #1c3a5e;
-    --muted-foreground: #9ca3af;
+    --muted-foreground: #b3b9c3;
     --accent: #1c3a5e;
     --accent-foreground: #e5e7eb;
     --destructive: #d98282;
@@ -84,6 +94,10 @@
     --chart-3: #8ecbe0;
     --chart-4: #d98282;
     --chart-5: #e9b949;
+    --brand-teal-ink: #5ccbc4;
+    --brand-terracotta-ink: #eba5a5;
+    --brand-sky-ink: #a3d5e6;
+    --brand-amber-ink: #f3d68f;
   }
 }
 
@@ -119,6 +133,10 @@
 
   --color-brand-navy: var(--brand-navy);
   --color-brand-teal: var(--brand-teal);
+  --color-brand-teal-ink: var(--brand-teal-ink);
+  --color-brand-terracotta-ink: var(--brand-terracotta-ink);
+  --color-brand-sky-ink: var(--brand-sky-ink);
+  --color-brand-amber-ink: var(--brand-amber-ink);
   --color-brand-sky: var(--brand-sky);
   --color-brand-terracotta: var(--brand-terracotta);
   --color-brand-ivory: var(--brand-ivory);

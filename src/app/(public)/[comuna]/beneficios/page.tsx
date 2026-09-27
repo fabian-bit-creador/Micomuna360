@@ -49,7 +49,7 @@ export default async function BeneficiosPage({
 
       <div className="mt-10 space-y-3 rounded-lg bg-muted px-4 py-4 text-sm text-muted-foreground">
         <p className="flex items-start gap-2 font-semibold text-foreground">
-          <LockIcon className="mt-0.5 size-4 shrink-0 text-brand-teal" />
+          <LockIcon className="mt-0.5 size-4 shrink-0 text-brand-teal-ink" />
           Nada de lo que marcas sale de tu teléfono
         </p>
         <p>

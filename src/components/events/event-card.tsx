@@ -38,7 +38,7 @@ export async function EventCard({
           </span>
         </div>
         <div className="min-w-0 space-y-1.5">
-          <Badge variant="outline" className="text-brand-teal">
+          <Badge variant="outline" className="text-brand-teal-ink">
             {categoryLabels[event.category] ?? event.category}
           </Badge>
           <h3 className="text-base leading-snug font-bold">{event.title}</h3>

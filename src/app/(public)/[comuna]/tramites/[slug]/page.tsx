@@ -55,7 +55,7 @@ export default async function TramiteDetallePage({
     <div className="mx-auto max-w-3xl px-4 py-12">
       <Link
         href={`/${commune.id}/tramites`}
-        className="mb-6 flex w-fit items-center gap-1 text-sm font-semibold text-brand-teal hover:text-primary"
+        className="mb-6 flex w-fit items-center gap-1 text-sm font-semibold text-brand-teal-ink hover:text-primary"
       >
         <ArrowLeftIcon className="size-4" />
         Volver a trámites
@@ -73,7 +73,7 @@ export default async function TramiteDetallePage({
         <CardContent className="grid gap-4 px-4 sm:grid-cols-2">
           {facts.map((fact) => (
             <div key={fact.label} className="flex items-start gap-3">
-              <div className="flex size-9 shrink-0 items-center justify-center rounded-lg bg-accent text-brand-teal">
+              <div className="flex size-9 shrink-0 items-center justify-center rounded-lg bg-accent text-brand-teal-ink">
                 <fact.icon className="size-4.5" />
               </div>
               <div>
@@ -92,7 +92,7 @@ export default async function TramiteDetallePage({
         <ul className="mt-4 space-y-2">
           {procedure.requirements.map((req) => (
             <li key={req} className="flex items-start gap-2.5">
-              <CheckIcon className="mt-0.5 size-4.5 shrink-0 text-brand-teal" />
+              <CheckIcon className="mt-0.5 size-4.5 shrink-0 text-brand-teal-ink" />
               <span>{req}</span>
             </li>
           ))}

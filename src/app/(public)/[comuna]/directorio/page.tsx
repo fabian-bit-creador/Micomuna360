@@ -88,7 +88,7 @@ export default async function DirectorioPage({
       {commune.features.community && (
         <Link
           href={`/${commune.id}/comunidad`}
-          className="mb-6 flex w-fit items-center gap-1 text-sm font-semibold text-brand-teal hover:text-primary"
+          className="mb-6 flex w-fit items-center gap-1 text-sm font-semibold text-brand-teal-ink hover:text-primary"
         >
           <ArrowLeftIcon className="size-4" />
           Volver a Comunidad
@@ -129,7 +129,7 @@ export default async function DirectorioPage({
                         </p>
                         <div className="space-y-1 pt-1.5 text-xs text-muted-foreground">
                           <p className="flex items-start gap-1.5">
-                            <MapPinIcon className="mt-0.5 size-3.5 shrink-0 text-brand-terracotta" />
+                            <MapPinIcon className="mt-0.5 size-3.5 shrink-0 text-brand-terracotta-ink" />
                             {place.address}
                             {place.sectorId
                               ? ` · ${sectorName(place.sectorId)}`
@@ -137,7 +137,7 @@ export default async function DirectorioPage({
                           </p>
                           {place.schedule && (
                             <p className="flex items-center gap-1.5">
-                              <ClockIcon className="size-3.5 shrink-0 text-brand-sky" />
+                              <ClockIcon className="size-3.5 shrink-0 text-brand-sky-ink" />
                               {place.schedule}
                             </p>
                           )}
@@ -165,7 +165,7 @@ export default async function DirectorioPage({
                           {place.phone && (
                             <a
                               href={telHref(place.phone)}
-                              className="inline-flex min-h-9 items-center gap-1.5 rounded-full bg-brand-teal/10 px-3.5 py-1 text-sm font-bold text-brand-teal transition-colors hover:bg-brand-teal hover:text-white"
+                              className="inline-flex min-h-9 items-center gap-1.5 rounded-full bg-brand-teal/10 px-3.5 py-1 text-sm font-bold text-brand-teal-ink transition-colors hover:bg-brand-teal-ink hover:text-background"
                             >
                               <PhoneCallIcon className="size-3.5" />
                               {place.phone}

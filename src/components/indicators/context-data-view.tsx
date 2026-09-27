@@ -88,7 +88,7 @@ export async function ContextDataView({
       />
 
       <p className="-mt-4 mb-10 flex max-w-3xl items-start gap-2 rounded-lg border border-brand-sky/40 bg-brand-sky/10 px-4 py-3 text-sm">
-        <ScaleIcon className="mt-0.5 size-4 shrink-0 text-brand-navy dark:text-brand-sky" />
+        <ScaleIcon className="mt-0.5 size-4 shrink-0 text-brand-navy dark:text-brand-sky-ink" />
         <span>
           <strong>Contexto, no puntaje.</strong> No hacemos rankings ni ponemos
           notas: las cifras de una comuna dependen de su población, su historia
@@ -135,7 +135,7 @@ export async function ContextDataView({
             {commune.features.transparency && (
               <Link
                 href={`/${commune.id}/transparencia#presupuesto`}
-                className="mt-4 inline-flex items-center gap-1.5 text-sm font-semibold text-brand-teal hover:text-primary"
+                className="mt-4 inline-flex items-center gap-1.5 text-sm font-semibold text-brand-teal-ink hover:text-primary"
               >
                 Ver en qué se está usando el presupuesto de este año
                 <ArrowRightIcon className="size-4" />
@@ -148,7 +148,7 @@ export async function ContextDataView({
           <h2 className="text-xl font-bold">Seguridad</h2>
           <Card className="mt-4 border-brand-sky/40 bg-brand-sky/5 py-6">
             <CardContent className="flex items-start gap-4 px-6">
-              <span className="flex size-11 shrink-0 items-center justify-center rounded-xl bg-brand-sky/20 text-brand-navy dark:text-brand-sky">
+              <span className="flex size-11 shrink-0 items-center justify-center rounded-xl bg-brand-sky/20 text-brand-navy dark:text-brand-sky-ink">
                 <ShieldQuestionIcon className="size-6" />
               </span>
               <div className="space-y-2 text-sm text-muted-foreground">

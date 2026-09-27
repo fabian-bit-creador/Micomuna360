@@ -97,7 +97,7 @@ export function ContextCard({
         )}
 
         <details className="mt-4 text-sm">
-          <summary className="flex cursor-pointer items-center gap-1.5 font-semibold text-brand-teal">
+          <summary className="flex cursor-pointer items-center gap-1.5 font-semibold text-brand-teal-ink">
             <InfoIcon className="size-4" />
             Cómo leer este dato
           </summary>

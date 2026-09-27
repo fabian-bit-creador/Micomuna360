@@ -68,7 +68,7 @@ export function BudgetIndexSection({ rows, source }: BudgetIndexSectionProps) {
                             href={ingresos.url}
                             target="_blank"
                             rel="noopener noreferrer"
-                            className="inline-flex min-h-8 items-center gap-1.5 rounded-full bg-brand-teal/10 px-3 text-xs font-bold text-brand-teal hover:bg-brand-teal hover:text-white"
+                            className="inline-flex min-h-8 items-center gap-1.5 rounded-full bg-brand-teal/10 px-3 text-xs font-bold text-brand-teal-ink hover:bg-brand-teal-ink hover:text-background"
                           >
                             <ArrowDownToLineIcon className="size-3.5" />
                             Ingresos
@@ -79,7 +79,7 @@ export function BudgetIndexSection({ rows, source }: BudgetIndexSectionProps) {
                             href={gastos.url}
                             target="_blank"
                             rel="noopener noreferrer"
-                            className="inline-flex min-h-8 items-center gap-1.5 rounded-full bg-brand-terracotta/10 px-3 text-xs font-bold text-brand-terracotta hover:bg-brand-terracotta hover:text-white"
+                            className="inline-flex min-h-8 items-center gap-1.5 rounded-full bg-brand-terracotta/10 px-3 text-xs font-bold text-brand-terracotta-ink hover:bg-brand-terracotta-ink hover:text-background"
                           >
                             <ArrowUpFromLineIcon className="size-3.5" />
                             Gastos
@@ -97,7 +97,7 @@ export function BudgetIndexSection({ rows, source }: BudgetIndexSectionProps) {
 
       <p className="mt-4 rounded-lg bg-muted px-4 py-3 text-sm text-muted-foreground">
         El informe acumulado más reciente ya está resumido en cifras en{" "}
-        <a href="#presupuesto" className="font-semibold text-brand-teal underline underline-offset-2">
+        <a href="#presupuesto" className="font-semibold text-brand-teal-ink underline underline-offset-2">
           el presupuesto, en simple
         </a>
         . Los demás informes los dejamos con acceso directo al documento

@@ -48,7 +48,7 @@ export function Logo({
           >
             MiComuna
           </span>
-          <span className="text-brand-teal">360</span>
+          <span className="text-brand-teal-ink">360</span>
         </span>
       )}
     </Link>

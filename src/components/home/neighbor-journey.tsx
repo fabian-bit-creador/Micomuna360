@@ -11,28 +11,28 @@ import { cn } from "@/lib/utils";
 const journey = [
   {
     icon: LampIcon,
-    color: "bg-brand-amber/25 text-yellow-700 dark:text-brand-amber",
+    color: "bg-brand-amber/25 text-yellow-700 dark:text-brand-amber-ink",
     title: "Doña María ve el problema",
     description:
       "La luminaria de su pasaje lleva semanas apagada y de noche da miedo salir.",
   },
   {
     icon: SmartphoneIcon,
-    color: "bg-brand-teal/15 text-brand-teal",
+    color: "bg-brand-teal/15 text-brand-teal-ink",
     title: "Lo reporta en 2 minutos",
     description:
       "Desde el celular, con una foto y el punto en el mapa. Sin filas, sin papeleo.",
   },
   {
     icon: Building2Icon,
-    color: "bg-brand-sky/20 text-brand-navy dark:text-brand-sky",
+    color: "bg-brand-sky/20 text-brand-navy dark:text-brand-sky-ink",
     title: "El municipio lo recibe y asigna",
     description:
       "El reporte llega ordenado al equipo correcto, con responsable y plazo.",
   },
   {
     icon: BellRingIcon,
-    color: "bg-brand-terracotta/15 text-brand-terracotta",
+    color: "bg-brand-terracotta/15 text-brand-terracotta-ink",
     title: "María sigue el avance",
     description:
       "Recibe el aviso cuando queda resuelto: pasaje iluminado y confianza que crece.",

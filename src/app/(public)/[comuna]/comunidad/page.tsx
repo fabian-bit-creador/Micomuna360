@@ -52,21 +52,21 @@ export default async function ComunidadPage({
       description: `${organizations.length} juntas de vecinos, clubes, comités y fundaciones activas en la comuna demo.`,
       href: `${base}/comunidad/organizaciones`,
       icon: UsersIcon,
-      chip: "bg-brand-teal/15 text-brand-teal",
+      chip: "bg-brand-teal/15 text-brand-teal-ink",
     },
     {
       title: "Directorio comunal",
       description: `${places.length} lugares y servicios útiles: salud, deporte, reciclaje, biblioteca y más.`,
       href: `${base}/directorio`,
       icon: MapPinIcon,
-      chip: "bg-brand-sky/20 text-brand-navy dark:text-brand-sky",
+      chip: "bg-brand-sky/20 text-brand-navy dark:text-brand-sky-ink",
     },
     {
       title: "Buenas noticias",
       description: `${goodNews.length} historias positivas de la comunidad: logros, espacios recuperados y vecinos que se organizan.`,
       href: `${base}/noticias?tipo=buena_noticia`,
       icon: PartyPopperIcon,
-      chip: "bg-emerald-600/15 text-emerald-700 dark:text-emerald-400",
+      chip: "bg-emerald-600/15 text-emerald-800 dark:text-emerald-400",
     },
     {
       title: "Actividades y encuentros",
@@ -74,7 +74,7 @@ export default async function ComunidadPage({
         "La agenda comunal: talleres, deportes, ferias y reuniones territoriales.",
       href: `${base}/actividades`,
       icon: CalendarDaysIcon,
-      chip: "bg-brand-terracotta/15 text-brand-terracotta",
+      chip: "bg-brand-terracotta/15 text-brand-terracotta-ink",
     },
   ];
 
@@ -115,7 +115,7 @@ export default async function ComunidadPage({
       <Card className="mt-8 border-brand-teal/40 bg-brand-teal/5 py-5">
         <CardContent className="flex flex-wrap items-center justify-between gap-3 px-5">
           <div className="max-w-2xl">
-            <Badge variant="secondary" className="mb-2 bg-brand-teal/15 text-brand-teal">
+            <Badge variant="secondary" className="mb-2 bg-brand-teal/15 text-brand-teal-ink">
               Próximamente
             </Badge>
             <p className="text-sm text-muted-foreground">

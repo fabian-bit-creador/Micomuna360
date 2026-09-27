@@ -18,22 +18,22 @@ const statusConfig: Record<
   verificado: {
     label: "Verificado",
     icon: CircleCheckIcon,
-    className: "text-brand-teal",
+    className: "text-brand-teal-ink",
   },
   revision_vencida: {
     label: "Revisión vencida",
     icon: ClockAlertIcon,
-    className: "text-yellow-700 dark:text-brand-amber",
+    className: "text-yellow-700 dark:text-brand-amber-ink",
   },
   pendiente: {
     label: "Pendiente de revisión",
     icon: CircleHelpIcon,
-    className: "text-yellow-700 dark:text-brand-amber",
+    className: "text-yellow-700 dark:text-brand-amber-ink",
   },
   enlace_caido: {
     label: "Enlace caído",
     icon: UnlinkIcon,
-    className: "text-brand-terracotta",
+    className: "text-brand-terracotta-ink",
   },
   archivado: {
     label: "Archivado",

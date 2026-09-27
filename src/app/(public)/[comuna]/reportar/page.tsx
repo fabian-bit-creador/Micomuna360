@@ -68,10 +68,10 @@ export default async function ReportarPage({
           <Card key={step.title} className="py-5">
             <CardContent className="px-5">
               <div className="mb-3 flex items-center justify-between">
-                <div className="flex size-11 items-center justify-center rounded-lg bg-accent text-brand-teal">
+                <div className="flex size-11 items-center justify-center rounded-lg bg-accent text-brand-teal-ink">
                   <step.icon className="size-6" />
                 </div>
-                <span className="font-display text-3xl font-bold text-brand-sky/60">
+                <span className="font-display text-3xl font-bold text-brand-sky-ink">
                   {i + 1}
                 </span>
               </div>

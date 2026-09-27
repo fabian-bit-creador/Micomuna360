@@ -49,7 +49,7 @@ export function BalanceSection({ rows, source }: BalanceSectionProps) {
       <Card className="mt-4 py-5">
         <CardContent className="px-5">
           <details>
-            <summary className="cursor-pointer text-sm font-semibold text-brand-teal">
+            <summary className="cursor-pointer text-sm font-semibold text-brand-teal-ink">
               Ver las {rows.length} cuentas del balance
             </summary>
             <div className="mt-3 max-h-[32rem] overflow-auto">

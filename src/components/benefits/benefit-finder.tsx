@@ -147,7 +147,7 @@ export function BenefitFinder({
 
       <div className="mt-8" aria-live="polite">
         <h2 className="flex flex-wrap items-center gap-2 text-xl font-bold">
-          <SearchCheckIcon className="size-5 text-brand-teal" />
+          <SearchCheckIcon className="size-5 text-brand-teal-ink" />
           {selected.length === 0
             ? "Por dónde partir"
             : `Qué revisar en tu caso (${results.length})`}
@@ -192,7 +192,7 @@ export function BenefitFinder({
                       <ExternalLinkIcon />
                     </a>
                   </Button>
-                  <Badge variant="outline" className="text-brand-teal">
+                  <Badge variant="outline" className="text-brand-teal-ink">
                     Sitio oficial externo
                   </Badge>
                 </div>

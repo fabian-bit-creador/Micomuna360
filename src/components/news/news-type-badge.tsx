@@ -5,23 +5,23 @@ import type { NewsType } from "@/types";
 const typeConfig: Record<NewsType, { label: string; className: string }> = {
   noticia: {
     label: "Noticia",
-    className: "bg-brand-navy/10 text-brand-navy dark:bg-brand-sky/20 dark:text-brand-sky",
+    className: "bg-brand-navy/10 text-brand-navy dark:bg-brand-sky/20 dark:text-brand-sky-ink",
   },
   anuncio: {
     label: "Anuncio",
-    className: "bg-brand-sky/20 text-brand-navy dark:text-brand-sky",
+    className: "bg-brand-sky/20 text-brand-navy dark:text-brand-sky-ink",
   },
   taller: {
     label: "Taller",
-    className: "bg-brand-teal/15 text-brand-teal",
+    className: "bg-brand-teal/15 text-brand-teal-ink",
   },
   beneficio: {
     label: "Beneficio",
-    className: "bg-brand-amber/25 text-yellow-800 dark:text-brand-amber",
+    className: "bg-brand-amber/25 text-yellow-800 dark:text-brand-amber-ink",
   },
   buena_noticia: {
     label: "Buena noticia",
-    className: "bg-emerald-600/15 text-emerald-700 dark:text-emerald-400",
+    className: "bg-emerald-600/15 text-emerald-800 dark:text-emerald-400",
   },
 };
 

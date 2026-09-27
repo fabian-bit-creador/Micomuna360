@@ -187,7 +187,7 @@ export function EducationSection({
 
         {transferred && (
           <p className="mt-5 flex items-start gap-2 rounded-lg bg-muted px-4 py-3 text-sm text-muted-foreground">
-            <GraduationCapIcon className="mt-0.5 size-4 shrink-0 text-brand-teal" />
+            <GraduationCapIcon className="mt-0.5 size-4 shrink-0 text-brand-teal-ink" />
             <span>
               En {last.year}, los establecimientos públicos de la comuna ya
               figuran a cargo del Servicio Local de Educación Pública{" "}
@@ -203,7 +203,7 @@ export function EducationSection({
         )}
 
         <details className="mt-4 text-sm">
-          <summary className="cursor-pointer font-semibold text-brand-teal">
+          <summary className="cursor-pointer font-semibold text-brand-teal-ink">
             Cómo leer este dato
           </summary>
           <p className="mt-2 text-muted-foreground">

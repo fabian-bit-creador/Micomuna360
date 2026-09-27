@@ -60,7 +60,7 @@ export function SectionHeader({
       )}
     >
       <div className="max-w-2xl">
-        <p className="mb-2 flex items-center gap-2 text-sm font-bold tracking-wide text-brand-teal uppercase">
+        <p className="mb-2 flex items-center gap-2 text-sm font-bold tracking-wide text-brand-teal-ink uppercase">
           <ArcMark />
           {eyebrow}
         </p>
@@ -74,7 +74,7 @@ export function SectionHeader({
       {action && (
         <Link
           href={action.href}
-          className="group inline-flex items-center gap-1 text-sm font-semibold text-brand-teal hover:text-primary"
+          className="group inline-flex items-center gap-1 text-sm font-semibold text-brand-teal-ink hover:text-primary"
         >
           {action.label}
           <ArrowRightIcon className="size-4 transition-transform group-hover:translate-x-0.5" />

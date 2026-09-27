@@ -37,56 +37,56 @@ const accesos = [
     description: "Emergencias y servicios, a un toque.",
     href: "/telefonos",
     icon: PhoneCallIcon,
-    chip: "bg-brand-terracotta/15 text-brand-terracotta group-hover:bg-brand-terracotta",
+    chip: "bg-brand-terracotta/15 text-brand-terracotta-ink group-hover:bg-brand-terracotta",
   },
   {
     title: "Trámites y beneficios",
     description: "Guías paso a paso, sin letra chica.",
     href: "/tramites",
     icon: FileTextIcon,
-    chip: "bg-brand-sky/20 text-brand-navy group-hover:bg-brand-sky dark:text-brand-sky",
+    chip: "bg-brand-sky/20 text-brand-navy group-hover:bg-brand-sky dark:text-brand-sky-ink",
   },
   {
     title: "Actividades",
     description: "Talleres, deportes y encuentros.",
     href: "/actividades",
     icon: CalendarDaysIcon,
-    chip: "bg-brand-teal/15 text-brand-teal group-hover:bg-brand-teal",
+    chip: "bg-brand-teal/15 text-brand-teal-ink group-hover:bg-brand-teal",
   },
   {
     title: "Noticias",
     description: "Anuncios y beneficios al día.",
     href: "/noticias",
     icon: MegaphoneIcon,
-    chip: "bg-brand-navy/10 text-brand-navy group-hover:bg-brand-navy dark:bg-brand-sky/15 dark:text-brand-sky",
+    chip: "bg-brand-navy/10 text-brand-navy group-hover:bg-brand-navy dark:bg-brand-sky/15 dark:text-brand-sky-ink",
   },
   {
     title: "Comunidad",
     description: "Organizaciones y buenas noticias.",
     href: "/comunidad",
     icon: UsersIcon,
-    chip: "bg-brand-teal/15 text-brand-teal group-hover:bg-brand-teal",
+    chip: "bg-brand-teal/15 text-brand-teal-ink group-hover:bg-brand-teal",
   },
   {
     title: "Directorio comunal",
     description: "Lugares que sirven, con horario.",
     href: "/directorio",
     icon: MapPinIcon,
-    chip: "bg-brand-terracotta/15 text-brand-terracotta group-hover:bg-brand-terracotta",
+    chip: "bg-brand-terracotta/15 text-brand-terracotta-ink group-hover:bg-brand-terracotta",
   },
   {
     title: "Datos comunales",
     description: "Tu comuna en cifras simples.",
     href: "/datos",
     icon: BarChart3Icon,
-    chip: "bg-brand-sky/20 text-brand-navy group-hover:bg-brand-sky dark:text-brand-sky",
+    chip: "bg-brand-sky/20 text-brand-navy group-hover:bg-brand-sky dark:text-brand-sky-ink",
   },
   {
     title: "Reportar un problema",
     description: "Tu reporte, con seguimiento.",
     href: "/reportar",
     icon: MessageSquarePlusIcon,
-    chip: "bg-brand-navy/10 text-brand-navy group-hover:bg-brand-navy dark:bg-brand-sky/15 dark:text-brand-sky",
+    chip: "bg-brand-navy/10 text-brand-navy group-hover:bg-brand-navy dark:bg-brand-sky/15 dark:text-brand-sky-ink",
   },
 ];
 
@@ -113,7 +113,7 @@ export async function DemoHome({ commune }: { commune: CommuneConfig }) {
               Portal ciudadano · piloto con datos de demostración
             </Badge>
             <h1 className="text-4xl font-bold tracking-tight md:text-6xl">
-              Tu comuna en <span className="text-brand-teal">un solo lugar</span>
+              Tu comuna en <span className="text-brand-teal-ink">un solo lugar</span>
             </h1>
             <p className="mt-5 max-w-xl text-lg text-muted-foreground">
               Teléfonos que sirven, trámites explicados simple, actividades
@@ -290,7 +290,7 @@ export async function DemoHome({ commune }: { commune: CommuneConfig }) {
                 personas y los territorios.{" "}
                 <Link
                   href="/nosotros"
-                  className="font-semibold text-brand-teal hover:underline"
+                  className="font-semibold text-brand-teal-ink hover:underline"
                 >
                   Lee nuestro compromiso
                 </Link>

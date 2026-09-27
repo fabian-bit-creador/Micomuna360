@@ -52,7 +52,7 @@ export default async function OrganizacionesPage({
     <div className="mx-auto max-w-6xl px-4 py-12">
       <Link
         href={`/${commune.id}/comunidad`}
-        className="mb-6 flex w-fit items-center gap-1 text-sm font-semibold text-brand-teal hover:text-primary"
+        className="mb-6 flex w-fit items-center gap-1 text-sm font-semibold text-brand-teal-ink hover:text-primary"
       >
         <ArrowLeftIcon className="size-4" />
         Volver a Comunidad
@@ -72,7 +72,7 @@ export default async function OrganizacionesPage({
               <CivicIconChip name={org.icon} color="teal" />
               <div className="min-w-0 space-y-1.5">
                 <div className="flex flex-wrap items-center gap-2">
-                  <Badge variant="outline" className="text-brand-teal">
+                  <Badge variant="outline" className="text-brand-teal-ink">
                     {typeLabels[org.type]}
                   </Badge>
                   <span className="inline-flex items-center gap-1 text-xs text-muted-foreground">
@@ -85,12 +85,12 @@ export default async function OrganizacionesPage({
                   {org.description}
                 </p>
                 <p className="flex items-start gap-1.5 pt-1 text-xs text-muted-foreground">
-                  <CalendarClockIcon className="mt-0.5 size-3.5 shrink-0 text-brand-terracotta" />
+                  <CalendarClockIcon className="mt-0.5 size-3.5 shrink-0 text-brand-terracotta-ink" />
                   {org.meetingInfo}
                 </p>
                 {org.contact && (
                   <p className="flex items-center gap-1.5 text-xs text-muted-foreground">
-                    <MailIcon className="size-3.5 shrink-0 text-brand-sky" />
+                    <MailIcon className="size-3.5 shrink-0 text-brand-sky-ink" />
                     {org.contact}
                   </p>
                 )}

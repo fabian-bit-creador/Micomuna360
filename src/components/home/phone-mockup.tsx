@@ -43,7 +43,7 @@ export function PhoneMockup({ className }: { className?: string }) {
           <div className="space-y-3 px-4 py-4">
             {/* Categoría y título */}
             <div className="flex items-center gap-2">
-              <span className="flex size-8 items-center justify-center rounded-lg bg-brand-amber/25 text-yellow-700 dark:text-brand-amber">
+              <span className="flex size-8 items-center justify-center rounded-lg bg-brand-amber/25 text-yellow-700 dark:text-brand-amber-ink">
                 <LightbulbIcon className="size-4.5" />
               </span>
               <div className="leading-tight">
@@ -56,7 +56,7 @@ export function PhoneMockup({ className }: { className?: string }) {
             </div>
 
             {/* Foto del reporte (placeholder) */}
-            <div className="flex h-20 items-center justify-center rounded-lg bg-gradient-to-br from-accent to-brand-sky/25 text-brand-navy/50">
+            <div className="flex h-20 items-center justify-center rounded-lg bg-gradient-to-br from-accent to-brand-sky/25 text-brand-navy dark:text-brand-sky-ink">
               <CameraIcon className="size-6" />
               <span className="ml-2 text-[11px] font-medium">
                 Foto del vecino
@@ -86,7 +86,7 @@ export function PhoneMockup({ className }: { className?: string }) {
                     {step.label}
                   </span>
                   {i === steps.length - 1 && (
-                    <span className="rounded-full bg-brand-teal/15 px-2 py-0.5 text-[10px] font-bold text-brand-teal">
+                    <span className="rounded-full bg-brand-teal/15 px-2 py-0.5 text-[10px] font-bold text-brand-teal-ink">
                       ¡Pasaje iluminado!
                     </span>
                   )}

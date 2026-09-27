@@ -75,7 +75,7 @@ export default async function MapaPage({
       ) : (
         <Card className="border-brand-sky/40 bg-brand-sky/5 py-6">
           <CardContent className="flex items-start gap-4 px-6">
-            <span className="flex size-11 shrink-0 items-center justify-center rounded-xl bg-brand-sky/20 text-brand-navy dark:text-brand-sky">
+            <span className="flex size-11 shrink-0 items-center justify-center rounded-xl bg-brand-sky/20 text-brand-navy dark:text-brand-sky-ink">
               <MapPinnedIcon className="size-6" />
             </span>
             <div>

@@ -48,7 +48,7 @@ function PhoneRow({ phone }: { phone: UsefulPhone }) {
           {phone.description} · {phone.available}
         </p>
       </div>
-      <span className="inline-flex shrink-0 items-center gap-2 rounded-full bg-brand-teal/10 px-3.5 py-1.5 font-display text-lg font-bold whitespace-nowrap text-brand-teal transition-colors group-hover:bg-brand-teal group-hover:text-white">
+      <span className="inline-flex shrink-0 items-center gap-2 rounded-full bg-brand-teal/10 px-3.5 py-1.5 font-display text-lg font-bold whitespace-nowrap text-brand-teal-ink transition-colors group-hover:bg-brand-teal-ink group-hover:text-background">
         <PhoneCallIcon className="size-4" />
         {phone.number}
       </span>
@@ -85,7 +85,7 @@ export default async function TelefonosPage({
           return (
             <section key={group.category}>
               <h2 className="mb-4 flex items-center gap-2 text-xl font-bold">
-                <group.icon className="size-5 text-brand-terracotta" />
+                <group.icon className="size-5 text-brand-terracotta-ink" />
                 {group.title}
               </h2>
               <div className="grid gap-2.5 sm:grid-cols-2">

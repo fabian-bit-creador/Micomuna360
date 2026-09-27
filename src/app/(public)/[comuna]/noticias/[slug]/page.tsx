@@ -41,7 +41,7 @@ export default async function NoticiaDetallePage({
     <article className="mx-auto max-w-3xl px-4 py-12">
       <Link
         href={`/${commune.id}/noticias`}
-        className="mb-6 inline-flex items-center gap-1 text-sm font-semibold text-brand-teal hover:text-primary"
+        className="mb-6 inline-flex items-center gap-1 text-sm font-semibold text-brand-teal-ink hover:text-primary"
       >
         <ArrowLeftIcon className="size-4" />
         Volver a noticias

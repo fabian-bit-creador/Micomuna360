@@ -124,7 +124,7 @@ export function CommuneMap({
 
       {/* Alternativa accesible: la misma información como lista. */}
       <details className="mt-4">
-        <summary className="cursor-pointer text-sm font-semibold text-brand-teal">
+        <summary className="cursor-pointer text-sm font-semibold text-brand-teal-ink">
           Ver los {visible.length} lugares como lista
         </summary>
         <ul className="mt-3 space-y-2 text-sm">

@@ -28,7 +28,7 @@ export default function PortalPage() {
       <section className="border-b bg-gradient-to-b from-accent to-background">
         <div className="mx-auto max-w-6xl px-4 py-16 text-center md:py-24">
           <h1 className="mx-auto max-w-3xl text-4xl font-bold tracking-tight md:text-6xl">
-            Tu comuna en <span className="text-brand-teal">un solo lugar</span>
+            Tu comuna en <span className="text-brand-teal-ink">un solo lugar</span>
           </h1>
           <p className="mx-auto mt-5 max-w-2xl text-lg text-muted-foreground">
             {siteConfig.sublema} Una plataforma ciudadana, independiente y sin
@@ -55,8 +55,8 @@ export default function PortalPage() {
                     variant="secondary"
                     className={
                       commune.isDemo
-                        ? "w-fit bg-brand-teal/15 text-brand-teal"
-                        : "w-fit bg-brand-terracotta/15 text-brand-terracotta"
+                        ? "w-fit bg-brand-teal/15 text-brand-teal-ink"
+                        : "w-fit bg-brand-terracotta/15 text-brand-terracotta-ink"
                     }
                   >
                     {commune.isDemo
@@ -82,7 +82,7 @@ export default function PortalPage() {
           ¿Quieres ver MiComuna360 en tu comuna?{" "}
           <Link
             href="/nosotros"
-            className="font-semibold text-brand-teal hover:underline"
+            className="font-semibold text-brand-teal-ink hover:underline"
           >
             Conoce el proyecto
           </Link>

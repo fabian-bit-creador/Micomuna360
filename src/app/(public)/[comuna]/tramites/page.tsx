@@ -64,7 +64,7 @@ export default async function TramitesPage({
           >
             <Card className="h-full gap-3 transition-all group-hover:-translate-y-0.5 group-hover:shadow-md">
               <CardHeader className="gap-2">
-                <Badge variant="outline" className="text-brand-teal">
+                <Badge variant="outline" className="text-brand-teal-ink">
                   {categoryLabels[procedure.category]}
                 </Badge>
                 <CardTitle className="flex items-start justify-between gap-2 text-lg leading-snug text-primary">

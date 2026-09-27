@@ -37,7 +37,7 @@ const roleColors: Record<string, string> = {
 const howItWorks = [
   {
     icon: NewspaperIcon,
-    chip: "bg-brand-teal/15 text-brand-teal",
+    chip: "bg-brand-teal/15 text-brand-teal-ink",
     title: "Infórmate hoy",
     description:
       "Noticias, actividades, trámites explicados simple, teléfonos útiles y datos de tu comuna, ya disponibles sin registro.",
@@ -45,7 +45,7 @@ const howItWorks = [
   },
   {
     icon: MessageSquarePlusIcon,
-    chip: "bg-brand-sky/20 text-brand-navy dark:text-brand-sky",
+    chip: "bg-brand-sky/20 text-brand-navy dark:text-brand-sky-ink",
     title: "Participa y reporta",
     description:
       "Reportes vecinales con foto, ubicación y seguimiento. Se activa en la próxima etapa del piloto.",
@@ -53,7 +53,7 @@ const howItWorks = [
   },
   {
     icon: BuildingIcon,
-    chip: "bg-brand-terracotta/15 text-brand-terracotta",
+    chip: "bg-brand-terracotta/15 text-brand-terracotta-ink",
     title: "Tu municipio responde",
     description:
       "Cada reporte llegará ordenado al equipo municipal, con responsable, estado y aviso al vecino al resolverse.",
@@ -84,7 +84,7 @@ export default function NosotrosPage() {
         <div className="grid gap-4 md:grid-cols-2">
           <Card className="border-t-4 border-t-brand-teal">
             <CardHeader>
-              <div className="mb-1 flex size-11 items-center justify-center rounded-xl bg-accent text-brand-teal">
+              <div className="mb-1 flex size-11 items-center justify-center rounded-xl bg-accent text-brand-teal-ink">
                 <CompassIcon className="size-6" />
               </div>
               <CardTitle className="text-xl">Nuestra misión</CardTitle>
@@ -95,7 +95,7 @@ export default function NosotrosPage() {
           </Card>
           <Card className="border-t-4 border-t-brand-sky">
             <CardHeader>
-              <div className="mb-1 flex size-11 items-center justify-center rounded-xl bg-accent text-brand-sky">
+              <div className="mb-1 flex size-11 items-center justify-center rounded-xl bg-accent text-brand-sky-ink">
                 <EyeIcon className="size-6" />
               </div>
               <CardTitle className="text-xl">Nuestra visión</CardTitle>
@@ -151,8 +151,8 @@ export default function NosotrosPage() {
                     variant="secondary"
                     className={cn(
                       step.available
-                        ? "bg-brand-teal/15 text-brand-teal"
-                        : "bg-brand-amber/25 text-yellow-800 dark:text-brand-amber"
+                        ? "bg-brand-teal/15 text-brand-teal-ink"
+                        : "bg-brand-amber/25 text-yellow-800 dark:text-brand-amber-ink"
                     )}
                   >
                     {step.available ? "Disponible hoy" : "Próximamente"}
@@ -180,7 +180,7 @@ export default function NosotrosPage() {
           {siteConfig.valores.map((valor) => (
             <Card key={valor.name} className="gap-2 py-5">
               <CardHeader className="gap-1">
-                <CardTitle className="text-brand-teal">{valor.name}</CardTitle>
+                <CardTitle className="text-brand-teal-ink">{valor.name}</CardTitle>
                 <CardDescription className="text-sm leading-relaxed">
                   {valor.description}
                 </CardDescription>
@@ -221,13 +221,13 @@ export default function NosotrosPage() {
         <div className="rounded-2xl bg-primary px-6 py-10 text-primary-foreground md:px-14">
           <div className="flex flex-col items-start gap-5 md:flex-row md:items-center">
             <div className="flex size-14 shrink-0 items-center justify-center rounded-2xl bg-brand-ivory/10">
-              <ScaleIcon className="size-7 text-brand-sky" />
+              <ScaleIcon className="size-7 text-primary-foreground" />
             </div>
             <div>
-              <h2 className="text-2xl font-bold text-brand-ivory">
+              <h2 className="text-2xl font-bold text-primary-foreground">
                 Sin colores políticos
               </h2>
-              <p className="mt-2 max-w-3xl leading-relaxed text-brand-ivory/80">
+              <p className="mt-2 max-w-3xl leading-relaxed text-primary-foreground/85">
                 {siteConfig.noPartidista}
               </p>
             </div>
@@ -237,7 +237,7 @@ export default function NosotrosPage() {
 
       {/* CTA final */}
       <section className="mx-auto max-w-6xl px-4 pb-16 text-center">
-        <HandshakeIcon className="mx-auto size-10 text-brand-teal" />
+        <HandshakeIcon className="mx-auto size-10 text-brand-teal-ink" />
         <h2 className="mt-4 text-2xl font-bold md:text-3xl">
           {siteConfig.sublema}
         </h2>

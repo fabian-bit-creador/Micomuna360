@@ -52,7 +52,7 @@ const markers: DemoMarker[] = [
     icon: TrafficConeIcon,
     x: 45,
     y: 56,
-    chip: "text-brand-terracotta ring-brand-terracotta/50",
+    chip: "text-brand-terracotta-ink ring-brand-terracotta/50",
   },
   {
     id: "m-basural",
@@ -80,7 +80,7 @@ const markers: DemoMarker[] = [
     icon: CalendarDaysIcon,
     x: 76,
     y: 58,
-    chip: "text-brand-teal ring-brand-teal/50",
+    chip: "text-brand-teal-ink ring-brand-teal/50",
   },
   {
     id: "m-reunion",
@@ -89,7 +89,7 @@ const markers: DemoMarker[] = [
     icon: CalendarDaysIcon,
     x: 13,
     y: 58,
-    chip: "text-brand-teal ring-brand-teal/50",
+    chip: "text-brand-teal-ink ring-brand-teal/50",
   },
   // Servicios
   {
@@ -354,13 +354,13 @@ export async function DemoMap({ communeId }: { communeId: string }) {
         >
           <li className="flex items-center gap-1.5">
             <span className="flex size-5 items-center justify-center rounded-full bg-white ring-2 ring-brand-terracotta/50">
-              <WrenchIcon className="size-3 text-brand-terracotta" />
+              <WrenchIcon className="size-3 text-brand-terracotta-ink" />
             </span>
             Reportes en gestión (demo)
           </li>
           <li className="flex items-center gap-1.5">
             <span className="flex size-5 items-center justify-center rounded-full bg-white ring-2 ring-brand-teal/50">
-              <CalendarDaysIcon className="size-3 text-brand-teal" />
+              <CalendarDaysIcon className="size-3 text-brand-teal-ink" />
             </span>
             Actividades
           </li>

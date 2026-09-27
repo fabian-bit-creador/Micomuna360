@@ -23,8 +23,8 @@ export function SiteHeader({ commune }: { commune: CommuneConfig }) {
             variant="secondary"
             className={
               commune.isDemo
-                ? "hidden bg-brand-teal/15 text-brand-teal sm:inline-flex"
-                : "hidden bg-brand-terracotta/15 text-brand-terracotta sm:inline-flex"
+                ? "hidden bg-brand-teal/15 text-brand-teal-ink sm:inline-flex"
+                : "hidden bg-brand-terracotta/15 text-brand-terracotta-ink sm:inline-flex"
             }
           >
             {commune.name} · {commune.isDemo ? "demo" : "piloto"}

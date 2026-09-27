@@ -62,7 +62,7 @@ function EmptyBudget() {
       <h2 className="text-xl font-bold">El presupuesto, en simple</h2>
       <Card className="mt-4 border-brand-sky/40 bg-brand-sky/5 py-6">
         <CardContent className="flex items-start gap-4 px-6">
-          <span className="flex size-11 shrink-0 items-center justify-center rounded-xl bg-brand-sky/20 text-brand-navy dark:text-brand-sky">
+          <span className="flex size-11 shrink-0 items-center justify-center rounded-xl bg-brand-sky/20 text-brand-navy dark:text-brand-sky-ink">
             <ScaleIcon className="size-6" />
           </span>
           <div>
@@ -287,7 +287,7 @@ export function BudgetSection({ lines, documents, source }: BudgetSectionProps) 
         <Card className="mt-4 py-6">
           <CardContent className="px-6">
             <div className="flex items-start gap-4">
-              <span className="flex size-11 shrink-0 items-center justify-center rounded-xl bg-brand-teal/15 text-brand-teal">
+              <span className="flex size-11 shrink-0 items-center justify-center rounded-xl bg-brand-teal/15 text-brand-teal-ink">
                 <HeartPulseIcon className="size-6" />
               </span>
               <div>
@@ -319,7 +319,7 @@ export function BudgetSection({ lines, documents, source }: BudgetSectionProps) 
               </div>
             </div>
             <details className="mt-4">
-              <summary className="cursor-pointer text-sm font-semibold text-brand-teal">
+              <summary className="cursor-pointer text-sm font-semibold text-brand-teal-ink">
                 Ver en qué se usa el presupuesto de salud
               </summary>
               <ExecutionLegend showElapsed />

@@ -74,7 +74,7 @@ export function LiabilitiesPreview({
           />
 
           <details className="mt-6 border-t pt-4">
-            <summary className="cursor-pointer text-sm font-semibold text-brand-teal">
+            <summary className="cursor-pointer text-sm font-semibold text-brand-teal-ink">
               Ver las {family215.length + family115.length} cuentas del informe,
               con montos exactos
             </summary>
@@ -124,7 +124,7 @@ export function LiabilitiesPreview({
 
       <Card className="mt-4 border-brand-amber/50 bg-brand-amber/10 py-5">
         <CardContent className="flex items-start gap-3 px-5">
-          <InfoIcon className="mt-0.5 size-5 shrink-0 text-yellow-700 dark:text-brand-amber" />
+          <InfoIcon className="mt-0.5 size-5 shrink-0 text-yellow-700 dark:text-brand-amber-ink" />
           <div className="space-y-2 text-sm">
             <p>
               <strong>Cómo leer estas cifras.</strong> Son los montos que

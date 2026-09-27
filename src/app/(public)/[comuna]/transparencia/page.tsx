@@ -114,7 +114,7 @@ export default async function TransparenciaPage({
       <section className="grid gap-4 md:grid-cols-2">
         <Card className="gap-0 py-6">
           <CardContent className="px-6">
-            <Badge className="mb-3 bg-brand-teal/15 text-brand-teal">
+            <Badge className="mb-3 bg-brand-teal/15 text-brand-teal-ink">
               Ya está publicado
             </Badge>
             <h2 className="text-xl font-bold text-primary">
@@ -146,7 +146,7 @@ export default async function TransparenciaPage({
 
         <Card className="gap-0 py-6">
           <CardContent className="px-6">
-            <Badge className="mb-3 bg-brand-terracotta/15 text-brand-terracotta">
+            <Badge className="mb-3 bg-brand-terracotta/15 text-brand-terracotta-ink">
               Lo pides tú
             </Badge>
             <h2 className="text-xl font-bold text-primary">
@@ -184,7 +184,7 @@ export default async function TransparenciaPage({
           {rights.map((right) => (
             <Card key={right.title} className="gap-0 py-5">
               <CardContent className="flex items-start gap-4 px-5">
-                <span className="flex size-11 shrink-0 items-center justify-center rounded-xl bg-accent text-brand-teal">
+                <span className="flex size-11 shrink-0 items-center justify-center rounded-xl bg-accent text-brand-teal-ink">
                   <right.icon className="size-6" />
                 </span>
                 <div>
@@ -220,7 +220,7 @@ export default async function TransparenciaPage({
             {reports.map((report) => (
               <Card key={report.id} className="gap-0 py-5">
                 <CardContent className="flex items-start gap-4 px-5">
-                  <span className="flex size-11 shrink-0 items-center justify-center rounded-xl bg-brand-navy/10 text-brand-navy dark:bg-brand-sky/15 dark:text-brand-sky">
+                  <span className="flex size-11 shrink-0 items-center justify-center rounded-xl bg-brand-navy/10 text-brand-navy dark:bg-brand-sky/15 dark:text-brand-sky-ink">
                     <FileTextIcon className="size-6" />
                   </span>
                   <div className="min-w-0">

@@ -318,7 +318,7 @@ export function TrendChart({
       </div>
 
       <details className="mt-2 text-xs">
-        <summary className="cursor-pointer font-semibold text-brand-teal">
+        <summary className="cursor-pointer font-semibold text-brand-teal-ink">
           Ver los datos en tabla
         </summary>
         <div className="mt-2 overflow-x-auto">

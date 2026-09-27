@@ -109,7 +109,7 @@ export default async function ServiciosPage({
                               <ExternalLinkIcon />
                             </a>
                           </Button>
-                          <Badge variant="outline" className="text-brand-teal">
+                          <Badge variant="outline" className="text-brand-teal-ink">
                             Sitio oficial externo
                           </Badge>
                         </div>

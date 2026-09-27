@@ -112,7 +112,7 @@ function ResultBody({ entry }: { entry: SearchEntry }) {
   return (
     <span className="block">
       <span className="flex items-center gap-2">
-        <span className="text-xs font-bold tracking-wide text-brand-teal uppercase">
+        <span className="text-xs font-bold tracking-wide text-brand-teal-ink uppercase">
           {entry.group}
         </span>
         {entry.external && (

@@ -127,12 +127,12 @@ export async function PilotoHome({ commune }: { commune: CommuneConfig }) {
       {/* Hero piloto */}
       <section className="border-b bg-gradient-to-b from-accent to-background">
         <div className="mx-auto max-w-6xl px-4 py-16 md:py-20">
-          <Badge className="mb-4 bg-brand-terracotta/15 text-brand-terracotta">
+          <Badge className="mb-4 bg-brand-terracotta/15 text-brand-terracotta-ink">
             Piloto informativo · {commune.region}
           </Badge>
           <h1 className="max-w-3xl text-4xl font-bold tracking-tight md:text-6xl">
             {commune.name} en{" "}
-            <span className="text-brand-teal">un solo lugar</span>
+            <span className="text-brand-teal-ink">un solo lugar</span>
           </h1>
           <p className="mt-5 max-w-2xl text-lg text-muted-foreground">
             Estamos reuniendo la información pública de {commune.name} —
@@ -140,7 +140,7 @@ export async function PilotoHome({ commune }: { commune: CommuneConfig }) {
             verificación, para que la encuentres simple y sin vueltas.
           </p>
           <p className="mt-4 flex max-w-2xl items-start gap-2 rounded-lg border border-brand-sky/40 bg-brand-sky/10 px-4 py-3 text-sm">
-            <ScaleIcon className="mt-0.5 size-4 shrink-0 text-brand-navy dark:text-brand-sky" />
+            <ScaleIcon className="mt-0.5 size-4 shrink-0 text-brand-navy dark:text-brand-sky-ink" />
             <span>
               <strong>{siteConfig.name} es un sitio ciudadano
               independiente</strong>
@@ -169,7 +169,7 @@ export async function PilotoHome({ commune }: { commune: CommuneConfig }) {
             <Link key={item.title} href={`${base}${item.href}`} className="group">
               <Card className="h-full gap-0 py-5 transition-all group-hover:-translate-y-0.5 group-hover:shadow-md">
                 <CardContent className="flex items-start gap-4 px-5">
-                  <span className="flex size-11 shrink-0 items-center justify-center rounded-xl bg-brand-teal/15 text-brand-teal">
+                  <span className="flex size-11 shrink-0 items-center justify-center rounded-xl bg-brand-teal/15 text-brand-teal-ink">
                     <item.icon className="size-6" />
                   </span>
                   <div className="min-w-0 flex-1">
@@ -200,7 +200,7 @@ export async function PilotoHome({ commune }: { commune: CommuneConfig }) {
             {upcoming.map((item) => (
               <Card key={item.title} className="gap-0 py-5">
                 <CardContent className="flex items-start gap-4 px-5">
-                  <span className="flex size-11 shrink-0 items-center justify-center rounded-xl bg-accent text-brand-teal">
+                  <span className="flex size-11 shrink-0 items-center justify-center rounded-xl bg-accent text-brand-teal-ink">
                     <item.icon className="size-6" />
                   </span>
                   <div>
@@ -247,7 +247,7 @@ export async function PilotoHome({ commune }: { commune: CommuneConfig }) {
                       <p className="pt-1 text-xs text-muted-foreground">
                         <Badge
                           variant="outline"
-                          className="mr-2 text-brand-teal"
+                          className="mr-2 text-brand-teal-ink"
                         >
                           Sitio oficial externo
                         </Badge>
