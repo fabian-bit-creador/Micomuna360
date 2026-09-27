@@ -155,6 +155,37 @@ function insideRing(lat: number, lng: number, ring: [number, number][]): boolean
   return inside;
 }
 
+const yearPoint = z.object({
+  year: z.number().int().min(1990).max(2100),
+  value: z.number().nullable(),
+});
+
+const contextIndicatorSchema = z.object({
+  id: z.string().min(1),
+  area: z.enum(["comuna", "salud", "educacion", "finanzas"]),
+  question: z.string().min(1),
+  title: z.string().min(1),
+  unit: z.enum(["percent", "clp", "people", "index"]),
+  headline: z.string().includes("{value}"),
+  series: z.array(yearPoint).min(1),
+  regional: z
+    .array(yearPoint.extend({ communes: z.number().int().min(0) }))
+    .nullable(),
+  reading: z.string().min(1),
+  caveat: z.string().min(1).nullable(),
+  sourceCode: z.string().min(1).nullable(),
+  sourceId: z.string().min(1),
+});
+
+const enrollmentSchema = z.object({
+  year: z.number().int().min(1990).max(2100),
+  commune: z.record(z.string(), z.number().int().min(0)),
+  region: z.record(z.string(), z.number().int().min(0)),
+  schools: z.number().int().min(0),
+  slep: z.string().min(1).nullable(),
+  sourceId: z.string().min(1),
+});
+
 function duplicates(ids: string[]): string[] {
   const seen = new Set<string>();
   return ids.filter((id) => (seen.has(id) ? true : (seen.add(id), false)));
@@ -313,6 +344,47 @@ export function validateCommuneData(
           `${label} "${row.id}" referencia la fuente inexistente "${row.sourceId}"`
         );
       }
+    }
+  }
+
+  for (const indicator of data.contextIndicators) {
+    const result = contextIndicatorSchema.safeParse(indicator);
+    if (!result.success) {
+      fail(
+        `indicador "${indicator.id}": ${result.error.issues
+          .map((i) => `${i.path.join(".")} ${i.message}`)
+          .join("; ")}`
+      );
+    }
+    if (!sourceIds.has(indicator.sourceId)) {
+      fail(`indicador "${indicator.id}" referencia la fuente inexistente "${indicator.sourceId}"`);
+    }
+    // Serie en orden cronológico, sin años repetidos, y el regional alineado.
+    const years = indicator.series.map((p) => p.year);
+    if (years.some((y, i) => i > 0 && y <= years[i - 1])) {
+      fail(`indicador "${indicator.id}" tiene años desordenados o repetidos`);
+    }
+    if (
+      indicator.regional &&
+      indicator.regional.map((p) => p.year).join() !== years.join()
+    ) {
+      fail(`indicador "${indicator.id}" tiene la serie regional desalineada`);
+    }
+    if (indicator.regional?.some((p) => p.value !== null && p.communes === 0)) {
+      fail(`indicador "${indicator.id}" tiene un promedio regional sin comunas`);
+    }
+  }
+  for (const row of data.enrollment) {
+    const result = enrollmentSchema.safeParse(row);
+    if (!result.success) {
+      fail(
+        `matrícula ${row.year}: ${result.error.issues
+          .map((i) => `${i.path.join(".")} ${i.message}`)
+          .join("; ")}`
+      );
+    }
+    if (!sourceIds.has(row.sourceId)) {
+      fail(`matrícula ${row.year} referencia la fuente inexistente "${row.sourceId}"`);
     }
   }
 

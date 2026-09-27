@@ -9,7 +9,7 @@ import type { DataSource } from "@/types";
  * para sitios municipales, 6 para nacionales.
  * Nada con status distinto de "verificado" se muestra como vigente.
  *
- * Totales: 29 fuentes registradas — 28 verificadas, 1 pendiente de clasificación
+ * Totales: 31 fuentes registradas — 30 verificadas, 1 pendiente de clasificación
  * (el informe de pasivos, cuya clasificación contable falta confirmar)
  * (la ficha de Transparencia Activa pasó de pendiente a verificada el
  * 2026-07-19 con el enlace directo entregado desde pintana.cl).
@@ -249,6 +249,36 @@ export const sources: DataSource[] = [
     validUntil: "2027-03-27",
     notes:
       "Coordenadas del Polideportivo de La Pintana (way 1036662021, con dirección Patagonia 12980, la misma que publica la Corporación de Deportes). Datos © colaboradores de OpenStreetMap, licencia ODbL.",
+  },
+  {
+    id: "cl-sinim",
+    institution: "SUBDERE — Sistema Nacional de Información Municipal (SINIM)",
+    pageName: "SINIM — Datos municipales",
+    description:
+      "Indicadores oficiales de todos los municipios del país: salud, educación, finanzas y caracterización comunal.",
+    featured: false,
+    url: "https://datos.sinim.gov.cl/datos_municipales.php",
+    publishedAt: null,
+    verifiedAt: "2026-09-27",
+    status: "verificado",
+    validUntil: "2027-03-27",
+    notes:
+      "Descarga del 2026-09-27, Región Metropolitana completa (52 comunas), años 2017–2025. Variables: ITPC, ISOC001, ISAL005, ISAL23, IADM75 e IADM74; los montos con el factor de actualización de SINIM (pesos de diciembre de 2025). Los datos de educación municipal no se usan porque dejaron de ser válidos tras el traspaso al SLEP.",
+  },
+  {
+    id: "cl-mineduc-matricula",
+    institution: "Ministerio de Educación — Datos Abiertos",
+    pageName: "Resumen de matrícula por establecimiento educacional",
+    description:
+      "Matrícula oficial de cada colegio del país, con su dependencia, al 30 de abril de cada año.",
+    featured: false,
+    url: "https://datosabiertos.mineduc.cl/resumen-de-matricula-por-establecimiento-educacional/",
+    publishedAt: "2025-10-29",
+    verifiedAt: "2026-09-27",
+    status: "verificado",
+    validUntil: "2027-03-27",
+    notes:
+      "Archivos 2020 a 2025. Se suman solo establecimientos en funcionamiento. En 2025 los 14 establecimientos públicos de la comuna figuran bajo el SLEP Del Pino.",
   },
   {
     id: "cl-chileatiende",

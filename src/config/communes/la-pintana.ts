@@ -29,7 +29,7 @@ export const laPintana: CommuneConfig = {
     events: false,
     procedures: false,
     phones: false,
-    dataPage: false,
+    dataPage: true,
     community: false,
     directory: true,
     services: true,

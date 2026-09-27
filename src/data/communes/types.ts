@@ -4,6 +4,8 @@ import type {
   BenefitOrientation,
   BudgetLine,
   Category,
+  ContextIndicator,
+  EnrollmentByDependency,
   FinancialReport,
   ReportedLiabilityRow,
   CitizenRequest,
@@ -57,4 +59,8 @@ export interface CommuneData {
   benefits: BenefitOrientation[];
   /** Límite comunal oficial para el mapa; null si no está verificado. */
   boundary: CommuneBoundary | null;
+  /** Indicadores con contexto (pilotos con datos reales). */
+  contextIndicators: ContextIndicator[];
+  /** Matrícula escolar por dependencia (pilotos con datos reales). */
+  enrollment: EnrollmentByDependency[];
 }

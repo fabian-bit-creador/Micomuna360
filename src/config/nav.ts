@@ -83,7 +83,7 @@ export function communeNav(commune: CommuneConfig): NavItem[] {
     {
       title: "Datos",
       href: `${base}/datos`,
-      description: "Indicadores y avances comunales",
+      description: "La comuna en cifras, con contexto",
       enabled: commune.features.dataPage,
     },
   ];

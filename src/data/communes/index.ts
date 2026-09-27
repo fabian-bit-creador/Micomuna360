@@ -42,6 +42,8 @@ const empty: CommuneData = {
   accountingBalance: [],
   benefits: [],
   boundary: null,
+  contextIndicators: [],
+  enrollment: [],
 };
 
 /** Dataset de una comuna; comuna desconocida devuelve dataset vacío. */

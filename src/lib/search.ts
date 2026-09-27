@@ -72,6 +72,26 @@ export function buildSearchIndex(commune: CommuneConfig): SearchEntry[] {
       });
     }
   }
+  if (commune.features.dataPage) {
+    for (const i of data.contextIndicators) {
+      entries.push({
+        title: i.question,
+        description: `${i.title} · comparado con la historia de la comuna y con la región`,
+        href: `${base}/datos`,
+        group: "Datos",
+        external: false,
+      });
+    }
+    if (data.enrollment.length > 0) {
+      entries.push({
+        title: "¿Cuántos estudiantes hay en los colegios de la comuna?",
+        description: "Matrícula escolar y tipo de colegio, según MINEDUC",
+        href: `${base}/datos`,
+        group: "Datos",
+        external: false,
+      });
+    }
+  }
   if (commune.features.directory) {
     for (const p of data.places) {
       entries.push({

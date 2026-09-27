@@ -97,3 +97,22 @@ export function formatPeriod(period: string): string {
   const name = MONTHS[Number(month) - 1];
   return name ? `${name} de ${year}` : period;
 }
+
+export type IndicatorUnit = "percent" | "clp" | "people" | "index";
+
+/**
+ * Valor de un indicador en su unidad: "78,8 %", "$281.000", "188.806".
+ * Los porcentajes llevan un decimal; el resto, ninguno.
+ */
+export function formatIndicatorValue(value: number, unit: IndicatorUnit): string {
+  switch (unit) {
+    case "percent":
+      return `${value.toLocaleString("es-CL", { minimumFractionDigits: 1, maximumFractionDigits: 1 })} %`;
+    case "clp":
+      return formatClp(Math.round(value));
+    case "people":
+      return formatNumber(Math.round(value));
+    case "index":
+      return value.toLocaleString("es-CL", { maximumFractionDigits: 0 });
+  }
+}

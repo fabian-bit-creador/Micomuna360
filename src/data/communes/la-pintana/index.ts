@@ -3,6 +3,7 @@ import { places } from "./places";
 import { benefits } from "./benefits";
 import { boundary } from "./boundary";
 import { financialReports } from "./financial-reports";
+import { contextIndicators, enrollment } from "./indicators";
 import { accountingBalance } from "./transparency/accounting-balance";
 import { budgetExecution } from "./transparency/budget-execution";
 import { budgetDocumentIndex } from "./transparency/budget-index";
@@ -40,4 +41,6 @@ export const laPintanaData: CommuneData = {
   accountingBalance,
   benefits,
   boundary,
+  contextIndicators,
+  enrollment,
 };

@@ -40,7 +40,7 @@ function PhoneRow({ phone }: { phone: UsefulPhone }) {
   return (
     <a
       href={telHref(phone.number)}
-      className="group flex min-h-14 items-center justify-between gap-3 rounded-lg border bg-card px-4 py-3 transition-colors hover:border-brand-teal/50 hover:bg-accent"
+      className="group flex min-h-14 min-w-0 items-center justify-between gap-3 rounded-lg border bg-card px-4 py-3 transition-colors hover:border-brand-teal/50 hover:bg-accent"
     >
       <div className="min-w-0">
         <p className="font-semibold">{phone.name}</p>

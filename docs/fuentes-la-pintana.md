@@ -9,7 +9,7 @@ la fuente de verdad que consume la aplicación). Reglas:
 - No se completa información faltante con supuestos: si un dato (horario,
   teléfono, coordenada) no está verificado, no se publica.
 
-**Totales del registro (2026-09-27):** 29 fuentes — 28 verificadas y 1 pendiente de clasificación (el informe de pasivos). (Al cierre de P2 el registro tenía 16 fuentes: 15 verificadas y 1 pendiente; la ficha de Transparencia Activa pasó a verificada con el enlace directo entregado desde pintana.cl. El 2026-09-20 se sumaron las tres fuentes nacionales que usa el orientador «¿A qué puedo postular?», y el 2026-09-27 la ejecución presupuestaria de junio, las dos páginas de salud de pintana.cl, las capas de equipamiento del geoportal y OpenStreetMap.)
+**Totales del registro (2026-09-27):** 31 fuentes — 30 verificadas y 1 pendiente de clasificación (el informe de pasivos). (Al cierre de P2 el registro tenía 16 fuentes: 15 verificadas y 1 pendiente; la ficha de Transparencia Activa pasó a verificada con el enlace directo entregado desde pintana.cl. El 2026-09-20 se sumaron las tres fuentes nacionales que usa el orientador «¿A qué puedo postular?», y el 2026-09-27 la ejecución presupuestaria de junio, las dos páginas de salud de pintana.cl, las capas de equipamiento del geoportal, OpenStreetMap, SINIM y la matrícula de MINEDUC.)
 
 **Método de verificación (desde 2026-09-27):** navegación directa a cada
 sitio y revisión de su contenido (dirección, horarios, enlaces de pago y de
@@ -40,6 +40,8 @@ enlaza hoy; conviene abrir ambos desde Chile en la próxima revisión.
 | lp-muni-salud-servicios | Municipalidad | [Programas y servicios de salud](https://pintana.cl/?page_id=5229) | verificado | 2026-09-27 | 2026-12-27 | COSAM, CCR, UAPO, horarios de SAPU y SAR |
 | lp-geo-equipamiento | Municipalidad | [GeoPintana — capas de equipamiento](https://services7.arcgis.com/Jc7ZuHKHcN6HGMlG/arcgis/rest/services) | verificado | 2026-09-27 | 2026-12-27 | Coordenadas de 23 lugares y límite comunal. Contrastado con OSM (1–125 m). Nunca se usan capas con datos personales o tributarios |
 | osm-la-pintana | OpenStreetMap | [way 1036662021](https://www.openstreetmap.org/way/1036662021) | verificado | 2026-09-27 | 2027-03-27 | Solo coordenadas del Polideportivo (no está en el geoportal). ODbL |
+| cl-sinim | SUBDERE — SINIM | [Datos municipales](https://datos.sinim.gov.cl/datos_municipales.php) | verificado | 2026-09-27 | 2027-03-27 | 6 variables para las 52 comunas de la RM, 2017–2025. Educación municipal descartada tras el traspaso al SLEP (ver `docs/fuentes/la-pintana-indicadores-2026-09/`) |
+| cl-mineduc-matricula | MINEDUC — Datos Abiertos | [Resumen de matrícula por establecimiento](https://datosabiertos.mineduc.cl/resumen-de-matricula-por-establecimiento-educacional/) | verificado | 2026-09-27 | 2027-03-27 | Matrícula 2020–2025 por dependencia; en 2025 los establecimientos públicos figuran bajo el SLEP Del Pino |
 | cl-chileatiende | ChileAtiende | [chileatiende.gob.cl](https://www.chileatiende.gob.cl/) | verificado | 2026-09-27 | 2027-03-27 | Sin logo hasta verificar condiciones de uso |
 | cl-registro-social | MDSF | [registrosocial.gob.cl](https://www.registrosocial.gob.cl/) | verificado | 2026-09-27 | 2027-03-27 | — |
 | cl-portal-transparencia | Consejo para la Transparencia | [portaltransparencia.cl](https://www.portaltransparencia.cl/) | verificado | 2026-09-27 | 2027-03-27 | Entrada a Transparencia Activa municipal |
@@ -82,9 +84,15 @@ fuente:
    validador exige fuente de las coordenadas y rechaza cualquier punto fuera
    del polígono comunal. `realMap` encendido.
 
+3. **Indicadores con contexto** → hecho para comuna, salud, educación y
+   finanzas (SINIM y MINEDUC, con reglas de validez escritas en
+   `docs/fuentes/la-pintana-indicadores-2026-09/metodologia.md`).
+
 Siguen fuera de alcance desde este entorno: SmartDIDECO y la Bolsa Nacional
 de Empleo (rechazan conexiones desde fuera de Chile) y el portal de
-estadísticas delictuales del CEAD (no responde).
+estadísticas delictuales del CEAD (no responde). Por eso **seguridad sigue
+pendiente**: hace falta el archivo de casos policiales del CEAD descargado
+desde Chile.
 
 ## Paquete de trabajo incorporado (julio 2026)
 

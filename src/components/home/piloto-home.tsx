@@ -1,6 +1,7 @@
 import {
   ArrowRightIcon,
   CalendarDaysIcon,
+  ChartLineIcon,
   ExternalLinkIcon,
   FileTextIcon,
   MapIcon,
@@ -59,6 +60,14 @@ function availableFor(commune: CommuneConfig) {
         "En qué se gasta la plata de la comuna y qué puedes pedirle al municipio.",
       href: "/transparencia",
       enabled: features.transparency,
+    },
+    {
+      icon: ChartLineIcon,
+      title: `${commune.name} en cifras`,
+      description:
+        "Salud, educación y finanzas municipales, comparadas con la historia de la comuna y con la región.",
+      href: "/datos",
+      enabled: features.dataPage,
     },
     {
       icon: MapPinIcon,

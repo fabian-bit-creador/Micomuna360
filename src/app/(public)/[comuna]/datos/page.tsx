@@ -8,12 +8,17 @@ import { FeatureUnavailable } from "@/components/layout/feature-unavailable";
 import { SectionHeader } from "@/components/layout/section-header";
 import { getCommune } from "@/config/communes";
 import { Card, CardContent } from "@/components/ui/card";
-import { getIndicators } from "@/lib/repositories";
+import { ContextDataView } from "@/components/indicators/context-data-view";
+import {
+  getContextIndicators,
+  getEnrollment,
+  getIndicators,
+} from "@/lib/repositories";
 
 export const metadata: Metadata = {
   title: "Datos comunales",
   description:
-    "Indicadores de tu comuna presentados de forma simple: población, gestión, educación y medioambiente.",
+    "Indicadores de tu comuna en contexto: salud, educación y finanzas municipales, comparados con su historia y con la región.",
 };
 
 const areaLabels: Record<string, string> = {
@@ -46,7 +51,23 @@ export default async function DatosPage({
     return <FeatureUnavailable commune={commune} title="Datos comunales" />;
   }
 
-  const indicators = await getIndicators(commune.id);
+  const [indicators, contextIndicators, enrollment] = await Promise.all([
+    getIndicators(commune.id),
+    getContextIndicators(commune.id),
+    getEnrollment(commune.id),
+  ]);
+
+  /* Comunas con datos reales: indicadores con contexto y fuente. */
+  if (contextIndicators.length > 0 || enrollment.length > 0) {
+    return (
+      <ContextDataView
+        commune={commune}
+        indicators={contextIndicators}
+        enrollment={enrollment}
+      />
+    );
+  }
+
   const areas = areaOrder.filter((area) =>
     indicators.some((i) => i.area === area)
   );

@@ -128,6 +128,60 @@ export interface Indicator {
   source: string;
 }
 
+/**
+ * Indicador comunal con contexto (pilotos con datos reales).
+ *
+ * REGLA: contexto, no puntaje. Se compara la comuna con su propia historia
+ * y con el promedio de las comunas de su región; nunca se ordena ni se
+ * califica. Cada serie declara su fuente y los años sin dato válido quedan
+ * en null (se muestran como vacío, no como cero).
+ */
+export interface ContextIndicator {
+  id: string;
+  area: "comuna" | "salud" | "educacion" | "finanzas";
+  /** Pregunta ciudadana que responde el indicador. */
+  question: string;
+  /** Nombre corto del indicador. */
+  title: string;
+  unit: "percent" | "clp" | "people" | "index";
+  /**
+   * Frase del valor más reciente, con {value} y {year} como marcadores; la
+   * UI los reemplaza con el dato para que el texto nunca se desfase.
+   */
+  headline: string;
+  /** Serie de la comuna, en orden cronológico. */
+  series: { year: number; value: number | null }[];
+  /** Promedio simple de las comunas de la región con dato válido. */
+  regional: { year: number; value: number | null; communes: number }[] | null;
+  /** Cómo leerlo, en lenguaje simple y neutral. */
+  reading: string;
+  /** Advertencia sobre la calidad o el alcance del dato, si la hay. */
+  caveat: string | null;
+  /** Código de la variable en la fuente (p. ej. "ISAL005"). */
+  sourceCode: string | null;
+  sourceId: string;
+}
+
+/** Matrícula escolar por dependencia en los establecimientos de la comuna. */
+export interface EnrollmentByDependency {
+  year: number;
+  /** Estudiantes por dependencia, en la comuna y en toda la región. */
+  commune: Partial<Record<SchoolDependency, number>>;
+  region: Partial<Record<SchoolDependency, number>>;
+  /** Establecimientos en funcionamiento en la comuna. */
+  schools: number;
+  /** Servicio Local de Educación Pública a cargo, si ya hubo traspaso. */
+  slep: string | null;
+  sourceId: string;
+}
+
+export type SchoolDependency =
+  | "municipal"
+  | "slep"
+  | "particular_subvencionado"
+  | "particular_pagado"
+  | "administracion_delegada";
+
 export type ProcedureCategory =
   | "certificados"
   | "beneficios"

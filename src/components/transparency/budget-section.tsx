@@ -273,9 +273,10 @@ export function BudgetSection({ lines, documents, source }: BudgetSectionProps) 
                 ¿Qué es el Fondo Común Municipal?
               </strong>{" "}
               Es un fondo solidario entre todas las comunas de Chile: cada una
-              aporta parte de lo que recauda y el fondo se reparte según la
-              población y las necesidades de cada comuna. Las comunas que
-              recaudan menos por su cuenta dependen más de él.
+              aporta parte de lo que recauda y el fondo se reparte con
+              criterios que favorecen a las que recaudan menos por su cuenta.
+              Por eso las comunas con menos comercio, industria y propiedades
+              con contribuciones dependen más de él.
             </p>
           )}
         </CardContent>
