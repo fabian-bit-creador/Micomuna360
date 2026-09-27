@@ -1,77 +1,88 @@
 # MiComuna360
 
 **Tu comuna en un solo lugar.** Plataforma web ciudadana y multicomuna para
-Chile: reúne la información pública de cada comuna —trámites, beneficios,
-lugares, presupuesto e indicadores— con fuente y fecha, en lenguaje simple y
-sin pedir datos personales.
+Chile que reúne la información pública de cada comuna —trámites, beneficios,
+lugares, presupuesto e indicadores— en lenguaje simple, con la fuente y la
+fecha de verificación de cada dato.
 
-- Producción: <https://micomuna360.vercel.app>
-- Estado (2026-09-27): **piloto informativo real en La Pintana** + comuna
-  demo **Los Aromos** (datos ficticios).
+Sitio: <https://micomuna360.vercel.app>
 
-> ⚠️ **Despliegue:** en Vercel la rama de producción es
-> `claude/micomuna360-architecture-gadm7s`. **Todo push a esa rama se publica
-> de inmediato.** La rama `piloto-la-pintana-informativo` se mantiene igual a
-> ella y genera vistas previas.
+## Comunas
 
-## Dos comunas, un solo código
+El proyecto usa un solo conjunto de páginas para todas las comunas. Cada
+comuna tiene su configuración y su propio conjunto de datos:
 
-| Comuna | Ruta | Tipo | Datos |
-| --- | --- | --- | --- |
-| La Pintana | `/la-pintana` | Piloto (`isDemo: false`) | **Reales**, verificados, con fuente |
-| Los Aromos | `/los-aromos` | Demo (`isDemo: true`) | **Ficticios**; no modificar su contenido |
+- **La Pintana** (`/la-pintana`): piloto con información pública real y
+  verificada.
+- **Los Aromos** (`/los-aromos`): comuna de demostración con datos
+  ficticios, usada para probar funcionalidades.
 
-Nunca se mezclan datos ficticios con reales. Cada comuna se define con una
-configuración (`src/config/communes/*.ts`, con *feature flags*) y un dataset
-(`src/data/communes/<comuna>/`). Todas las comunas comparten las mismas
-páginas en `src/app/(public)/[comuna]/`.
+## Funcionalidades
 
-## Qué tiene hoy La Pintana
+| Sección | Ruta | Descripción |
+| --- | --- | --- |
+| Inicio | `/[comuna]` | Portada con buscador y accesos a cada sección |
+| Servicios | `/servicios` | Trámites y pagos con enlace al sitio oficial de cada institución |
+| Beneficios | `/beneficios` | Orientador «¿A qué puedo postular?» según la situación del hogar; funciona en el navegador, sin pedir datos personales |
+| Directorio | `/directorio` | Municipio, centros de salud, recintos deportivos, seguridad y emergencias, con horarios, teléfonos y cómo llegar |
+| Mapa | `/mapa` | Los lugares del directorio sobre OpenStreetMap, con el límite comunal |
+| Transparencia | `/transparencia` | Derecho de acceso a la información, ejecución presupuestaria, informes mensuales, pasivos, balance y estados financieros |
+| Datos | `/datos` | Indicadores de la comuna (población, salud, educación, finanzas municipales) comparados con su historia y con el promedio regional |
+| Buscar | `/buscar` | Buscador sobre el contenido de la comuna |
+| Noticias, actividades, comunidad, trámites, teléfonos, reportar | varias | Módulos disponibles en la comuna demo |
 
-| Sección | Ruta | Contenido | Fuente principal |
-| --- | --- | --- | --- |
-| Servicios | `/servicios` | Trámites y pagos con enlace al sitio oficial | pintana.cl, ChileAtiende |
-| ¿A qué puedo postular? | `/beneficios` | Orientador de 10 beneficios según la situación del hogar; corre en el navegador, sin RUT ni envío de datos | ChileAtiende, RSH, BNE, SENCE, SERCOTEC |
-| Directorio | `/directorio` | 24 lugares: municipio, 10 centros de salud, 4 recintos deportivos, 6 de seguridad y emergencias | pintana.cl, Corp. de Deportes |
-| Mapa | `/mapa` | Los 24 lugares con coordenadas y el límite comunal oficial | Geoportal GeoPintana (ArcGIS), OSM |
-| Transparencia | `/transparencia` | Derechos de acceso, presupuesto al 30-06-2026 (comprometido/pagado por subtítulo, origen de los ingresos, presupuesto de salud), informes mensuales, pasivos, balance, estados financieros | Transparencia Activa (MU124) |
-| Datos | `/datos` | Indicadores con contexto: población, pobreza, salud, matrícula escolar, finanzas municipales | SINIM, MINEDUC |
-| Buscar | `/buscar` | Buscador sobre todo lo anterior | — |
+Las secciones de cada comuna se activan con *feature flags* en
+`src/config/communes/<comuna>.ts`.
 
-**Pendiente:** seguridad (casos policiales CEAD por 100.000 habitantes). El
-CEAD no responde desde el entorno de desarrollo y hace falta el archivo
-descargado desde Chile. También faltan agenda, teléfonos útiles propios y
-colegios/ferias en el mapa (flags `events`, `phones` apagados).
+## Datos y fuentes
 
-## Reglas de datos (obligatorias)
+- Cada dato real referencia una fuente del registro de la comuna
+  (`src/data/communes/la-pintana/sources.ts`), con institución, enlace, fecha
+  de verificación y vigencia. La interfaz muestra esa procedencia junto al
+  dato. Hay un espejo legible en `docs/fuentes-la-pintana.md`.
+- Fuentes principales del piloto: sitio municipal pintana.cl, Transparencia
+  Activa, geoportal GeoPintana, SINIM, MINEDUC Datos Abiertos, ChileAtiende y
+  OpenStreetMap.
+- `docs/fuentes/` guarda los respaldos de cada carga de datos: CSV
+  normalizados, metodología o control de calidad y huellas SHA-256 de los
+  archivos originales.
+- `src/lib/data-integrity.ts` valida los datasets con zod al cargarse (fuentes
+  existentes, fechas, coordenadas dentro de la comuna, cuadratura de las
+  cifras presupuestarias), de modo que un dato inconsistente se detecta en el
+  build.
 
-1. **Todo dato real declara `sourceId`** del registro
-   `src/data/communes/la-pintana/sources.ts` (31 fuentes, con fecha de
-   verificación y vigencia). Una fuente con `validUntil` vencido se muestra
-   como «Revisión vencida». Espejo legible: `docs/fuentes-la-pintana.md`.
-2. **Nada se estima ni se completa a mano.** Horarios y teléfonos solo si
-   una fuente oficial los confirma; si no, `null`.
-3. **Validación en el build:** `src/lib/data-integrity.ts` (zod) revisa todo
-   dataset al cargarse. Un dato sin fuente, una coordenada fuera del polígono
-   comunal o un presupuesto que no cuadra **rompe el build**.
-4. **Conciliación como código:** `transparency/budget-execution.ts` y
-   `transparency/accounting-balance.ts` verifican sus cifras contra los
-   totales impresos en los informes.
-5. **Indicadores: contexto, no puntaje.** Se compara con la propia historia y
-   con el promedio de las comunas de la región; sin rankings ni notas.
-6. **Privacidad (Ley 21.719):** sin login, sin RUT, sin datos personales ni
-   nombres de funcionarios. Capas del geoportal con datos personales o
-   tributarios no se usan.
-7. La UI lee datos solo vía `src/lib/repositories` (nunca `src/data` directo).
+## Arquitectura
 
-## Respaldo de los datos
+```
+src/
+├── app/(public)/(portal)/     # portada multicomuna y /nosotros
+├── app/(public)/[comuna]/     # páginas de cada comuna
+├── app/(admin)/               # panel municipal (estructura inicial)
+├── components/                # ui/ (shadcn), data/ (gráficos), map/, transparency/,
+│                              # indicators/, benefits/, home/, layout/, shared/
+├── config/communes/           # registro de comunas y feature flags
+├── data/communes/<comuna>/    # datasets por comuna
+├── lib/                       # repositories/, data-integrity.ts, format.ts, search.ts
+└── types/                     # tipos de dominio
+docs/                          # arquitectura, modelo de datos, fuentes
+supabase/                      # migraciones del modelo de datos
+```
 
-`docs/fuentes/` guarda, por paquete, los CSV normalizados, la metodología o
-control de calidad y las huellas SHA-256 de los archivos originales:
+La interfaz accede a los datos a través de `src/lib/repositories`, que
+reciben el identificador de la comuna. Más detalle en
+`docs/arquitectura-multicomuna.md`, `docs/arquitectura.md`,
+`docs/modelo-datos.md` y `docs/design-brief.md`.
 
-- `la-pintana-transparencia-julio-2026/` — balance, pasivos, índice de informes.
-- `la-pintana-ejecucion-junio-2026/` — presupuesto transcrito de PDF escaneados.
-- `la-pintana-indicadores-2026-09/` — SINIM y MINEDUC, reglas de validez y descartes.
+## Stack
+
+- Next.js 16 (App Router) y React 19 — ver `AGENTS.md` sobre las diferencias
+  de esta versión
+- TypeScript, Tailwind CSS 4, componentes shadcn/ui en `src/components/ui`
+- Leaflet + OpenStreetMap para mapas (cargados en el cliente con
+  `next/dynamic`)
+- Gráficos propios en HTML/SVG (`src/components/data`)
+- zod para validación de datos
+- Despliegue en Vercel desde GitHub
 
 ## Desarrollo
 
@@ -79,49 +90,30 @@ control de calidad y las huellas SHA-256 de los archivos originales:
 npm install
 npm run dev     # http://localhost:3000
 npm run lint
-npm run build   # también ejecuta la validación de datos
+npm run build   # build de producción (incluye la validación de datos)
 ```
 
-Stack: Next.js 16 (App Router, ver `AGENTS.md`: tiene cambios respecto de
-versiones anteriores), React 19, TypeScript, Tailwind CSS 4, shadcn/ui
-vendorizado, Leaflet + OpenStreetMap (solo con `next/dynamic` y `ssr: false`),
-zod. Gráficos hechos en HTML/SVG propios (`src/components/data/`).
+## Agregar o actualizar datos de una comuna
 
-```
-src/
-├── app/(public)/(portal)/     # portada multicomuna y /nosotros
-├── app/(public)/[comuna]/     # páginas de cada comuna
-├── app/(admin)/               # panel municipal (solo estructura/demo)
-├── components/                # ui/, data/ (gráficos), map/, transparency/, indicators/, benefits/…
-├── config/communes/           # registro de comunas y feature flags
-├── data/communes/<comuna>/    # datasets (La Pintana real, Los Aromos ficticio)
-├── lib/                       # repositories/, data-integrity.ts, format.ts, search.ts
-└── types/                     # tipos de dominio
-docs/                          # arquitectura, modelo de datos, fuentes
-```
+1. Registrar la fuente en `sources.ts` de la comuna.
+2. Agregar los datos al dataset con su `sourceId` y, si vienen de un archivo,
+   guardar el respaldo en `docs/fuentes/`.
+3. Activar el flag de la sección en la configuración de la comuna.
+4. Correr `npm run lint` y `npm run build`.
 
-## Cómo agregar o actualizar datos reales
+Para una comuna nueva: crear su configuración en `src/config/communes/`, su
+carpeta en `src/data/communes/` y registrarla en ambos índices.
 
-1. Registrar o actualizar la fuente en `sources.ts` (y su fila en
-   `docs/fuentes-la-pintana.md`).
-2. Agregar los datos al dataset con su `sourceId`; si vienen de un archivo,
-   guardar el respaldo en `docs/fuentes/<paquete>/`.
-3. Encender el flag de la sección en `src/config/communes/la-pintana.ts` solo
-   cuando haya datos verificados.
-4. `npm run lint && npm run build` deben pasar sin errores.
+## Estado y próximos pasos
 
-Próximas re-verificaciones: fuentes municipales vencen el **2026-12-27**,
-nacionales el **2027-03-27**.
+- Piloto de La Pintana con servicios, beneficios, directorio, mapa,
+  transparencia e indicadores.
+- En preparación: indicadores de seguridad (CEAD), agenda comunal y teléfonos
+  útiles del piloto.
+- Etapas posteriores: participación ciudadana, base de datos en Supabase
+  (modelo en `docs/modelo-datos.md`) y panel municipal.
 
-## Roadmap
+## Privacidad
 
-| Fase | Alcance | Estado |
-| --- | --- | --- |
-| 0–1.9 | Arquitectura, portal ciudadano demo, auditoría visual | ✅ |
-| Piloto P1–P3 | Multicomuna, servicios, fuentes, transparencia, mapa, beneficios, indicadores de La Pintana | ✅ (seguridad pendiente) |
-| 2 | Participación ciudadana real (reportes) | — |
-| 3 | Supabase (auth, tablas, RLS). **No conectar antes.** Modelo en `docs/modelo-datos.md` | — |
-| 4 | Panel municipal completo | — |
-
-Más contexto: `docs/arquitectura.md`, `docs/arquitectura-multicomuna.md`,
-`docs/design-brief.md`, `AGENTS.md`.
+El sitio no requiere cuenta ni solicita datos personales. El diseño sigue los
+principios de la Ley 21.719 de protección de datos personales.
