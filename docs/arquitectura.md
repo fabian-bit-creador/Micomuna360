@@ -5,13 +5,13 @@
 | # | Decisión | Motivo |
 | --- | --- | --- |
 | 1 | Next.js App Router con route groups `(public)` y `(admin)` | Separa la capa ciudadana de la municipal desde el día uno sin duplicar layout raíz. |
-| 2 | Patrón repositorio en `src/lib/repositories` | La UI consume funciones (`getPublicRequests()`, `getNews()`…) que hoy leen mocks de `src/lib/data`. En Fase 3 solo cambia la implementación interna a Supabase. |
+| 2 | Patrón repositorio en `src/lib/repositories` | La UI consume funciones (`getNews()`, `getPlaces()`…) que reciben la comuna y hoy leen los datasets de `src/data/communes/<comuna>`. Al conectar una base de datos solo cambia la implementación interna. |
 | 3 | Supabase diferido a Fase 3 | Validar modelo de datos y flujo de usuario antes de crear tablas (evita una base desordenada). Dependencias ya instaladas. |
 | 4 | Componentes shadcn/ui vendorizados en `src/components/ui` | La red del entorno de desarrollo bloquea `ui.shadcn.com`; los componentes se escribieron siguiendo las convenciones oficiales (data-slot, cva, Tailwind v4) y son intercambiables con `npx shadcn add`. |
 | 5 | Tokens de marca en `globals.css` (Tailwind v4 `@theme`) | Paleta oficial disponible como clases (`bg-brand-teal`, etc.) y mapeada a los tokens shadcn (primary = azul profundo, secondary = turquesa). |
 | 6 | Tipos de dominio centralizados en `src/types` | Espejo 1:1 del modelo de datos de `docs/modelo-datos.md`. |
 | 7 | Fuente Nunito | Redondeada y humanista: coherente con el tono "cercano, humano, accesible" de la marca. |
-| 8 | Leaflet se cargará con `next/dynamic` y `ssr: false` | Leaflet no soporta SSR (Fase 2). |
+| 8 | Leaflet se carga con `next/dynamic` y `ssr: false` | Leaflet no soporta SSR. |
 
 ## Identidad visual
 
@@ -34,11 +34,16 @@ claro, ciudadano, no partidista.
 Isotipo: `public/isotipo.svg` (círculo 360° segmentado + pin de ubicación),
 recreado en SVG a partir del brand board oficial. Favicon: `src/app/icon.svg`.
 
+Para texto se usan variantes de tinta (`brand-teal-ink`, `brand-terracotta-ink`,
+`brand-sky-ink`, `brand-amber-ink`) y `muted-foreground`, definidas para
+claro y oscuro con contraste WCAG AA (≥4,5:1). Los colores de marca quedan
+para fondos, íconos y gráficos.
+
 ## Flujo de datos
 
 ```
-página (RSC) ──► lib/repositories ──► lib/data (mocks)   ← hoy
-página (RSC) ──► lib/repositories ──► Supabase (RLS)     ← Fase 3
+página (RSC) ──► lib/repositories(comuna) ──► src/data/communes/<comuna>   ← hoy
+página (RSC) ──► lib/repositories(comuna) ──► Supabase (RLS)              ← al conectar la base
 ```
 
 ## Enfoque: la comunidad primero

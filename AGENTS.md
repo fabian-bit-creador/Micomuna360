@@ -4,35 +4,70 @@
 This version has breaking changes — APIs, conventions, and file structure may all differ from your training data. Read the relevant guide in `node_modules/next/dist/docs/` before writing any code. Heed deprecation notices.
 <!-- END:nextjs-agent-rules -->
 
-# MiComuna360 / MuniApp
+# MiComuna360
 
-Plataforma web comunal para municipios y vecinos en Chile. Dos capas: ciudadana
-(`src/app/(public)`) y municipal (`src/app/(admin)`).
+Plataforma web ciudadana y multicomuna para Chile. Reúne la información
+pública de cada comuna (trámites, beneficios, lugares, presupuesto e
+indicadores) con la fuente y la fecha de verificación de cada dato. El
+`README.md` describe el producto, las secciones y la arquitectura.
 
-## Reglas del proyecto
+## Estado actual
 
-- **Enfoque**: la comunidad primero. El producto principal es el portal
-  ciudadano público, usable sin iniciar sesión. El panel municipal
-  (`(admin)`) se mantiene como estructura/demo secundaria y su acceso en la
-  UI debe ser discreto (no protagonista de la navegación) hasta la Fase 4.
-- **Idioma**: UI, contenido, commits y docs en español (Chile). Código
-  (identificadores) en inglés.
-- **Datos**: solo datos ficticios hasta la Fase 3. Nunca datos personales
-  reales (Ley 21.719). La UI accede a datos únicamente vía
-  `src/lib/repositories` (nunca importa `src/lib/data` directo).
-- **Supabase**: NO conectar hasta la Fase 3. El modelo de datos acordado está
-  en `docs/modelo-datos.md`; los tipos espejo en `src/types/index.ts`.
-- **Fases**: seguir el roadmap del README. No construir módulos de fases
-  futuras sin acuerdo explícito.
-- **UI**: componentes shadcn/ui vendorizados en `src/components/ui` (la red
-  puede bloquear `ui.shadcn.com`; escribirlos a mano siguiendo sus
-  convenciones). Paleta y tokens de marca en `src/app/globals.css`; tono de
-  textos: simple, humano, cercano, no burocrático ni partidista
-  (`docs/arquitectura.md`).
-- **Mapas**: Leaflet solo con `next/dynamic` + `ssr: false`.
-- **Privacidad**: solicitudes con `is_sensitive = true` jamás se muestran en
-  mapa o listados públicos.
+- **La Pintana** (`/la-pintana`): piloto con datos públicos reales y
+  verificados. Cada dato referencia una fuente de
+  `src/data/communes/la-pintana/sources.ts`.
+- **Los Aromos** (`/los-aromos`): comuna de demostración con datos
+  ficticios, usada como laboratorio de funcionalidades. Sus datos se
+  mantienen separados de los reales.
+- **Portal ciudadano sin cuenta**: no hay login ni base de datos conectada.
+  Supabase está previsto (modelo en `docs/modelo-datos.md`); conectarlo
+  requiere antes diseñar el aislamiento por comuna, roles y RLS.
+- **Panel municipal** (`src/app/(admin)`): estructura inicial con
+  contenido de ejemplo; su acceso en la interfaz es discreto.
+
+## Convenciones
+
+- **Idioma**: interfaz, contenido, commits y documentación en español de
+  Chile; identificadores de código en inglés. Tono simple, cercano, no
+  burocrático ni partidista (`docs/arquitectura.md`).
+- **Acceso a datos**: la interfaz lee a través de `src/lib/repositories`,
+  que reciben el identificador de la comuna; los datasets viven en
+  `src/data/communes/<comuna>/` y las secciones se activan con los flags de
+  `src/config/communes/<comuna>.ts`.
+- **Datos reales**: cada registro lleva `sourceId`; horarios, teléfonos y
+  cifras se publican cuando una fuente oficial los confirma (si no, `null`).
+  `src/lib/data-integrity.ts` valida los datasets al cargar, así que un dato
+  inconsistente aparece como error de build. Los respaldos de cada carga
+  (CSV, metodología, SHA-256) van en `docs/fuentes/`, y el registro legible
+  de fuentes en `docs/fuentes-la-pintana.md`.
+- **Indicadores**: se presentan como contexto (historia propia y promedio
+  regional), sin rankings ni calificaciones.
+- **Privacidad** (Ley 21.719): no se piden ni publican datos personales ni
+  nombres de funcionarios. Lo que el vecino marca en herramientas como el
+  orientador de beneficios se procesa en el navegador; los parámetros que
+  describen su situación van en el fragmento de la URL (`#`), no en la
+  consulta (`?`). Si se agregan solicitudes vecinales, las marcadas
+  `is_sensitive` no aparecen en mapas ni listados públicos.
+- **Vigencia de fuentes**: `getSourceFreshness` (`src/lib/sources.ts`)
+  compara `validUntil` con la fecha de Chile; las páginas de cada comuna se
+  regeneran cada hora (`revalidate` en `src/app/(public)/[comuna]/layout.tsx`).
+- **UI**: componentes shadcn/ui escritos a mano en `src/components/ui`.
+  Colores en `src/app/globals.css`: los de marca (`brand-*`) para fondos,
+  íconos y gráficos, y las tintas (`brand-*-ink`, `muted-foreground`) para
+  texto, que cumplen WCAG AA en claro y oscuro. Gráficos propios en
+  HTML/SVG en `src/components/data`, con tabla alternativa.
+- **Mapas**: Leaflet se carga solo en el cliente (`next/dynamic` con
+  `ssr: false`) sobre teselas de OpenStreetMap, con lista alternativa.
+
+## Despliegue
+
+El proyecto está conectado a Vercel. La rama de producción es
+`claude/micomuna360-architecture-gadm7s` (rama predeterminada del
+repositorio): cada push a ella publica el sitio. Las demás ramas generan
+vistas previas.
 
 ## Comandos
 
-- `npm run dev` / `npm run build` / `npm run lint`
+- `npm run dev` — desarrollo en http://localhost:3000
+- `npm run lint` — ESLint
+- `npm run build` — build de producción, incluida la validación de datos

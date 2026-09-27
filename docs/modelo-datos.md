@@ -1,5 +1,12 @@
 # Modelo de datos (Supabase — se implementa en Fase 3)
 
+> **Estado (septiembre 2026):** la base de datos no está conectada. El
+> piloto y la demo usan datasets en código (`src/data/communes/`). Antes de
+> conectar datos privados, este modelo necesita aislamiento por comuna
+> (`commune_id` en cada tabla), pertenencia de usuarios a comunas y
+> políticas RLS por comuna, además de las vistas públicas con proyección
+> segura.
+
 Esquema acordado en la Fase 0, basado en la sección 8 del documento maestro
 del proyecto. Los tipos TypeScript de `src/types/index.ts` son el espejo de
 este modelo; cualquier cambio debe hacerse en ambos lados.
