@@ -286,8 +286,8 @@ export async function DemoHome({ commune }: { commune: CommuneConfig }) {
                 </div>
               ))}
               <p className="px-1 pt-2 text-sm text-muted-foreground">
-                Sin colores políticos: una herramienta al servicio de las
-                personas y los territorios.{" "}
+                Una herramienta al servicio de las personas y los
+                territorios.{" "}
                 <Link
                   href="/nosotros"
                   className="font-semibold text-brand-teal-ink hover:underline"

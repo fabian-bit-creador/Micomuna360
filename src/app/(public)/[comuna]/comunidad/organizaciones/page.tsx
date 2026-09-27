@@ -116,8 +116,7 @@ export default async function OrganizacionesPage({
           <p className="text-sm">
             ¿Tu organización quiere aparecer aquí? En la próxima etapa podrán
             registrarse con validación municipal, publicar sus actividades y
-            actualizar sus datos. Solo organizaciones sociales — sin partidos
-            ni campañas políticas.
+            actualizar sus datos.
           </p>
         </CardContent>
       </Card>

@@ -28,8 +28,6 @@ export const siteConfig = {
     "Cuando la información se queda en un papel pegado en una oficina o en una publicación perdida, hay familias que pierden postulaciones, vecinos que no se enteran de la hora médica, dirigentes que golpean puertas sin respuesta. Esa brecha no es falta de oportunidades: es falta de conexión.",
     "Por eso existe esta plataforma: para que la información de tu comuna te encuentre a ti, y no al revés. Porque una comunidad informada participa mejor, exige mejor, colabora mejor y crece junta.",
   ],
-  noPartidista:
-    "MiComuna360 no pertenece a ningún partido ni proyecto político. Es una herramienta al servicio de las personas, los territorios y las comunidades — no de un color político. La información pública se presenta de forma clara y neutral, para que cada vecino saque sus propias conclusiones.",
   noReemplaza:
     "MiComuna360 no reemplaza a tu municipalidad. El municipio decide, ejecuta y responde; la plataforma acerca la información, los servicios y la participación a las personas, y ayuda a que ese trabajo sea más visible, ordenado y cercano.",
   valores: [

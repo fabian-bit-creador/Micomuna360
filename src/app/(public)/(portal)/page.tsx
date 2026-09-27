@@ -38,8 +38,8 @@ export default function PortalPage() {
             Tu comuna en <span className="text-brand-teal-ink">un solo lugar</span>
           </h1>
           <p className="mx-auto mt-5 max-w-2xl text-lg text-muted-foreground">
-            {siteConfig.sublema} Una plataforma ciudadana, independiente y sin
-            colores políticos, que reúne la información útil de cada comuna.
+            {siteConfig.sublema} Una plataforma ciudadana e independiente que
+            reúne la información útil de cada comuna.
           </p>
         </div>
       </section>

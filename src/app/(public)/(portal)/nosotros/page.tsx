@@ -5,7 +5,6 @@ import {
   EyeIcon,
   HandshakeIcon,
   NewspaperIcon,
-  ScaleIcon,
 } from "lucide-react";
 
 import { BrandMark3D } from "@/components/layout/brand-mark-3d";
@@ -201,25 +200,6 @@ export default function NosotrosPage() {
                 </CardHeader>
               </Card>
             ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Compromiso no partidista */}
-      <section className="mx-auto max-w-6xl px-4 py-14">
-        <div className="rounded-2xl bg-primary px-6 py-10 text-primary-foreground md:px-14">
-          <div className="flex flex-col items-start gap-5 md:flex-row md:items-center">
-            <div className="flex size-14 shrink-0 items-center justify-center rounded-2xl bg-brand-ivory/10">
-              <ScaleIcon className="size-7 text-primary-foreground" />
-            </div>
-            <div>
-              <h2 className="text-2xl font-bold text-primary-foreground">
-                Sin colores políticos
-              </h2>
-              <p className="mt-2 max-w-3xl leading-relaxed text-primary-foreground/85">
-                {siteConfig.noPartidista}
-              </p>
-            </div>
           </div>
         </div>
       </section>

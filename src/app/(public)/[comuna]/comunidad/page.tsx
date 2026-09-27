@@ -129,8 +129,7 @@ export default async function ComunidadPage({
             <p className="text-sm text-muted-foreground">
               En las próximas etapas, las organizaciones podrán registrarse y
               publicar sus actividades, y los vecinos podrán proponer
-              iniciativas y sumarse a ellas — con moderación y sin colores
-              políticos.
+              iniciativas y sumarse a ellas, con moderación.
             </p>
           </div>
         </CardContent>
