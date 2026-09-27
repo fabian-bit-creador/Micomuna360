@@ -64,11 +64,14 @@ export async function GET(
         <div
           style={{
             display: "flex",
-            fontSize: 92,
+            /* A la derecha va el isotipo: los nombres largos se achican y
+               pasan a dos líneas antes de llegar a él. */
+            fontSize: name.length > 14 ? 68 : 92,
             fontWeight: 700,
             lineHeight: 1.05,
             letterSpacing: -3,
             marginTop: "40px",
+            maxWidth: "600px",
           }}
         >
           {name}
