@@ -8,6 +8,7 @@ import {
   ScaleIcon,
 } from "lucide-react";
 
+import { BrandMark3D } from "@/components/layout/brand-mark-3d";
 import { SectionHeader } from "@/components/layout/section-header";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -63,16 +64,19 @@ export default function NosotrosPage() {
     <>
       {/* Encabezado */}
       <section className="border-b bg-gradient-to-b from-accent to-background">
-        <div className="mx-auto max-w-6xl px-4 py-14 md:py-20">
-          <Badge variant="secondary" className="mb-4">
-            Nuestro propósito
-          </Badge>
-          <h1 className="max-w-2xl text-3xl font-bold tracking-tight md:text-5xl">
-            Un puente entre tu comuna y tú
-          </h1>
-          <p className="mt-4 max-w-2xl text-lg text-muted-foreground">
-            {siteConfig.description}
-          </p>
+        <div className="mx-auto flex max-w-6xl items-center justify-between gap-10 px-4 py-14 md:py-20">
+          <div>
+            <Badge variant="secondary" className="mb-4">
+              Nuestro propósito
+            </Badge>
+            <h1 className="max-w-2xl text-3xl font-bold tracking-tight md:text-5xl">
+              Un puente entre tu comuna y tú
+            </h1>
+            <p className="mt-4 max-w-2xl text-lg text-muted-foreground">
+              {siteConfig.description}
+            </p>
+          </div>
+          <BrandMark3D className="hidden size-56 shrink-0 md:block" />
         </div>
       </section>
 

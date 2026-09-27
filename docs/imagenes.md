@@ -116,3 +116,43 @@ estereotipos de pobreza o peligro, rostros en primer plano.
 - Colores dentro de la paleta; si no, pedir: «ajusta los colores a la
   paleta indicada».
 - Exportar a WebP, 1600 px de ancho, y registrar el tipo `ilustracion-ia`.
+
+## Íconos
+
+Hay dos tipos de ícono, y cada uno tiene su lugar:
+
+- **Íconos de interfaz** (botones, listas, menús, 16 a 24 px): vectoriales,
+  de la librería Lucide que usa el sitio. Se ven nítidos en cualquier
+  pantalla, cambian de color con el modo oscuro y pesan casi nada. No se
+  reemplazan por imágenes.
+- **Íconos de sección** (tarjetas de la portada, encabezados de Servicios,
+  Beneficios, Deportes, Agenda, Teléfonos, Mapa, 64 a 160 px): aquí sí
+  caben ilustraciones en relieve, en el mismo estilo del isotipo 3D.
+
+### Pedido para íconos de sección en relieve
+
+Sirve para ChatGPT o para Higgsfield. Adjuntar
+`docs/marca/fuentes/MiComuna360-logo-original-3D-2048.png` como referencia.
+
+```
+Crea un ícono 3D para la sección «[Deportes]» de una plataforma ciudadana
+chilena. Mismo estilo que el logo adjunto: formas simples y redondeadas,
+volumen suave, bisel discreto, material satinado mate, luz de estudio
+suave desde arriba a la izquierda, sin sombras duras.
+Objeto: [una pelota de fútbol simple sobre un pequeño podio redondeado].
+Colores solo de la paleta: #17375E, #1E8E89, #67B7D1, #C95B5B, #E9B949
+y #F7F7F2.
+Fondo transparente, objeto centrado, vista frontal levemente elevada,
+formato cuadrado 1024 × 1024.
+Sin texto, letras, números, logos ni personas.
+```
+
+Objetos sugeridos por sección: Servicios → documento con un visto bueno;
+Beneficios → regalo o mano con corazón; Deportes → pelota sobre podio;
+Agenda → calendario de escritorio; Teléfonos → auricular; Mapa → mapa
+plegado con pin; Transparencia → balanza; Datos → gráfico de barras.
+
+Para que la serie se vea pareja, generar todos en la misma sesión, con la
+misma referencia y el mismo texto, cambiando solo el objeto. Revisar que el
+fondo sea de verdad transparente, exportar en WebP de 512 px y registrarlos
+como `ilustracion-ia`.

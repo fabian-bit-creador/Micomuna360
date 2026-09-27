@@ -14,6 +14,7 @@ import {
 
 import Link from "next/link";
 
+import { BrandMark3D } from "@/components/layout/brand-mark-3d";
 import { SectionHeader } from "@/components/layout/section-header";
 import { SearchBox } from "@/components/search/search-box";
 import { Badge } from "@/components/ui/badge";
@@ -128,36 +129,40 @@ export async function PilotoHome({ commune }: { commune: CommuneConfig }) {
     <>
       {/* Portada */}
       <section className="border-b bg-gradient-to-b from-accent to-background">
-        <div className="mx-auto max-w-6xl px-4 py-16 md:py-20">
-          <Badge className="mb-4 bg-brand-terracotta/15 text-brand-terracotta-ink">
-            {commune.region}
-          </Badge>
-          <h1 className="max-w-3xl text-4xl font-bold tracking-tight md:text-6xl">
-            {commune.name} en{" "}
-            <span className="text-brand-teal-ink">un solo lugar</span>
-          </h1>
-          <p className="mt-5 max-w-2xl text-lg text-muted-foreground">
-            La información pública de {commune.name} — trámites, beneficios,
-            deporte, lugares y cifras — con fuente y fecha de verificación,
-            para que la encuentres simple y sin vueltas.
-          </p>
-          <p className="mt-4 flex max-w-2xl items-start gap-2 rounded-lg border border-brand-sky/40 bg-brand-sky/10 px-4 py-3 text-sm">
-            <ScaleIcon className="mt-0.5 size-4 shrink-0 text-brand-navy dark:text-brand-sky-ink" />
-            <span>
-              <strong>{siteConfig.name} es un sitio ciudadano
-              independiente</strong>
-              : no es el sitio oficial de la Municipalidad de {commune.name}{" "}
-              ni de sus corporaciones. Para cada trámite te llevamos al sitio
-              oficial correspondiente.
-            </span>
-          </p>
-          <div className="mt-8">
-            <SearchBox
-              entries={searchEntries}
-              limit={6}
-              placeholder={`Busca un trámite o lugar de ${commune.name}…`}
-            />
+        <div className="mx-auto grid max-w-6xl items-center gap-10 px-4 py-16 md:py-20 lg:grid-cols-[minmax(0,1fr)_auto]">
+          <div>
+            <Badge className="mb-4 bg-brand-terracotta/15 text-brand-terracotta-ink">
+              {commune.region}
+            </Badge>
+            <h1 className="max-w-3xl text-4xl font-bold tracking-tight md:text-6xl">
+              {commune.name} en{" "}
+              <span className="text-brand-teal-ink">un solo lugar</span>
+            </h1>
+            <p className="mt-5 max-w-2xl text-lg text-muted-foreground">
+              La información pública de {commune.name} — trámites, beneficios,
+              deporte, lugares y cifras — con fuente y fecha de verificación,
+              para que la encuentres simple y sin vueltas.
+            </p>
+            <p className="mt-4 flex max-w-2xl items-start gap-2 rounded-lg border border-brand-sky/40 bg-brand-sky/10 px-4 py-3 text-sm">
+              <ScaleIcon className="mt-0.5 size-4 shrink-0 text-brand-navy dark:text-brand-sky-ink" />
+              <span>
+                <strong>{siteConfig.name} es un sitio ciudadano
+                independiente</strong>
+                : no es el sitio oficial de la Municipalidad de {commune.name}{" "}
+                ni de sus corporaciones. Para cada trámite te llevamos al sitio
+                oficial correspondiente.
+              </span>
+            </p>
+            <div className="mt-8">
+              <SearchBox
+                entries={searchEntries}
+                limit={6}
+                placeholder={`Busca un trámite o lugar de ${commune.name}…`}
+              />
+            </div>
           </div>
+          {/* Solo en escritorio: en el celular la portada ya es larga. */}
+          <BrandMark3D className="hidden size-72 lg:block xl:size-80" />
         </div>
       </section>
 

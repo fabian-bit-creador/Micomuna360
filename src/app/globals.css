@@ -176,3 +176,22 @@
     scroll-behavior: auto !important;
   }
 }
+
+/* Entrada del isotipo 3D: el giro de 14° y el descenso suave del modelo de
+   la marca (docs/marca.md). Se reproduce una vez y queda quieto. */
+@keyframes brand-intro {
+  from {
+    opacity: 0;
+    transform: translateY(-14px) rotate(-14deg) scale(0.96);
+  }
+  60% {
+    opacity: 1;
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+.brand-intro {
+  animation: brand-intro 1.75s cubic-bezier(0.22, 1, 0.36, 1) both;
+}

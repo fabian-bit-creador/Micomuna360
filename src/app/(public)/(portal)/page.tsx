@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { ArrowRightIcon } from "lucide-react";
 
+import { BrandMark3D } from "@/components/layout/brand-mark-3d";
 import { Badge } from "@/components/ui/badge";
 import {
   Card,
@@ -31,7 +32,8 @@ export default function PortalPage() {
     <>
       {/* Hero del portal */}
       <section className="border-b bg-gradient-to-b from-accent to-background">
-        <div className="mx-auto max-w-6xl px-4 py-16 text-center md:py-24">
+        <div className="mx-auto max-w-6xl px-4 py-14 text-center md:py-20">
+          <BrandMark3D priority className="mx-auto mb-6 size-36 md:size-48" />
           <h1 className="mx-auto max-w-3xl text-4xl font-bold tracking-tight md:text-6xl">
             Tu comuna en <span className="text-brand-teal-ink">un solo lugar</span>
           </h1>
