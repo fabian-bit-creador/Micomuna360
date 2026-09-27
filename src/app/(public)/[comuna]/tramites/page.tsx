@@ -96,9 +96,9 @@ export default async function TramitesPage({
         ))}
       </div>
       <p className="mt-10 rounded-lg bg-muted px-4 py-3 text-sm text-muted-foreground">
-        Guías de demostración con requisitos generales de referencia. En la
-        versión piloto, cada municipio publica sus propios requisitos, valores
-        y horarios oficiales.
+        Guías de demostración con requisitos generales de referencia. En una
+        comuna real, cada guía usa los requisitos, valores y horarios
+        oficiales del municipio.
       </p>
     </div>
   );

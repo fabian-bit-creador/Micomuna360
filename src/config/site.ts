@@ -16,7 +16,7 @@ export const siteConfig = {
   lema: "Tu comuna en un solo lugar",
   sublema: "Conecta, participa y transforma tu entorno.",
   description:
-    "MiComuna360 es una plataforma digital que conecta vecinos, municipios y datos comunales en un solo lugar. Hoy permite informarse sobre noticias, actividades, trámites, teléfonos útiles y datos de tu comuna; en sus próximas etapas permitirá reportar problemas, hacer solicitudes con seguimiento y participar activamente en el desarrollo del territorio.",
+    "MiComuna360 es una plataforma digital que conecta vecinos, municipios y datos comunales en un solo lugar: trámites, beneficios, deporte, lugares, presupuesto y cifras de tu comuna, con la fuente y la fecha de cada dato.",
   porQueExiste:
     "Muchas oportunidades, beneficios y servicios existen, pero no siempre llegan a las personas de forma clara, simple y oportuna. MiComuna360 busca cerrar esa brecha, conectando información, comunidad y gestión pública para que cada vecino pueda participar mejor en el desarrollo de su comuna.",
   mision:

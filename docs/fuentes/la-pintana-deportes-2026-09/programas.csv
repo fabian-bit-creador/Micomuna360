@@ -1,0 +1,72 @@
+id,nombre_oficial,nombre,disciplina,tipo,recinto,direccion,dias,inicio,termino
+lp-dep-acondicionamiento-fisico-club-de-campo-mar-jue,ACONDICIONAMIENTO FÍSICO - CLUB DE CAMPO,Acondicionamiento físico,Acondicionamiento físico,taller,Club de Campo,Santa Rosa 10812,martes jueves,18:30,20:00
+lp-dep-acondicionamiento-fisico-club-de-campo-vie,ACONDICIONAMIENTO FÍSICO - CLUB DE CAMPO,Acondicionamiento físico,Acondicionamiento físico,taller,Club de Campo,Santa Rosa 10812,viernes,18:00,19:30
+lp-dep-atletismo-lanzamiento-estadio-municipal-lun-mar-mie-vie,ATLETISMO LANZAMIENTO,Atletismo: lanzamiento,Atletismo,escuela,Estadio Municipal,Ciudad de México 1589,lunes martes miercoles viernes,18:10,20:10
+lp-dep-atletismo-lanzamiento-estadio-municipal-sab,ATLETISMO LANZAMIENTO - SÁBADO,Atletismo: lanzamiento,Atletismo,escuela,Estadio Municipal,Ciudad de México 1589,sabado,09:00,11:00
+lp-dep-mini-atletismo-estadio-municipal-lun-jue-vie,MINI ATLETISMO,Mini atletismo,Atletismo,escuela,Estadio Municipal,Ciudad de México 1589,lunes jueves viernes,19:15,20:30
+lp-dep-bmx-estadio-municipal-lun-mie-vie,BMX,BMX,BMX,escuela,Estadio Municipal,Ciudad de México 1589,lunes miercoles viernes,19:00,21:00
+lp-dep-bmx-estadio-municipal-sab,BMX - SÁBADO,BMX,BMX,escuela,Estadio Municipal,Ciudad de México 1589,sabado,10:00,12:00
+lp-dep-basquetbol-bullterriers-polideportivo-lun-mie-vie,BASQUETBOL BULLTERRIERS,Básquetbol Bullterriers,Básquetbol,taller,Polideportivo,Patagonia 12980,lunes miercoles viernes,18:15,21:30
+lp-dep-basquetbol-la-curva-lun-mie-vie,BASQUETBOL LA CURVA,Básquetbol La Curva,Básquetbol,taller,,Calle C 1140 A,lunes miercoles viernes,17:30,19:45
+lp-dep-boxeo-competitivo-estadio-municipal-lun-mar-mie-jue-vie,BOXEO COMPETITIVO,Boxeo competitivo,Boxeo,escuela,Estadio Municipal,Ciudad de México 1589,lunes martes miercoles jueves viernes,19:00,21:00
+lp-dep-boxeo-recreativo-estadio-municipal-lun-mie-vie,BOXEO RECREATIVO,Boxeo recreativo,Boxeo,escuela,Estadio Municipal,Ciudad de México 1589,lunes miercoles viernes,19:00,21:00
+lp-dep-ciclismo-estadio-municipal-mar-mie-jue,CICLISMO,Ciclismo,Ciclismo,escuela,Estadio Municipal,Ciudad de México 1589,martes miercoles jueves,18:00,21:00
+lp-dep-cross-training-estadio-municipal-mar-jue,CROSS TRAINING,Cross training,Cross training,escuela,Estadio Municipal,Ciudad de México 1589,martes jueves,19:30,21:40
+lp-dep-cross-training-estadio-municipal-sab,CROSS TRAINING - SÁBADO,Cross training,Cross training,escuela,Estadio Municipal,Ciudad de México 1589,sabado,09:00,11:00
+lp-dep-escalada-estadio-municipal-lun-mie-vie,ESCALADA,Escalada,Escalada,escuela,Estadio Municipal,Ciudad de México 1589,lunes miercoles viernes,17:30,20:30
+lp-dep-freeskate-anticura-mar-jue,FREESKATE - ANTICURA,Freeskate,Freeskate,taller,Anticura,Anticura 13156,martes jueves,20:00,22:00
+lp-dep-freeskate-santo-tomas-mar-jue,FREESKATE - SANTO TOMÁS,Freeskate,Freeskate,taller,Santo Tomás,Apóstol Felipe 10718,martes jueves,17:30,19:30
+lp-dep-futbol-cancha-jamaica-mar-jue,FUTBOL - CANCHA JAMAICA,Fútbol,Fútbol,taller,Cancha Jamaica,Edith Madge de Huneeus 0630,martes jueves,18:00,20:00
+lp-dep-futbol-diego-de-almagro-lun-jue,FÚTBOL - DIEGO DE ALMAGRO,Fútbol,Fútbol,taller,Diego de Almagro,Francisco de Zurbaran 1716,lunes jueves,19:00,21:00
+lp-dep-futbol-el-remanzo-mar-jue,FÚTBOL - EL REMANZO,Fútbol,Fútbol,taller,El Remanzo,José Echeverría 13831,martes jueves,17:30,19:30
+lp-dep-futbol-eleuterio-ramirez-mar-jue,FÚTBOL - ELEUTERIO RAMÍREZ,Fútbol,Fútbol,taller,Eleuterio Ramírez,Cabo Gutierrez 02786,martes jueves,19:40,21:40
+lp-dep-futbol-los-mayas-lun-mie,FÚTBOL - LOS MAYAS,Fútbol,Fútbol,taller,Los Mayas,Los Olmecas 10650,lunes miercoles,18:00,20:00
+lp-dep-futbol-villa-concierto-1-mar-jue,FÚTBOL - VILLA CONCIERTO 1,Fútbol,Fútbol,taller,Villa Concierto 1,Bahía Catalina 10935,martes jueves,17:00,19:00
+lp-dep-futbol-villa-los-almendros-mar-vie,FÚTBOL - VILLA LOS ALMENDROS,Fútbol,Fútbol,taller,Villa Los Almendros,Los Almendros Poniente 10726,martes viernes,19:00,21:00
+lp-dep-futbol-villa-magdalena-1-mar-jue,FÚTBOL - VILLA MAGDALENA 1,Fútbol,Fútbol,taller,Villa Magdalena 1,Santa Rebeca 2079,martes jueves,19:30,21:30
+lp-dep-futbol-villa-nacimiento-lun-mie-vie,FÚTBOL - VILLA NACIMIENTO,Fútbol,Fútbol,taller,Villa Nacimiento,La Recova 10982,lunes miercoles viernes,16:00,19:30
+lp-dep-futbol-villa-salvador-dali-lun-mie,FUTBOL - VILLA SALVADOR DALI,Fútbol,Fútbol,taller,Villa Salvador Dalí,Gala 10735,lunes miercoles,20:15,22:15
+lp-dep-futbol-villa-san-gabriel-lun-mie,FUTBOL - VILLA SAN GABRIEL,Fútbol,Fútbol,taller,Villa San Gabriel,Gabriela Figueroa 11032,lunes miercoles,18:00,20:00
+lp-dep-futbol-femenino-juvenil-estadio-municipal-lun-mie-vie,FÚTBOL FEMENINO JUVENIL,Fútbol femenino juvenil,Fútbol,escuela,Estadio Municipal,Ciudad de México 1589,lunes miercoles viernes,18:00,20:00
+lp-dep-futbol-masculino-sub-11-13-complejo-las-rosas-lun-mie-vie,FÚTBOL MASCULINO SUB 11 - 13,Fútbol masculino sub 11–13,Fútbol,escuela,Complejo Las Rosas,Avenida Gabriela 3343,lunes miercoles viernes,17:00,19:00
+lp-dep-futbol-masculino-sub-15-17-complejo-las-rosas-lun-mie-vie,FÚTBOL MASCULINO SUB 15 - 17,Fútbol masculino sub 15–17,Fútbol,escuela,Complejo Las Rosas,Avenida Gabriela 3343,lunes miercoles viernes,17:00,19:00
+lp-dep-futbol-masculino-sub-7-9-complejo-las-rosas-lun-mie-vie,FÚTBOL MASCULINO SUB 7 - 9,Fútbol masculino sub 7–9,Fútbol,escuela,Complejo Las Rosas,Avenida Gabriela 3343,lunes miercoles viernes,17:00,19:00
+lp-dep-halterofilia-adultos-complejo-las-rosas-mar-jue,HALTEROFILIA ADULTO,Halterofilia adultos,Halterofilia,escuela,Complejo Las Rosas,Avenida Gabriela 3343,martes jueves,17:30,18:30
+lp-dep-halterofilia-infantil-complejo-las-rosas-lun-mar-mie,HALTEROFILIA INFANTIL,Halterofilia infantil,Halterofilia,escuela,Complejo Las Rosas,Avenida Gabriela 3343,lunes martes miercoles,16:30,19:30
+lp-dep-judo-polideportivo-mar-jue,JUDO,Judo,Judo,escuela,Polideportivo,Patagonia 12980,martes jueves,18:30,21:00
+lp-dep-judo-polideportivo-sab,JUDO - SÁBADO,Judo,Judo,escuela,Polideportivo,Patagonia 12980,sabado,10:00,12:00
+lp-dep-karate-do-polideportivo-lun-mie-vie,KARATE DO,Karate do,Karate do,escuela,Polideportivo,Patagonia 12980,lunes miercoles viernes,18:00,21:00
+lp-dep-patin-carrera-estadio-municipal-lun-mie-vie,PATÍN CARRERA - ESTADIO MUNICIPAL,Patín carrera,Patín carrera,taller,Estadio Municipal,Ciudad de México 1589,lunes miercoles viernes,18:00,20:00
+lp-dep-patin-carrera-estadio-municipal-mar-mie-jue,PATIN CARRERA,Patín carrera,Patín carrera,escuela,Estadio Municipal,Ciudad de México 1589,martes miercoles jueves,18:00,20:00
+lp-dep-patin-carrera-estadio-municipal-sab,PATIN CARRERA - SÁBADO,Patín carrera,Patín carrera,escuela,Estadio Municipal,Ciudad de México 1589,sabado,09:00,11:00
+lp-dep-patinaje-artistico-avanzado-estadio-municipal-lun-mie-vie,PATINAJE ARTÍSTICO AVANZADO,Patinaje artístico avanzado,Patinaje artístico,escuela,Estadio Municipal,Ciudad de México 1589,lunes miercoles viernes,18:45,19:00
+lp-dep-patinaje-artistico-iniciacion-estadio-municipal-lun-mie,PATINAJE ARTÍSTICO INICIACIÓN,Patinaje artístico iniciación,Patinaje artístico,escuela,Estadio Municipal,Ciudad de México 1589,lunes miercoles,17:30,18:45
+lp-dep-patinaje-artistico-intermedio-estadio-municipal-lun-mie-vie,PATINAJE ARTÍSTICO INTERMEDIO,Patinaje artístico intermedio,Patinaje artístico,escuela,Estadio Municipal,Ciudad de México 1589,lunes miercoles viernes,18:45,19:00
+lp-dep-power-training-estadio-municipal-lun-mie-vie,POWER TRAINING,Power training,Power training,escuela,Estadio Municipal,Ciudad de México 1589,lunes miercoles viernes,19:30,21:40
+lp-dep-rugby-adultos-complejo-las-rosas-mar-jue,RUGBY ADULTOS,Rugby adultos,Rugby,escuela,Complejo Las Rosas,Avenida Gabriela 3343,martes jueves,20:00,22:30
+lp-dep-rugby-adultos-complejo-las-rosas-sab,RUGBY ADULTOS - SÁBADO,Rugby adultos,Rugby,escuela,Complejo Las Rosas,Avenida Gabriela 3343,sabado,10:00,12:00
+lp-dep-rugby-femenino-complejo-las-rosas-mar-jue,RUGBY FEMENINO,Rugby femenino,Rugby,escuela,Complejo Las Rosas,Avenida Gabriela 3343,martes jueves,19:00,21:00
+lp-dep-rugby-femenino-complejo-las-rosas-sab,RUGBY FEMENINO - SÁBADO,Rugby femenino,Rugby,escuela,Complejo Las Rosas,Avenida Gabriela 3343,sabado,10:00,12:00
+lp-dep-rugby-infantil-complejo-las-rosas-mar-jue,RUGBY INFANTIL,Rugby infantil,Rugby,escuela,Complejo Las Rosas,Avenida Gabriela 3343,martes jueves,19:00,21:00
+lp-dep-rugby-infantil-complejo-las-rosas-sab,RUGBY INFANTIL - SÁBADO,Rugby infantil,Rugby,escuela,Complejo Las Rosas,Avenida Gabriela 3343,sabado,10:00,12:00
+lp-dep-rugby-juvenil-masculino-complejo-las-rosas-mar-jue,RUGBY JUVENIL MASCULINO,Rugby juvenil masculino,Rugby,escuela,Complejo Las Rosas,Avenida Gabriela 3343,martes jueves,19:00,21:00
+lp-dep-rugby-juvenil-masculino-complejo-las-rosas-sab,RUGBY JUVENIL MASCULINO - SÁBADO,Rugby juvenil masculino,Rugby,escuela,Complejo Las Rosas,Avenida Gabriela 3343,sabado,10:00,12:00
+lp-dep-running-la-pintana-estadio-municipal-mar-mie-jue,RUNNING LA PINTANA,Running La Pintana,Running,escuela,Estadio Municipal,Ciudad de México 1589,martes miercoles jueves,19:00,21:00
+lp-dep-taekwondo-estadio-municipal-lun-mie-vie,TAEKWONDO,Taekwondo,Taekwondo,escuela,Estadio Municipal,Ciudad de México 1589,lunes miercoles viernes,19:00,22:00
+lp-dep-tenis-de-mesa-adultos-club-de-campo-mar-jue,TENIS DE MESA ADULTOS,Tenis de mesa adultos,Tenis de mesa,escuela,Club de Campo,Santa Rosa 10812,martes jueves,19:30,21:00
+lp-dep-tenis-de-mesa-formativo-club-de-campo-lun-mie-vie,TENIS DE MESA FORMATIVO,Tenis de mesa formativo,Tenis de mesa,escuela,Club de Campo,Santa Rosa 10812,lunes miercoles viernes,16:30,19:30
+lp-dep-voleibol-polideportivo-lun-mie-vie,VOLEIBOL,Vóleibol,Vóleibol,escuela,Polideportivo,Patagonia 12980,lunes miercoles viernes,16:30,18:00
+lp-dep-yoga-club-de-campo-mar-jue,YOGA - CLUB DE CAMPO,Yoga,Yoga,taller,Club de Campo,Santa Rosa 10812,martes jueves,18:00,19:30
+lp-dep-yoga-club-de-campo-sab,YOGA - CLUB DE CAMPO,Yoga,Yoga,taller,Club de Campo,Santa Rosa 10812,sabado,09:00,10:30
+lp-dep-zumba-cedeco-la-platina-lun-mie,ZUMBA - CEDECO LA PLATINA,Zumba,Zumba,taller,Cedeco La Platina,Los Olivillos 0905,lunes miercoles,17:30,18:30
+lp-dep-zumba-club-el-dinamo-lun-mie,ZUMBA - CLUB EL DINAMO,Zumba,Zumba,taller,Club El Dínamo,Apóstol Felipe 10718,lunes miercoles,20:00,21:30
+lp-dep-zumba-club-de-campo-lun-mie,ZUMBA - CLUB DE CAMPO,Zumba,Zumba,taller,Club de Campo,Santa Rosa 10812,lunes miercoles,19:00,20:00
+lp-dep-zumba-condominio-nueva-esperanza-lun-mie,ZUMBA - CONDOMINIO NUEVA ESPERANZA,Zumba,Zumba,taller,Condominio Nueva Esperanza,Miguel Ángel 03611,lunes miercoles,20:15,21:15
+lp-dep-zumba-estadio-municipal-mar-jue,ZUMBA - ESTADIO MUNICIPAL,Zumba,Zumba,taller,Estadio Municipal,Ciudad de México 1589,martes jueves,09:00,10:00
+lp-dep-zumba-junta-de-vecinos-7-1-mar-jue,ZUMBA - JJVV 7-1,Zumba,Zumba,taller,Junta de vecinos 7-1,Pedro Prado 12697,martes jueves,20:15,21:15
+lp-dep-zumba-raul-del-canto-lun-mie,ZUMBA - RAÚL DEL CANTO,Zumba,Zumba,taller,Raúl del Canto,Daniel Rebolledo 0672,lunes miercoles,20:15,21:15
+lp-dep-zumba-sede-cas-susana-menares-lun-mie,ZUMBA - SEDE CAS SUSANA MENARES,Zumba,Zumba,taller,Sede CAS Susana Menares,Martín Sánchez 0641,lunes miercoles,19:00,20:00
+lp-dep-zumba-sede-hemisferio-mar-jue,ZUMBA - SEDE HEMISFERIO,Zumba,Zumba,taller,Sede Hemisferio,José Manuel Balmaceda 1413,martes jueves,19:00,20:00
+lp-dep-zumba-sede-jaime-silva-mar-jue,ZUMBA - SEDE JAIME SILVA,Zumba,Zumba,taller,Sede Jaime Silva,José Toribio Medina 12250,martes jueves,18:45,19:45
+lp-dep-zumba-sede-villa-gabriela-mar-jue,ZUMBA - SEDE VILLA GABRIELA,Zumba,Zumba,taller,Sede Villa Gabriela,Nueva Gabriela 1357,martes jueves,19:30,21:00
+lp-dep-zumba-villa-los-almendros-lun-mie,ZUMBA - VILLA LOS ALMENDROS,Zumba,Zumba,taller,Villa Los Almendros,Los Almendros Poniente 10726,lunes miercoles,19:00,20:00

@@ -27,6 +27,7 @@ import {
   getBudget,
   getBudgetDocumentIndex,
   getDataSource,
+  getSectionSource,
   getFinancialReports,
   getReportedLiabilities,
 } from "@/lib/repositories";
@@ -87,20 +88,22 @@ export default async function TransparenciaPage({
     balance,
     legalSource,
     portalSource,
-    indexSource,
-    liabilitiesSource,
-    balanceSource,
   ] = await Promise.all([
     getBudget(commune.id),
     getFinancialReports(commune.id),
     getBudgetDocumentIndex(commune.id),
     getReportedLiabilities(commune.id),
     getAccountingBalance(commune.id),
-    getDataSource(commune.id, "cl-consejo-transparencia"),
-    getDataSource(commune.id, "lp-transparencia-directa"),
-    getDataSource(commune.id, "lp-ta-indice-ejecucion-2026"),
-    getDataSource(commune.id, "lp-ta-pasivos-julio-2026"),
-    getDataSource(commune.id, "lp-ta-balance-julio-2026"),
+    getSectionSource(commune.id, "transparencyAuthority"),
+    getSectionSource(commune.id, "transparencyRequest"),
+  ]);
+  /* La fuente de cada bloque sale de sus propias filas. */
+  const firstSource = (rows: { sourceId: string }[]) =>
+    rows.length ? getDataSource(commune.id, rows[0].sourceId) : null;
+  const [indexSource, liabilitiesSource, balanceSource] = await Promise.all([
+    firstSource(budgetIndex),
+    firstSource(liabilities),
+    firstSource(balance),
   ]);
   const reportsSource = reports.length
     ? await getDataSource(commune.id, reports[0].sourceId)

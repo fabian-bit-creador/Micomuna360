@@ -1,11 +1,13 @@
-import { getCommuneData } from "@/data/communes";
+import { getCommuneData, type SectionSources } from "@/data/communes";
 import type {
   BenefitOrientation,
   CitizenService,
   DataSource,
   PhoneCategory,
+  Photo,
   Procedure,
   ProcedureCategory,
+  SportsProgram,
   UsefulPhone,
 } from "@/types";
 
@@ -23,11 +25,32 @@ export async function getBenefitOrientations(
   return [...getCommuneData(communeId).benefits];
 }
 
+/** Escuelas y talleres deportivos de la comuna. */
+export async function getSportsPrograms(
+  communeId: string
+): Promise<SportsProgram[]> {
+  return [...getCommuneData(communeId).sportsPrograms];
+}
+
+/** Fotos con crédito de la comuna. */
+export async function getPhotos(communeId: string): Promise<Photo[]> {
+  return [...getCommuneData(communeId).photos];
+}
+
 /** Sitios oficiales destacados de la comuna (registro único de fuentes). */
 export async function getOfficialSites(
   communeId: string
 ): Promise<DataSource[]> {
   return getCommuneData(communeId).sources.filter((s) => s.featured);
+}
+
+/** Fuente que una sección enlaza por su función (ver SectionSources). */
+export async function getSectionSource(
+  communeId: string,
+  section: keyof SectionSources
+): Promise<DataSource | null> {
+  const id = getCommuneData(communeId).sectionSources[section];
+  return id ? getDataSource(communeId, id) : null;
 }
 
 /** Fuente de procedencia por id, dentro de una comuna. */

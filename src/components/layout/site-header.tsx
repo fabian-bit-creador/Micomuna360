@@ -6,7 +6,7 @@ import { MobileNav } from "@/components/layout/mobile-nav";
 import { NavLink } from "@/components/layout/nav-link";
 import { SkipLink } from "@/components/layout/skip-link";
 import { Button } from "@/components/ui/button";
-import { listCommunes, type CommuneConfig } from "@/config/communes";
+import { listPublicCommunes, type CommuneConfig } from "@/config/communes";
 import { communeNav, reportHref } from "@/config/nav";
 
 export function SiteHeader({ commune }: { commune: CommuneConfig }) {
@@ -26,7 +26,7 @@ export function SiteHeader({ commune }: { commune: CommuneConfig }) {
           <Logo href={`/${commune.id}`} compactOnMobile />
           <CommuneSwitcher
             current={option(commune)}
-            communes={listCommunes().map(option)}
+            communes={listPublicCommunes().map(option)}
           />
         </div>
         <nav

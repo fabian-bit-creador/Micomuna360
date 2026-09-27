@@ -34,6 +34,8 @@ enlaza hoy; conviene abrir ambos desde Chile en la próxima revisión.
 | lp-smartdideco | DIDECO | [SmartDIDECO](https://www.lapintana.smartdideco.cl/) | verificado | 2026-09-27 | 2026-12-27 | Plataforma de programas y atenciones. Vigente según el enlace publicado en dideco.cl; el servidor rechaza conexiones desde fuera de Chile |
 | lp-deportes | Corp. de Deportes | [pintanadeportes.cl](https://www.pintanadeportes.cl/) | verificado | 2026-09-27 | 2026-12-27 | — |
 | lp-deportes-recintos | Corp. de Deportes | Recintos (direcciones) | verificado | 2026-09-27 | 2026-12-27 | Direcciones de 4 recintos desde el sitio oficial; horarios/teléfonos NO publicados (no verificados) |
+| lp-deportes-talleres | Corp. de Deportes | [Escuelas y talleres deportivos](https://www.pintanadeportes.cl/) | verificado | 2026-09-27 | 2026-12-31 | 71 escuelas y talleres del 2.º semestre 2026: recinto, dirección, días y horario. Sin nombres de profesores (ver `docs/fuentes/la-pintana-deportes-2026-09/`) |
+| lp-deportes-inscripcion | Corp. de Deportes | [Inscripción a escuelas](https://www.pintanadeportes.cl/productos-categoria/inscripcion-escuelas/) | verificado | 2026-09-27 | 2026-12-31 | Inscripción por semestre; valor según escuela; RSH para acreditar residencia. Montos no publicados |
 | lp-cultura | Corp. Cultural | [culturapintana.cl](https://www.culturapintana.cl/) | verificado | 2026-09-27 | 2026-12-27 | — |
 | lp-geoportal | Municipalidad | [GeoPintana](https://geopintana-lapintana.hub.arcgis.com/) | verificado | 2026-09-27 | 2026-12-27 | Fuente candidata de coordenadas (etapa mapa) |
 | lp-muni-salud | Municipalidad | [Centros de Salud Familiar](https://pintana.cl/?page_id=7115) | verificado | 2026-09-27 | 2026-12-27 | 7 CESFAM con dirección y teléfono; Juan Pablo II es de la Red Áncora UC. No se publican nombres ni correos de directivos |
@@ -121,3 +123,14 @@ futuros módulos consumen el mismo registro (las fuentes con `featured:
 true` aparecen como sitios oficiales en la portada de la comuna). Una
 verificación con `validUntil` vencida se muestra como «Revisión vencida»,
 nunca como verificada vigente.
+
+## Fotos
+
+Las fotos publicadas se registran en `src/data/communes/la-pintana/photos.ts`
+con autor, licencia y enlace de origen (criterios en `docs/imagenes.md`).
+
+| Foto | Autor | Licencia | Origen |
+|---|---|---|---|
+| Cancha 2 del Estadio Municipal | Alexisaherven | CC BY 4.0 | [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:Cancha_2_Estadio_Municipal_de_La_Pintana_(1).jpg) |
+| Estadio Municipal | Alexisaherven | CC BY 4.0 | [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:Estadio_Municipal_de_La_Pintana_(1).jpg) |
+| Polideportivo | Alexisaherven | CC BY 4.0 | [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:Polideportivo_Municipal_de_La_Pintana.jpg) |

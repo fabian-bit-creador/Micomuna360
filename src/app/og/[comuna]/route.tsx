@@ -25,8 +25,8 @@ export async function GET(
   const name = commune?.name ?? "MiComuna360";
   const isDemo = commune?.isDemo ?? true;
   const label = isDemo
-    ? "Comuna de demostración · datos ficticios"
-    : "Piloto informativo · información pública con fuente y fecha";
+    ? "Comuna de ejemplo · datos ficticios"
+    : "Información pública con fuente y fecha";
   const accent = isDemo ? "#1e8e89" : "#c95b5b";
 
   return new ImageResponse(

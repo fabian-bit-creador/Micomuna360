@@ -1,12 +1,11 @@
 import {
   ArrowRightIcon,
-  CalendarDaysIcon,
   ChartLineIcon,
   ExternalLinkIcon,
   FileTextIcon,
   MapIcon,
   MapPinIcon,
-  PhoneCallIcon,
+  MedalIcon,
   ScaleIcon,
   SearchCheckIcon,
 } from "lucide-react";
@@ -54,6 +53,14 @@ function availableFor(commune: CommuneConfig) {
       enabled: features.benefits,
     },
     {
+      icon: MedalIcon,
+      title: "Deporte en tu barrio",
+      description:
+        "Escuelas y talleres deportivos: qué días, a qué hora y dónde, con cómo inscribirse.",
+      href: "/deportes",
+      enabled: features.sports,
+    },
+    {
       icon: ScaleIcon,
       title: "Transparencia municipal",
       description:
@@ -88,56 +95,29 @@ function availableFor(commune: CommuneConfig) {
   ].filter((item) => item.enabled);
 }
 
-function upcomingFor(commune: CommuneConfig) {
-  const { features } = commune;
-  return [
-    {
-      icon: CalendarDaysIcon,
-      title: "Agenda comunal",
-      description:
-        "Actividades de deporte, cultura y comunidad, reunidas desde los canales oficiales.",
-      pending: !features.events,
-    },
-    {
-      icon: PhoneCallIcon,
-      title: "Teléfonos útiles",
-      description:
-        "Emergencias y servicios comunales, llamables con un toque desde el celular.",
-      pending: !features.phones,
-    },
-    {
-      icon: MapIcon,
-      title: "Mapa de la comuna",
-      description:
-        "Lugares con coordenadas verificadas y cómo llegar a cada uno.",
-      pending: !features.realMap,
-    },
-  ].filter((item) => item.pending);
-}
 
-/** Home del piloto informativo: solo información verificada, con fuentes. */
+/** Portada de una comuna con datos reales: solo información verificada, con fuentes. */
 export async function PilotoHome({ commune }: { commune: CommuneConfig }) {
   const searchEntries = buildSearchIndex(commune);
   const officialSites = await getOfficialSites(commune.id);
   const base = `/${commune.id}`;
   const available = availableFor(commune);
-  const upcoming = upcomingFor(commune);
   return (
     <>
-      {/* Hero piloto */}
+      {/* Portada */}
       <section className="border-b bg-gradient-to-b from-accent to-background">
         <div className="mx-auto max-w-6xl px-4 py-16 md:py-20">
           <Badge className="mb-4 bg-brand-terracotta/15 text-brand-terracotta-ink">
-            Piloto informativo · {commune.region}
+            {commune.region}
           </Badge>
           <h1 className="max-w-3xl text-4xl font-bold tracking-tight md:text-6xl">
             {commune.name} en{" "}
             <span className="text-brand-teal-ink">un solo lugar</span>
           </h1>
           <p className="mt-5 max-w-2xl text-lg text-muted-foreground">
-            Estamos reuniendo la información pública de {commune.name} —
-            trámites, teléfonos, lugares y actividades — con fuente y fecha de
-            verificación, para que la encuentres simple y sin vueltas.
+            La información pública de {commune.name} — trámites, beneficios,
+            deporte, lugares y cifras — con fuente y fecha de verificación,
+            para que la encuentres simple y sin vueltas.
           </p>
           <p className="mt-4 flex max-w-2xl items-start gap-2 rounded-lg border border-brand-sky/40 bg-brand-sky/10 px-4 py-3 text-sm">
             <ScaleIcon className="mt-0.5 size-4 shrink-0 text-brand-navy dark:text-brand-sky-ink" />
@@ -189,39 +169,12 @@ export async function PilotoHome({ commune }: { commune: CommuneConfig }) {
         </div>
       </section>
 
-      {/* Qué viene en el piloto */}
-      {upcoming.length > 0 && (
-        <section className="mx-auto max-w-6xl px-4 py-14">
-          <SectionHeader
-            eyebrow="En preparación"
-            title="Lo que viene, etapa por etapa"
-            description="Cada módulo se publica solo cuando su información está verificada. Sin datos inventados, sin promesas vacías."
-          />
-          <div className="grid gap-4 sm:grid-cols-2">
-            {upcoming.map((item) => (
-              <Card key={item.title} className="gap-0 py-5">
-                <CardContent className="flex items-start gap-4 px-5">
-                  <span className="flex size-11 shrink-0 items-center justify-center rounded-xl bg-accent text-brand-teal-ink">
-                    <item.icon className="size-6" />
-                  </span>
-                  <div>
-                    <h3 className="font-bold text-primary">{item.title}</h3>
-                    <p className="mt-0.5 text-sm text-muted-foreground">
-                      {item.description}
-                    </p>
-                  </div>
-                </CardContent>
-              </Card>
-            ))}
-          </div>
-        </section>
-      )}
 
       {/* Fuentes oficiales */}
       <section className="border-y bg-card">
         <div className="mx-auto max-w-6xl px-4 py-14">
           <SectionHeader
-            eyebrow="Mientras tanto"
+            eyebrow="Sitios oficiales"
             title="Los sitios oficiales de la comuna, en un solo lugar"
             description={`El ecosistema digital de ${commune.name} está repartido en varios sitios. Aquí reunimos los principales sitios oficiales, verificados y con fecha.`}
           />
@@ -278,7 +231,7 @@ export async function PilotoHome({ commune }: { commune: CommuneConfig }) {
           {siteConfig.sublema}
         </p>
         <p className="mx-auto mt-3 max-w-xl text-muted-foreground">
-          Este piloto crece por etapas junto a la comunidad. Última
+          Revisamos y sumamos información todo el tiempo. Última
           actualización: {formatDate(commune.updatedAt)}.
         </p>
       </section>

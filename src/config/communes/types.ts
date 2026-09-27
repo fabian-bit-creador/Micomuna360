@@ -31,6 +31,8 @@ export interface CommuneFeatures {
   transparency: boolean;
   /** Orientador de beneficios ("¿a qué puedo postular?"). */
   benefits: boolean;
+  /** Escuelas y talleres deportivos. */
+  sports: boolean;
   /** Página de reportes (demo/explicativa). */
   reports: boolean;
   /** Plano ilustrado demo en la home. */

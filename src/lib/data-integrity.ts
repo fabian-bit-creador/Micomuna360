@@ -10,13 +10,71 @@ import type { CommuneData } from "@/data/communes/types";
  * así que un error de datos rompe el build en vez de llegar al vecino.
  */
 
+/** Fecha YYYY-MM-DD que existe en el calendario (rechaza 2026-02-31). */
 const isoDate = z
   .string()
-  .regex(/^\d{4}-\d{2}-\d{2}$/, "debe tener formato YYYY-MM-DD");
+  .regex(/^\d{4}-\d{2}-\d{2}$/, "debe tener formato YYYY-MM-DD")
+  .refine((v) => {
+    const date = new Date(`${v}T00:00:00Z`);
+    return !Number.isNaN(date.getTime()) && date.toISOString().startsWith(v);
+  }, "no es una fecha válida");
 
-const httpsUrl = z
+/** URL https bien formada, con dominio y sin espacios. */
+const httpsUrl = z.string().refine((v) => {
+  if (/\s/.test(v)) return false;
+  try {
+    const url = new URL(v);
+    return url.protocol === "https:" && url.hostname.includes(".");
+  } catch {
+    return false;
+  }
+}, "debe ser una URL https válida");
+
+const hhmm = z
   .string()
-  .refine((v) => v.startsWith("https://"), "debe ser una URL https");
+  .regex(/^([01]\d|2[0-3]):[0-5]\d$/, "debe ser una hora HH:MM");
+
+const sportsProgramSchema = z
+  .object({
+    id: z.string().min(1),
+    name: z.string().min(1),
+    discipline: z.string().min(1),
+    kind: z.enum(["escuela", "taller"]),
+    venue: z.string().min(1).nullable(),
+    address: z.string().min(1),
+    placeId: z.string().min(1).nullable(),
+    days: z
+      .array(
+        z.enum([
+          "lunes",
+          "martes",
+          "miercoles",
+          "jueves",
+          "viernes",
+          "sabado",
+          "domingo",
+        ])
+      )
+      .min(1),
+    startTime: hhmm,
+    endTime: hhmm,
+    sourceId: z.string().min(1),
+  })
+  .refine((p) => p.startTime < p.endTime, "termina antes de empezar");
+
+const photoSchema = z.object({
+  id: z.string().min(1),
+  src: z.string().regex(/^\/images\/[a-z0-9-]+\/[a-z0-9-]+\.(webp|jpg)$/),
+  width: z.number().int().positive(),
+  height: z.number().int().positive(),
+  alt: z.string().min(10),
+  author: z.string().min(1),
+  license: z.string().min(1),
+  licenseUrl: httpsUrl,
+  sourceUrl: httpsUrl,
+  retrievedAt: isoDate,
+  placeId: z.string().min(1).nullable(),
+});
 
 const sourceSchema = z.object({
   id: z.string().min(1),
@@ -328,6 +386,7 @@ export function validateCommuneData(
       ["pasivo reportado", data.reportedLiabilities, liabilitySchema],
       ["cuenta del balance", data.accountingBalance, balanceRowSchema],
       ["beneficio", data.benefits, benefitSchema],
+      ["programa deportivo", data.sportsPrograms, sportsProgramSchema],
     ];
   for (const [label, rows, schema] of traceables) {
     for (const row of rows) {
@@ -385,6 +444,40 @@ export function validateCommuneData(
     }
     if (!sourceIds.has(row.sourceId)) {
       fail(`matrícula ${row.year} referencia la fuente inexistente "${row.sourceId}"`);
+    }
+  }
+
+  for (const [section, id] of Object.entries(data.sectionSources)) {
+    if (id && !sourceIds.has(id)) {
+      fail(`la sección "${section}" referencia la fuente inexistente "${id}"`);
+    }
+  }
+
+  const placeIds = new Set(data.places.map((p) => p.id));
+  for (const dup of duplicates(data.sportsPrograms.map((p) => p.id))) {
+    fail(`programa deportivo con id repetido: ${dup}`);
+  }
+  for (const program of data.sportsPrograms) {
+    if (program.placeId && !placeIds.has(program.placeId)) {
+      fail(
+        `programa deportivo "${program.id}" referencia el lugar inexistente "${program.placeId}"`
+      );
+    }
+  }
+  for (const photo of data.photos) {
+    const result = photoSchema.safeParse(photo);
+    if (!result.success) {
+      fail(
+        `foto "${photo.id}": ${result.error.issues
+          .map((i) => `${i.path.join(".")} ${i.message}`)
+          .join("; ")}`
+      );
+    }
+    if (!photo.src.startsWith(`/images/${communeId}/`)) {
+      fail(`foto "${photo.id}" no está en /images/${communeId}/`);
+    }
+    if (photo.placeId && !placeIds.has(photo.placeId)) {
+      fail(`foto "${photo.id}" referencia el lugar inexistente "${photo.placeId}"`);
     }
   }
 

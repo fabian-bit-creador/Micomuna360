@@ -53,6 +53,28 @@ export function buildSearchIndex(commune: CommuneConfig): SearchEntry[] {
       });
     }
   }
+  if (commune.features.sports && data.sportsPrograms.length > 0) {
+    const byDiscipline = new Map<string, number>();
+    for (const p of data.sportsPrograms) {
+      byDiscipline.set(p.discipline, (byDiscipline.get(p.discipline) ?? 0) + 1);
+    }
+    entries.push({
+      title: "Escuelas y talleres deportivos",
+      description: `${data.sportsPrograms.length} escuelas y talleres de la Corporación Municipal de Deportes, con días, horario y lugar.`,
+      href: `${base}/deportes`,
+      group: "Deportes",
+      external: false,
+    });
+    for (const [discipline, count] of byDiscipline) {
+      entries.push({
+        title: discipline,
+        description: `${count} ${count === 1 ? "escuela o taller" : "escuelas y talleres"} en ${commune.name}: días, horario y lugar.`,
+        href: `${base}/deportes#d=${encodeURIComponent(discipline)}`,
+        group: "Deportes",
+        external: false,
+      });
+    }
+  }
   if (commune.features.transparency) {
     entries.push({
       title: "Transparencia municipal",

@@ -162,6 +162,36 @@ export const sources: DataSource[] = [
       "Direcciones de Estadio Municipal, Club de Campo, Polideportivo y Complejo Las Rosas tomadas del contenido del sitio oficial y re-confirmadas navegando directo el 2026-09-27. Horarios y teléfonos no publicados aquí por no estar verificados.",
   },
   {
+    id: "lp-deportes-talleres",
+    institution: "Corporación Municipal de Deportes de La Pintana",
+    pageName: "Escuelas y talleres deportivos",
+    description:
+      "Listado de escuelas y talleres del semestre: recinto, dirección, días y horario.",
+    featured: false,
+    url: "https://www.pintanadeportes.cl/",
+    publishedAt: null,
+    verifiedAt: "2026-09-27",
+    status: "verificado",
+    validUntil: "2026-12-31",
+    notes:
+      "71 escuelas y talleres del segundo semestre 2026, copiados del listado de la portada. Se omite el nombre de cada profesor. Respaldo en docs/fuentes/la-pintana-deportes-2026-09/.",
+  },
+  {
+    id: "lp-deportes-inscripcion",
+    institution: "Corporación Municipal de Deportes de La Pintana",
+    pageName: "Inscripción a escuelas deportivas",
+    description:
+      "Inscripción en línea a las escuelas deportivas, por semestre.",
+    featured: false,
+    url: "https://www.pintanadeportes.cl/productos-categoria/inscripcion-escuelas/",
+    publishedAt: null,
+    verifiedAt: "2026-09-27",
+    status: "verificado",
+    validUntil: "2026-12-31",
+    notes:
+      "Valores desde $20.000 según categoría, con recargo para quienes viven en otra comuna; la ficha de inscripción pide el Registro Social de Hogares para acreditar residencia. No se publican montos aquí porque varían por escuela.",
+  },
+  {
     id: "lp-cultura",
     institution: "Corporación Cultural de La Pintana",
     pageName: "Corporación Cultural",

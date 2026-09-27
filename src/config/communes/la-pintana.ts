@@ -1,7 +1,7 @@
 import type { CommuneConfig } from "./types";
 
 /**
- * La Pintana: primer piloto informativo real de MiComuna360.
+ * La Pintana: primera comuna publicada en MiComuna360.
  *
  * Regla de oro: aquí SOLO se publica información pública verificada, con
  * fuente y fecha. Lo no verificado queda pendiente y no se muestra como
@@ -12,9 +12,10 @@ export const laPintana: CommuneConfig = {
   id: "la-pintana",
   name: "La Pintana",
   region: "Región Metropolitana",
-  status: "piloto",
+  status: "activa",
   isDemo: false,
-  tagline: "Piloto informativo: información pública, con fuente y fecha",
+  tagline:
+    "Trámites, beneficios, deporte, lugares y cifras de la comuna, con fuente y fecha.",
   /**
    * Centroide y rectángulo del límite comunal oficial (capa LIMITE_COMUNAL
    * del geoportal GeoPintana, editada el 2025-01-27). El rectángulo se
@@ -34,6 +35,7 @@ export const laPintana: CommuneConfig = {
     directory: true,
     services: true,
     benefits: true,
+    sports: true,
     transparency: true,
     search: true,
     reports: false,

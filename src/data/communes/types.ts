@@ -16,9 +16,11 @@ import type {
   Location,
   NewsArticle,
   Organization,
+  Photo,
   Place,
   Procedure,
   Profile,
+  SportsProgram,
   UsefulPhone,
 } from "@/types";
 
@@ -63,4 +65,23 @@ export interface CommuneData {
   contextIndicators: ContextIndicator[];
   /** Matrícula escolar por dependencia (pilotos con datos reales). */
   enrollment: EnrollmentByDependency[];
+  /** Escuelas y talleres deportivos. */
+  sportsPrograms: SportsProgram[];
+  /** Fotos reales con crédito (lugares y portadas de sección). */
+  photos: Photo[];
+  /**
+   * Fuentes que una sección enlaza sin que salgan de sus filas de datos
+   * (p. ej. el formulario de solicitud o la página de inscripción). Así las
+   * páginas compartidas no nombran ids de una comuna.
+   */
+  sectionSources: SectionSources;
+}
+
+export interface SectionSources {
+  /** Organismo que resuelve reclamos de transparencia. */
+  transparencyAuthority?: string;
+  /** Formulario para pedir información al municipio. */
+  transparencyRequest?: string;
+  /** Inscripción a escuelas deportivas. */
+  sportsEnrollment?: string;
 }

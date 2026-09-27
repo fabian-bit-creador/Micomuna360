@@ -10,7 +10,7 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { listCommunes } from "@/config/communes";
+import { listPublicCommunes } from "@/config/communes";
 import { siteConfig } from "@/config/site";
 import { portalMetadata } from "@/lib/seo";
 
@@ -25,7 +25,7 @@ export const metadata: Metadata = {
 };
 
 export default function PortalPage() {
-  const communes = listCommunes();
+  const communes = listPublicCommunes();
 
   return (
     <>
@@ -47,7 +47,13 @@ export default function PortalPage() {
         <h2 className="text-center text-2xl font-bold md:text-3xl">
           Elige tu comuna
         </h2>
-        <div className="mt-8 grid gap-4 md:grid-cols-2">
+        <div
+          className={
+            communes.length > 1
+              ? "mt-8 grid gap-4 md:grid-cols-2"
+              : "mx-auto mt-8 grid max-w-md gap-4"
+          }
+        >
           {communes.map((commune) => (
             <Link
               key={commune.id}
@@ -65,8 +71,8 @@ export default function PortalPage() {
                     }
                   >
                     {commune.isDemo
-                      ? "Comuna demo · datos ficticios"
-                      : "Piloto informativo · fuentes verificadas"}
+                      ? "Datos ficticios"
+                      : "Información pública verificada"}
                   </Badge>
                   <CardTitle className="flex items-center justify-between text-2xl text-primary">
                     {commune.name}

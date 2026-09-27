@@ -47,7 +47,7 @@ export function NeighborJourney() {
         <SectionHeader
           eyebrow="El viaje de un vecino"
           title="De un problema a una solución, paso a paso"
-          description="Así funcionará el reporte vecinal cuando se active en la próxima etapa del piloto."
+          description="Así funcionaría el reporte vecinal: un ejemplo con datos ficticios."
         />
         <ol className="grid gap-6 md:grid-cols-4 md:gap-4">
           {journey.map((step, i) => (

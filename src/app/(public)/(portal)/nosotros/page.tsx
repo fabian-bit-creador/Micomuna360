@@ -1,11 +1,9 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import {
-  BuildingIcon,
   CompassIcon,
   EyeIcon,
   HandshakeIcon,
-  MessageSquarePlusIcon,
   NewspaperIcon,
   ScaleIcon,
 } from "lucide-react";
@@ -40,26 +38,23 @@ const howItWorks = [
   {
     icon: NewspaperIcon,
     chip: "bg-brand-teal/15 text-brand-teal-ink",
-    title: "Infórmate hoy",
+    title: "Infórmate",
     description:
-      "Noticias, actividades, trámites explicados simple, teléfonos útiles y datos de tu comuna, ya disponibles sin registro.",
-    available: true,
+      "Trámites, beneficios, escuelas deportivas y cifras de tu comuna, explicados en simple y sin registrarte.",
   },
   {
-    icon: MessageSquarePlusIcon,
+    icon: CompassIcon,
     chip: "bg-brand-sky/20 text-brand-navy dark:text-brand-sky-ink",
-    title: "Participa y reporta",
+    title: "Encuentra y llega",
     description:
-      "Reportes vecinales con foto, ubicación y seguimiento. Se activa en la próxima etapa del piloto.",
-    available: false,
+      "Dónde queda cada lugar útil, en el mapa y con cómo llegar, y el sitio oficial donde se hace cada trámite.",
   },
   {
-    icon: BuildingIcon,
+    icon: EyeIcon,
     chip: "bg-brand-terracotta/15 text-brand-terracotta-ink",
-    title: "Tu municipio responde",
+    title: "Mira cómo se usa lo público",
     description:
-      "Cada reporte llegará ordenado al equipo municipal, con responsable, estado y aviso al vecino al resolverse.",
-    available: false,
+      "El presupuesto municipal y lo que puedes pedirle a tu municipio, con la fuente de cada cifra.",
   },
 ];
 
@@ -134,31 +129,19 @@ export default function NosotrosPage() {
         <SectionHeader
           eyebrow="Así funciona"
           title="En simple, paso a paso"
-          description="Con total honestidad: esto es lo que ya puedes usar hoy y lo que viene en las próximas etapas del piloto."
+          description="Tres cosas que puedes hacer hoy, sin cuenta ni clave."
         />
         <div className="grid gap-4 md:grid-cols-3">
           {howItWorks.map((step, i) => (
             <Card key={step.title} className="gap-2 py-5">
               <CardHeader className="gap-2">
-                <div className="flex items-center justify-between">
-                  <div
-                    className={cn(
-                      "flex size-11 items-center justify-center rounded-xl",
-                      step.chip
-                    )}
-                  >
-                    <step.icon className="size-6" />
-                  </div>
-                  <Badge
-                    variant="secondary"
-                    className={cn(
-                      step.available
-                        ? "bg-brand-teal/15 text-brand-teal-ink"
-                        : "bg-brand-amber/25 text-yellow-800 dark:text-brand-amber-ink"
-                    )}
-                  >
-                    {step.available ? "Disponible hoy" : "Próximamente"}
-                  </Badge>
+                <div
+                  className={cn(
+                    "flex size-11 items-center justify-center rounded-xl",
+                    step.chip
+                  )}
+                >
+                  <step.icon className="size-6" />
                 </div>
                 <CardTitle className="text-lg">
                   {i + 1}. {step.title}
@@ -244,15 +227,12 @@ export default function NosotrosPage() {
           {siteConfig.sublema}
         </h2>
         <p className="mx-auto mt-2 max-w-xl text-muted-foreground">
-          Explora el portal de demostración y cuéntanos qué necesitaría tu
-          comuna.
+          Elige tu comuna y encuentra lo que necesitas, con la fuente de cada
+          dato.
         </p>
         <div className="mt-6 flex flex-wrap justify-center gap-3">
           <Button size="lg" asChild>
             <Link href="/">Elegir tu comuna</Link>
-          </Button>
-          <Button size="lg" variant="outline" asChild>
-            <Link href="/los-aromos/reportar">Ver la demo de reportes</Link>
           </Button>
         </div>
       </section>

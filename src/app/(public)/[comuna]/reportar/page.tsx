@@ -68,7 +68,7 @@ export default async function ReportarPage({
         level="h1"
         eyebrow="Tu voz"
         title="Reporta un problema, sin filas ni papeleo"
-        description="Así funcionará el reporte vecinal cuando se active en la próxima etapa del piloto."
+        description="Así funcionaría el reporte vecinal: un ejemplo con datos ficticios."
       />
 
       <div className="grid gap-4 md:grid-cols-3">

@@ -1,11 +1,9 @@
 import Link from "next/link";
-import { ArrowRightIcon, ScaleIcon, ShieldQuestionIcon } from "lucide-react";
+import { ArrowRightIcon, ScaleIcon } from "lucide-react";
 
 import { EducationSection } from "@/components/indicators/education-section";
 import { ContextCard } from "@/components/indicators/context-card";
 import { SectionHeader } from "@/components/layout/section-header";
-import { Badge } from "@/components/ui/badge";
-import { Card, CardContent } from "@/components/ui/card";
 import type { CommuneConfig } from "@/config/communes";
 import { getDataSource } from "@/lib/repositories";
 import type { ContextIndicator, EnrollmentByDependency } from "@/types";
@@ -143,33 +141,6 @@ export async function ContextDataView({
             )}
           </section>
         )}
-
-        <section>
-          <h2 className="text-xl font-bold">Seguridad</h2>
-          <Card className="mt-4 border-brand-sky/40 bg-brand-sky/5 py-6">
-            <CardContent className="flex items-start gap-4 px-6">
-              <span className="flex size-11 shrink-0 items-center justify-center rounded-xl bg-brand-sky/20 text-brand-navy dark:text-brand-sky-ink">
-                <ShieldQuestionIcon className="size-6" />
-              </span>
-              <div className="space-y-2 text-sm text-muted-foreground">
-                <Badge variant="secondary">En preparación</Badge>
-                <p>
-                  Vamos a mostrar los casos policiales por cada 100.000
-                  habitantes que publica el Centro de Estudios y Análisis del
-                  Delito (CEAD), con su evolución y el promedio regional.
-                </p>
-                <p>
-                  Y lo vamos a explicar bien: esas cifras cuentan denuncias y
-                  detenciones registradas por las policías, no cuán peligrosa
-                  es una comuna. Suben, por ejemplo, cuando hay más
-                  fiscalización o cuando la gente denuncia más. Lo publicaremos
-                  cuando tengamos los datos oficiales descargados y
-                  verificados.
-                </p>
-              </div>
-            </CardContent>
-          </Card>
-        </section>
       </div>
     </div>
   );

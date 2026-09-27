@@ -5,7 +5,7 @@ import { laPintanaData } from "./la-pintana";
 import { losAromosData } from "./los-aromos";
 import type { CommuneData } from "./types";
 
-export type { CommuneBoundary, CommuneData } from "./types";
+export type { CommuneBoundary, CommuneData, SectionSources } from "./types";
 
 const datasets: Record<string, CommuneData> = {
   "los-aromos": losAromosData,
@@ -44,6 +44,9 @@ const empty: CommuneData = {
   boundary: null,
   contextIndicators: [],
   enrollment: [],
+  sportsPrograms: [],
+  photos: [],
+  sectionSources: {},
 };
 
 /** Dataset de una comuna; comuna desconocida devuelve dataset vacío. */

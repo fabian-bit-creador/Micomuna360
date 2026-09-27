@@ -1,4 +1,5 @@
 import type { CommuneData } from "../types";
+import { photos } from "./photos";
 import { places } from "./places";
 import { benefits } from "./benefits";
 import { boundary } from "./boundary";
@@ -10,6 +11,7 @@ import { budgetDocumentIndex } from "./transparency/budget-index";
 import { reportedLiabilities } from "./transparency/liabilities";
 import { services } from "./services";
 import { sources } from "./sources";
+import { sportsPrograms } from "./sports";
 
 /**
  * Dataset del piloto La Pintana.
@@ -43,4 +45,11 @@ export const laPintanaData: CommuneData = {
   boundary,
   contextIndicators,
   enrollment,
+  sportsPrograms,
+  photos,
+  sectionSources: {
+    transparencyAuthority: "cl-consejo-transparencia",
+    transparencyRequest: "lp-transparencia-directa",
+    sportsEnrollment: "lp-deportes-inscripcion",
+  },
 };

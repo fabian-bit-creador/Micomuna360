@@ -10,8 +10,9 @@ Cuando llegue el momento, aquí vivirán:
 - `server.ts` — cliente de servidor con cookies (`createServerClient`)
 - `middleware.ts` — refresco de sesión
 
-Las dependencias (`@supabase/supabase-js`, `@supabase/ssr`) ya están
-instaladas y las variables necesarias están documentadas en `.env.example`.
+Las dependencias (`@supabase/supabase-js`, `@supabase/ssr`) se instalan al
+conectar; las variables necesarias están documentadas en `.env.example`.
+Antes, diseñar el aislamiento por comuna (ver `docs/hoja-de-ruta.md`).
 
 **Regla de seguridad:** antes de exponer cualquier tabla, activar RLS y
 políticas por rol (vecino / funcionario / admin). Nunca subir datos personales

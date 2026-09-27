@@ -12,10 +12,11 @@ Sitio: <https://micomuna360.vercel.app>
 El proyecto usa un solo conjunto de páginas para todas las comunas. Cada
 comuna tiene su configuración y su propio conjunto de datos:
 
-- **La Pintana** (`/la-pintana`): piloto con información pública real y
-  verificada.
-- **Los Aromos** (`/los-aromos`): comuna de demostración con datos
-  ficticios, usada para probar funcionalidades.
+- **La Pintana** (`/la-pintana`): comuna publicada, con información pública
+  real y verificada.
+- **Los Aromos** (`/los-aromos`): comuna de ejemplo con datos ficticios,
+  usada para probar funcionalidades. No aparece en el portal ni en los menús;
+  se abre por su URL y cada página indica que sus datos son ficticios.
 
 ## Funcionalidades
 
@@ -24,15 +25,16 @@ comuna tiene su configuración y su propio conjunto de datos:
 | Inicio | `/[comuna]` | Portada con buscador y accesos a cada sección |
 | Servicios | `/servicios` | Trámites y pagos con enlace al sitio oficial de cada institución |
 | Beneficios | `/beneficios` | Orientador «¿A qué puedo postular?» según la situación del hogar; funciona en el navegador, sin pedir datos personales |
+| Deportes | `/deportes` | Escuelas y talleres deportivos con días, horario, lugar y cómo inscribirse; filtro por deporte, día y tipo |
 | Directorio | `/directorio` | Municipio, centros de salud, recintos deportivos, seguridad y emergencias, con horarios, teléfonos y cómo llegar |
 | Mapa | `/mapa` | Los lugares del directorio sobre OpenStreetMap, con el límite comunal |
 | Transparencia | `/transparencia` | Derecho de acceso a la información, ejecución presupuestaria, informes mensuales, pasivos, balance y estados financieros |
 | Datos | `/datos` | Indicadores de la comuna (población, salud, educación, finanzas municipales) comparados con su historia y con el promedio regional |
 | Buscar | `/buscar` | Buscador sobre el contenido de la comuna |
-| Noticias, actividades, comunidad, trámites, teléfonos, reportar | varias | Módulos disponibles en la comuna demo |
+| Noticias, actividades, comunidad, trámites, teléfonos, reportar | varias | Módulos disponibles en la comuna de ejemplo |
 
 Las secciones de cada comuna se activan con *feature flags* en
-`src/config/communes/<comuna>.ts`.
+`src/config/communes/<comuna>.ts`; una sección desactivada responde 404.
 
 ## Datos y fuentes
 
@@ -40,9 +42,11 @@ Las secciones de cada comuna se activan con *feature flags* en
   (`src/data/communes/la-pintana/sources.ts`), con institución, enlace, fecha
   de verificación y vigencia. La interfaz muestra esa procedencia junto al
   dato. Hay un espejo legible en `docs/fuentes-la-pintana.md`.
-- Fuentes principales del piloto: sitio municipal pintana.cl, Transparencia
-  Activa, geoportal GeoPintana, SINIM, MINEDUC Datos Abiertos, ChileAtiende y
-  OpenStreetMap.
+- Fuentes principales de La Pintana: sitio municipal pintana.cl,
+  Corporación Municipal de Deportes, Transparencia Activa, geoportal
+  GeoPintana, SINIM, MINEDUC Datos Abiertos, ChileAtiende y OpenStreetMap.
+- Fotos reales con autor y licencia (`src/data/communes/<comuna>/photos.ts`);
+  criterios en `docs/imagenes.md`.
 - `docs/fuentes/` guarda los respaldos de cada carga de datos: CSV
   normalizados, metodología o control de calidad y huellas SHA-256 de los
   archivos originales.
@@ -106,12 +110,11 @@ carpeta en `src/data/communes/` y registrarla en ambos índices.
 
 ## Estado y próximos pasos
 
-- Piloto de La Pintana con servicios, beneficios, directorio, mapa,
+- La Pintana publicada con servicios, beneficios, deportes, directorio, mapa,
   transparencia e indicadores.
-- En preparación: indicadores de seguridad (CEAD), agenda comunal y teléfonos
-  útiles del piloto.
-- Etapas posteriores: participación ciudadana, base de datos en Supabase
-  (modelo en `docs/modelo-datos.md`) y panel municipal.
+- La hoja de ruta (`docs/hoja-de-ruta.md`) ordena lo que sigue: mantener los
+  datos al día, sumar contenido público (seguridad, agenda, teléfonos) y
+  después las funciones con cuenta y base de datos.
 
 ## Privacidad
 

@@ -48,8 +48,8 @@ export default async function ActividadesPage({
       </div>
       {commune.isDemo && (
         <p className="mt-10 rounded-lg bg-muted px-4 py-3 text-sm text-muted-foreground">
-          Agenda de demostración de la comuna ficticia {commune.name}. En la
-          versión piloto, cada municipio publica y actualiza su propia agenda.
+          Agenda de demostración de la comuna ficticia {commune.name}. En una
+          comuna real, la agenda sale de los canales oficiales del municipio.
         </p>
       )}
     </div>

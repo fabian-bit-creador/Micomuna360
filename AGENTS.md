@@ -13,17 +13,22 @@ indicadores) con la fuente y la fecha de verificación de cada dato. El
 
 ## Estado actual
 
-- **La Pintana** (`/la-pintana`): piloto con datos públicos reales y
-  verificados. Cada dato referencia una fuente de
+- **La Pintana** (`/la-pintana`): comuna publicada, con datos públicos
+  reales y verificados. Cada dato referencia una fuente de
   `src/data/communes/la-pintana/sources.ts`.
-- **Los Aromos** (`/los-aromos`): comuna de demostración con datos
-  ficticios, usada como laboratorio de funcionalidades. Sus datos se
-  mantienen separados de los reales.
+- **Los Aromos** (`/los-aromos`): comuna de ejemplo con datos ficticios,
+  usada como laboratorio de funcionalidades. Sus datos se mantienen separados
+  de los reales y queda fuera de la navegación pública (`listPublicCommunes`
+  en `src/config/communes`); se abre por su URL.
+- **Tono del sitio**: se presenta como producto en uso, sin rótulos de
+  «piloto», «demo» ni «en construcción». Lo que no está listo no se anuncia:
+  su sección se apaga (responde 404) hasta que tenga datos verificados.
 - **Portal ciudadano sin cuenta**: no hay login ni base de datos conectada.
   Supabase está previsto (modelo en `docs/modelo-datos.md`); conectarlo
   requiere antes diseñar el aislamiento por comuna, roles y RLS.
 - **Panel municipal** (`src/app/(admin)`): estructura inicial con
-  contenido de ejemplo; su acceso en la interfaz es discreto.
+  contenido de ejemplo; solo se enlaza desde la comuna de ejemplo.
+- **Hoja de ruta**: `docs/hoja-de-ruta.md`.
 
 ## Convenciones
 

@@ -86,7 +86,7 @@ export default async function DatosPage({
         level="h1"
         eyebrow="Transparencia"
         title="Los datos de tu comuna, sin letra chica"
-        description="Indicadores comunales presentados de forma simple. En la versión piloto se conectan a fuentes oficiales como SINIM, INE y MINEDUC."
+        description="Indicadores comunales presentados de forma simple. Datos ficticios de ejemplo; en una comuna real vienen de SINIM, INE y MINEDUC."
       />
 
       <div className="space-y-10">

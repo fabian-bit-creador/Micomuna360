@@ -27,6 +27,12 @@ export function communeNav(commune: CommuneConfig): NavItem[] {
       enabled: commune.features.benefits,
     },
     {
+      title: "Deportes",
+      href: `${base}/deportes`,
+      description: "Escuelas y talleres deportivos",
+      enabled: commune.features.sports,
+    },
+    {
       title: "Directorio",
       href: `${base}/directorio`,
       description: "Lugares útiles de la comuna",

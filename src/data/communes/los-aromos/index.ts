@@ -35,4 +35,7 @@ export const losAromosData: CommuneData = {
   boundary: null,
   contextIndicators: [],
   enrollment: [],
+  sportsPrograms: [],
+  photos: [],
+  sectionSources: {},
 };

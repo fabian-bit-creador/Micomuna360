@@ -110,7 +110,7 @@ export async function DemoHome({ commune }: { commune: CommuneConfig }) {
         <div className="relative mx-auto grid max-w-6xl items-center gap-10 px-4 py-16 md:py-20 lg:grid-cols-[1fr_auto]">
           <div className="max-w-2xl">
             <Badge variant="secondary" className="mb-4">
-              Portal ciudadano · piloto con datos de demostración
+              Comuna de ejemplo · datos ficticios
             </Badge>
             <h1 className="text-4xl font-bold tracking-tight md:text-6xl">
               Tu comuna en <span className="text-brand-teal-ink">un solo lugar</span>
@@ -306,9 +306,8 @@ export async function DemoHome({ commune }: { commune: CommuneConfig }) {
           {siteConfig.sublema}
         </p>
         <p className="mx-auto mt-3 max-w-xl text-muted-foreground">
-          Este piloto usa datos ficticios de la comuna demo{" "}
-          {commune.name}. ¿Te gustaría verlo con los datos de tu
-          comuna?
+          {commune.name} es una comuna de ejemplo con datos ficticios.
+          ¿Te gustaría ver MiComuna360 con los datos de tu comuna?
         </p>
         <Button size="lg" className="mt-6" asChild>
           <Link href="/nosotros">Conoce el proyecto</Link>

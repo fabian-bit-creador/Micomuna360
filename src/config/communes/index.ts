@@ -9,9 +9,18 @@ const registry: Record<string, CommuneConfig> = {
   [laPintana.id]: laPintana,
 };
 
-/** Todas las comunas registradas (orden: piloto primero, demo después). */
+/** Todas las comunas registradas, incluida la de ejemplo. */
 export function listCommunes(): CommuneConfig[] {
   return [laPintana, losAromos];
+}
+
+/**
+ * Comunas que se ofrecen al público (portal, selector, pie de página). La
+ * comuna de ejemplo, con datos ficticios, queda fuera: se abre solo por su
+ * URL, para probar funcionalidades.
+ */
+export function listPublicCommunes(): CommuneConfig[] {
+  return listCommunes().filter((c) => !c.isDemo);
 }
 
 /** Comuna por slug de URL, o null si no existe. */

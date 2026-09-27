@@ -2,21 +2,18 @@ import Link from "next/link";
 
 import { Logo } from "@/components/layout/logo";
 import { WaveDivider } from "@/components/layout/wave-divider";
-import { listCommunes, type CommuneConfig } from "@/config/communes";
+import { listPublicCommunes, type CommuneConfig } from "@/config/communes";
 import { communeNav } from "@/config/nav";
 import { siteConfig } from "@/config/site";
 
 /**
  * Footer público. Con `commune` muestra la navegación de esa comuna y su
- * aviso (demo o piloto); sin comuna (portal, nosotros) muestra las comunas.
+ * aviso; sin comuna (portal, nosotros) muestra las comunas publicadas.
  */
 export function SiteFooter({ commune }: { commune?: CommuneConfig }) {
   const links = commune
     ? communeNav(commune)
-    : listCommunes().map((c) => ({
-        title: `${c.name} (${c.isDemo ? "demo" : "piloto"})`,
-        href: `/${c.id}`,
-      }));
+    : listPublicCommunes().map((c) => ({ title: c.name, href: `/${c.id}` }));
 
   return (
     <footer>
@@ -56,14 +53,14 @@ export function SiteFooter({ commune }: { commune?: CommuneConfig }) {
           </nav>
           <div className="space-y-2 text-sm">
             <p className="text-sm font-bold tracking-wide text-brand-sky uppercase">
-              {commune && !commune.isDemo ? "Sobre este piloto" : "Sobre la plataforma"}
+              {commune && !commune.isDemo ? `Sobre ${siteConfig.name}` : "Sobre la plataforma"}
             </p>
             {commune ? (
               commune.isDemo ? (
                 <p className="text-brand-ivory/70">
-                  Versión de demostración con datos ficticios de la comuna{" "}
-                  {commune.name}. Ninguna solicitud ingresada aquí llega aún a
-                  un municipio real.
+                  {commune.name} es una comuna de ejemplo: sus datos son
+                  ficticios y sirven para probar funcionalidades. Nada de lo que
+                  se ingresa aquí llega a un municipio.
                 </p>
               ) : (
                 <p className="text-brand-ivory/70">
@@ -76,9 +73,9 @@ export function SiteFooter({ commune }: { commune?: CommuneConfig }) {
               )
             ) : (
               <p className="text-brand-ivory/70">
-                Plataforma ciudadana independiente y multicomuna. Cada comuna
-                indica si su contenido es demostrativo o información pública
-                verificada.
+                Plataforma ciudadana independiente y multicomuna. Publicamos
+                información pública con su fuente y fecha de verificación, y
+                enlazamos a los sitios oficiales para cada trámite.
               </p>
             )}
           </div>
@@ -88,12 +85,14 @@ export function SiteFooter({ commune }: { commune?: CommuneConfig }) {
             <span>
               {siteConfig.name} · {new Date().getFullYear()}
             </span>
-            <Link
-              href="/admin"
-              className="hover:text-brand-ivory/90 hover:underline"
-            >
-              Acceso municipal (demo)
-            </Link>
+            {commune?.isDemo && (
+              <Link
+                href="/admin"
+                className="hover:text-brand-ivory/90 hover:underline"
+              >
+                Panel municipal de ejemplo
+              </Link>
+            )}
           </div>
         </div>
       </div>

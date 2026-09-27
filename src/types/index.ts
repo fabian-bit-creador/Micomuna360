@@ -464,6 +464,63 @@ export interface Place {
   sourceId?: string | null;
 }
 
+export type Weekday =
+  | "lunes"
+  | "martes"
+  | "miercoles"
+  | "jueves"
+  | "viernes"
+  | "sabado"
+  | "domingo";
+
+/**
+ * Escuela o taller deportivo publicado por la institución a cargo. Las
+ * escuelas tienen inscripción por semestre; los talleres se hacen en sedes y
+ * canchas de barrio.
+ */
+export interface SportsProgram {
+  id: string;
+  /** Nombre legible, sin recinto ni día (p. ej. "Rugby infantil"). */
+  name: string;
+  /** Disciplina para agrupar y filtrar (p. ej. "Rugby"). */
+  discipline: string;
+  kind: "escuela" | "taller";
+  /** Recinto o sede, cuando la fuente lo nombra. */
+  venue: string | null;
+  address: string;
+  /** Lugar del directorio en la misma dirección, si existe. */
+  placeId: string | null;
+  days: Weekday[];
+  /** Hora de inicio y término, "HH:MM". */
+  startTime: string;
+  endTime: string;
+  sourceId: string;
+}
+
+/**
+ * Foto real publicada en el sitio, con su crédito. Solo fotos propias, con
+ * licencia libre o con permiso escrito (docs/imagenes.md).
+ */
+export interface Photo {
+  id: string;
+  /** Ruta dentro de /public, p. ej. "/images/la-pintana/polideportivo.webp". */
+  src: string;
+  width: number;
+  height: number;
+  /** Qué se ve, en una frase (texto alternativo). */
+  alt: string;
+  author: string;
+  /** Licencia corta, p. ej. "CC BY 4.0". */
+  license: string;
+  licenseUrl: string;
+  /** Página de origen de la imagen. */
+  sourceUrl: string;
+  /** Fecha en que se descargó (YYYY-MM-DD). */
+  retrievedAt: string;
+  /** Lugar del directorio que muestra, si corresponde. */
+  placeId: string | null;
+}
+
 export type OrganizationType =
   | "junta_vecinos"
   | "club_deportivo"

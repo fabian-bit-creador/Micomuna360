@@ -215,7 +215,7 @@ export default async function DirectorioPage({
       <p className="mt-10 rounded-lg bg-muted px-4 py-3 text-sm text-muted-foreground">
         {commune.isDemo
           ? "Lugares, direcciones y teléfonos ficticios (comuna demo). En la versión real de cada comuna, este directorio se construye solo con información oficial verificada."
-          : "Directorio en construcción: cada lugar se publica con su fuente y fecha de verificación. Si un horario o teléfono no aparece, es porque aún no está verificado."}
+          : "Cada lugar se publica con su fuente y fecha de verificación. Si un horario o teléfono no aparece, es porque aún no está verificado."}
       </p>
     </div>
   );
