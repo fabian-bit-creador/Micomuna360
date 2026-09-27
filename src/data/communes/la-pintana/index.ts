@@ -1,4 +1,6 @@
 import type { CommuneData } from "../types";
+import { events } from "./events";
+import { phones } from "./phones";
 import { photos } from "./photos";
 import { places } from "./places";
 import { benefits } from "./benefits";
@@ -27,10 +29,10 @@ export const laPintanaData: CommuneData = {
   profiles: [],
   requests: [],
   news: [],
-  events: [],
+  events,
   indicators: [],
   procedures: [],
-  phones: [],
+  phones,
   places,
   organizations: [],
   services,

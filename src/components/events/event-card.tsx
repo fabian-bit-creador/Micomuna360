@@ -1,8 +1,8 @@
-import { ClockIcon, MapPinIcon } from "lucide-react";
+import { ClockIcon, ExternalLinkIcon, MapPinIcon, TicketIcon } from "lucide-react";
 
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent } from "@/components/ui/card";
-import { formatDay, formatMonth, formatTime } from "@/lib/format";
+import { formatDay, formatMonth, formatTime, formatWeekday } from "@/lib/format";
 import { getLocationById } from "@/lib/repositories";
 import type { CommunalEvent } from "@/types";
 
@@ -25,6 +25,7 @@ export async function EventCard({
   const location = event.locationId
     ? await getLocationById(communeId, event.locationId)
     : null;
+  const place = location?.name ?? event.venue ?? null;
 
   return (
     <Card className="gap-0 py-0">
@@ -46,18 +47,35 @@ export async function EventCard({
             {event.description}
           </p>
           <div className="flex flex-wrap gap-x-4 gap-y-1 pt-0.5 text-xs text-muted-foreground">
-            <span className="inline-flex items-center gap-1">
+            <span className="inline-flex items-center gap-1 first-letter:uppercase">
               <ClockIcon className="size-3.5" />
-              {formatTime(event.startsAt)}
+              {formatWeekday(event.startsAt)} · {formatTime(event.startsAt)}
               {event.endsAt ? `–${formatTime(event.endsAt)}` : ""} h
             </span>
-            {location && (
+            {place && (
               <span className="inline-flex items-center gap-1">
                 <MapPinIcon className="size-3.5" />
-                {location.name}
+                {place}
               </span>
             )}
           </div>
+          {event.access && (
+            <p className="flex items-start gap-1 text-xs text-muted-foreground">
+              <TicketIcon className="mt-0.5 size-3.5 shrink-0" />
+              {event.access}
+            </p>
+          )}
+          {event.url && (
+            <a
+              href={event.url}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex min-h-9 items-center gap-1.5 text-sm font-semibold text-brand-teal-ink hover:underline"
+            >
+              Ver entradas e información
+              <ExternalLinkIcon className="size-3.5" />
+            </a>
+          )}
         </div>
       </CardContent>
     </Card>

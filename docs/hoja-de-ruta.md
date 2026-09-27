@@ -4,8 +4,9 @@ Qué sigue para MiComuna360, en orden. Cada etapa se apoya en la anterior.
 
 ## Dónde estamos
 
-La Pintana está publicada con servicios, beneficios, deportes, directorio,
-mapa, transparencia e indicadores, todo con fuente y fecha. El sitio no usa
+La Pintana está publicada con servicios, beneficios, deportes, agenda,
+teléfonos, directorio, mapa, transparencia e indicadores, todo con fuente y
+fecha. El sitio no usa
 cuentas ni base de datos: las páginas se generan desde los datasets del
 repositorio y se regeneran cada hora.
 
@@ -20,6 +21,8 @@ La información vieja es el mayor riesgo del sitio.
 
 | Tarea | Detalle |
 |---|---|
+| Agenda | La cartelera cultural se revisa cada mes (su fuente vence el 2026-10-31). Las actividades pasadas se ocultan solas, pero las nuevas hay que cargarlas. |
+| Números de emergencia | 131, 132, 133 y 134 están publicados como «pendiente de revisión»: falta confirmarlos en sitios oficiales navegando desde Chile. |
 | Revisión de fuentes | Cada fuente tiene `validUntil`. Deportes vence el 2026-12-31 (cambio de semestre) y la mayoría de las fuentes municipales el 2026-12-27. Al vencer, la ficha se muestra como «revisión vencida» sola. |
 | Controles automáticos | Revisión en cada cambio con lint, build y validación de datos (GitHub Actions), y una rama estable protegida para producción. |
 | Pruebas de recorridos | Pruebas automáticas de lo que usa un vecino: buscar, revisar beneficios, filtrar deportes, abrir el mapa, llamar. |
@@ -30,11 +33,10 @@ La información vieja es el mayor riesgo del sitio.
 Suma valor sin pedir datos a nadie. Cada una se publica solo con fuente
 verificada.
 
-1. **Teléfonos útiles**: municipio, CESFAM, SAPU, emergencias. Buena parte
-   ya está verificada en el directorio; falta reunirla en su sección.
-2. **Agenda comunal**: actividades de la Corporación Cultural, la de Deportes
-   y el municipio, con fecha y fuente. Cada actividad desaparece sola al
-   pasar su fecha.
+1. **Más líneas de apoyo**: Fono Mayor, Fono Familia, violencia contra la
+   mujer y drogas, cuando se confirmen en sus sitios oficiales.
+2. **Agenda con más fuentes**: actividades del municipio y talleres
+   vecinales, además de cultura y deporte.
 3. **Cultura**: talleres de la Corporación Cultural, con el mismo formato de
    Deportes.
 4. **Ferias libres**: días y calles, desde la información municipal.

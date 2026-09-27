@@ -34,6 +34,14 @@ export function formatDay(iso: string): string {
   }).format(new Date(iso));
 }
 
+/** Día de la semana: "lunes" */
+export function formatWeekday(iso: string): string {
+  return new Intl.DateTimeFormat("es-CL", {
+    weekday: "long",
+    timeZone: TIME_ZONE,
+  }).format(new Date(iso));
+}
+
 /** Mes corto: "jul" */
 export function formatMonth(iso: string): string {
   return new Intl.DateTimeFormat("es-CL", {

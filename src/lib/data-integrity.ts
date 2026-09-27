@@ -62,6 +62,44 @@ const sportsProgramSchema = z
   })
   .refine((p) => p.startTime < p.endTime, "termina antes de empezar");
 
+/** Fecha y hora ISO con zona horaria explícita (p. ej. -03:00). */
+const isoDateTime = z
+  .string()
+  .regex(
+    /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}(:\d{2})?([+-]\d{2}:\d{2}|Z)$/,
+    "debe ser fecha y hora ISO con zona horaria"
+  )
+  .refine(
+    (v) => !Number.isNaN(Date.parse(v)) && isoDate.safeParse(v.slice(0, 10)).success,
+    "no es una fecha válida"
+  );
+
+const eventSchema = z
+  .object({
+    id: z.string().min(1),
+    title: z.string().min(1),
+    description: z.string().min(1),
+    startsAt: isoDateTime,
+    endsAt: isoDateTime.nullable(),
+    url: httpsUrl.nullable().optional(),
+  })
+  .refine(
+    (e) => !e.endsAt || Date.parse(e.endsAt) > Date.parse(e.startsAt),
+    "termina antes de empezar"
+  );
+
+const phoneSchema = z.object({
+  id: z.string().min(1),
+  name: z.string().min(1),
+  /* Dígitos con espacios o paréntesis, con * o + opcional al inicio
+     (*4141, 600 360 7777, (2) 2555 0100). */
+  number: z
+    .string()
+    .regex(/^[*+]?[\d(][\d ()]{1,16}\d$/, "no parece un teléfono"),
+  description: z.string().min(1),
+  available: z.string().min(1).nullable(),
+});
+
 const photoSchema = z.object({
   id: z.string().min(1),
   src: z.string().regex(/^\/images\/[a-z0-9-]+\/[a-z0-9-]+\.(webp|jpg)$/),
@@ -444,6 +482,33 @@ export function validateCommuneData(
     }
     if (!sourceIds.has(row.sourceId)) {
       fail(`matrícula ${row.year} referencia la fuente inexistente "${row.sourceId}"`);
+    }
+  }
+
+  const rowsWithSource: [string, { id: string; sourceId?: string | null }[], z.ZodType][] =
+    [
+      ["actividad", data.events, eventSchema],
+      ["teléfono", data.phones, phoneSchema],
+    ];
+  for (const [label, rows, schema] of rowsWithSource) {
+    for (const dup of duplicates(rows.map((r) => r.id))) {
+      fail(`${label} con id repetido: ${dup}`);
+    }
+    for (const row of rows) {
+      const result = schema.safeParse(row);
+      if (!result.success) {
+        fail(
+          `${label} "${row.id}": ${result.error.issues
+            .map((i) => `${i.path.join(".")} ${i.message}`)
+            .join("; ")}`
+        );
+      }
+      if (!isDemo && !row.sourceId) {
+        fail(`${label} "${row.id}" no declara fuente (obligatorio fuera de la demo)`);
+      }
+      if (row.sourceId && !sourceIds.has(row.sourceId)) {
+        fail(`${label} "${row.id}" referencia la fuente inexistente "${row.sourceId}"`);
+      }
     }
   }
 

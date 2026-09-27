@@ -110,10 +110,19 @@ export interface CommunalEvent {
   id: string;
   title: string;
   description: string;
+  /** Fecha y hora ISO con zona horaria de Chile (p. ej. -03:00 en verano). */
   startsAt: string;
   endsAt: string | null;
   locationId: string | null;
   category: string;
+  /** Lugar en texto, cuando no es una ubicación del dataset. */
+  venue?: string | null;
+  /** Cómo se entra: entrada liberada, inscripción, etc. */
+  access?: string | null;
+  /** Página oficial de la actividad (entradas o inscripción). */
+  url?: string | null;
+  /** Fuente de procedencia; obligatoria fuera de la demo. */
+  sourceId?: string | null;
 }
 
 export interface Indicator {
@@ -216,8 +225,10 @@ export interface UsefulPhone {
   number: string;
   description: string;
   category: PhoneCategory;
-  /** Horario de atención, p. ej. "24 horas" o "L-V 8:30–14:00". */
-  available: string;
+  /** Horario de atención, p. ej. "24 horas"; null si la fuente no lo dice. */
+  available: string | null;
+  /** Fuente de procedencia; obligatoria fuera de la demo. */
+  sourceId?: string | null;
 }
 
 /* ── Procedencia de datos (piloto multicomuna) ──────────────────────────── */

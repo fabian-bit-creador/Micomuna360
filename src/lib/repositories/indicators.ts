@@ -1,3 +1,4 @@
+import { getCommune } from "@/config/communes";
 import { getCommuneData } from "@/data/communes";
 import type {
   CommunalEvent,
@@ -32,13 +33,21 @@ export async function getEnrollment(
   );
 }
 
+/**
+ * Próximas actividades, en orden. En una comuna real se quitan las que ya
+ * terminaron (la página se regenera cada hora); la agenda ficticia de la
+ * comuna de ejemplo se muestra completa.
+ */
 export async function getUpcomingEvents(
   communeId: string,
-  limit = 4
+  limit = 4,
+  now: Date = new Date()
 ): Promise<CommunalEvent[]> {
-  return [...getCommuneData(communeId).events]
-    .sort(
-      (a, b) => new Date(a.startsAt).getTime() - new Date(b.startsAt).getTime()
+  const isDemo = getCommune(communeId)?.isDemo ?? true;
+  return getCommuneData(communeId)
+    .events.filter(
+      (e) => isDemo || Date.parse(e.endsAt ?? e.startsAt) >= now.getTime()
     )
+    .sort((a, b) => Date.parse(a.startsAt) - Date.parse(b.startsAt))
     .slice(0, limit);
 }

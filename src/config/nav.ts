@@ -4,6 +4,8 @@ export interface NavItem {
   title: string;
   href: string;
   description?: string;
+  /** Va a la vista en la barra de escritorio; el resto queda en «Más». */
+  primary?: boolean;
 }
 
 /**
@@ -16,18 +18,21 @@ export function communeNav(commune: CommuneConfig): NavItem[] {
     { title: "Inicio", href: base, enabled: true },
     {
       title: "Servicios",
+      primary: true,
       href: `${base}/servicios`,
       description: "Trámites y servicios con enlace oficial",
       enabled: commune.features.services,
     },
     {
       title: "Beneficios",
+      primary: true,
       href: `${base}/beneficios`,
       description: "Orientador: ¿a qué puedo postular?",
       enabled: commune.features.benefits,
     },
     {
       title: "Deportes",
+      primary: true,
       href: `${base}/deportes`,
       description: "Escuelas y talleres deportivos",
       enabled: commune.features.sports,
@@ -40,6 +45,7 @@ export function communeNav(commune: CommuneConfig): NavItem[] {
     },
     {
       title: "Mapa",
+      primary: true,
       href: `${base}/mapa`,
       description: "Lugares de la comuna en el mapa",
       enabled: commune.features.realMap,
@@ -63,7 +69,8 @@ export function communeNav(commune: CommuneConfig): NavItem[] {
       enabled: commune.features.news,
     },
     {
-      title: "Actividades",
+      title: "Agenda",
+      primary: true,
       href: `${base}/actividades`,
       description: "Agenda de talleres, deportes y encuentros",
       enabled: commune.features.events,
@@ -82,6 +89,7 @@ export function communeNav(commune: CommuneConfig): NavItem[] {
     },
     {
       title: "Teléfonos",
+      primary: true,
       href: `${base}/telefonos`,
       description: "Teléfonos de emergencia y servicios",
       enabled: commune.features.phones,
@@ -95,7 +103,33 @@ export function communeNav(commune: CommuneConfig): NavItem[] {
   ];
   return items
     .filter((i) => i.enabled)
-    .map(({ title, href, description }) => ({ title, href, description }));
+    .map(({ title, href, description, primary }) => ({
+      title,
+      href,
+      description,
+      primary,
+    }));
+}
+
+/**
+ * Reparte la navegación de escritorio: hasta `max` secciones a la vista
+ * (primero las marcadas como principales) y el resto en el menú «Más».
+ * El inicio no se incluye: lo lleva el logo.
+ */
+export function splitNav(
+  items: NavItem[],
+  max = 6
+): { visible: NavItem[]; more: NavItem[] } {
+  const sections = items.filter((i) => i.title !== "Inicio");
+  const ranked = [
+    ...sections.filter((i) => i.primary),
+    ...sections.filter((i) => !i.primary),
+  ];
+  const chosen = new Set(ranked.slice(0, max));
+  return {
+    visible: sections.filter((i) => chosen.has(i)),
+    more: sections.filter((i) => !chosen.has(i)),
+  };
 }
 
 /** Enlace al flujo de reporte de la comuna (botón destacado). */

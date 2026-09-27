@@ -27,9 +27,9 @@ export const laPintana: CommuneConfig = {
   updatedAt: "2026-09-27",
   features: {
     news: false,
-    events: false,
+    events: true,
     procedures: false,
-    phones: false,
+    phones: true,
     dataPage: true,
     community: false,
     directory: true,

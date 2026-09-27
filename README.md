@@ -31,7 +31,9 @@ comuna tiene su configuración y su propio conjunto de datos:
 | Transparencia | `/transparencia` | Derecho de acceso a la información, ejecución presupuestaria, informes mensuales, pasivos, balance y estados financieros |
 | Datos | `/datos` | Indicadores de la comuna (población, salud, educación, finanzas municipales) comparados con su historia y con el promedio regional |
 | Buscar | `/buscar` | Buscador sobre el contenido de la comuna |
-| Noticias, actividades, comunidad, trámites, teléfonos, reportar | varias | Módulos disponibles en la comuna de ejemplo |
+| Agenda | `/actividades` | Teatro, deporte y actividades con fecha, lugar y cómo entrar; las pasadas se ocultan solas |
+| Teléfonos | `/telefonos` | Emergencias, oficinas municipales, salud y líneas de apoyo, para llamar con un toque |
+| Noticias, comunidad, trámites, reportar | varias | Módulos disponibles en la comuna de ejemplo |
 
 Las secciones de cada comuna se activan con *feature flags* en
 `src/config/communes/<comuna>.ts`; una sección desactivada responde 404.

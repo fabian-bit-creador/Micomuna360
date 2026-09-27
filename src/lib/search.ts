@@ -149,7 +149,11 @@ export function buildSearchIndex(commune: CommuneConfig): SearchEntry[] {
     }
   }
   if (commune.features.events) {
-    for (const e of data.events) {
+    /* En una comuna real, solo las actividades que aún no terminan. */
+    const now = Date.now();
+    for (const e of data.events.filter(
+      (ev) => commune.isDemo || Date.parse(ev.endsAt ?? ev.startsAt) >= now
+    )) {
       entries.push({
         title: e.title,
         description: e.description,

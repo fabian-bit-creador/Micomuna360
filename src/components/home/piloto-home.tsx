@@ -1,11 +1,13 @@
 import {
   ArrowRightIcon,
+  CalendarDaysIcon,
   ChartLineIcon,
   ExternalLinkIcon,
   FileTextIcon,
   MapIcon,
   MapPinIcon,
   MedalIcon,
+  PhoneCallIcon,
   ScaleIcon,
   SearchCheckIcon,
 } from "lucide-react";
@@ -25,7 +27,8 @@ import {
 import type { CommuneConfig } from "@/config/communes";
 import { siteConfig } from "@/config/site";
 import { formatDate } from "@/lib/format";
-import { getOfficialSites } from "@/lib/repositories";
+import { EventCard } from "@/components/events/event-card";
+import { getOfficialSites, getUpcomingEvents } from "@/lib/repositories";
 import { buildSearchIndex } from "@/lib/search";
 import { getSourceFreshness } from "@/lib/sources";
 
@@ -59,6 +62,22 @@ function availableFor(commune: CommuneConfig) {
         "Escuelas y talleres deportivos: qué días, a qué hora y dónde, con cómo inscribirse.",
       href: "/deportes",
       enabled: features.sports,
+    },
+    {
+      icon: PhoneCallIcon,
+      title: "Teléfonos útiles",
+      description:
+        "Emergencias, oficinas municipales, CESFAM y líneas de apoyo, para llamar con un toque.",
+      href: "/telefonos",
+      enabled: features.phones,
+    },
+    {
+      icon: CalendarDaysIcon,
+      title: "Agenda comunal",
+      description:
+        "Teatro, deporte y actividades para la familia, con fecha, lugar y cómo entrar.",
+      href: "/actividades",
+      enabled: features.events,
     },
     {
       icon: ScaleIcon,
@@ -100,6 +119,9 @@ function availableFor(commune: CommuneConfig) {
 export async function PilotoHome({ commune }: { commune: CommuneConfig }) {
   const searchEntries = buildSearchIndex(commune);
   const officialSites = await getOfficialSites(commune.id);
+  const nextEvents = commune.features.events
+    ? await getUpcomingEvents(commune.id, 2)
+    : [];
   const base = `/${commune.id}`;
   const available = availableFor(commune);
   return (
@@ -169,6 +191,22 @@ export async function PilotoHome({ commune }: { commune: CommuneConfig }) {
         </div>
       </section>
 
+
+      {/* Próximas actividades */}
+      {nextEvents.length > 0 && (
+        <section className="mx-auto max-w-6xl px-4 pt-14">
+          <SectionHeader
+            eyebrow="Agenda"
+            title="Lo que viene en la comuna"
+            action={{ label: "Ver toda la agenda", href: `${base}/actividades` }}
+          />
+          <div className="grid gap-4 md:grid-cols-2">
+            {nextEvents.map((event) => (
+              <EventCard key={event.id} event={event} communeId={commune.id} />
+            ))}
+          </div>
+        </section>
+      )}
 
       {/* Fuentes oficiales */}
       <section className="border-y bg-card">

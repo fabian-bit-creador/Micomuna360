@@ -3,14 +3,15 @@ import Link from "next/link";
 import { CommuneSwitcher } from "@/components/layout/commune-switcher";
 import { Logo } from "@/components/layout/logo";
 import { MobileNav } from "@/components/layout/mobile-nav";
+import { MoreNav } from "@/components/layout/more-nav";
 import { NavLink } from "@/components/layout/nav-link";
 import { SkipLink } from "@/components/layout/skip-link";
 import { Button } from "@/components/ui/button";
 import { listPublicCommunes, type CommuneConfig } from "@/config/communes";
-import { communeNav, reportHref } from "@/config/nav";
+import { communeNav, reportHref, splitNav } from "@/config/nav";
 
 export function SiteHeader({ commune }: { commune: CommuneConfig }) {
-  const nav = communeNav(commune);
+  const { visible, more } = splitNav(communeNav(commune));
   const report = reportHref(commune);
   const option = (c: CommuneConfig) => ({
     id: c.id,
@@ -33,12 +34,21 @@ export function SiteHeader({ commune }: { commune: CommuneConfig }) {
           className="hidden items-center gap-0.5 lg:flex"
           aria-label="Principal"
         >
-          {nav.map((item) => (
+          {visible.map((item) => (
             <NavLink key={item.href} href={item.href}>
               {item.title}
             </NavLink>
           ))}
-          <NavLink href="/nosotros">Nosotros</NavLink>
+          <MoreNav
+            items={[
+              ...more,
+              {
+                title: "Nosotros",
+                href: "/nosotros",
+                description: "Qué es MiComuna360",
+              },
+            ]}
+          />
           {report && (
             <Button size="sm" className="ml-2" asChild>
               <Link href={report}>Reportar</Link>
