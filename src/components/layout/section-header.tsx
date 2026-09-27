@@ -1,6 +1,10 @@
 import Link from "next/link";
 import { ArrowRightIcon } from "lucide-react";
 
+import {
+  SectionIcon,
+  type SectionIconName,
+} from "@/components/shared/section-icon";
 import { cn } from "@/lib/utils";
 
 interface SectionHeaderProps {
@@ -12,6 +16,8 @@ interface SectionHeaderProps {
   className?: string;
   /** "h1" cuando el encabezado es el título de la página. */
   level?: "h1" | "h2";
+  /** Ícono de sección en relieve, a la izquierda del título. */
+  icon?: SectionIconName;
 }
 
 /** Arco 360° en miniatura: firma visual de la marca como eyebrow de sección. */
@@ -50,6 +56,7 @@ export function SectionHeader({
   action,
   className,
   level = "h2",
+  icon,
 }: SectionHeaderProps) {
   const Heading = level;
   return (
@@ -59,17 +66,20 @@ export function SectionHeader({
         className
       )}
     >
-      <div className="max-w-2xl">
-        <p className="mb-2 flex items-center gap-2 text-sm font-bold tracking-wide text-brand-teal-ink uppercase">
-          <ArcMark />
-          {eyebrow}
-        </p>
-        <Heading className="text-2xl font-bold tracking-tight md:text-3xl">
-          {title}
-        </Heading>
-        {description && (
-          <p className="mt-2 text-muted-foreground">{description}</p>
-        )}
+      <div className={cn("max-w-2xl", icon && "flex items-start gap-4")}>
+        {icon && <SectionIcon name={icon} className="mt-1 sm:size-16" />}
+        <div>
+          <p className="mb-2 flex items-center gap-2 text-sm font-bold tracking-wide text-brand-teal-ink uppercase">
+            <ArcMark />
+            {eyebrow}
+          </p>
+          <Heading className="text-2xl font-bold tracking-tight md:text-3xl">
+            {title}
+          </Heading>
+          {description && (
+            <p className="mt-2 text-muted-foreground">{description}</p>
+          )}
+        </div>
       </div>
       {action && (
         <Link

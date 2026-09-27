@@ -116,6 +116,7 @@ export default async function TransparenciaPage({
     <div className="mx-auto max-w-6xl px-4 py-12">
       <SectionHeader
         level="h1"
+        icon="transparencia"
         eyebrow="Tu derecho a saber"
         title="Transparencia, explicada en simple"
         description={`Qué publica la Municipalidad de ${commune.name} por obligación legal, qué puedes pedir tú, y en cuánto tiempo deben responderte.`}

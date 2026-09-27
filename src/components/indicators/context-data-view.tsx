@@ -80,6 +80,7 @@ export async function ContextDataView({
     <div className="mx-auto max-w-6xl px-4 py-12">
       <SectionHeader
         level="h1"
+        icon="datos"
         eyebrow="En contexto"
         title={`${commune.name} en cifras`}
         description={`Datos oficiales de salud, educación y finanzas municipales, comparados con la historia de la comuna y con el promedio de las comunas de la ${regionLabel}.`}

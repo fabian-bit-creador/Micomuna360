@@ -520,6 +520,8 @@ export interface Photo {
   height: number;
   /** Qué se ve, en una frase (texto alternativo). */
   alt: string;
+  /** Rótulo corto visible sobre la foto (p. ej. el nombre del lugar). */
+  caption?: string | null;
   author: string;
   /** Licencia corta, p. ej. "CC BY 4.0". */
   license: string;

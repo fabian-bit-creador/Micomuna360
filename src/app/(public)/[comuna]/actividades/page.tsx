@@ -46,6 +46,7 @@ export default async function ActividadesPage({
     <div className="mx-auto max-w-6xl px-4 py-12">
       <SectionHeader
         level="h1"
+        icon="agenda"
         eyebrow="Agenda comunal"
         title="Actividades para participar"
         description={

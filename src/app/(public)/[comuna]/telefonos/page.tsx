@@ -104,6 +104,7 @@ export default async function TelefonosPage({
     <div className="mx-auto max-w-4xl px-4 py-12">
       <SectionHeader
         level="h1"
+        icon="telefonos"
         eyebrow="A un toque"
         title="Teléfonos útiles"
         description={

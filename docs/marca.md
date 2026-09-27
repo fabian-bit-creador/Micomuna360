@@ -22,7 +22,7 @@ pin: la comuna en el centro. Colores oficiales:
 | En relieve (render 3D) | `public/brand/isotipo-3d-960.webp` | Portadas: portal, portada de cada comuna y Nosotros (`BrandMark3D`) |
 | En relieve, PNG | `public/brand/isotipo-3d-360.png` | Tarjetas de vista previa `/og` (WhatsApp, redes) |
 
-| Íconos de sección | `public/brand/iconos/*.webp` | Tarjetas de la portada de cada comuna (`SectionIcon`) |
+| Íconos de sección | `public/brand/iconos/*.webp` | Tarjetas de la portada y encabezado de cada sección (`SectionIcon`, prop `icon` de `SectionHeader`) |
 
 El isotipo en relieve entra una sola vez con un giro de 14° y un descenso
 suave (1,75 s) y queda quieto; con «reducir movimiento» aparece directo en su
@@ -70,5 +70,3 @@ al contenido y convertido a WebP.
 
 - **Modelo 3D interactivo** (GLB en la página): pesa unos 800 KB más la
   librería para mostrarlo; hoy no se justifica frente a una imagen de 58 KB.
-- **Íconos de sección en las páginas internas** (encabezado de Servicios,
-  Deportes, etc.): mismo estilo, por decidir.

@@ -28,7 +28,8 @@ indicadores) con la fuente y la fecha de verificación de cada dato. El
   requiere antes diseñar el aislamiento por comuna, roles y RLS.
 - **Panel municipal** (`src/app/(admin)`): estructura inicial con
   contenido de ejemplo; solo se enlaza desde la comuna de ejemplo.
-- **Hoja de ruta**: `docs/hoja-de-ruta.md`.
+- **Hoja de ruta**: `docs/hoja-de-ruta.md`. Trabajo con otras herramientas
+  de IA (Codex, GPT Image, Canva, Stitch): `docs/pedidos-ia.md`.
 
 ## Convenciones
 

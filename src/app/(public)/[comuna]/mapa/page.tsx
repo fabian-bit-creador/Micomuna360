@@ -63,6 +63,7 @@ export default async function MapaPage({
     <div className="mx-auto max-w-6xl px-4 py-12">
       <SectionHeader
         level="h1"
+        icon="mapa"
         eyebrow="Territorio"
         title={`Mapa de ${commune.name}`}
         description="Lugares y servicios de la comuna sobre el mapa abierto de OpenStreetMap, con su ficha y cómo llegar."

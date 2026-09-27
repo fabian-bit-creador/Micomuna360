@@ -48,6 +48,7 @@ export default async function BeneficiosPage({
     <div className="mx-auto max-w-4xl px-4 py-12">
       <SectionHeader
         level="h1"
+        icon="beneficios"
         eyebrow="Orientador"
         title="¿A qué puedo postular?"
         description="Muchos beneficios se pierden simplemente porque nadie supo que existían. Marca lo que pasa en tu hogar y te mostramos qué conviene revisar y dónde se hace."

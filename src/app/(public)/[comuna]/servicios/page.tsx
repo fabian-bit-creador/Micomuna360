@@ -61,6 +61,7 @@ export default async function ServiciosPage({
     <div className="mx-auto max-w-6xl px-4 py-12">
       <SectionHeader
         level="h1"
+        icon="servicios"
         eyebrow="Sin vueltas"
         title="Servicios y trámites, con su sitio oficial"
         description={`Qué puedes hacer y dónde se hace de verdad. ${siteConfig.name} no administra ningún trámite: cada tarjeta te lleva al sitio oficial de la institución responsable.`}

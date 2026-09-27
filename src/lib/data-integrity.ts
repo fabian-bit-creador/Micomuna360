@@ -512,6 +512,13 @@ export function validateCommuneData(
     }
   }
 
+  const photoIds = new Set(data.photos.map((p) => p.id));
+  for (const [section, id] of Object.entries(data.sectionPhotos)) {
+    if (id && !photoIds.has(id)) {
+      fail(`la sección "${section}" referencia la foto inexistente "${id}"`);
+    }
+  }
+
   for (const [section, id] of Object.entries(data.sectionSources)) {
     if (id && !sourceIds.has(id)) {
       fail(`la sección "${section}" referencia la fuente inexistente "${id}"`);

@@ -105,6 +105,7 @@ export default async function DirectorioPage({
 
       <SectionHeader
         level="h1"
+        icon="directorio"
         eyebrow="Lugares que sirven"
         title="Directorio comunal"
         description={`Dónde queda y cómo llegar a cada lugar útil de ${commune.name}. Solo publicamos horarios y teléfonos verificados.`}

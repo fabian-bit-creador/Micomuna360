@@ -75,6 +75,15 @@ export interface CommuneData {
    * páginas compartidas no nombran ids de una comuna.
    */
   sectionSources: SectionSources;
+  /** Foto que encabeza una sección (id de `photos`), si la hay. */
+  sectionPhotos: SectionPhotos;
+}
+
+export interface SectionPhotos {
+  /** Portada de la comuna. */
+  home?: string;
+  /** Página de deportes. */
+  sports?: string;
 }
 
 export interface SectionSources {

@@ -38,4 +38,5 @@ export const losAromosData: CommuneData = {
   sportsPrograms: [],
   photos: [],
   sectionSources: {},
+  sectionPhotos: {},
 };

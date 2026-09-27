@@ -54,4 +54,8 @@ export const laPintanaData: CommuneData = {
     transparencyRequest: "lp-transparencia-directa",
     sportsEnrollment: "lp-deportes-inscripcion",
   },
+  sectionPhotos: {
+    home: "lp-foto-plaza",
+    sports: "lp-foto-estadio-cancha-2",
+  },
 };

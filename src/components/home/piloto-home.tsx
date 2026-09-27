@@ -25,7 +25,12 @@ import type { CommuneConfig } from "@/config/communes";
 import { siteConfig } from "@/config/site";
 import { formatDate } from "@/lib/format";
 import { EventCard } from "@/components/events/event-card";
-import { getOfficialSites, getUpcomingEvents } from "@/lib/repositories";
+import { PhotoFigure } from "@/components/shared/photo-figure";
+import {
+  getOfficialSites,
+  getSectionPhoto,
+  getUpcomingEvents,
+} from "@/lib/repositories";
 import { buildSearchIndex } from "@/lib/search";
 import { getSourceFreshness } from "@/lib/sources";
 
@@ -116,6 +121,7 @@ function availableFor(commune: CommuneConfig) {
 export async function PilotoHome({ commune }: { commune: CommuneConfig }) {
   const searchEntries = buildSearchIndex(commune);
   const officialSites = await getOfficialSites(commune.id);
+  const homePhoto = await getSectionPhoto(commune.id, "home");
   const nextEvents = commune.features.events
     ? await getUpcomingEvents(commune.id, 2)
     : [];
@@ -161,6 +167,24 @@ export async function PilotoHome({ commune }: { commune: CommuneConfig }) {
           <BrandMark3D className="hidden size-72 lg:block xl:size-80" />
         </div>
       </section>
+
+      {/* La comuna en una foto real, con su crédito */}
+      {homePhoto && (
+        <section className="mx-auto max-w-6xl px-4 pt-10">
+          <div className="relative">
+            <PhotoFigure
+              photo={homePhoto}
+              sizes="(min-width: 1152px) 1120px, 100vw"
+              imageClassName="aspect-[16/9] rounded-2xl sm:aspect-[21/8]"
+            />
+            {homePhoto.caption && (
+              <p className="pointer-events-none absolute bottom-9 left-4 rounded-lg bg-black/60 px-3 py-1.5 text-sm font-semibold text-white">
+                {homePhoto.caption}
+              </p>
+            )}
+          </div>
+        </section>
+      )}
 
       {/* Disponible hoy */}
       <section className="mx-auto max-w-6xl px-4 pt-14">

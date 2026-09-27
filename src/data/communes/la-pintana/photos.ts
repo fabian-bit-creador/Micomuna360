@@ -7,6 +7,21 @@ import type { Photo } from "@/types";
  */
 export const photos: Photo[] = [
   {
+    id: "lp-foto-plaza",
+    src: "/images/la-pintana/plaza-de-la-pintana.webp",
+    width: 1280,
+    height: 576,
+    alt: "Plaza de Armas de La Pintana: senderos de ladrillo, palmeras y árboles en un día nublado.",
+    caption: "Plaza de Armas de La Pintana",
+    author: "Alexisaherven",
+    license: "CC BY 4.0",
+    licenseUrl: "https://creativecommons.org/licenses/by/4.0/deed.es",
+    sourceUrl:
+      "https://commons.wikimedia.org/wiki/File:Plaza_de_La_Pintana_25-05-2025_(1).jpg",
+    retrievedAt: "2026-09-27",
+    placeId: null,
+  },
+  {
     id: "lp-foto-estadio-cancha-2",
     src: "/images/la-pintana/estadio-municipal-cancha-2.webp",
     width: 1280,

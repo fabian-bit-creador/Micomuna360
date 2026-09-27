@@ -21,6 +21,7 @@ import {
   getDataSource,
   getPhotos,
   getPlaces,
+  getSectionPhoto,
   getSectionSource,
   getSportsPrograms,
 } from "@/lib/repositories";
@@ -58,7 +59,7 @@ export default async function DeportesPage({
   const listing = programs.length
     ? await getDataSource(commune.id, programs[0].sourceId)
     : null;
-  const hero = photos.find((p) => p.placeId === null) ?? null;
+  const hero = await getSectionPhoto(commune.id, "sports");
   const schools = programs.filter((p) => p.kind === "escuela").length;
   const workshops = programs.length - schools;
   const disciplines = new Set(programs.map((p) => p.discipline)).size;
@@ -83,6 +84,7 @@ export default async function DeportesPage({
         <div>
           <SectionHeader
             level="h1"
+            icon="deportes"
             eyebrow="Deporte en tu barrio"
             title={`Muévete en ${commune.name}`}
             description={`${programs.length} escuelas y talleres de ${disciplines} deportes, en recintos municipales y en sedes y canchas de barrio. Elige tu deporte y el día que te acomoda.`}

@@ -1,4 +1,8 @@
-import { getCommuneData, type SectionSources } from "@/data/communes";
+import {
+  getCommuneData,
+  type SectionPhotos,
+  type SectionSources,
+} from "@/data/communes";
 import type {
   BenefitOrientation,
   CitizenService,
@@ -42,6 +46,16 @@ export async function getOfficialSites(
   communeId: string
 ): Promise<DataSource[]> {
   return getCommuneData(communeId).sources.filter((s) => s.featured);
+}
+
+/** Foto que encabeza una sección (ver SectionPhotos), o null. */
+export async function getSectionPhoto(
+  communeId: string,
+  section: keyof SectionPhotos
+): Promise<Photo | null> {
+  const data = getCommuneData(communeId);
+  const id = data.sectionPhotos[section];
+  return id ? (data.photos.find((p) => p.id === id) ?? null) : null;
 }
 
 /** Fuente que una sección enlaza por su función (ver SectionSources). */
