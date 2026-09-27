@@ -4,6 +4,13 @@ import { SiteFooter } from "@/components/layout/site-footer";
 import { SiteHeader } from "@/components/layout/site-header";
 import { getCommune, listCommunes } from "@/config/communes";
 
+/*
+ * Las páginas de cada comuna se regeneran cada hora al recibir visitas. Así
+ * los estados que dependen de la fecha (p. ej. una fuente cuya revisión
+ * venció) se actualizan solos, sin esperar un nuevo despliegue.
+ */
+export const revalidate = 3600;
+
 export function generateStaticParams() {
   return listCommunes().map((c) => ({ comuna: c.id }));
 }
