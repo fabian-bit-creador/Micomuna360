@@ -1,9 +1,14 @@
 "use client";
 
 import { useEffect, useRef } from "react";
-import L from "leaflet";
+
+import L from "./leaflet-global";
+import "leaflet.markercluster";
+
+import { googleMapsUrls } from "@/lib/maps";
 
 import "leaflet/dist/leaflet.css";
+import "leaflet.markercluster/dist/MarkerCluster.css";
 
 /** Lugar con coordenadas verificadas, listo para dibujarse en el mapa. */
 export interface MapPlace {
@@ -25,15 +30,12 @@ interface MapViewProps {
   colors: Record<string, string>;
   /** Límite comunal oficial [lat, lng], dibujado como contorno. */
   boundary?: [number, number][] | null;
-}
-
-/** Enlaces oficiales de Google Maps (Maps URLs), sin API ni contenido de Google. */
-function mapsUrls(place: MapPlace) {
-  const q = `${place.lat},${place.lng}`;
-  return {
-    ver: `https://www.google.com/maps/search/?api=1&query=${q}`,
-    llegar: `https://www.google.com/maps/dir/?api=1&destination=${q}`,
-  };
+  /** Lugar elegido en la lista: el mapa lo muestra y abre su ficha. */
+  selectedId?: string | null;
+  /** Avisa qué lugar abrió el vecino en el mapa (para marcarlo en la lista). */
+  onSelect?: (id: string | null) => void;
+  /** Posición del vecino («cerca de mí»); solo vive en su navegador. */
+  userPosition?: { lat: number; lng: number } | null;
 }
 
 /* Glifo blanco por categoría (trazos simples, 24×24), para no depender
@@ -65,7 +67,9 @@ function escapeHtml(text: string): string {
 
 /**
  * Mapa comunal sobre OpenStreetMap. Se carga solo en el navegador
- * (next/dynamic con ssr:false) porque Leaflet necesita el DOM.
+ * (next/dynamic con ssr:false) porque Leaflet necesita el DOM. Los lugares
+ * cercanos se agrupan en un círculo con el número de lugares; al acercarse
+ * se separan.
  */
 export default function MapView({
   places,
@@ -73,10 +77,21 @@ export default function MapView({
   zoom,
   colors,
   boundary = null,
+  selectedId = null,
+  onSelect,
+  userPosition = null,
 }: MapViewProps) {
   const containerRef = useRef<HTMLDivElement>(null);
   const mapRef = useRef<L.Map | null>(null);
-  const layerRef = useRef<L.LayerGroup | null>(null);
+  const clusterRef = useRef<L.MarkerClusterGroup | null>(null);
+  const markersRef = useRef(new Map<string, L.Marker>());
+  const userLayerRef = useRef<L.LayerGroup | null>(null);
+  /* El aviso al padre se guarda en una ref para no recrear los marcadores
+     cada vez que cambia la función. */
+  const onSelectRef = useRef(onSelect);
+  useEffect(() => {
+    onSelectRef.current = onSelect;
+  }, [onSelect]);
 
   // Crear el mapa una sola vez.
   useEffect(() => {
@@ -113,21 +128,36 @@ export default function MapView({
         interactive: false,
       }).addTo(map);
     }
-    layerRef.current = L.layerGroup().addTo(map);
+    clusterRef.current = L.markerClusterGroup({
+      showCoverageOnHover: false,
+      maxClusterRadius: 44,
+      spiderfyOnMaxZoom: true,
+      /* Círculo azul marino con el número de lugares, en la paleta del sitio. */
+      iconCreateFunction: (cluster) => {
+        const n = cluster.getChildCount();
+        return L.divIcon({
+          className: "",
+          html: `<span style="display:flex;align-items:center;justify-content:center;width:34px;height:34px;border-radius:999px;background:#17375e;color:#fff;font:700 13px/1 sans-serif;box-shadow:0 0 0 3px #fff,0 1px 5px rgba(0,0,0,.45)" aria-label="${n} lugares">${n}</span>`,
+          iconSize: [34, 34],
+        });
+      },
+    }).addTo(map);
+    userLayerRef.current = L.layerGroup().addTo(map);
     mapRef.current = map;
 
     return () => {
       map.remove();
       mapRef.current = null;
-      layerRef.current = null;
+      clusterRef.current = null;
+      userLayerRef.current = null;
     };
   }, [center.lat, center.lng, zoom, boundary]);
 
   // Redibujar marcadores cuando cambian los filtros.
   useEffect(() => {
-    const layer = layerRef.current;
-    if (!layer) return;
-    layer.clearLayers();
+    const cluster = clusterRef.current;
+    if (!cluster) return;
+    cluster.clearLayers();
 
     const markers = new Map<string, L.Marker>();
     for (const place of places) {
@@ -141,7 +171,7 @@ export default function MapView({
         iconAnchor: [13, 13],
         popupAnchor: [0, -15],
       });
-      const urls = mapsUrls(place);
+      const urls = googleMapsUrls(place);
       const marker = L.marker([place.lat, place.lng], { icon, title: place.name })
         .bindPopup(
           `<div style="min-width:200px">
@@ -149,20 +179,23 @@ export default function MapView({
             <span style="display:block;margin-top:2px;color:#4b5563">${escapeHtml(place.address)}</span>
             <span style="display:flex;flex-direction:column;gap:4px;margin-top:8px">
               <a href="${escapeHtml(place.href)}" style="color:#1e8e89;font-weight:700">Ver ficha en MiComuna360</a>
-              <a href="${urls.ver}" target="_blank" rel="noopener noreferrer">Ver en Google Maps ↗</a>
               <a href="${urls.llegar}" target="_blank" rel="noopener noreferrer">Cómo llegar ↗</a>
+              <a href="${urls.calle}" target="_blank" rel="noopener noreferrer">Ver la calle (Street View) ↗</a>
+              <a href="${urls.ver}" target="_blank" rel="noopener noreferrer">Ver en Google Maps ↗</a>
             </span>
           </div>`
-        )
-        .addTo(layer);
+        );
+      marker.on("popupopen", () => onSelectRef.current?.(place.id));
+      marker.on("popupclose", () => onSelectRef.current?.(null));
+      cluster.addLayer(marker);
       markers.set(place.id, marker);
     }
+    markersRef.current = markers;
 
     // Si se llegó con #id (desde el directorio), abrir ese lugar.
     const target = markers.get(decodeURIComponent(window.location.hash.slice(1)));
-    if (target && mapRef.current) {
-      mapRef.current.setView(target.getLatLng(), 16);
-      target.openPopup();
+    if (target) {
+      cluster.zoomToShowLayer(target, () => target.openPopup());
     } else if (places.length > 1 && mapRef.current) {
       // Encuadrar los marcadores visibles (y la comuna, si se conoce).
       const points = places.map((p) => [p.lat, p.lng] as [number, number]);
@@ -172,6 +205,34 @@ export default function MapView({
       });
     }
   }, [places, colors, boundary]);
+
+  // Lugar elegido desde la lista: separarlo del grupo y abrir su ficha.
+  useEffect(() => {
+    if (!selectedId) return;
+    const marker = markersRef.current.get(selectedId);
+    const cluster = clusterRef.current;
+    if (!marker || !cluster || marker.isPopupOpen()) return;
+    cluster.zoomToShowLayer(marker, () => marker.openPopup());
+  }, [selectedId]);
+
+  // Posición del vecino: un punto azul que no sale de su navegador.
+  useEffect(() => {
+    const layer = userLayerRef.current;
+    const map = mapRef.current;
+    if (!layer || !map) return;
+    layer.clearLayers();
+    if (!userPosition) return;
+    L.circleMarker([userPosition.lat, userPosition.lng], {
+      radius: 8,
+      color: "#fff",
+      weight: 3,
+      fillColor: "#2a78d6",
+      fillOpacity: 1,
+    })
+      .bindTooltip("Estás aquí")
+      .addTo(layer);
+    map.setView([userPosition.lat, userPosition.lng], Math.max(map.getZoom(), 15));
+  }, [userPosition]);
 
   return (
     <div

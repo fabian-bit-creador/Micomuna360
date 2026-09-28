@@ -120,7 +120,7 @@ Rotular siempre como ilustración generada con IA donde se usen.
 | Places API (horarios, fotos, reseñas) | Por uso | No | No se puede mostrar sobre un mapa que no sea de Google ni guardar (salvo el identificador del lugar): choca con nuestros datos con fuente |
 | Gemini con datos de Google Maps | Requiere facturación | No por ahora | En el nivel gratuito la cuota es cero (probado el 28-09-2026) |
 
-**Recomendación:** mantener el mapa propio (Leaflet con OpenStreetMap:
+**Recomendación** (puntos 1 y 2 hechos el 28-09-2026): mantener el mapa propio (Leaflet con OpenStreetMap:
 gratis, sin rastreo y con nuestras fuentes) y sumar lo que Google da
 gratis sin clave:
 

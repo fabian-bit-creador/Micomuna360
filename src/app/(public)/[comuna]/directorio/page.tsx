@@ -6,6 +6,7 @@ import {
   MapIcon,
   MapPinIcon,
   NavigationIcon,
+  ScanEyeIcon,
   PhoneCallIcon,
 } from "lucide-react";
 
@@ -19,6 +20,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { SourceBadge } from "@/components/shared/source-badge";
 import { getDataSource, getLocations, getPlaces } from "@/lib/repositories";
 import type { PlaceCategory } from "@/types";
+import { googleMapsUrls } from "@/lib/maps";
 import { communeMetadata } from "@/lib/seo";
 
 export async function generateMetadata({
@@ -182,15 +184,32 @@ export default async function DirectorioPage({
                           )}
                           {typeof place.lat === "number" &&
                             typeof place.lng === "number" && (
-                              <a
-                                href={`https://www.google.com/maps/dir/?api=1&destination=${place.lat},${place.lng}`}
-                                target="_blank"
-                                rel="noopener noreferrer"
-                                className="inline-flex min-h-9 items-center gap-1.5 rounded-full border px-3.5 py-1 text-sm font-semibold text-muted-foreground transition-colors hover:bg-accent hover:text-accent-foreground"
-                              >
-                                <NavigationIcon className="size-3.5" />
-                                Cómo llegar
-                              </a>
+                              <>
+                                <a
+                                  href={
+                                    googleMapsUrls({ lat: place.lat, lng: place.lng })
+                                      .llegar
+                                  }
+                                  target="_blank"
+                                  rel="noopener noreferrer"
+                                  className="inline-flex min-h-9 items-center gap-1.5 rounded-full border px-3.5 py-1 text-sm font-semibold text-muted-foreground transition-colors hover:bg-accent hover:text-accent-foreground"
+                                >
+                                  <NavigationIcon className="size-3.5" />
+                                  Cómo llegar
+                                </a>
+                                <a
+                                  href={
+                                    googleMapsUrls({ lat: place.lat, lng: place.lng })
+                                      .calle
+                                  }
+                                  target="_blank"
+                                  rel="noopener noreferrer"
+                                  className="inline-flex min-h-9 items-center gap-1.5 rounded-full border px-3.5 py-1 text-sm font-semibold text-muted-foreground transition-colors hover:bg-accent hover:text-accent-foreground"
+                                >
+                                  <ScanEyeIcon className="size-3.5" />
+                                  Ver la calle
+                                </a>
+                              </>
                             )}
                           {typeof place.lat === "number" &&
                             commune.features.realMap && (

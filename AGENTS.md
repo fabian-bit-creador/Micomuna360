@@ -72,7 +72,12 @@ indicadores) con la fuente y la fecha de verificación de cada dato. El
   con licencia libre o con permiso) y su crédito; las ilustraciones con IA
   solo para temas generales y rotuladas. Detalle en `docs/imagenes.md`.
 - **Mapas**: Leaflet se carga solo en el cliente (`next/dynamic` con
-  `ssr: false`) sobre teselas de OpenStreetMap, con lista alternativa.
+  `ssr: false`) sobre teselas de OpenStreetMap, con marcadores agrupados
+  (leaflet.markercluster) y una lista sincronizada que es también la
+  alternativa accesible. Los enlaces a Google Maps (ver, cómo llegar,
+  Street View) salen de `googleMapsUrls` (`src/lib/maps.ts`): no usan API
+  ni clave. «Cerca de mí» usa la ubicación solo en el navegador, sin
+  guardarla ni enviarla.
 
 ## Despliegue
 
