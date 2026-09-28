@@ -29,7 +29,8 @@ indicadores) con la fuente y la fecha de verificación de cada dato. El
 - **Panel municipal** (`src/app/(admin)`): estructura inicial con
   contenido de ejemplo; solo se enlaza desde la comuna de ejemplo.
 - **Hoja de ruta**: `docs/hoja-de-ruta.md`. Trabajo con otras herramientas
-  de IA (Codex, GPT Image, Canva, Stitch): `docs/pedidos-ia.md`.
+  de IA (Codex, GPT Image, Canva, Stitch, AI Studio): `docs/pedidos-ia.md`
+  y `docs/pedidos-por-etapa.md`.
 
 ## Convenciones
 

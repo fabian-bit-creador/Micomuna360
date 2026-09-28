@@ -12,7 +12,7 @@ cada una y cómo devolver el resultado al repositorio sin romper nada.
 | GPT Image 2.5 (ChatGPT) | Ilustraciones, íconos y piezas para redes | PNG que se sube a `public/` y se registra |
 | Canva Pro | Íconos en relieve, piezas para redes e impresos | Conectado a Claude: se generan desde aquí |
 | Google Stitch (gratis) | Explorar diseños de pantalla completos | Captura o exportación a HTML/Figma como referencia |
-| Google AI Studio (gratis) | Imágenes con Nano Banana por API, sin costo | Clave `GEMINI_API_KEY` en el entorno de Claude |
+| Google AI Studio (gratis) | Revisiones de diseño, lectura de documentos, maquetas con «Build» | Clave en el entorno de Claude (texto e imágenes de entrada; generar imágenes requiere facturación) |
 
 ### Reglas para todas
 
@@ -99,11 +99,10 @@ construye con los componentes del sitio.
 
 ## Google AI Studio
 
-Permite generar imágenes con Nano Banana sin costo, dentro de los límites
-del nivel gratuito. Para que Claude las genere directamente: crear una
-clave en AI Studio («Get API key») y guardarla en la configuración del
-entorno de Claude como `GEMINI_API_KEY` (nunca en el chat ni en el
-repositorio).
+La clave ya está en el entorno de Claude. En el nivel gratuito sirve para
+texto y análisis de imágenes (revisiones de diseño, pasar documentos a
+tablas); generar imágenes o usar datos de Google Maps requiere activar la
+facturación. Pedidos concretos por etapa en `docs/pedidos-por-etapa.md`.
 
 ## Ideas tomadas de otros portales
 
