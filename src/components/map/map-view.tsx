@@ -241,7 +241,7 @@ export default function MapView({
       aria-label="Mapa de lugares de la comuna"
       /* z-0 aísla el apilado de Leaflet para que sus capas y fichas no
          se dibujen por encima del encabezado fijo. */
-      className="relative z-0 h-[420px] w-full rounded-xl border md:h-[560px]"
+      className="relative z-0 h-[480px] w-full rounded-xl border md:h-[640px] lg:h-[680px]"
     />
   );
 }

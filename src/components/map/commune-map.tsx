@@ -4,7 +4,6 @@ import { useMemo, useState } from "react";
 import dynamic from "next/dynamic";
 import { LocateFixedIcon, NavigationIcon, ScanEyeIcon } from "lucide-react";
 
-import { Badge } from "@/components/ui/badge";
 import { distanceMeters, formatDistance, googleMapsUrls } from "@/lib/maps";
 import { cn } from "@/lib/utils";
 
@@ -14,7 +13,7 @@ import type { MapPlace } from "./map-view";
 const MapView = dynamic(() => import("./map-view"), {
   ssr: false,
   loading: () => (
-    <div className="h-[420px] w-full animate-pulse rounded-xl border bg-muted md:h-[560px]" />
+    <div className="h-[480px] w-full animate-pulse rounded-xl border bg-muted md:h-[640px] lg:h-[680px]" />
   ),
 });
 
@@ -200,7 +199,7 @@ export function CommuneMap({
           "Ordenamos los lugares por distancia en línea recta. Tu ubicación queda en tu teléfono: no la guardamos ni la enviamos."}
       </p>
 
-      <div className="grid gap-4 lg:grid-cols-[340px_minmax(0,1fr)]">
+      <div className="grid gap-4 lg:grid-cols-[272px_minmax(0,1fr)]">
         <div id="mapa-comunal" className="scroll-mt-24 lg:order-2">
           <MapView
             places={visible}
@@ -218,7 +217,7 @@ export function CommuneMap({
             accesible al mapa. */}
         <section aria-label="Lugares" className="lg:order-1">
           <h2 className="sr-only">Lugares en el mapa</h2>
-          <ul className="space-y-2 lg:max-h-[560px] lg:overflow-y-auto lg:pr-1">
+          <ul className="max-h-[360px] space-y-1.5 overflow-y-auto pr-1 lg:max-h-[680px]">
             {listed.map(({ place, distance }) => {
               const urls = googleMapsUrls(place);
               const isSelected = selectedId === place.id;
@@ -226,7 +225,7 @@ export function CommuneMap({
                 <li
                   key={place.id}
                   className={cn(
-                    "rounded-xl border bg-card p-3 transition-colors",
+                    "rounded-lg border bg-card px-2.5 py-2 transition-colors",
                     isSelected && "border-brand-teal ring-2 ring-brand-teal/30"
                   )}
                 >
@@ -244,11 +243,14 @@ export function CommuneMap({
                           background: categoryColors[place.category] ?? "#17375e",
                         }}
                       />
-                      <span className="font-semibold text-primary">
+                      <span className="text-sm leading-snug font-semibold text-primary">
+                        <span className="sr-only">
+                          {categoryLabels[place.category] ?? place.category}:{" "}
+                        </span>
                         {place.name}
                       </span>
                     </span>
-                    <span className="mt-0.5 block text-sm text-muted-foreground">
+                    <span className="mt-0.5 block text-xs text-muted-foreground">
                       {place.address}
                       {distance !== null && (
                         <>
@@ -260,10 +262,7 @@ export function CommuneMap({
                       )}
                     </span>
                   </button>
-                  <div className="mt-1.5 flex flex-wrap items-center gap-x-3 gap-y-1 text-xs font-semibold">
-                    <Badge variant="outline">
-                      {categoryLabels[place.category] ?? place.category}
-                    </Badge>
+                  <div className="mt-1 flex flex-wrap items-center gap-x-3 text-xs font-semibold">
                     <a
                       href={place.href}
                       className="inline-flex min-h-8 items-center text-brand-teal-ink hover:underline"
