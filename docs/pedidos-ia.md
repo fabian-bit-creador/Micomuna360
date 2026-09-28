@@ -16,7 +16,8 @@ cada una y cómo devolver el resultado al repositorio sin romper nada.
 
 ### Reglas para todas
 
-- Leer `AGENTS.md` antes de empezar: idioma, fuentes, privacidad y colores.
+- Leer `AGENTS.md` y `DESIGN.md` antes de empezar: idioma, fuentes,
+  privacidad, colores (para texto, las «tintas») y componentes.
 - Nunca trabajar ni hacer push directo en la rama de producción
   (`claude/micomuna360-architecture-gadm7s`): cada push publica el sitio.
 - Datos reales solo con fuente oficial registrada en `sources.ts`.

@@ -58,7 +58,9 @@ indicadores) con la fuente y la fecha de verificación de cada dato. El
 - **Vigencia de fuentes**: `getSourceFreshness` (`src/lib/sources.ts`)
   compara `validUntil` con la fecha de Chile; las páginas de cada comuna se
   regeneran cada hora (`revalidate` en `src/app/(public)/[comuna]/layout.tsx`).
-- **UI**: componentes shadcn/ui escritos a mano en `src/components/ui`.
+- **UI**: sistema de diseño completo en `DESIGN.md` (colores, tintas de
+  texto, tipografía, componentes). Componentes shadcn/ui escritos a mano en
+  `src/components/ui`.
   Colores en `src/app/globals.css`: los de marca (`brand-*`) para fondos,
   íconos y gráficos, y las tintas (`brand-*-ink`, `muted-foreground`) para
   texto, que cumplen WCAG AA en claro y oscuro. Gráficos propios en
