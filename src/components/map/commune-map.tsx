@@ -4,7 +4,13 @@ import { useMemo, useState } from "react";
 import dynamic from "next/dynamic";
 import { LocateFixedIcon, NavigationIcon, ScanEyeIcon } from "lucide-react";
 
-import { distanceMeters, formatDistance, googleMapsUrls } from "@/lib/maps";
+import type { CommuneTerritory } from "@/data/communes";
+import {
+  distanceMeters,
+  findArea,
+  formatDistance,
+  googleMapsUrls,
+} from "@/lib/maps";
 import { cn } from "@/lib/utils";
 
 import type { MapPlace } from "./map-view";
@@ -52,7 +58,25 @@ interface CommuneMapProps {
   zoom: number;
   /** Límite comunal oficial [lat, lng]; se dibuja como contorno. */
   boundary?: [number, number][] | null;
+  /** Sectores y unidades vecinales oficiales, si la comuna los publica. */
+  territory?: CommuneTerritory | null;
 }
+
+type Division = "sectors" | "units" | "none";
+
+const divisionLabels: Record<Division, string> = {
+  sectors: "Sectores",
+  units: "Unidades vecinales",
+  none: "Sin divisiones",
+};
+
+const chipClass = (active: boolean) =>
+  cn(
+    "min-h-9 rounded-full border px-4 py-1.5 text-sm font-semibold transition-colors",
+    active
+      ? "border-transparent bg-primary text-primary-foreground"
+      : "bg-card text-muted-foreground hover:bg-accent hover:text-accent-foreground"
+  );
 
 type Locate =
   | { state: "idle" }
@@ -62,15 +86,17 @@ type Locate =
 
 /**
  * Mapa con filtros por categoría, lista sincronizada (elegir un lugar en la
- * lista lo abre en el mapa y al revés) y «cerca de mí». La ubicación del
- * vecino se pide solo al tocar el botón, se usa en su navegador para ordenar
- * la lista y no se guarda ni se envía.
+ * lista lo abre en el mapa y al revés), «cerca de mí» y, si la comuna los
+ * publica, sectores y unidades vecinales. La ubicación del vecino se pide
+ * solo al tocar el botón, se usa en su navegador para ordenar la lista y
+ * decirle en qué sector está, y no se guarda ni se envía.
  */
 export function CommuneMap({
   places,
   center,
   zoom,
   boundary = null,
+  territory = null,
 }: CommuneMapProps) {
   const categories = useMemo(
     () => [...new Set(places.map((p) => p.category))],
@@ -80,10 +106,35 @@ export function CommuneMap({
   const [selectedId, setSelectedId] = useState<string | null>(null);
   const [locate, setLocate] = useState<Locate>({ state: "idle" });
   const position = locate.state === "ready" ? locate.position : null;
+  const [division, setDivision] = useState<Division>(
+    territory ? "sectors" : "none"
+  );
+  const [sectorId, setSectorId] = useState<string | null>(null);
 
-  const visible = useMemo(
+  const sectors = useMemo(() => territory?.sectors ?? [], [territory]);
+  const sector = sectors.find((s) => s.id === sectorId) ?? null;
+  /* Sector y unidad vecinal del vecino: se calculan en su navegador. */
+  const mySector = position ? findArea(position, sectors) : null;
+  const myUnit =
+    position && territory ? findArea(position, territory.neighborhoodUnits) : null;
+
+  const inCategory = useMemo(
     () => (active ? places.filter((p) => p.category === active) : places),
     [places, active]
+  );
+  const visible = useMemo(
+    () =>
+      sector ? inCategory.filter((p) => p.sector === sector.name) : inCategory,
+    [inCategory, sector]
+  );
+  const areas = useMemo(
+    () =>
+      division === "sectors"
+        ? sectors
+        : division === "units"
+          ? (territory?.neighborhoodUnits ?? [])
+          : [],
+    [division, sectors, territory]
   );
   const listed = useMemo(() => {
     if (!position) return visible.map((p) => ({ place: p, distance: null }));
@@ -136,12 +187,7 @@ export function CommuneMap({
             type="button"
             onClick={() => setActive(null)}
             aria-pressed={active === null}
-            className={cn(
-              "min-h-9 rounded-full border px-4 py-1.5 text-sm font-semibold transition-colors",
-              active === null
-                ? "border-transparent bg-primary text-primary-foreground"
-                : "bg-card text-muted-foreground hover:bg-accent hover:text-accent-foreground"
-            )}
+            className={chipClass(active === null)}
           >
             Todos ({places.length})
           </button>
@@ -154,12 +200,7 @@ export function CommuneMap({
                 type="button"
                 onClick={() => setActive(isActive ? null : category)}
                 aria-pressed={isActive}
-                className={cn(
-                  "flex min-h-9 items-center gap-2 rounded-full border px-4 py-1.5 text-sm font-semibold transition-colors",
-                  isActive
-                    ? "border-transparent bg-primary text-primary-foreground"
-                    : "bg-card text-muted-foreground hover:bg-accent hover:text-accent-foreground"
-                )}
+                className={cn(chipClass(isActive), "flex items-center gap-2")}
               >
                 <span
                   aria-hidden="true"
@@ -193,11 +234,70 @@ export function CommuneMap({
         )}
       </div>
 
-      <p aria-live="polite" className="mb-3 text-sm text-muted-foreground">
-        {locate.state === "error" && locate.message}
-        {position &&
-          "Ordenamos los lugares por distancia en línea recta. Tu ubicación queda en tu teléfono: no la guardamos ni la enviamos."}
-      </p>
+      {territory && (
+        <div className="mb-4 flex flex-wrap items-center gap-x-4 gap-y-2">
+          <div
+            className="flex flex-wrap gap-2"
+            role="group"
+            aria-label="Divisiones de la comuna en el mapa"
+          >
+            {(["sectors", "units", "none"] as const).map((value) => (
+              <button
+                key={value}
+                type="button"
+                onClick={() => setDivision(value)}
+                aria-pressed={division === value}
+                className={chipClass(division === value)}
+              >
+                {divisionLabels[value]}
+              </button>
+            ))}
+          </div>
+          <label className="flex items-center gap-2 text-sm font-semibold text-muted-foreground">
+            Lugares del sector
+            <select
+              value={sectorId ?? ""}
+              onChange={(e) => setSectorId(e.target.value || null)}
+              className="min-h-9 rounded-md border bg-card px-2 py-1.5 text-sm font-semibold text-foreground"
+            >
+              <option value="">Todos los sectores</option>
+              {sectors.map((s) => (
+                <option key={s.id} value={s.id}>
+                  {s.name} ({inCategory.filter((p) => p.sector === s.name).length})
+                </option>
+              ))}
+            </select>
+          </label>
+        </div>
+      )}
+
+      <div aria-live="polite" className="mb-3 text-sm text-muted-foreground">
+        {locate.state === "error" && <p>{locate.message}</p>}
+        {position && (
+          <>
+            {territory && (
+              <p className="mb-1 font-semibold text-foreground">
+                {mySector
+                  ? `Estás en el sector ${mySector.name}${myUnit ? `, ${myUnit.name.toLowerCase()}` : ""}.`
+                  : "Tu ubicación queda fuera de los sectores de la comuna."}
+                {mySector && mySector.id !== sectorId && (
+                  <button
+                    type="button"
+                    onClick={() => setSectorId(mySector.id)}
+                    className="ml-2 inline-flex min-h-8 items-center font-semibold text-brand-teal-ink underline-offset-2 hover:underline"
+                  >
+                    Ver solo los lugares de mi sector
+                  </button>
+                )}
+              </p>
+            )}
+            <p>
+              Ordenamos los lugares por distancia en línea recta. Tu ubicación
+              queda en tu teléfono: no la guardamos ni la enviamos.
+            </p>
+          </>
+        )}
+      </div>
 
       <div className="grid gap-4 lg:grid-cols-[272px_minmax(0,1fr)]">
         <div id="mapa-comunal" className="scroll-mt-24 lg:order-2">
@@ -207,6 +307,10 @@ export function CommuneMap({
             zoom={zoom}
             colors={categoryColors}
             boundary={boundary}
+            areas={areas}
+            labelMinZoom={division === "units" ? 13 : 12}
+            highlight={sector ?? mySector}
+            frame={sector?.ring ?? null}
             selectedId={selectedId}
             onSelect={setSelectedId}
             userPosition={position}
@@ -217,6 +321,12 @@ export function CommuneMap({
             accesible al mapa. */}
         <section aria-label="Lugares" className="lg:order-1">
           <h2 className="sr-only">Lugares en el mapa</h2>
+          {listed.length === 0 && (
+            <p className="rounded-lg border bg-card px-3 py-3 text-sm text-muted-foreground">
+              No hay lugares{active ? " de esta categoría" : ""} en el sector{" "}
+              {sector?.name}.
+            </p>
+          )}
           <ul className="max-h-[360px] space-y-1.5 overflow-y-auto pr-1 lg:max-h-[680px]">
             {listed.map(({ place, distance }) => {
               const urls = googleMapsUrls(place);
@@ -252,6 +362,7 @@ export function CommuneMap({
                     </span>
                     <span className="mt-0.5 block text-xs text-muted-foreground">
                       {place.address}
+                      {place.sector && !sector && ` · Sector ${place.sector}`}
                       {distance !== null && (
                         <>
                           {" · "}

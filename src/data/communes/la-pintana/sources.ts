@@ -279,6 +279,21 @@ export const sources: DataSource[] = [
       "Horarios del SAPU y del SAR confirmados aquí. Las direcciones de cada SAPU no figuran en esta página: provienen del geoportal comunal.",
   },
   {
+    id: "lp-geo-territorio",
+    institution: "Municipalidad de La Pintana",
+    pageName: "GeoPintana — sectores y unidades vecinales",
+    description:
+      "Capas públicas del geoportal municipal con los 12 sectores de la comuna y sus 24 unidades vecinales.",
+    featured: false,
+    url: "https://services7.arcgis.com/Jc7ZuHKHcN6HGMlG/arcgis/rest/services",
+    publishedAt: "2026-06-18",
+    verifiedAt: "2026-09-28",
+    status: "verificado",
+    validUntil: "2026-12-28",
+    notes:
+      "Capas usadas: UNIDADES_VECINALES (editada 2026-06-18) y SECTORES_LA_PINTANA (2022-05-17), simplificadas a unos 5 metros. Las superficies de las unidades vecinales suman la de los sectores (30,4 km²). La capa de unidades vecinales asigna la UV 13 al sector Mapuhue, pero esa unidad abarca también Ex Fundo San Antonio y Ex Fundo La Esperanza: el sector se toma siempre de la capa de sectores. Respaldo en docs/fuentes/la-pintana-territorio-2026-09.",
+  },
+  {
     id: "lp-geo-equipamiento",
     institution: "Municipalidad de La Pintana",
     pageName: "GeoPintana — capas de equipamiento comunal",

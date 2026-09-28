@@ -8,8 +8,10 @@ import type { CommuneData } from "./types";
 export type {
   CommuneBoundary,
   CommuneData,
+  CommuneTerritory,
   SectionPhotos,
   SectionSources,
+  TerritoryArea,
 } from "./types";
 
 const datasets: Record<string, CommuneData> = {
@@ -47,6 +49,7 @@ const empty: CommuneData = {
   accountingBalance: [],
   benefits: [],
   boundary: null,
+  territory: null,
   contextIndicators: [],
   enrollment: [],
   sportsPrograms: [],

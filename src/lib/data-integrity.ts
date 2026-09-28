@@ -1,6 +1,7 @@
 import { z } from "zod";
 
 import type { CommuneData } from "@/data/communes/types";
+import { findArea, insideRing } from "@/lib/maps";
 
 /**
  * Integridad de los datos publicados.
@@ -234,22 +235,6 @@ const benefitSchema = z.object({
   icon: z.string().min(1),
   sourceId: z.string().min(1),
 });
-
-/** Punto dentro de un anillo [lat, lng] (algoritmo de trazado de rayos). */
-function insideRing(lat: number, lng: number, ring: [number, number][]): boolean {
-  let inside = false;
-  for (let i = 0, j = ring.length - 1; i < ring.length; j = i++) {
-    const [latI, lngI] = ring[i];
-    const [latJ, lngJ] = ring[j];
-    if (
-      latI > lat !== latJ > lat &&
-      lng < ((lngJ - lngI) * (lat - latI)) / (latJ - latI) + lngI
-    ) {
-      inside = !inside;
-    }
-  }
-  return inside;
-}
 
 const yearPoint = z.object({
   year: z.number().int().min(1990).max(2100),
@@ -567,6 +552,43 @@ export function validateCommuneData(
       )
     ) {
       fail("el límite comunal se sale del rectángulo declarado en la configuración");
+    }
+  }
+
+  if (data.territory) {
+    const territory = data.territory;
+    if (!sourceIds.has(territory.sourceId)) {
+      fail(`el territorio referencia la fuente inexistente "${territory.sourceId}"`);
+    }
+    const areaIds = new Set<string>();
+    for (const area of [...territory.sectors, ...territory.neighborhoodUnits]) {
+      if (areaIds.has(area.id)) fail(`área territorial duplicada "${area.id}"`);
+      areaIds.add(area.id);
+      if (area.ring.length < 4) fail(`el área "${area.id}" tiene menos de 4 puntos`);
+      if (
+        bounds &&
+        area.ring.some(
+          ([lat, lng]) =>
+            lat < bounds.south || lat > bounds.north || lng < bounds.west || lng > bounds.east
+        )
+      ) {
+        fail(`el área "${area.id}" se sale del rectángulo declarado en la configuración`);
+      }
+      if (!insideRing(area.label[0], area.label[1], area.ring)) {
+        fail(`el rótulo del área "${area.id}" cae fuera de su polígono`);
+      }
+    }
+    // Cada lugar del mapa debe caer en un sector y en una unidad vecinal:
+    // si no, las capas no calzan con las coordenadas publicadas.
+    for (const place of data.places) {
+      if (typeof place.lat !== "number" || typeof place.lng !== "number") continue;
+      const point = { lat: place.lat, lng: place.lng };
+      if (!findArea(point, territory.sectors)) {
+        fail(`lugar "${place.id}" no cae en ningún sector`);
+      }
+      if (!findArea(point, territory.neighborhoodUnits)) {
+        fail(`lugar "${place.id}" no cae en ninguna unidad vecinal`);
+      }
     }
   }
 

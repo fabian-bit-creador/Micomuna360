@@ -76,8 +76,8 @@ Después, en este orden (de menor a mayor riesgo):
 
 - **Orientador de beneficios**: sumar deporte y cultura según la edad
   («hay niños de 6 a 12 años» → mini atletismo, judo infantil).
-- **«Cerca de mí»** en el mapa, calculado en el navegador sin guardar la
-  ubicación.
+- **Mapa comunal**: «cerca de mí», lista sincronizada y Street View (hechos);
+  sectores y unidades vecinales con «¿en qué sector estoy?» (propuesta).
 - **Instalable en el celular** (PWA), con teléfonos y direcciones disponibles
   sin conexión.
 - **Portada con foto real** de la comuna, accesos rápidos y barra inferior de

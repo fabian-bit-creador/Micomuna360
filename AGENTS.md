@@ -79,7 +79,8 @@ indicadores) con la fuente y la fecha de verificación de cada dato. El
   alternativa accesible. Los enlaces a Google Maps (ver, cómo llegar,
   Street View) salen de `googleMapsUrls` (`src/lib/maps.ts`): no usan API
   ni clave. «Cerca de mí» usa la ubicación solo en el navegador, sin
-  guardarla ni enviarla.
+  guardarla ni enviarla; ahí mismo se calcula el sector y la unidad vecinal
+  del vecino (`findArea`, capas oficiales en `territory.ts`).
 
 ## Despliegue
 

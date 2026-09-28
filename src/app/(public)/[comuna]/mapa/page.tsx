@@ -9,7 +9,12 @@ import type { MapPlace } from "@/components/map/map-view";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent } from "@/components/ui/card";
 import { getCommune } from "@/config/communes";
-import { getCommuneBoundary, getPlaces } from "@/lib/repositories";
+import { findArea } from "@/lib/maps";
+import {
+  getCommuneBoundary,
+  getCommuneTerritory,
+  getPlaces,
+} from "@/lib/repositories";
 import { communeMetadata } from "@/lib/seo";
 
 export async function generateMetadata({
@@ -43,21 +48,28 @@ export default async function MapaPage({
   }
 
   /* Solo entran al mapa los lugares con coordenadas verificadas. */
-  const [places, boundary] = await Promise.all([
+  const [places, boundary, territory] = await Promise.all([
     getPlaces(commune.id),
     getCommuneBoundary(commune.id),
+    getCommuneTerritory(commune.id),
   ]);
   const mapPlaces: MapPlace[] = places
     .filter((p) => typeof p.lat === "number" && typeof p.lng === "number")
-    .map((p) => ({
-      id: p.id,
-      name: p.name,
-      address: p.address,
-      category: p.category,
-      lat: p.lat as number,
-      lng: p.lng as number,
-      href: `/${commune.id}/directorio#${p.id}`,
-    }));
+    .map((p) => {
+      const point = { lat: p.lat as number, lng: p.lng as number };
+      return {
+        id: p.id,
+        name: p.name,
+        address: p.address,
+        category: p.category,
+        ...point,
+        href: `/${commune.id}/directorio#${p.id}`,
+        sector: territory ? (findArea(point, territory.sectors)?.name ?? null) : null,
+        unit: territory
+          ? (findArea(point, territory.neighborhoodUnits)?.name ?? null)
+          : null,
+      };
+    });
 
   return (
     <div className="mx-auto max-w-6xl px-4 py-12">
@@ -76,12 +88,16 @@ export default async function MapaPage({
             center={commune.center}
             zoom={commune.zoom}
             boundary={boundary?.coordinates ?? null}
+            territory={territory}
           />
           <p className="mt-4 rounded-lg bg-muted px-4 py-3 text-sm text-muted-foreground">
             Mapa base: © colaboradores de OpenStreetMap. Las coordenadas
             vienen del geoportal municipal y se contrastaron con
             OpenStreetMap; cuando el geoportal no tiene un lugar, usamos
-            OpenStreetMap y lo indicamos en su ficha. En una emergencia llama
+            OpenStreetMap y lo indicamos en su ficha.
+            {territory &&
+              " Los sectores y las unidades vecinales (el territorio de cada junta de vecinos) son las capas oficiales del mismo geoportal."}{" "}
+            En una emergencia llama
             al 131 (ambulancia), 132 (bomberos) o 133 (Carabineros).
           </p>
         </>

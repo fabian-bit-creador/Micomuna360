@@ -131,7 +131,7 @@ deporte `#EB6834`, seguridad `#4A3AA7`, siempre con un glifo blanco.
 | Aviso de independencia | portada de comuna | Caja `bg-brand-sky/10` con borde `brand-sky/40` |
 | Buscador | `search/search-box.tsx` | `h-12`, muestra «X de N resultados» y «ver todos» |
 | Foto con crédito | `shared/photo-figure.tsx` | Autor y licencia enlazados bajo la foto |
-| Mapa | `map/commune-map.tsx` | Filtros, «Cerca de mí», lista sincronizada y mapa Leaflet |
+| Mapa | `map/commune-map.tsx` | Filtros, «Cerca de mí», sectores y unidades vecinales, lista sincronizada y mapa Leaflet |
 
 ## Movimiento
 

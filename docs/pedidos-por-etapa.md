@@ -129,9 +129,9 @@ gratis sin clave:
 2. **Mejoras al mapa propio**, todas gratuitas: agrupar marcadores cercanos,
    capas por categoría, «cerca de mí» calculado en el navegador sin
    guardar la ubicación, y lista y mapa sincronizados.
-3. **Sectores de la comuna** (idea de la revisión de Gemini): dibujar las
-   unidades vecinales o macrosectores si GeoPintana publica esa capa, para
-   que el vecino se ubique por su sector.
+3. **Sectores de la comuna** (idea de la revisión de Gemini): los 12
+   sectores y las 24 unidades vecinales de GeoPintana, con filtro por
+   sector y «estás en el sector…» calculado en el navegador.
 
 Maps Embed o la vista 3D quedan para cuando exista una ficha propia por
 lugar y se decida pedir una clave de Google Maps Platform (requiere cuenta

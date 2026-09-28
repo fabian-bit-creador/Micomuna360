@@ -30,6 +30,26 @@ export interface CommuneBoundary {
   sourceId: string;
 }
 
+/** Área de una división territorial (sector o unidad vecinal). */
+export interface TerritoryArea {
+  id: string;
+  /** Nombre para mostrar: «Centro», «Unidad vecinal 7». */
+  name: string;
+  /** Rótulo corto en el mapa (unidades vecinales: «UV 7»). */
+  shortName?: string;
+  /** Punto interior donde va el rótulo [lat, lng]. */
+  label: [number, number];
+  /** Anillo exterior [lat, lng]. */
+  ring: [number, number][];
+}
+
+/** Divisiones territoriales oficiales, para ubicarse en el mapa. */
+export interface CommuneTerritory {
+  sourceId: string;
+  sectors: TerritoryArea[];
+  neighborhoodUnits: TerritoryArea[];
+}
+
 /** Dataset completo de una comuna. Los repositorios leen de aquí. */
 export interface CommuneData {
   categories: Category[];
@@ -61,6 +81,8 @@ export interface CommuneData {
   benefits: BenefitOrientation[];
   /** Límite comunal oficial para el mapa; null si no está verificado. */
   boundary: CommuneBoundary | null;
+  /** Sectores y unidades vecinales; null si no están verificados. */
+  territory: CommuneTerritory | null;
   /** Indicadores con contexto (pilotos con datos reales). */
   contextIndicators: ContextIndicator[];
   /** Matrícula escolar por dependencia (pilotos con datos reales). */

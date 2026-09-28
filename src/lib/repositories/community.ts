@@ -1,4 +1,8 @@
-import { getCommuneData, type CommuneBoundary } from "@/data/communes";
+import {
+  getCommuneData,
+  type CommuneBoundary,
+  type CommuneTerritory,
+} from "@/data/communes";
 import type {
   Organization,
   OrganizationType,
@@ -21,6 +25,13 @@ export async function getCommuneBoundary(
   communeId: string
 ): Promise<CommuneBoundary | null> {
   return getCommuneData(communeId).boundary;
+}
+
+/** Sectores y unidades vecinales oficiales (null si no están verificados). */
+export async function getCommuneTerritory(
+  communeId: string
+): Promise<CommuneTerritory | null> {
+  return getCommuneData(communeId).territory;
 }
 
 export async function getOrganizations(

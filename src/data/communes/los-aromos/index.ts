@@ -33,6 +33,7 @@ export const losAromosData: CommuneData = {
   accountingBalance: [],
   benefits: [],
   boundary: null,
+  territory: null,
   contextIndicators: [],
   enrollment: [],
   sportsPrograms: [],

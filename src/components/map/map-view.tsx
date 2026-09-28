@@ -5,6 +5,7 @@ import { useEffect, useRef } from "react";
 import L from "./leaflet-global";
 import "leaflet.markercluster";
 
+import type { TerritoryArea } from "@/data/communes";
 import { googleMapsUrls } from "@/lib/maps";
 
 import "leaflet/dist/leaflet.css";
@@ -20,6 +21,9 @@ export interface MapPlace {
   lng: number;
   /** Enlace a la ficha propia dentro de MiComuna360. */
   href: string;
+  /** Sector y unidad vecinal donde cae el lugar, si la comuna los publica. */
+  sector?: string | null;
+  unit?: string | null;
 }
 
 interface MapViewProps {
@@ -30,6 +34,14 @@ interface MapViewProps {
   colors: Record<string, string>;
   /** Límite comunal oficial [lat, lng], dibujado como contorno. */
   boundary?: [number, number][] | null;
+  /** División territorial visible (sectores o unidades vecinales), con rótulos. */
+  areas?: TerritoryArea[];
+  /** Zoom mínimo al que se muestran los rótulos de `areas`. */
+  labelMinZoom?: number;
+  /** Sector destacado (el elegido o el del vecino). */
+  highlight?: TerritoryArea | null;
+  /** Encuadre al filtrar (p. ej. el sector elegido); si no, toda la comuna. */
+  frame?: [number, number][] | null;
   /** Lugar elegido en la lista: el mapa lo muestra y abre su ficha. */
   selectedId?: string | null;
   /** Avisa qué lugar abrió el vecino en el mapa (para marcarlo en la lista). */
@@ -77,6 +89,10 @@ export default function MapView({
   zoom,
   colors,
   boundary = null,
+  areas = [],
+  labelMinZoom = 13,
+  highlight = null,
+  frame = null,
   selectedId = null,
   onSelect,
   userPosition = null,
@@ -86,6 +102,7 @@ export default function MapView({
   const clusterRef = useRef<L.MarkerClusterGroup | null>(null);
   const markersRef = useRef(new Map<string, L.Marker>());
   const userLayerRef = useRef<L.LayerGroup | null>(null);
+  const areaLayerRef = useRef<L.LayerGroup | null>(null);
   /* El aviso al padre se guarda en una ref para no recrear los marcadores
      cada vez que cambia la función. */
   const onSelectRef = useRef(onSelect);
@@ -128,6 +145,12 @@ export default function MapView({
         interactive: false,
       }).addTo(map);
     }
+    /* Rótulos de sectores y unidades vecinales: sobre los polígonos, bajo
+       los marcadores, y sin capturar toques. */
+    const labelPane = map.createPane("areaLabels");
+    labelPane.style.zIndex = "450";
+    labelPane.style.pointerEvents = "none";
+    areaLayerRef.current = L.layerGroup().addTo(map);
     clusterRef.current = L.markerClusterGroup({
       showCoverageOnHover: false,
       maxClusterRadius: 44,
@@ -150,6 +173,7 @@ export default function MapView({
       mapRef.current = null;
       clusterRef.current = null;
       userLayerRef.current = null;
+      areaLayerRef.current = null;
     };
   }, [center.lat, center.lng, zoom, boundary]);
 
@@ -177,6 +201,11 @@ export default function MapView({
           `<div style="min-width:200px">
             <strong style="display:block;font-size:14px">${escapeHtml(place.name)}</strong>
             <span style="display:block;margin-top:2px;color:#4b5563">${escapeHtml(place.address)}</span>
+            ${
+              place.sector
+                ? `<span style="display:block;margin-top:2px;color:#4b5563">Sector ${escapeHtml(place.sector)}${place.unit ? ` · ${escapeHtml(place.unit)}` : ""}</span>`
+                : ""
+            }
             <span style="display:flex;flex-direction:column;gap:4px;margin-top:8px">
               <a href="${escapeHtml(place.href)}" style="color:#1e8e89;font-weight:700">Ver ficha en MiComuna360</a>
               <a href="${urls.llegar}" target="_blank" rel="noopener noreferrer">Cómo llegar ↗</a>
@@ -197,14 +226,63 @@ export default function MapView({
     if (target) {
       cluster.zoomToShowLayer(target, () => target.openPopup());
     } else if (places.length > 1 && mapRef.current) {
-      // Encuadrar los marcadores visibles (y la comuna, si se conoce).
+      // Encuadrar los marcadores visibles y la comuna (o el sector elegido).
       const points = places.map((p) => [p.lat, p.lng] as [number, number]);
-      mapRef.current.fitBounds(L.latLngBounds([...points, ...(boundary ?? [])]), {
-        padding: [24, 24],
-        maxZoom: 16,
-      });
+      mapRef.current.fitBounds(
+        L.latLngBounds([...points, ...(frame ?? boundary ?? [])]),
+        { padding: [24, 24], maxZoom: 16 }
+      );
+    } else if (frame && mapRef.current) {
+      mapRef.current.fitBounds(L.latLngBounds(frame), { padding: [24, 24] });
     }
-  }, [places, colors, boundary]);
+  }, [places, colors, boundary, frame]);
+
+  // Sectores o unidades vecinales, con su rótulo, y el sector destacado.
+  useEffect(() => {
+    const layer = areaLayerRef.current;
+    const map = mapRef.current;
+    if (!layer || !map) return;
+    layer.clearLayers();
+    for (const area of areas) {
+      L.polygon(area.ring, {
+        color: "#17375e",
+        weight: 1.5,
+        opacity: 0.6,
+        fill: false,
+        interactive: false,
+      }).addTo(layer);
+      const text = escapeHtml(area.shortName ?? area.name);
+      L.marker(area.label, {
+        pane: "areaLabels",
+        interactive: false,
+        keyboard: false,
+        icon: L.divIcon({
+          className: "",
+          html: `<span style="display:flex;align-items:center;justify-content:center;width:112px;height:40px;margin:-20px 0 0 -56px;text-align:center;font:700 ${area.shortName ? 11 : 12}px/1.15 var(--font-sans),sans-serif;color:#17375e;text-shadow:0 0 2px #fff,0 0 3px #fff,0 0 4px #fff">${text}</span>`,
+          iconSize: [0, 0],
+        }),
+      }).addTo(layer);
+    }
+    if (highlight) {
+      L.polygon(highlight.ring, {
+        color: "#136a66",
+        weight: 3,
+        fillColor: "#1e8e89",
+        fillOpacity: 0.12,
+        interactive: false,
+      }).addTo(layer);
+    }
+    /* Rótulos solo cuando caben: con poco zoom se tapan entre sí. */
+    const pane = map.getPane("areaLabels");
+    const syncLabels = () => {
+      if (pane) pane.style.display = map.getZoom() < labelMinZoom ? "none" : "";
+    };
+    syncLabels();
+    map.on("zoomend", syncLabels);
+    return () => {
+      map.off("zoomend", syncLabels);
+    };
+  }, [areas, highlight, labelMinZoom]);
 
   // Lugar elegido desde la lista: separarlo del grupo y abrir su ficha.
   useEffect(() => {

@@ -1,0 +1,37 @@
+capa,id,nombre_oficial,nombre_publicado,puntos,superficie_km2
+sector,sector-antumapu,SECTOR ANTUMAPU,Antumapu,13,3.40
+sector,sector-centro,SECTOR CENTRO,Centro,18,3.88
+sector,sector-el-castillo,SECTOR EL CASTILLO,El Castillo,11,1.55
+sector,sector-el-roble,SECTOR EL ROBLE,El Roble,12,1.97
+sector,sector-ex-fundo-la-esperanza,SECTOR EX FUNDO LA ESPERANZA,Ex Fundo La Esperanza,7,1.23
+sector,sector-ex-fundo-la-primavera,SECTOR EX FUNDO LA PRIMAVERA,Ex Fundo La Primavera,9,1.71
+sector,sector-ex-fundo-san-antonio,SECTOR EX FUNDO SAN ANTONIO,Ex Fundo San Antonio,13,4.80
+sector,sector-huertos-jose-maza,SECTOR HUERTOS JOSE MAZA DE LA PINTANA,Huertos José Maza,11,2.93
+sector,sector-la-platina,SECTOR LA PLATINA,La Platina,9,2.96
+sector,sector-las-rosas,SECTOR LAS ROSAS,Las Rosas,14,1.30
+sector,sector-mapuhue,SECTOR MAPUHUE,Mapuhue,16,3.20
+sector,sector-santo-tomas,SECTOR SANTO TOMAS,Santo Tomás,7,1.44
+unidad_vecinal,uv-1,UV 1,Unidad vecinal 1,15,0.81
+unidad_vecinal,uv-2,UV 2,Unidad vecinal 2,20,0.51
+unidad_vecinal,uv-3,UV 3,Unidad vecinal 3,14,0.65
+unidad_vecinal,uv-4,UV 4,Unidad vecinal 4,17,1.31
+unidad_vecinal,uv-5,UV 5,Unidad vecinal 5,9,0.27
+unidad_vecinal,uv-6,UV 6,Unidad vecinal 6,11,0.43
+unidad_vecinal,uv-7,UV 7,Unidad vecinal 7,12,0.41
+unidad_vecinal,uv-8,UV 8,Unidad vecinal 8,5,0.44
+unidad_vecinal,uv-9,UV 9,Unidad vecinal 9,6,0.66
+unidad_vecinal,uv-10,UV 10,Unidad vecinal 10,6,0.52
+unidad_vecinal,uv-11,UV 11,Unidad vecinal 11,10,0.32
+unidad_vecinal,uv-12,UV 12,Unidad vecinal 12,6,0.62
+unidad_vecinal,uv-13,UV 13,Unidad vecinal 13,21,9.22
+unidad_vecinal,uv-14,UV 14,Unidad vecinal 14,8,0.27
+unidad_vecinal,uv-15,UV 15,Unidad vecinal 15,9,0.47
+unidad_vecinal,uv-16,UV 16,Unidad vecinal 16,7,0.28
+unidad_vecinal,uv-17,UV 17,Unidad vecinal 17,9,1.71
+unidad_vecinal,uv-18,UV 18,Unidad vecinal 18,11,2.93
+unidad_vecinal,uv-19,UV 19,Unidad vecinal 19,7,0.53
+unidad_vecinal,uv-20,UV 20,Unidad vecinal 20,5,0.55
+unidad_vecinal,uv-21,UV 21,Unidad vecinal 21,9,0.23
+unidad_vecinal,uv-22,UV 22,Unidad vecinal 22,6,0.89
+unidad_vecinal,uv-23,UV 23,Unidad vecinal 23,13,3.40
+unidad_vecinal,uv-24,UV 24,Unidad vecinal 24,11,2.95

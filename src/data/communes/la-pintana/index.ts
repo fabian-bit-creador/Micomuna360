@@ -14,6 +14,7 @@ import { reportedLiabilities } from "./transparency/liabilities";
 import { services } from "./services";
 import { sources } from "./sources";
 import { sportsPrograms } from "./sports";
+import { territory } from "./territory";
 
 /**
  * Dataset del piloto La Pintana.
@@ -45,6 +46,7 @@ export const laPintanaData: CommuneData = {
   accountingBalance,
   benefits,
   boundary,
+  territory,
   contextIndicators,
   enrollment,
   sportsPrograms,

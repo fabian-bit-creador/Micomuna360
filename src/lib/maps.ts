@@ -33,3 +33,31 @@ export function formatDistance(meters: number): string {
   if (meters < 1000) return `${Math.round(meters / 10) * 10} m`;
   return `${(meters / 1000).toLocaleString("es-CL", { maximumFractionDigits: 1 })} km`;
 }
+
+/** Punto dentro de un anillo [lat, lng] (algoritmo de trazado de rayos). */
+export function insideRing(
+  lat: number,
+  lng: number,
+  ring: [number, number][]
+): boolean {
+  let inside = false;
+  for (let i = 0, j = ring.length - 1; i < ring.length; j = i++) {
+    const [latI, lngI] = ring[i];
+    const [latJ, lngJ] = ring[j];
+    if (
+      latI > lat !== latJ > lat &&
+      lng < ((lngJ - lngI) * (lat - latI)) / (latJ - latI) + lngI
+    ) {
+      inside = !inside;
+    }
+  }
+  return inside;
+}
+
+/** Primera área (sector o unidad vecinal) que contiene el punto, si hay. */
+export function findArea<T extends { ring: [number, number][] }>(
+  { lat, lng }: { lat: number; lng: number },
+  areas: T[]
+): T | null {
+  return areas.find((area) => insideRing(lat, lng, area.ring)) ?? null;
+}
