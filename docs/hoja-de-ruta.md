@@ -25,7 +25,7 @@ La información vieja es el mayor riesgo del sitio.
 | Agenda | La cartelera cultural se revisa cada mes (su fuente vence el 2026-10-31). Las actividades pasadas se ocultan solas, pero las nuevas hay que cargarlas. |
 | Números de emergencia | 131, 132, 133 y 134 confirmados desde Chile el 2026-10-03; se revisan de nuevo antes del 2027-04-03. |
 | Revisión de fuentes | Cada fuente tiene `validUntil`. Deportes vence el 2026-12-31 (cambio de semestre) y la mayoría de las fuentes municipales el 2026-12-27. Al vencer, la ficha se muestra como «revisión vencida» sola. |
-| Controles automáticos | Revisión en cada cambio con lint, build y validación de datos (GitHub Actions), y una rama estable protegida para producción. |
+| Controles automáticos | Hecho el 2026-10-03: `.github/workflows/revision.yml` corre lint, validación de datos y build en la rama de producción, en las ramas `propuesta-*` y en cada pull request. Falta proteger la rama de producción en GitHub (Settings → Branches) para que exija esa revisión. |
 | Pruebas de recorridos | Pruebas automáticas de lo que usa un vecino: buscar, revisar beneficios, filtrar deportes, abrir el mapa, llamar. |
 | Rendimiento | Medir en un celular de gama media con red móvil. Transparencia es la página más pesada: cargar sus tablas largas bajo demanda. |
 
@@ -95,5 +95,5 @@ Después, en este orden (de menor a mayor riesgo):
 | H01 dependencias, H02 vigencia, H03 contraste, H05 buscadores, H06 cabeceras, H07 validación de fechas y URL, H09 documentación, H11 ids fijos, H12 privacidad en URL, H14 celular | Resueltos |
 | H13 rendimiento | Dependencias sin uso eliminadas y versión de Node fijada; falta medir |
 | H10 cargas reproducibles | Deportes tiene captura y generador en `docs/fuentes/`; faltan los de las cargas anteriores |
-| H04 controles del repositorio | Pendiente (etapa 1) |
+| H04 controles del repositorio | Revisión automática hecha (2026-10-03); falta proteger la rama de producción |
 | H08 aislamiento en base de datos | Condición previa de la etapa 3 |
