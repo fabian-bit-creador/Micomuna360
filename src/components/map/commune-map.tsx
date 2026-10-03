@@ -1,8 +1,15 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useMemo, useState, useSyncExternalStore } from "react";
 import dynamic from "next/dynamic";
-import { LocateFixedIcon, NavigationIcon, ScanEyeIcon } from "lucide-react";
+import {
+  ListIcon,
+  LocateFixedIcon,
+  MapIcon,
+  NavigationIcon,
+  PhoneIcon,
+  ScanEyeIcon,
+} from "lucide-react";
 
 import type { CommuneTerritory } from "@/data/communes";
 import {
@@ -11,9 +18,11 @@ import {
   formatDistance,
   googleMapsUrls,
 } from "@/lib/maps";
+import { telHref } from "@/lib/format";
 import { cn } from "@/lib/utils";
 
 import type { MapPlace } from "./map-view";
+import { PlaceSheet } from "./place-sheet";
 
 /* Leaflet necesita el DOM: se carga solo en el navegador. */
 const MapView = dynamic(() => import("./map-view"), {
@@ -64,6 +73,41 @@ interface CommuneMapProps {
 
 type Division = "sectors" | "units" | "none";
 
+const noSubscribe = () => () => {};
+
+/** Pantalla de escritorio (mapa y lista lado a lado). */
+function useIsDesktop(): boolean {
+  return useSyncExternalStore(
+    (onChange) => {
+      const query = window.matchMedia("(min-width: 1024px)");
+      query.addEventListener("change", onChange);
+      return () => query.removeEventListener("change", onChange);
+    },
+    () => window.matchMedia("(min-width: 1024px)").matches,
+    () => false
+  );
+}
+
+/** El teléfono pidió ahorrar datos o la conexión es muy lenta. */
+function useLowData(): boolean {
+  return useSyncExternalStore(
+    noSubscribe,
+    () => {
+      const connection = (
+        navigator as Navigator & {
+          connection?: { saveData?: boolean; effectiveType?: string };
+        }
+      ).connection;
+      return Boolean(
+        connection?.saveData ||
+          connection?.effectiveType === "2g" ||
+          connection?.effectiveType === "slow-2g"
+      );
+    },
+    () => false
+  );
+}
+
 const divisionLabels: Record<Division, string> = {
   sectors: "Sectores",
   units: "Unidades vecinales",
@@ -72,7 +116,7 @@ const divisionLabels: Record<Division, string> = {
 
 const chipClass = (active: boolean) =>
   cn(
-    "min-h-9 rounded-full border px-4 py-1.5 text-sm font-semibold transition-colors",
+    "min-h-9 shrink-0 rounded-full border px-4 py-1.5 text-sm font-semibold whitespace-nowrap transition-colors",
     active
       ? "border-transparent bg-primary text-primary-foreground"
       : "bg-card text-muted-foreground hover:bg-accent hover:text-accent-foreground"
@@ -110,6 +154,13 @@ export function CommuneMap({
     territory ? "sectors" : "none"
   );
   const [sectorId, setSectorId] = useState<string | null>(null);
+  const isDesktop = useIsDesktop();
+  const lowData = useLowData();
+  /* En el celular se elige mapa o lista; con datos limitados parte en lista
+     y el mapa (Leaflet y las teselas) no se descarga hasta pedirlo. */
+  const [viewChoice, setViewChoice] = useState<"map" | "list" | null>(null);
+  const view = viewChoice ?? (lowData ? "list" : "map");
+  const showMap = isDesktop || view === "map";
 
   const sectors = useMemo(() => territory?.sectors ?? [], [territory]);
   const sector = sectors.find((s) => s.id === sectorId) ?? null;
@@ -143,6 +194,16 @@ export function CommuneMap({
       .sort((a, b) => a.distance - b.distance);
   }, [visible, position]);
 
+  const selected = visible.find((p) => p.id === selectedId) ?? null;
+  const nearby = useMemo(() => {
+    if (!selected) return [];
+    return visible
+      .filter((p) => p.id !== selected.id)
+      .map((p) => ({ place: p, distance: distanceMeters(selected, p) }))
+      .sort((a, b) => a.distance - b.distance)
+      .slice(0, 6);
+  }, [visible, selected]);
+
   function findMe() {
     if (!("geolocation" in navigator)) {
       setLocate({ state: "error", message: "Tu navegador no permite ubicarte." });
@@ -169,6 +230,8 @@ export function CommuneMap({
 
   function choose(id: string) {
     setSelectedId(id);
+    /* Desde la lista del celular, elegir un lugar abre el mapa con su ficha. */
+    if (!isDesktop && view === "list") setViewChoice("map");
     /* En el celular la lista queda bajo el mapa: subir para verlo. */
     document
       .getElementById("mapa-comunal")
@@ -178,8 +241,9 @@ export function CommuneMap({
   return (
     <div>
       <div className="mb-4 flex flex-wrap items-center gap-2">
+        {/* En el celular, filtros en una fila que se desliza de lado. */}
         <div
-          className="flex flex-wrap gap-2"
+          className="-mx-4 flex w-[calc(100%+2rem)] gap-2 overflow-x-auto px-4 pb-1 [scrollbar-width:none] sm:mx-0 sm:w-auto sm:flex-wrap sm:overflow-visible sm:px-0 sm:pb-0"
           role="group"
           aria-label="Filtrar lugares por categoría"
         >
@@ -212,6 +276,38 @@ export function CommuneMap({
             );
           })}
         </div>
+        {/* Solo en el celular: mapa o lista, a elección */}
+        <div
+          role="group"
+          aria-label="Cómo ver los lugares"
+          className="inline-flex rounded-full border bg-card p-1 lg:hidden"
+        >
+          {(
+            [
+              ["map", "Mapa", MapIcon],
+              ["list", "Lista", ListIcon],
+            ] as const
+          ).map(([value, label, Icon]) => (
+            <button
+              key={value}
+              type="button"
+              onClick={() => {
+                setViewChoice(value);
+                if (value === "list") setSelectedId(null);
+              }}
+              aria-pressed={view === value}
+              className={cn(
+                "flex min-h-9 items-center gap-1.5 rounded-full px-4 text-sm font-semibold",
+                view === value
+                  ? "bg-primary text-primary-foreground"
+                  : "text-muted-foreground"
+              )}
+            >
+              <Icon aria-hidden="true" className="size-4" />
+              {label}
+            </button>
+          ))}
+        </div>
         {position ? (
           <button
             type="button"
@@ -237,7 +333,7 @@ export function CommuneMap({
       {territory && (
         <div className="mb-4 flex flex-wrap items-center gap-x-4 gap-y-2">
           <div
-            className="flex flex-wrap gap-2"
+            className="-mx-4 flex w-[calc(100%+2rem)] gap-2 overflow-x-auto px-4 pb-1 [scrollbar-width:none] sm:mx-0 sm:w-auto sm:flex-wrap sm:overflow-visible sm:px-0 sm:pb-0"
             role="group"
             aria-label="Divisiones de la comuna en el mapa"
           >
@@ -299,22 +395,35 @@ export function CommuneMap({
         )}
       </div>
 
+      {!isDesktop && view === "list" && lowData && viewChoice === null && (
+        <p className="mb-3 text-sm text-muted-foreground">
+          Tu teléfono está ahorrando datos: mostramos la lista. El mapa se
+          descarga solo si lo pides.
+        </p>
+      )}
+
       <div className="grid gap-4 lg:grid-cols-[272px_minmax(0,1fr)]">
-        <div id="mapa-comunal" className="scroll-mt-24 lg:order-2">
-          <MapView
-            places={visible}
-            center={center}
-            zoom={zoom}
-            colors={categoryColors}
-            boundary={boundary}
-            areas={areas}
-            labelMinZoom={division === "units" ? 13 : 12}
-            highlight={sector ?? mySector}
-            frame={sector?.ring ?? null}
-            selectedId={selectedId}
-            onSelect={setSelectedId}
-            userPosition={position}
-          />
+        <div
+          id="mapa-comunal"
+          className={cn("scroll-mt-24 lg:order-2", !showMap && "hidden")}
+        >
+          {showMap && (
+            <MapView
+              places={visible}
+              center={center}
+              zoom={zoom}
+              colors={categoryColors}
+              boundary={boundary}
+              areas={areas}
+              labelMinZoom={division === "units" ? 13 : 12}
+              highlight={sector ?? mySector}
+              frame={sector?.ring ?? null}
+              selectedId={selectedId}
+              onSelect={setSelectedId}
+              userPosition={position}
+              sheetMode={!isDesktop}
+            />
+          )}
         </div>
 
         {/* La misma información como lista: es también la alternativa
@@ -327,7 +436,12 @@ export function CommuneMap({
               {sector?.name}.
             </p>
           )}
-          <ul className="max-h-[360px] space-y-1.5 overflow-y-auto pr-1 lg:max-h-[680px]">
+          <ul
+            className={cn(
+              "space-y-1.5",
+              showMap && "max-h-[360px] overflow-y-auto pr-1 lg:max-h-[680px]"
+            )}
+          >
             {listed.map(({ place, distance }) => {
               const urls = googleMapsUrls(place);
               const isSelected = selectedId === place.id;
@@ -374,6 +488,15 @@ export function CommuneMap({
                     </span>
                   </button>
                   <div className="mt-1 flex flex-wrap items-center gap-x-3 text-xs font-semibold">
+                    {place.phone && (
+                      <a
+                        href={telHref(place.phone)}
+                        className="inline-flex min-h-8 items-center gap-1 text-brand-teal-ink hover:underline"
+                      >
+                        <PhoneIcon className="size-3.5" />
+                        Llamar
+                      </a>
+                    )}
                     <a
                       href={place.href}
                       className="inline-flex min-h-8 items-center text-brand-teal-ink hover:underline"
@@ -405,6 +528,18 @@ export function CommuneMap({
           </ul>
         </section>
       </div>
+
+      {!isDesktop && showMap && selected && (
+        <PlaceSheet
+          place={selected}
+          categoryLabel={categoryLabels[selected.category] ?? selected.category}
+          color={categoryColors[selected.category] ?? "#17375e"}
+          distance={position ? distanceMeters(position, selected) : null}
+          nearby={nearby}
+          onSelect={setSelectedId}
+          onClose={() => setSelectedId(null)}
+        />
+      )}
     </div>
   );
 }

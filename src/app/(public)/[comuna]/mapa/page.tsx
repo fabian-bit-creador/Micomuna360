@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
-import { MapPinnedIcon } from "lucide-react";
+import { DownloadIcon, MapPinnedIcon } from "lucide-react";
 
 import { ComingSoon } from "@/components/layout/coming-soon";
 import { SectionHeader } from "@/components/layout/section-header";
@@ -64,6 +64,7 @@ export default async function MapaPage({
         category: p.category,
         ...point,
         href: `/${commune.id}/directorio#${p.id}`,
+        phone: p.phone,
         sector: territory ? (findArea(point, territory.sectors)?.name ?? null) : null,
         unit: territory
           ? (findArea(point, territory.neighborhoodUnits)?.name ?? null)
@@ -90,6 +91,42 @@ export default async function MapaPage({
             boundary={boundary?.coordinates ?? null}
             territory={territory}
           />
+          <section
+            aria-labelledby="guardar"
+            className="mt-6 rounded-xl border bg-card px-5 py-4"
+          >
+            <h2 id="guardar" className="flex items-center gap-2 text-base font-bold">
+              <DownloadIcon aria-hidden="true" className="size-4 text-brand-teal-ink" />
+              Guarda los lugares para usarlos sin internet
+            </h2>
+            <p className="mt-1 text-sm text-muted-foreground">
+              Nombre, dirección, teléfono, coordenadas, sector y fuente de cada
+              lugar. Se abren en Excel, Google Sheets o una app de mapas.
+            </p>
+            <div className="mt-3 flex flex-wrap gap-x-5 gap-y-1 text-sm font-semibold">
+              <a
+                href={`/${commune.id}/descargas/lugares.csv`}
+                download
+                className="inline-flex min-h-9 items-center text-brand-teal-ink underline underline-offset-4"
+              >
+                Planilla (CSV)
+              </a>
+              <a
+                href={`/${commune.id}/descargas/lugares.geojson`}
+                download
+                className="inline-flex min-h-9 items-center text-brand-teal-ink underline underline-offset-4"
+              >
+                Mapa (GeoJSON)
+              </a>
+              <a
+                href={`/${commune.id}/descargas/telefonos.csv`}
+                download
+                className="inline-flex min-h-9 items-center text-brand-teal-ink underline underline-offset-4"
+              >
+                Teléfonos útiles (CSV)
+              </a>
+            </div>
+          </section>
           <p className="mt-4 rounded-lg bg-muted px-4 py-3 text-sm text-muted-foreground">
             Mapa base: © colaboradores de OpenStreetMap. Las coordenadas
             vienen del geoportal municipal y se contrastaron con

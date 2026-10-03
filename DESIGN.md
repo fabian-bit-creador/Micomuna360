@@ -122,16 +122,18 @@ deporte `#EB6834`, seguridad `#4A3AA7`, siempre con un glifo blanco.
 
 | Componente | Archivo | Notas |
 |---|---|---|
-| Cabecera | `layout/site-header.tsx` | Logo, selector de comuna (siempre visible), 6 secciones y menú «Más» |
+| Cabecera | `layout/site-header.tsx` | Logo, selector de comuna (siempre visible), 6 secciones y menú «Más»; en el celular, menú con el ícono de cada sección |
+| Barra inferior | `layout/bottom-nav.tsx` | Solo en el celular: Inicio, Trámites, Beneficios, Mapa y Teléfonos, al alcance del pulgar |
 | Encabezado de sección | `layout/section-header.tsx` | Antetítulo, título, bajada, ícono opcional y enlace «ver todo» |
 | Tarjeta | `ui/card.tsx` | Fondo `card`, borde, `rounded-xl` |
 | Botón | `ui/button.tsx` | `default` (navy), `secondary` (teal oscuro), `outline`, `ghost`, `link` |
 | Filtro | chips `rounded-full` con `aria-pressed` | Activo: `bg-primary text-primary-foreground` |
 | Procedencia | `shared/source-badge.tsx` | Estado (verificado, vencido, pendiente) + institución + fecha |
 | Aviso de independencia | portada de comuna | Caja `bg-brand-sky/10` con borde `brand-sky/40` |
-| Buscador | `search/search-box.tsx` | `h-12`, muestra «X de N resultados» y «ver todos» |
+| Buscador | `search/search-box.tsx` | `h-12`, «Lo más buscado» (solo términos con resultados), «X de N resultados» y «ver todos» |
+| Emergencias | portada de comuna | Fila de números a un toque (`tel:`) desde `phones.ts`, sin tono alarmista |
 | Foto con crédito | `shared/photo-figure.tsx` | Autor y licencia enlazados bajo la foto |
-| Mapa | `map/commune-map.tsx` | Filtros, «Cerca de mí», sectores y unidades vecinales, lista sincronizada y mapa Leaflet |
+| Mapa | `map/commune-map.tsx` | Filtros, «Cerca de mí», sectores y unidades vecinales, lista sincronizada y mapa Leaflet. En el celular: selector Mapa/Lista (lista por defecto si el teléfono ahorra datos) y ficha en hoja inferior (`map/place-sheet.tsx`) con «Cómo llegar» y lugares cercanos |
 
 ## Movimiento
 

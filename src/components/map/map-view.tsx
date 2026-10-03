@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 
 import L from "./leaflet-global";
 import "leaflet.markercluster";
@@ -24,6 +24,8 @@ export interface MapPlace {
   /** Sector y unidad vecinal donde cae el lugar, si la comuna los publica. */
   sector?: string | null;
   unit?: string | null;
+  /** Teléfono publicado del lugar, si tiene. */
+  phone?: string | null;
 }
 
 interface MapViewProps {
@@ -48,6 +50,11 @@ interface MapViewProps {
   onSelect?: (id: string | null) => void;
   /** Posición del vecino («cerca de mí»); solo vive en su navegador. */
   userPosition?: { lat: number; lng: number } | null;
+  /**
+   * En el celular la ficha del lugar la muestra el padre en una hoja
+   * inferior: el mapa no abre ventanas emergentes, solo avisa la selección.
+   */
+  sheetMode?: boolean;
 }
 
 /* Glifo blanco por categoría (trazos simples, 24×24), para no depender
@@ -96,7 +103,9 @@ export default function MapView({
   selectedId = null,
   onSelect,
   userPosition = null,
+  sheetMode = false,
 }: MapViewProps) {
+  const [showGestureHint, setShowGestureHint] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
   const mapRef = useRef<L.Map | null>(null);
   const clusterRef = useRef<L.MarkerClusterGroup | null>(null);
@@ -113,12 +122,16 @@ export default function MapView({
   // Crear el mapa una sola vez.
   useEffect(() => {
     if (!containerRef.current || mapRef.current) return;
+    /* En pantallas táctiles un dedo baja la página y dos mueven el mapa
+       (el gesto de pellizco de Leaflet también lo desplaza). */
+    const touch = window.matchMedia("(pointer: coarse)").matches;
     const map = L.map(containerRef.current, {
       center: [center.lat, center.lng],
       zoom,
       // Evita capturar el scroll de la página al pasar por encima.
       scrollWheelZoom: false,
       zoomControl: false,
+      dragging: !touch,
     });
     // Controles y botones en español (Leaflet los trae en inglés).
     L.control
@@ -168,7 +181,19 @@ export default function MapView({
     userLayerRef.current = L.layerGroup().addTo(map);
     mapRef.current = map;
 
+    let hintTimer: number | undefined;
+    const container = containerRef.current;
+    const onTouchMove = (e: TouchEvent) => {
+      if (e.touches.length !== 1) return;
+      setShowGestureHint(true);
+      window.clearTimeout(hintTimer);
+      hintTimer = window.setTimeout(() => setShowGestureHint(false), 1500);
+    };
+    if (touch) container.addEventListener("touchmove", onTouchMove, { passive: true });
+
     return () => {
+      container.removeEventListener("touchmove", onTouchMove);
+      window.clearTimeout(hintTimer);
       map.remove();
       mapRef.current = null;
       clusterRef.current = null;
@@ -195,25 +220,31 @@ export default function MapView({
         iconAnchor: [13, 13],
         popupAnchor: [0, -15],
       });
+      const marker = L.marker([place.lat, place.lng], { icon, title: place.name });
+      if (sheetMode) {
+        marker.on("click", () => onSelectRef.current?.(place.id));
+        cluster.addLayer(marker);
+        markers.set(place.id, marker);
+        continue;
+      }
       const urls = googleMapsUrls(place);
-      const marker = L.marker([place.lat, place.lng], { icon, title: place.name })
-        .bindPopup(
-          `<div style="min-width:200px">
-            <strong style="display:block;font-size:14px">${escapeHtml(place.name)}</strong>
-            <span style="display:block;margin-top:2px;color:#4b5563">${escapeHtml(place.address)}</span>
-            ${
-              place.sector
-                ? `<span style="display:block;margin-top:2px;color:#4b5563">Sector ${escapeHtml(place.sector)}${place.unit ? ` · ${escapeHtml(place.unit)}` : ""}</span>`
-                : ""
-            }
-            <span style="display:flex;flex-direction:column;gap:4px;margin-top:8px">
-              <a href="${escapeHtml(place.href)}" style="color:#1e8e89;font-weight:700">Ver ficha en MiComuna360</a>
-              <a href="${urls.llegar}" target="_blank" rel="noopener noreferrer">Cómo llegar ↗</a>
-              <a href="${urls.calle}" target="_blank" rel="noopener noreferrer">Ver la calle (Street View) ↗</a>
-              <a href="${urls.ver}" target="_blank" rel="noopener noreferrer">Ver en Google Maps ↗</a>
-            </span>
-          </div>`
-        );
+      marker.bindPopup(
+        `<div style="min-width:200px">
+          <strong style="display:block;font-size:14px">${escapeHtml(place.name)}</strong>
+          <span style="display:block;margin-top:2px;color:#4b5563">${escapeHtml(place.address)}</span>
+          ${
+            place.sector
+              ? `<span style="display:block;margin-top:2px;color:#4b5563">Sector ${escapeHtml(place.sector)}${place.unit ? ` · ${escapeHtml(place.unit)}` : ""}</span>`
+              : ""
+          }
+          <span style="display:flex;flex-direction:column;gap:4px;margin-top:8px">
+            <a href="${escapeHtml(place.href)}" style="color:#1e8e89;font-weight:700">Ver ficha en MiComuna360</a>
+            <a href="${urls.llegar}" target="_blank" rel="noopener noreferrer">Cómo llegar ↗</a>
+            <a href="${urls.calle}" target="_blank" rel="noopener noreferrer">Ver la calle (Street View) ↗</a>
+            <a href="${urls.ver}" target="_blank" rel="noopener noreferrer">Ver en Google Maps ↗</a>
+          </span>
+        </div>`
+      );
       marker.on("popupopen", () => onSelectRef.current?.(place.id));
       marker.on("popupclose", () => onSelectRef.current?.(null));
       cluster.addLayer(marker);
@@ -222,9 +253,12 @@ export default function MapView({
     markersRef.current = markers;
 
     // Si se llegó con #id (desde el directorio), abrir ese lugar.
-    const target = markers.get(decodeURIComponent(window.location.hash.slice(1)));
+    const targetId = decodeURIComponent(window.location.hash.slice(1));
+    const target = markers.get(targetId);
     if (target) {
-      cluster.zoomToShowLayer(target, () => target.openPopup());
+      cluster.zoomToShowLayer(target, () =>
+        sheetMode ? onSelectRef.current?.(targetId) : target.openPopup()
+      );
     } else if (places.length > 1 && mapRef.current) {
       // Encuadrar los marcadores visibles y la comuna (o el sector elegido).
       const points = places.map((p) => [p.lat, p.lng] as [number, number]);
@@ -235,7 +269,7 @@ export default function MapView({
     } else if (frame && mapRef.current) {
       mapRef.current.fitBounds(L.latLngBounds(frame), { padding: [24, 24] });
     }
-  }, [places, colors, boundary, frame]);
+  }, [places, colors, boundary, frame, sheetMode]);
 
   // Sectores o unidades vecinales, con su rótulo, y el sector destacado.
   useEffect(() => {
@@ -290,8 +324,10 @@ export default function MapView({
     const marker = markersRef.current.get(selectedId);
     const cluster = clusterRef.current;
     if (!marker || !cluster || marker.isPopupOpen()) return;
-    cluster.zoomToShowLayer(marker, () => marker.openPopup());
-  }, [selectedId]);
+    cluster.zoomToShowLayer(marker, () => {
+      if (!sheetMode) marker.openPopup();
+    });
+  }, [selectedId, sheetMode]);
 
   // Posición del vecino: un punto azul que no sale de su navegador.
   useEffect(() => {
@@ -313,13 +349,21 @@ export default function MapView({
   }, [userPosition]);
 
   return (
-    <div
-      ref={containerRef}
-      role="application"
-      aria-label="Mapa de lugares de la comuna"
-      /* z-0 aísla el apilado de Leaflet para que sus capas y fichas no
-         se dibujen por encima del encabezado fijo. */
-      className="relative z-0 h-[480px] w-full rounded-xl border md:h-[640px] lg:h-[680px]"
-    />
+    <div className="relative">
+      <div
+        ref={containerRef}
+        role="application"
+        aria-label="Mapa de lugares de la comuna"
+        /* z-0 aísla el apilado de Leaflet para que sus capas y fichas no
+           se dibujen por encima del encabezado fijo. */
+        className="relative z-0 h-[480px] w-full rounded-xl border md:h-[640px] lg:h-[680px]"
+      />
+      <p
+        aria-hidden="true"
+        className={`pointer-events-none absolute inset-0 z-10 flex items-center justify-center rounded-xl bg-black/45 px-6 text-center text-base font-semibold text-white transition-opacity duration-300 ${showGestureHint ? "opacity-100" : "opacity-0"}`}
+      >
+        Usa dos dedos para mover el mapa
+      </p>
+    </div>
   );
 }
