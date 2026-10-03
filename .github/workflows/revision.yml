@@ -1,0 +1,42 @@
+# Revisión automática: en cada pull request y en cada cambio de la rama de
+# producción corre ESLint y el build, que incluye la validación de todos los
+# datos (src/lib/data-integrity.ts). Si algo falla, el cambio queda marcado
+# en rojo antes de que llegue al sitio.
+name: Revisión
+
+on:
+  pull_request:
+  push:
+    branches:
+      - claude/micomuna360-architecture-gadm7s
+
+concurrency:
+  group: revision-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
+jobs:
+  revision:
+    name: Lint, datos y build
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version-file: .nvmrc
+          cache: npm
+
+      - name: Instalar dependencias
+        run: npm ci
+
+      - name: ESLint
+        run: npm run lint
+
+      - name: Build y validación de datos
+        run: npm run build
+        env:
+          NEXT_TELEMETRY_DISABLED: "1"
