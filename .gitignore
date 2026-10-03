@@ -45,3 +45,8 @@ next-env.d.ts
 
 # permitir el ejemplo de variables de entorno
 !.env.example
+
+# Pruebas de recorridos (Playwright)
+/test-results/
+/playwright-report/
+/blob-report/

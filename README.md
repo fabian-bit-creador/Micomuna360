@@ -97,6 +97,7 @@ npm install
 npm run dev     # http://localhost:3000
 npm run lint
 npm run build   # build de producción (incluye la validación de datos)
+npm run test:e2e  # pruebas de recorridos (después del build)
 ```
 
 ## Agregar o actualizar datos de una comuna
@@ -105,7 +106,7 @@ npm run build   # build de producción (incluye la validación de datos)
 2. Agregar los datos al dataset con su `sourceId` y, si vienen de un archivo,
    guardar el respaldo en `docs/fuentes/`.
 3. Activar el flag de la sección en la configuración de la comuna.
-4. Correr `npm run lint` y `npm run build`.
+4. Correr `npm run lint`, `npm run build` y `npm run test:e2e`.
 
 Para una comuna nueva: crear su configuración en `src/config/communes/`, su
 carpeta en `src/data/communes/` y registrarla en ambos índices.

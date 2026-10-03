@@ -55,6 +55,9 @@ nueve íconos de sección alrededor. Revisar que el texto salga bien escrito.
 
 Pedidos listos para pegar. Cada uno termina en un pull request.
 
+Los pedidos 1 y 2 ya están hechos (03-10-2026): `.github/workflows/revision.yml`
+y `e2e/`. Quedan como ejemplo de cómo pedirle algo a Codex.
+
 **1. Revisión automática en cada pull request** (auditoría H04):
 
 ```

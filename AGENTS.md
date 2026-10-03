@@ -98,3 +98,7 @@ vistas previas.
 - `npm run dev` — desarrollo en http://localhost:3000
 - `npm run lint` — ESLint
 - `npm run build` — build de producción, incluida la validación de datos
+- `npm run test:e2e` — pruebas de recorridos con Playwright en escritorio y
+  celular (`e2e/`; requiere el build). Corren también en GitHub Actions
+  (`.github/workflows/revision.yml`) en producción y en las ramas
+  `propuesta-*`. Al cambiar un texto o una etiqueta que usan, actualizarlas.
