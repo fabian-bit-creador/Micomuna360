@@ -1,6 +1,7 @@
 # Hoja de ruta
 
 Qué sigue para MiComuna360, en orden. Cada etapa se apoya en la anterior.
+El resumen de lo hecho y lo pendiente está en `docs/estado-2026-10.md`.
 
 ## Dónde estamos
 
@@ -76,13 +77,16 @@ Después, en este orden (de menor a mayor riesgo):
 
 - **Orientador de beneficios**: sumar deporte y cultura según la edad
   («hay niños de 6 a 12 años» → mini atletismo, judo infantil).
-- **Mapa comunal**: «cerca de mí», lista sincronizada y Street View (hechos);
-  sectores y unidades vecinales con «¿en qué sector estoy?» (propuesta).
+- **Mapa comunal**: «cerca de mí», lista sincronizada, Street View y
+  sectores con «¿en qué sector estoy?» (hechos). En el celular: hoja
+  inferior, lugares cercanos, dos dedos, vista lista y descargas
+  (propuesta `propuesta-mapa-movil`).
 - **Instalable en el celular** (PWA), con teléfonos y direcciones disponibles
   sin conexión.
-- **Portada con foto real** de la comuna, accesos rápidos y barra inferior de
-  navegación en el celular (ideas de la propuesta de interfaz de Codex).
-- **Mapa y lista en una sola vista**, como en esa misma propuesta.
+- **Portada v2**: buscador arriba con lo más buscado, emergencias a un
+  toque, cuatro accesos, foto real y barra inferior en el celular
+  (propuesta `propuesta-portada-v2`).
+- **Unir Directorio y Mapa** en una sola sección «Lugares».
 
 ## Auditoría de septiembre de 2026
 
