@@ -48,14 +48,18 @@ export function communeNav(commune: CommuneConfig): NavItem[] {
       href: `${base}/directorio`,
       icon: "directorio",
       description: "Lugares útiles de la comuna",
-      enabled: commune.features.directory && !commune.features.community,
+      /* Con mapa real, las fichas viven en la página del mapa. */
+      enabled:
+        commune.features.directory &&
+        !commune.features.community &&
+        !commune.features.realMap,
     },
     {
       title: "Mapa",
       primary: true,
       href: `${base}/mapa`,
       icon: "mapa",
-      description: "Lugares de la comuna en el mapa",
+      description: "Lugares de la comuna en el mapa, con su ficha",
       enabled: commune.features.realMap,
     },
     {

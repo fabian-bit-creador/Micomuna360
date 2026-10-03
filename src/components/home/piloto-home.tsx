@@ -110,13 +110,14 @@ function availableFor(commune: CommuneConfig) {
       description:
         "Municipio, centros de salud, recintos deportivos y emergencias, con dirección verificada y cómo llegar.",
       href: "/directorio",
-      enabled: features.directory,
+      /* Con mapa real, el directorio vive en la página del mapa. */
+      enabled: features.directory && !features.realMap,
     },
     {
-      title: "Mapa de la comuna",
+      title: "Mapa y lugares",
       art: "mapa" as SectionIconName,
       description:
-        "Los mismos lugares sobre el mapa, con coordenadas del geoportal municipal.",
+        "Municipio, centros de salud, recintos deportivos y seguridad sobre el mapa, con la ficha de cada lugar y cómo llegar.",
       href: "/mapa",
       enabled: features.realMap,
     },

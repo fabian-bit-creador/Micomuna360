@@ -84,7 +84,10 @@ indicadores) con la fuente y la fecha de verificación de cada dato. El
   la ficha va en una hoja inferior, el mapa se mueve con dos dedos (un dedo
   baja la página) y hay vista de lista que no descarga Leaflet. Los lugares
   y teléfonos se descargan en CSV/GeoJSON con su fuente
-  (`[comuna]/descargas/[archivo]`), solo para comunas reales.
+  (`[comuna]/descargas/[archivo]`), solo para comunas reales. Las fichas
+  del directorio (`components/places/place-directory.tsx`) van bajo el mapa
+  en la misma página: `#<id>` abre el lugar en el mapa y `#ficha-<id>` lleva
+  a su ficha; `/directorio` redirige a `/mapa` en las comunas con mapa real.
 
 ## Despliegue
 

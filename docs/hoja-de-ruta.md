@@ -86,7 +86,7 @@ Después, en este orden (de menor a mayor riesgo):
 - **Portada v2**: buscador arriba con lo más buscado, emergencias a un
   toque, cuatro accesos, foto real y barra inferior en el celular
   (publicada el 2026-10-03).
-- **Unir Directorio y Mapa** en una sola sección «Lugares».
+- **Directorio y Mapa unidos** en «Mapa y lugares» (2026-10-03): el mapa arriba y la ficha de cada lugar debajo.
 
 ## Auditoría de septiembre de 2026
 

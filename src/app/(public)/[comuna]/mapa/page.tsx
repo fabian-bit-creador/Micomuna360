@@ -6,6 +6,10 @@ import { ComingSoon } from "@/components/layout/coming-soon";
 import { SectionHeader } from "@/components/layout/section-header";
 import { CommuneMap } from "@/components/map/commune-map";
 import type { MapPlace } from "@/components/map/map-view";
+import {
+  PlaceDirectory,
+  placeCardId,
+} from "@/components/places/place-directory";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent } from "@/components/ui/card";
 import { getCommune } from "@/config/communes";
@@ -23,9 +27,9 @@ export async function generateMetadata({
   const { comuna } = await params;
   return communeMetadata(comuna, {
     path: "/mapa",
-    title: "Mapa",
+    title: "Mapa y lugares",
     description:
-      "Lugares y servicios de la comuna sobre el mapa, con su ficha y cómo llegar.",
+      "Municipio, salud, deporte y seguridad de la comuna sobre el mapa, con la ficha de cada lugar, su fuente y cómo llegar.",
     feature: "realMap",
   });
 }
@@ -63,7 +67,7 @@ export default async function MapaPage({
         address: p.address,
         category: p.category,
         ...point,
-        href: `/${commune.id}/directorio#${p.id}`,
+        href: `#${placeCardId(p.id)}`,
         phone: p.phone,
         sector: territory ? (findArea(point, territory.sectors)?.name ?? null) : null,
         unit: territory
@@ -78,8 +82,8 @@ export default async function MapaPage({
         level="h1"
         icon="mapa"
         eyebrow="Territorio"
-        title={`Mapa de ${commune.name}`}
-        description="Lugares y servicios de la comuna sobre el mapa abierto de OpenStreetMap, con su ficha y cómo llegar."
+        title={`Mapa y lugares de ${commune.name}`}
+        description="Municipio, salud, deporte y seguridad sobre el mapa abierto de OpenStreetMap. Bajo el mapa está la ficha de cada lugar, con su fuente, horario y teléfono verificados."
       />
 
       {mapPlaces.length > 0 ? (
@@ -127,7 +131,20 @@ export default async function MapaPage({
               </a>
             </div>
           </section>
-          <p className="mt-4 rounded-lg bg-muted px-4 py-3 text-sm text-muted-foreground">
+
+          {commune.features.directory && (
+            <section aria-labelledby="fichas" className="mt-14">
+              <h2
+                id="fichas"
+                className="mb-6 scroll-mt-24 text-2xl font-bold md:text-3xl"
+              >
+                Ficha de cada lugar
+              </h2>
+              <PlaceDirectory commune={commune} withMap headingLevel="h3" />
+            </section>
+          )}
+
+          <p className="mt-10 rounded-lg bg-muted px-4 py-3 text-sm text-muted-foreground">
             Mapa base: © colaboradores de OpenStreetMap. Las coordenadas
             vienen del geoportal municipal y se contrastaron con
             OpenStreetMap; cuando el geoportal no tiene un lugar, usamos

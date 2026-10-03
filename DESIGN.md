@@ -133,7 +133,7 @@ deporte `#EB6834`, seguridad `#4A3AA7`, siempre con un glifo blanco.
 | Buscador | `search/search-box.tsx` | `h-12`, «Lo más buscado» (solo términos con resultados), «X de N resultados» y «ver todos» |
 | Emergencias | portada de comuna | Fila de números a un toque (`tel:`) desde `phones.ts`, sin tono alarmista |
 | Foto con crédito | `shared/photo-figure.tsx` | Autor y licencia enlazados bajo la foto |
-| Mapa | `map/commune-map.tsx` | Filtros, «Cerca de mí», sectores y unidades vecinales, lista sincronizada y mapa Leaflet. En el celular: selector Mapa/Lista (lista por defecto si el teléfono ahorra datos) y ficha en hoja inferior (`map/place-sheet.tsx`) con «Cómo llegar» y lugares cercanos |
+| Mapa y lugares | `map/commune-map.tsx` + `places/place-directory.tsx` | Mapa arriba y la ficha de cada lugar debajo, en la misma página. Filtros, «Cerca de mí», sectores y unidades vecinales, lista sincronizada y mapa Leaflet. En el celular: selector Mapa/Lista (lista por defecto si el teléfono ahorra datos) y ficha en hoja inferior (`map/place-sheet.tsx`) con «Cómo llegar» y lugares cercanos |
 
 ## Movimiento
 

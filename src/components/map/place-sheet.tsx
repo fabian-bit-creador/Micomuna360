@@ -133,6 +133,7 @@ export function PlaceSheet({
         </a>
         <a
           href={place.href}
+          onClick={onClose}
           className="flex min-h-11 items-center justify-center gap-2 rounded-xl border bg-background px-3 text-sm font-semibold text-brand-teal-ink"
         >
           <FileTextIcon aria-hidden="true" className="size-4" />

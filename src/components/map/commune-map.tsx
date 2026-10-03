@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useState, useSyncExternalStore } from "react";
+import { useEffect, useMemo, useState, useSyncExternalStore } from "react";
 import dynamic from "next/dynamic";
 import {
   ListIcon,
@@ -203,6 +203,24 @@ export function CommuneMap({
       .sort((a, b) => a.distance - b.distance)
       .slice(0, 6);
   }, [visible, selected]);
+
+  /* «Ver en el mapa» desde una ficha de la misma página cambia el #: se
+     abre ese lugar (sin filtros que lo oculten) y el mapa sube a la vista. */
+  useEffect(() => {
+    const onHashChange = () => {
+      const id = decodeURIComponent(window.location.hash.slice(1));
+      if (!places.some((p) => p.id === id)) return;
+      setActive(null);
+      setSectorId(null);
+      setViewChoice((current) => (current === "list" ? "map" : current));
+      setSelectedId(id);
+      document
+        .getElementById("mapa-comunal")
+        ?.scrollIntoView({ behavior: "smooth", block: "center" });
+    };
+    window.addEventListener("hashchange", onHashChange);
+    return () => window.removeEventListener("hashchange", onHashChange);
+  }, [places]);
 
   function findMe() {
     if (!("geolocation" in navigator)) {

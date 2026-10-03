@@ -30,6 +30,18 @@ test.describe("Portada", () => {
     ).toBeVisible();
   });
 
+  test("busca un lugar y lo abre en el mapa", async ({ page }) => {
+    await page.goto("/la-pintana");
+    await page
+      .getByRole("searchbox", { name: "Buscador ciudadano" })
+      .fill("Polideportivo");
+    const result = page
+      .getByRole("link", { name: /Polideportivo/ })
+      .filter({ hasText: "Lugares" })
+      .first();
+    await expect(result).toHaveAttribute("href", /\/la-pintana\/mapa#/);
+  });
+
   test("las emergencias se llaman con un toque", async ({ page }) => {
     await page.goto("/la-pintana");
     for (const number of ["131", "132", "133"]) {
@@ -135,6 +147,34 @@ test.describe("Mapa", () => {
     await expect(list.getByRole("listitem").first()).toBeVisible();
   });
 
+  test("«Ver en el mapa» desde una ficha abre ese lugar", async ({
+    page,
+    isMobile,
+  }) => {
+    await page.goto("/la-pintana/mapa");
+    await expect(page.locator(".leaflet-container")).toBeVisible();
+    const fichas = page.getByRole("region", { name: "Ficha de cada lugar" });
+    const card = fichas.locator("[id^='ficha-']").nth(3);
+    const name = (await card.getByRole("heading").innerText()).trim();
+    await card.getByRole("link", { name: "Ver en el mapa" }).click();
+    if (isMobile) {
+      await expect(page.locator("#ficha-lugar")).toHaveText(name);
+    } else {
+      await expect(page.locator(".leaflet-popup")).toContainText(name);
+    }
+  });
+
+  test("«Ficha» en la lista lleva a la ficha completa del lugar", async ({
+    page,
+  }) => {
+    await page.goto("/la-pintana/mapa");
+    const list = page.getByRole("region", { name: "Lugares" });
+    await list.getByRole("link", { name: "Ficha", exact: true }).first().click();
+    await expect(page).toHaveURL(/#ficha-/);
+    const id = new URL(page.url()).hash.slice(1);
+    await expect(page.locator(`[id="${id}"]`)).toBeInViewport();
+  });
+
   test("filtra los lugares de un sector", async ({ page }) => {
     await page.goto("/la-pintana/mapa");
     const list = page.getByRole("region", { name: "Lugares" });
@@ -194,7 +234,6 @@ test.describe("Navegación", () => {
     "/deportes",
     "/actividades",
     "/telefonos",
-    "/directorio",
     "/mapa",
     "/transparencia",
     "/datos",
@@ -207,6 +246,19 @@ test.describe("Navegación", () => {
       await expect(page.getByRole("heading", { level: 1 })).toBeVisible();
     });
   }
+
+  test("el directorio quedó dentro del mapa: su dirección redirige", async ({
+    page,
+    request,
+  }) => {
+    const response = await request.get("/la-pintana/directorio", {
+      maxRedirects: 0,
+    });
+    expect(response.status()).toBe(308);
+    expect(response.headers()["location"]).toMatch(/\/la-pintana\/mapa$/);
+    await page.goto("/la-pintana/directorio");
+    await expect(page).toHaveURL(/\/la-pintana\/mapa$/);
+  });
 
   test("una sección apagada responde 404", async ({ request }) => {
     const response = await request.get("/la-pintana/noticias");

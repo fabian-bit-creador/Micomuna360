@@ -1,27 +1,12 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import {
-  ArrowLeftIcon,
-  ClockIcon,
-  MapIcon,
-  MapPinIcon,
-  NavigationIcon,
-  ScanEyeIcon,
-  PhoneCallIcon,
-} from "lucide-react";
-
-import { notFound } from "next/navigation";
+import { notFound, permanentRedirect } from "next/navigation";
+import { ArrowLeftIcon } from "lucide-react";
 
 import { FeatureUnavailable } from "@/components/layout/feature-unavailable";
 import { SectionHeader } from "@/components/layout/section-header";
+import { PlaceDirectory } from "@/components/places/place-directory";
 import { getCommune } from "@/config/communes";
-import { CivicIconChip, type CivicChipColor } from "@/components/shared/civic-icon";
-import { Card, CardContent } from "@/components/ui/card";
-import { SourceBadge } from "@/components/shared/source-badge";
-import { getDataSource, getLocations, getPlaces } from "@/lib/repositories";
-import type { PlaceCategory } from "@/types";
-import { googleMapsUrls } from "@/lib/maps";
-import { telHref } from "@/lib/format";
 import { communeMetadata } from "@/lib/seo";
 
 export async function generateMetadata({
@@ -37,20 +22,12 @@ export async function generateMetadata({
   });
 }
 
-const groups: {
-  category: PlaceCategory;
-  title: string;
-  color: CivicChipColor;
-}[] = [
-  { category: "municipal", title: "Servicios municipales", color: "navy" },
-  { category: "salud", title: "Salud", color: "sky" },
-  { category: "educacion", title: "Educación y cultura", color: "amber" },
-  { category: "deporte", title: "Deporte", color: "terracotta" },
-  { category: "comunitario", title: "Espacios comunitarios", color: "teal" },
-  { category: "medioambiente", title: "Medioambiente", color: "green" },
-  { category: "seguridad", title: "Seguridad y emergencias", color: "slate" },
-];
-
+/**
+ * Directorio de lugares. En una comuna con mapa real, las fichas viven en
+ * la misma página que el mapa (/mapa) y esta dirección redirige ahí; el
+ * navegador conserva el #lugar, que el mapa abre. Queda como página propia
+ * solo donde no hay mapa (la comuna de ejemplo).
+ */
 export default async function DirectorioPage({
   params,
 }: PageProps<"/[comuna]/directorio">) {
@@ -60,35 +37,9 @@ export default async function DirectorioPage({
   if (!commune.features.directory) {
     return <FeatureUnavailable commune={commune} title="Directorio comunal" />;
   }
-
-  const [places, locations] = await Promise.all([
-    getPlaces(commune.id),
-    getLocations(commune.id),
-  ]);
-  const placeSources = new Map(
-    await Promise.all(
-      places.map(
-        async (p) =>
-          [
-            p.id,
-            p.sourceId ? await getDataSource(commune.id, p.sourceId) : null,
-          ] as const
-      )
-    )
-  );
-  /* Fuente de la ubicación, cuando no es la misma de la ficha. */
-  const coordsSources = new Map(
-    await Promise.all(
-      places
-        .filter((p) => p.coordsSourceId && p.coordsSourceId !== p.sourceId)
-        .map(
-          async (p) =>
-            [p.id, await getDataSource(commune.id, p.coordsSourceId!)] as const
-        )
-    )
-  );
-  const sectorName = (id: string) =>
-    locations.find((l) => l.id === id)?.name ?? "";
+  if (commune.features.realMap && !commune.isDemo) {
+    permanentRedirect(`/${commune.id}/mapa`);
+  }
 
   return (
     <div className="mx-auto max-w-6xl px-4 py-12">
@@ -110,124 +61,7 @@ export default async function DirectorioPage({
         description={`Dónde queda y cómo llegar a cada lugar útil de ${commune.name}. Solo publicamos horarios y teléfonos verificados.`}
       />
 
-      <div className="space-y-10">
-        {groups.map((group) => {
-          const groupPlaces = places.filter(
-            (p) => p.category === group.category
-          );
-          if (groupPlaces.length === 0) return null;
-          return (
-            <section key={group.category}>
-              <h2 className="mb-4 text-xl font-bold">{group.title}</h2>
-              <div className="grid gap-4 md:grid-cols-2">
-                {groupPlaces.map((place) => (
-                  <Card
-                    key={place.id}
-                    id={place.id}
-                    className="scroll-mt-24 gap-0 py-5 target:ring-2 target:ring-brand-teal"
-                  >
-                    <CardContent className="flex gap-4 px-5">
-                      <CivicIconChip name={place.icon} color={group.color} />
-                      <div className="min-w-0 space-y-1">
-                        <h3 className="font-bold text-primary">
-                          {place.name}
-                        </h3>
-                        <p className="text-sm text-muted-foreground">
-                          {place.description}
-                        </p>
-                        <div className="space-y-1 pt-1.5 text-xs text-muted-foreground">
-                          <p className="flex items-start gap-1.5">
-                            <MapPinIcon className="mt-0.5 size-3.5 shrink-0 text-brand-terracotta-ink" />
-                            {place.address}
-                            {place.sectorId
-                              ? ` · ${sectorName(place.sectorId)}`
-                              : ""}
-                          </p>
-                          {place.schedule && (
-                            <p className="flex items-center gap-1.5">
-                              <ClockIcon className="size-3.5 shrink-0 text-brand-sky-ink" />
-                              {place.schedule}
-                            </p>
-                          )}
-                        </div>
-                        {placeSources.get(place.id) && (
-                          <SourceBadge
-                            source={placeSources.get(place.id)!}
-                            className="pt-2"
-                          />
-                        )}
-                        {coordsSources.get(place.id) && (
-                          <p className="text-xs text-muted-foreground">
-                            Ubicación en el mapa:{" "}
-                            <a
-                              href={coordsSources.get(place.id)!.url}
-                              target="_blank"
-                              rel="noopener noreferrer"
-                              className="underline decoration-dotted underline-offset-2 hover:text-foreground"
-                            >
-                              {coordsSources.get(place.id)!.pageName}
-                            </a>
-                          </p>
-                        )}
-                        <div className="flex flex-wrap gap-2 pt-1">
-                          {place.phone && (
-                            <a
-                              href={telHref(place.phone)}
-                              className="inline-flex min-h-9 items-center gap-1.5 rounded-full bg-brand-teal/10 px-3.5 py-1 text-sm font-bold text-brand-teal-ink transition-colors hover:bg-brand-teal-ink hover:text-background"
-                            >
-                              <PhoneCallIcon className="size-3.5" />
-                              {place.phone}
-                            </a>
-                          )}
-                          {typeof place.lat === "number" &&
-                            typeof place.lng === "number" && (
-                              <>
-                                <a
-                                  href={
-                                    googleMapsUrls({ lat: place.lat, lng: place.lng })
-                                      .llegar
-                                  }
-                                  target="_blank"
-                                  rel="noopener noreferrer"
-                                  className="inline-flex min-h-9 items-center gap-1.5 rounded-full border px-3.5 py-1 text-sm font-semibold text-muted-foreground transition-colors hover:bg-accent hover:text-accent-foreground"
-                                >
-                                  <NavigationIcon className="size-3.5" />
-                                  Cómo llegar
-                                </a>
-                                <a
-                                  href={
-                                    googleMapsUrls({ lat: place.lat, lng: place.lng })
-                                      .calle
-                                  }
-                                  target="_blank"
-                                  rel="noopener noreferrer"
-                                  className="inline-flex min-h-9 items-center gap-1.5 rounded-full border px-3.5 py-1 text-sm font-semibold text-muted-foreground transition-colors hover:bg-accent hover:text-accent-foreground"
-                                >
-                                  <ScanEyeIcon className="size-3.5" />
-                                  Ver la calle
-                                </a>
-                              </>
-                            )}
-                          {typeof place.lat === "number" &&
-                            commune.features.realMap && (
-                              <Link
-                                href={`/${commune.id}/mapa#${place.id}`}
-                                className="inline-flex min-h-9 items-center gap-1.5 rounded-full border px-3.5 py-1 text-sm font-semibold text-muted-foreground transition-colors hover:bg-accent hover:text-accent-foreground"
-                              >
-                                <MapIcon className="size-3.5" />
-                                Ver en el mapa
-                              </Link>
-                            )}
-                        </div>
-                      </div>
-                    </CardContent>
-                  </Card>
-                ))}
-              </div>
-            </section>
-          );
-        })}
-      </div>
+      <PlaceDirectory commune={commune} />
 
       <p className="mt-10 rounded-lg bg-muted px-4 py-3 text-sm text-muted-foreground">
         {commune.isDemo

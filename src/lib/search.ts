@@ -117,10 +117,17 @@ export function buildSearchIndex(commune: CommuneConfig): SearchEntry[] {
   }
   if (commune.features.directory) {
     for (const p of data.places) {
+      /* Con mapa real, el lugar se abre en el mapa (o su ficha, si no tiene
+         coordenadas), que comparten la misma página. */
+      const href = !commune.features.realMap
+        ? `${base}/directorio#${p.id}`
+        : typeof p.lat === "number"
+          ? `${base}/mapa#${p.id}`
+          : `${base}/mapa#ficha-${p.id}`;
       entries.push({
         title: p.name,
         description: `${p.address} · ${p.description}`,
-        href: `${base}/directorio#${p.id}`,
+        href,
         group: "Lugares",
         external: false,
       });

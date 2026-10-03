@@ -26,8 +26,7 @@ comuna tiene su configuración y su propio conjunto de datos:
 | Servicios | `/servicios` | Trámites y pagos con enlace al sitio oficial de cada institución |
 | Beneficios | `/beneficios` | Orientador «¿A qué puedo postular?» según la situación del hogar; funciona en el navegador, sin pedir datos personales |
 | Deportes | `/deportes` | Escuelas y talleres deportivos con días, horario, lugar y cómo inscribirse; filtro por deporte, día y tipo |
-| Directorio | `/directorio` | Municipio, centros de salud, recintos deportivos, seguridad y emergencias, con horarios, teléfonos y cómo llegar |
-| Mapa | `/mapa` | Los lugares del directorio sobre OpenStreetMap, con el límite comunal, marcadores agrupados, lista sincronizada, «cerca de mí» y enlaces a Street View |
+| Mapa y lugares | `/mapa` | Municipio, centros de salud, recintos deportivos y seguridad sobre OpenStreetMap (límite comunal, sectores, marcadores agrupados, lista sincronizada, «cerca de mí», Street View) y, debajo, la ficha de cada lugar con horario, teléfono, fuente y cómo llegar. `/directorio` redirige aquí; solo la comuna de ejemplo, sin mapa real, lo mantiene como página propia |
 | Transparencia | `/transparencia` | Derecho de acceso a la información, ejecución presupuestaria, informes mensuales, pasivos, balance y estados financieros |
 | Datos | `/datos` | Indicadores de la comuna (población, salud, educación, finanzas municipales) comparados con su historia y con el promedio regional |
 | Buscar | `/buscar` | Buscador sobre el contenido de la comuna |
