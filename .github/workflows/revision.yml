@@ -1,5 +1,5 @@
-# Revisión automática: en cada pull request y en cada cambio de la rama de
-# producción corre ESLint y el build, que incluye la validación de todos los
+# Revisión automática: en cada pull request, en la rama de producción y en
+# las ramas de propuesta corre ESLint y el build, que incluye la validación de todos los
 # datos (src/lib/data-integrity.ts). Si algo falla, el cambio queda marcado
 # en rojo antes de que llegue al sitio.
 name: Revisión
@@ -9,6 +9,7 @@ on:
   push:
     branches:
       - claude/micomuna360-architecture-gadm7s
+      - "propuesta-*"
 
 concurrency:
   group: revision-${{ github.ref }}
