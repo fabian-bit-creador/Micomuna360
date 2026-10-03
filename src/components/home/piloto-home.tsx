@@ -1,6 +1,7 @@
 import {
   ArrowRightIcon,
   ExternalLinkIcon,
+  PhoneIcon,
   ScaleIcon,
 } from "lucide-react";
 
@@ -16,22 +17,22 @@ import {
 import { Badge } from "@/components/ui/badge";
 import {
   Card,
-  CardContent,
   CardDescription,
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
 import type { CommuneConfig } from "@/config/communes";
 import { siteConfig } from "@/config/site";
-import { formatDate } from "@/lib/format";
+import { formatDate, telHref } from "@/lib/format";
 import { EventCard } from "@/components/events/event-card";
 import { PhotoFigure } from "@/components/shared/photo-figure";
 import {
   getOfficialSites,
   getSectionPhoto,
   getUpcomingEvents,
+  getUsefulPhones,
 } from "@/lib/repositories";
-import { buildSearchIndex } from "@/lib/search";
+import { buildSearchIndex, searchSuggestions } from "@/lib/search";
 import { getSourceFreshness } from "@/lib/sources";
 
 /*
@@ -43,6 +44,7 @@ function availableFor(commune: CommuneConfig) {
   return [
     {
       title: "Servicios y trámites",
+      priority: true,
       art: "servicios" as SectionIconName,
       description:
         "Pagos, licencias, apoyos sociales y más, cada uno con su sitio oficial.",
@@ -51,6 +53,7 @@ function availableFor(commune: CommuneConfig) {
     },
     {
       title: "¿A qué puedo postular?",
+      priority: true,
       art: "beneficios" as SectionIconName,
       description:
         "Marca tu situación y te mostramos qué beneficios revisar. Sin RUT ni clave.",
@@ -59,6 +62,7 @@ function availableFor(commune: CommuneConfig) {
     },
     {
       title: "Deporte en tu barrio",
+      priority: true,
       art: "deportes" as SectionIconName,
       description:
         "Escuelas y talleres deportivos: qué días, a qué hora y dónde, con cómo inscribirse.",
@@ -67,6 +71,8 @@ function availableFor(commune: CommuneConfig) {
     },
     {
       title: "Teléfonos útiles",
+      /* Va en la fila de emergencias, con su enlace a la página. */
+      inEmergencyRow: true,
       art: "telefonos" as SectionIconName,
       description:
         "Emergencias, oficinas municipales, CESFAM y líneas de apoyo, para llamar con un toque.",
@@ -75,6 +81,7 @@ function availableFor(commune: CommuneConfig) {
     },
     {
       title: "Agenda comunal",
+      priority: true,
       art: "agenda" as SectionIconName,
       description:
         "Teatro, deporte y actividades para la familia, con fecha, lugar y cómo entrar.",
@@ -125,57 +132,198 @@ export async function PilotoHome({ commune }: { commune: CommuneConfig }) {
   const nextEvents = commune.features.events
     ? await getUpcomingEvents(commune.id, 2)
     : [];
+  const emergencies = commune.features.phones
+    ? await getUsefulPhones(commune.id, "emergencia")
+    : [];
   const base = `/${commune.id}`;
   const available = availableFor(commune);
+  const priority = available.filter((item) => item.priority);
+  const more = available.filter(
+    (item) =>
+      !item.priority && !(item.inEmergencyRow && emergencies.length > 0)
+  );
   return (
     <>
-      {/* Portada */}
+      {/* Portada: título, buscador y, en escritorio, la comuna en una foto */}
       <section className="border-b bg-gradient-to-b from-accent to-background">
-        <div className="mx-auto grid max-w-6xl items-center gap-10 px-4 py-16 md:py-20 lg:grid-cols-[minmax(0,1fr)_auto]">
-          <div>
-            <Badge className="mb-4 bg-brand-terracotta/15 text-brand-terracotta-ink">
+        <div className="mx-auto grid max-w-6xl grid-cols-1 items-center gap-10 px-4 pt-10 pb-10 md:pt-16 md:pb-14 lg:grid-cols-[minmax(0,1fr)_minmax(0,0.85fr)]">
+          <div className="min-w-0">
+            <Badge className="mb-3 bg-brand-terracotta/15 text-brand-terracotta-ink">
               {commune.region}
             </Badge>
             <h1 className="max-w-3xl text-4xl font-bold tracking-tight md:text-6xl">
-              {commune.name} en{" "}
+              {commune.name} en
+              <br />
               <span className="text-brand-teal-ink">un solo lugar</span>
             </h1>
-            <p className="mt-5 max-w-2xl text-lg text-muted-foreground">
-              La información pública de {commune.name} — trámites, beneficios,
-              deporte, lugares y cifras — con fuente y fecha de verificación,
-              para que la encuentres simple y sin vueltas.
+            <p className="mt-3 max-w-xl text-lg text-muted-foreground">
+              Trámites, beneficios, deporte y lugares de la comuna, con la
+              fuente y la fecha de cada dato.
             </p>
-            <p className="mt-4 flex max-w-2xl items-start gap-2 rounded-lg border border-brand-sky/40 bg-brand-sky/10 px-4 py-3 text-sm">
-              <ScaleIcon className="mt-0.5 size-4 shrink-0 text-brand-navy dark:text-brand-sky-ink" />
-              <span>
-                <strong>{siteConfig.name} es un sitio ciudadano
-                independiente</strong>
-                : no es el sitio oficial de la Municipalidad de {commune.name}{" "}
-                ni de sus corporaciones. Para cada trámite te llevamos al sitio
-                oficial correspondiente.
-              </span>
-            </p>
-            <div className="mt-8">
+            <div className="mt-6">
               <SearchBox
                 entries={searchEntries}
                 limit={6}
-                placeholder={`Busca un trámite o lugar de ${commune.name}…`}
+                suggestions={searchSuggestions(searchEntries)}
+                placeholder="¿Qué necesitas? Ej.: licencia, CESFAM…"
               />
             </div>
+            <p className="mt-5 flex max-w-xl items-start gap-2 text-sm text-muted-foreground">
+              <ScaleIcon
+                aria-hidden="true"
+                className="mt-0.5 size-4 shrink-0 text-brand-navy dark:text-brand-sky-ink"
+              />
+              <span>
+                <strong className="text-foreground">
+                  Sitio ciudadano independiente:
+                </strong>{" "}
+                no es el portal de la Municipalidad de {commune.name}. Cada
+                trámite te lleva a su sitio oficial.{" "}
+                <Link
+                  href="/nosotros"
+                  className="font-semibold whitespace-nowrap text-brand-teal-ink underline underline-offset-4"
+                >
+                  Cómo trabajamos
+                </Link>
+              </span>
+            </p>
           </div>
-          {/* Solo en escritorio: en el celular la portada ya es larga. */}
-          <BrandMark3D className="hidden size-72 lg:block xl:size-80" />
+          {homePhoto && (
+            <div className="relative hidden lg:block">
+              <PhotoFigure
+                photo={homePhoto}
+                priority
+                sizes="(min-width: 1152px) 500px, 45vw"
+                imageClassName="aspect-[4/3] rounded-2xl"
+              />
+              {homePhoto.caption && (
+                <p className="pointer-events-none absolute bottom-9 left-4 rounded-lg bg-black/60 px-3 py-1.5 text-sm font-semibold text-white">
+                  {homePhoto.caption}
+                </p>
+              )}
+            </div>
+          )}
         </div>
       </section>
 
-      {/* La comuna en una foto real, con su crédito */}
+      {/* Emergencias a un toque, sin alarmar */}
+      {emergencies.length > 0 && (
+        <section
+          aria-labelledby="emergencias"
+          className="mx-auto max-w-6xl px-4 pt-8"
+        >
+          <div className="rounded-2xl border bg-card px-4 py-4 sm:px-5">
+            <div className="flex flex-wrap items-center justify-between gap-x-4 gap-y-1">
+              <h2
+                id="emergencias"
+                className="flex items-center gap-2 text-base font-bold"
+              >
+                <PhoneIcon
+                  aria-hidden="true"
+                  className="size-4 text-brand-terracotta-ink"
+                />
+                ¿Una emergencia? Llama con un toque
+              </h2>
+              <Link
+                href={`${base}/telefonos`}
+                className="inline-flex min-h-9 items-center gap-1 text-sm font-semibold text-brand-teal-ink hover:underline"
+              >
+                Todos los teléfonos útiles
+                <ArrowRightIcon aria-hidden="true" className="size-4" />
+              </Link>
+            </div>
+            <ul className="mt-3 grid grid-cols-2 gap-2 sm:grid-cols-3 lg:grid-cols-5">
+              {emergencies.map((phone) => (
+                <li key={phone.id}>
+                  <a
+                    href={telHref(phone.number)}
+                    className="flex min-h-14 items-center gap-3 rounded-xl border bg-background px-3 py-2 transition-colors hover:border-brand-terracotta/50 hover:bg-brand-terracotta/5"
+                  >
+                    <span className="font-display text-xl font-bold text-brand-terracotta-ink">
+                      {phone.number}
+                    </span>
+                    <span className="text-sm leading-tight font-semibold text-foreground">
+                      {phone.name}
+                    </span>
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </div>
+        </section>
+      )}
+
+      {/* Por dónde empezar: las cuatro tareas más frecuentes */}
+      <section className="mx-auto max-w-6xl px-4 pt-12">
+        <SectionHeader
+          eyebrow="Disponible hoy"
+          title="¿Por dónde quieres empezar?"
+        />
+        <ul className="grid grid-cols-2 gap-3 sm:gap-4 lg:grid-cols-4">
+          {priority.map((item) => (
+            <li key={item.title} className="min-w-0">
+              <Link href={`${base}${item.href}`} className="group block h-full">
+                <Card className="h-full gap-0 px-4 py-4 transition-all group-hover:-translate-y-0.5 group-hover:shadow-md sm:px-5 sm:py-5">
+                  <div className="flex items-start justify-between">
+                    <SectionIcon name={item.art} className="size-14 sm:size-16" />
+                    <ArrowRightIcon
+                      aria-hidden="true"
+                      className="size-4 text-brand-teal-ink transition-transform group-hover:translate-x-0.5"
+                    />
+                  </div>
+                  <h3 className="mt-3 leading-snug font-bold text-primary sm:text-lg">
+                    {item.title}
+                  </h3>
+                  <p className="mt-1 hidden text-sm text-muted-foreground sm:block">
+                    {item.description}
+                  </p>
+                </Card>
+              </Link>
+            </li>
+          ))}
+        </ul>
+
+        {more.length > 0 && (
+          <>
+            <h3 className="mt-10 mb-3 text-lg font-bold">
+              También en {commune.name}
+            </h3>
+            <ul className="grid grid-cols-1 gap-2 sm:grid-cols-2">
+              {more.map((item) => (
+                <li key={item.title} className="min-w-0">
+                  <Link
+                    href={`${base}${item.href}`}
+                    className="group flex h-full items-center gap-3 rounded-xl border bg-card px-3 py-2.5 transition-colors hover:bg-accent"
+                  >
+                    <SectionIcon name={item.art} className="size-11 rounded-xl" />
+                    <span className="min-w-0 flex-1">
+                      <span className="block font-semibold text-primary">
+                        {item.title}
+                      </span>
+                      <span className="block truncate text-sm text-muted-foreground">
+                        {item.description}
+                      </span>
+                    </span>
+                    <ArrowRightIcon
+                      aria-hidden="true"
+                      className="size-4 shrink-0 text-muted-foreground transition-transform group-hover:translate-x-0.5"
+                    />
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </>
+        )}
+      </section>
+
+      {/* En el celular la foto va después de las tareas, no antes */}
       {homePhoto && (
-        <section className="mx-auto max-w-6xl px-4 pt-10">
+        <section className="mx-auto max-w-6xl px-4 pt-12 lg:hidden">
           <div className="relative">
             <PhotoFigure
               photo={homePhoto}
-              sizes="(min-width: 1152px) 1120px, 100vw"
-              imageClassName="aspect-[16/9] rounded-2xl sm:aspect-[21/8]"
+              sizes="100vw"
+              imageClassName="aspect-[16/9] rounded-2xl"
             />
             {homePhoto.caption && (
               <p className="pointer-events-none absolute bottom-9 left-4 rounded-lg bg-black/60 px-3 py-1.5 text-sm font-semibold text-white">
@@ -185,35 +333,6 @@ export async function PilotoHome({ commune }: { commune: CommuneConfig }) {
           </div>
         </section>
       )}
-
-      {/* Disponible hoy */}
-      <section className="mx-auto max-w-6xl px-4 pt-14">
-        <SectionHeader
-          eyebrow="Disponible hoy"
-          title="Empieza por aquí"
-        />
-        <div className="grid gap-4 sm:grid-cols-2">
-          {available.map((item) => (
-            <Link key={item.title} href={`${base}${item.href}`} className="group">
-              <Card className="h-full gap-0 py-5 transition-all group-hover:-translate-y-0.5 group-hover:shadow-md">
-                <CardContent className="flex items-start gap-4 px-5">
-                  <SectionIcon name={item.art} />
-                  <div className="min-w-0 flex-1">
-                    <h3 className="flex items-center justify-between font-bold text-primary">
-                      {item.title}
-                      <ArrowRightIcon className="size-4 text-muted-foreground transition-transform group-hover:translate-x-0.5" />
-                    </h3>
-                    <p className="mt-0.5 text-sm text-muted-foreground">
-                      {item.description}
-                    </p>
-                  </div>
-                </CardContent>
-              </Card>
-            </Link>
-          ))}
-        </div>
-      </section>
-
 
       {/* Próximas actividades */}
       {nextEvents.length > 0 && (
@@ -288,6 +407,7 @@ export async function PilotoHome({ commune }: { commune: CommuneConfig }) {
 
       {/* Cierre */}
       <section className="mx-auto max-w-6xl px-4 py-16 text-center">
+        <BrandMark3D className="mx-auto mb-6 size-28 md:size-32" />
         <p className="font-display text-2xl font-bold text-primary md:text-3xl">
           {siteConfig.sublema}
         </p>

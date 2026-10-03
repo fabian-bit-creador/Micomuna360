@@ -124,3 +124,8 @@ export function formatIndicatorValue(value: number, unit: IndicatorUnit): string
       return value.toLocaleString("es-CL", { maximumFractionDigits: 0 });
   }
 }
+
+/** Enlace para llamar: deja solo dígitos, «+» y «*» («*4141» funciona). */
+export function telHref(number: string): string {
+  return `tel:${number.replace(/[^\d+*]/g, "")}`;
+}

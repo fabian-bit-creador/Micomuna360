@@ -21,6 +21,7 @@ import { SourceBadge } from "@/components/shared/source-badge";
 import { getDataSource, getLocations, getPlaces } from "@/lib/repositories";
 import type { PlaceCategory } from "@/types";
 import { googleMapsUrls } from "@/lib/maps";
+import { telHref } from "@/lib/format";
 import { communeMetadata } from "@/lib/seo";
 
 export async function generateMetadata({
@@ -49,10 +50,6 @@ const groups: {
   { category: "medioambiente", title: "Medioambiente", color: "green" },
   { category: "seguridad", title: "Seguridad y emergencias", color: "slate" },
 ];
-
-function telHref(number: string) {
-  return `tel:${number.replace(/[^\d+*]/g, "")}`;
-}
 
 export default async function DirectorioPage({
   params,

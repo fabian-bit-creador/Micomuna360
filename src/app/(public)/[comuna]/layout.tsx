@@ -1,8 +1,10 @@
 import { notFound } from "next/navigation";
 
+import { BottomNav } from "@/components/layout/bottom-nav";
 import { SiteFooter } from "@/components/layout/site-footer";
 import { SiteHeader } from "@/components/layout/site-header";
 import { getCommune, listCommunes } from "@/config/communes";
+import { communeNav } from "@/config/nav";
 
 /*
  * Las páginas de cada comuna se regeneran cada hora al recibir visitas. Así
@@ -30,6 +32,9 @@ export default async function CommuneLayout({
         {children}
       </main>
       <SiteFooter commune={commune} />
+      {/* Espacio para que la barra inferior no tape el pie en el celular. */}
+      <div aria-hidden="true" className="h-14 bg-brand-navy lg:hidden" />
+      <BottomNav base={`/${commune.id}`} nav={communeNav(commune)} />
     </>
   );
 }

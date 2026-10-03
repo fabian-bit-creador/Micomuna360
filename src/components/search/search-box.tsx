@@ -20,6 +20,8 @@ interface SearchBoxProps {
   placeholder?: string;
   /** Resultados visibles antes de "ver todos". */
   limit?: number;
+  /** Búsquedas frecuentes, como botones bajo el campo. */
+  suggestions?: string[];
 }
 
 /**
@@ -30,6 +32,7 @@ export function SearchBox({
   entries,
   placeholder = "Busca un trámite, lugar, teléfono…",
   limit = 12,
+  suggestions = [],
 }: SearchBoxProps) {
   const [query, setQuery] = useState("");
   const [showAll, setShowAll] = useState(false);
@@ -75,6 +78,27 @@ export function SearchBox({
           className="h-12 rounded-xl bg-card pl-10 text-base shadow-sm"
         />
       </div>
+
+      {suggestions.length > 0 && query.trim().length < 2 && (
+        <div className="mt-3 sm:flex sm:flex-wrap sm:items-center sm:gap-2">
+          <p className="mb-2 text-sm font-semibold text-muted-foreground sm:mb-0">
+            Lo más buscado:
+          </p>
+          {/* En el celular, una sola fila que se desliza de lado. */}
+          <div className="-mx-4 flex gap-2 overflow-x-auto px-4 pb-1 [scrollbar-width:none] sm:mx-0 sm:flex-wrap sm:overflow-visible sm:px-0 sm:pb-0">
+            {suggestions.map((term) => (
+              <button
+                key={term}
+                type="button"
+                onClick={() => setQuery(term)}
+                className="min-h-9 shrink-0 rounded-full border bg-card px-3.5 py-1.5 text-sm font-semibold whitespace-nowrap text-brand-teal-ink transition-colors hover:bg-accent focus-visible:ring-[3px] focus-visible:ring-ring/50 focus-visible:outline-none"
+              >
+                {term}
+              </button>
+            ))}
+          </div>
+        </div>
+      )}
 
       <div id={resultsId}>
         <p aria-live="polite" className="sr-only">

@@ -1,3 +1,4 @@
+import type { SectionIconName } from "@/components/shared/section-icon";
 import type { CommuneConfig } from "@/config/communes";
 
 export interface NavItem {
@@ -6,6 +7,8 @@ export interface NavItem {
   description?: string;
   /** Va a la vista en la barra de escritorio; el resto queda en «Más». */
   primary?: boolean;
+  /** Ícono de la sección (menú del celular). */
+  icon?: SectionIconName;
 }
 
 /**
@@ -20,6 +23,7 @@ export function communeNav(commune: CommuneConfig): NavItem[] {
       title: "Servicios",
       primary: true,
       href: `${base}/servicios`,
+      icon: "servicios",
       description: "Trámites y servicios con enlace oficial",
       enabled: commune.features.services,
     },
@@ -27,6 +31,7 @@ export function communeNav(commune: CommuneConfig): NavItem[] {
       title: "Beneficios",
       primary: true,
       href: `${base}/beneficios`,
+      icon: "beneficios",
       description: "Orientador: ¿a qué puedo postular?",
       enabled: commune.features.benefits,
     },
@@ -34,12 +39,14 @@ export function communeNav(commune: CommuneConfig): NavItem[] {
       title: "Deportes",
       primary: true,
       href: `${base}/deportes`,
+      icon: "deportes",
       description: "Escuelas y talleres deportivos",
       enabled: commune.features.sports,
     },
     {
       title: "Directorio",
       href: `${base}/directorio`,
+      icon: "directorio",
       description: "Lugares útiles de la comuna",
       enabled: commune.features.directory && !commune.features.community,
     },
@@ -47,12 +54,14 @@ export function communeNav(commune: CommuneConfig): NavItem[] {
       title: "Mapa",
       primary: true,
       href: `${base}/mapa`,
+      icon: "mapa",
       description: "Lugares de la comuna en el mapa",
       enabled: commune.features.realMap,
     },
     {
       title: "Transparencia",
       href: `${base}/transparencia`,
+      icon: "transparencia",
       description: "Tu derecho a saber, explicado en simple",
       enabled: commune.features.transparency,
     },
@@ -72,6 +81,7 @@ export function communeNav(commune: CommuneConfig): NavItem[] {
       title: "Agenda",
       primary: true,
       href: `${base}/actividades`,
+      icon: "agenda",
       description: "Agenda de talleres, deportes y encuentros",
       enabled: commune.features.events,
     },
@@ -91,23 +101,26 @@ export function communeNav(commune: CommuneConfig): NavItem[] {
       title: "Teléfonos",
       primary: true,
       href: `${base}/telefonos`,
+      icon: "telefonos",
       description: "Teléfonos de emergencia y servicios",
       enabled: commune.features.phones,
     },
     {
       title: "Datos",
       href: `${base}/datos`,
+      icon: "datos",
       description: "La comuna en cifras, con contexto",
       enabled: commune.features.dataPage,
     },
   ];
   return items
     .filter((i) => i.enabled)
-    .map(({ title, href, description, primary }) => ({
+    .map(({ title, href, description, primary, icon }) => ({
       title,
       href,
       description,
       primary,
+      icon,
     }));
 }
 

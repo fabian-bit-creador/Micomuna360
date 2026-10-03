@@ -15,6 +15,7 @@ import { getCommune } from "@/config/communes";
 import { SourceBadge } from "@/components/shared/source-badge";
 import { getDataSource, getPlaces, getUsefulPhones } from "@/lib/repositories";
 import type { DataSource, PhoneCategory, UsefulPhone } from "@/types";
+import { telHref } from "@/lib/format";
 import { communeMetadata } from "@/lib/seo";
 
 export async function generateMetadata({
@@ -40,10 +41,6 @@ const groups: {
   { category: "salud", title: "Salud", icon: HeartPulseIcon },
   { category: "apoyo", title: "Líneas de apoyo", icon: HandHeartIcon },
 ];
-
-function telHref(number: string) {
-  return `tel:${number.replace(/[^\d+*]/g, "")}`;
-}
 
 function PhoneRow({ phone }: { phone: UsefulPhone }) {
   return (

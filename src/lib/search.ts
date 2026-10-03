@@ -198,3 +198,30 @@ export function buildSearchIndex(commune: CommuneConfig): SearchEntry[] {
 
   return entries;
 }
+
+/** Normaliza para comparar sin tildes ni mayúsculas. */
+function fold(text: string): string {
+  return text
+    .toLowerCase()
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "");
+}
+
+/*
+ * Búsquedas frecuentes de un vecino. Solo se ofrecen las que tienen
+ * resultados en la comuna: así ninguna lleva a «sin resultados».
+ */
+const frequentSearches = [
+  "Licencia de conducir",
+  "Permiso de circulación",
+  "Registro Social de Hogares",
+  "CESFAM",
+  "Fútbol",
+];
+
+export function searchSuggestions(entries: SearchEntry[]): string[] {
+  return frequentSearches.filter((term) => {
+    const q = fold(term);
+    return entries.some((e) => fold(`${e.title} ${e.description}`).includes(q));
+  });
+}
