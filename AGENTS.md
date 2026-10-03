@@ -90,8 +90,17 @@ indicadores) con la fuente y la fecha de verificación de cada dato. El
 
 El proyecto está conectado a Vercel. La rama de producción es
 `claude/micomuna360-architecture-gadm7s` (rama predeterminada del
-repositorio): cada push a ella publica el sitio. Las demás ramas generan
-vistas previas.
+repositorio): cada push a ella publica el sitio. Para no llenar Vercel de
+despliegues repetidos:
+
+- **Una sola rama de producción.** No se mantienen copias de ella (la
+  antigua `piloto-la-pintana-informativo` se eliminó el 2026-10-03).
+- **Cambios visibles**: una rama `propuesta-<tema>` con su vista previa;
+  cuando se aprueba, se fusiona en producción y la rama se borra.
+- **Cambios que no se ven** (pruebas, documentación, configuración): directo
+  a producción, después de correr lint, build y pruebas en local.
+- `vercel.json` desactiva los despliegues de ramas que no son de
+  producción ni de propuesta (`revision-*`, `fase-*`).
 
 ## Comandos
 
