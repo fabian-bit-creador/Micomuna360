@@ -13,10 +13,11 @@ decide qué se integra, qué se adapta y qué se descarta.
 | 8 imágenes PNG | GPT Images | Dos láminas de íconos muy útiles; el resto sirve poco o nada |
 | `assets/` (íconos, foto, fuentes, isotipo) | Copias del sitio publicado | Nada nuevo: son nuestros archivos |
 
-**No está en el paquete:** la propuesta de mapas interactivos de Stitch. Nada
-de Stitch ni de AI Studio llegó al repositorio de GitHub: no hay ramas,
-archivos ni PR nuevos, y tampoco otro repositorio. En Google Drive hay un
-archivo compartido por otra persona, «WEB PARA INTEGRAR MICOMUNA360.rar»
+**Stitch** no venía en el paquete; se revisó el 03-10-2026 directo en el
+proyecto «MiComuna360 Design System», con la conexión MCP de Stitch
+(sección 5). AI Studio no subió nada a GitHub: no hay ramas, archivos ni PR
+nuevos, y tampoco otro repositorio. En Google Drive hay un archivo
+compartido por otra persona, «WEB PARA INTEGRAR MICOMUNA360.rar»
 (`dist/index.html`, `dist/data/comunas.json` y `README.md`). No se revisó
 porque no se sabe si es parte de este encargo.
 
@@ -165,12 +166,67 @@ pagados.
    cívico (mapa, transparencia y datos), que no debería depender de
    vender avisos.
 
-## 5. Mapa interactivo: qué hacer cuando llegue la propuesta de Stitch
+## 5. Stitch: mapas y pantallas (revisado el 03-10-2026)
 
-La propuesta de Stitch no vino en el paquete. Según la auditoría de AI
-Studio, su mapa era un bloque grande que atrapa el scroll y sin lista
-equivalente. Con eso a la vista, estos son los criterios para evaluarlo
-(y para las próximas capas: ferias libres, comercio y talleres):
+El proyecto de Stitch tiene 16 pantallas: geoportal (escritorio, móvil con
+hoja inferior y «lista accesible y bajo consumo»), dos variantes de
+portada, salud y farmacias, inscripción en CESFAM, ficha de CESFAM,
+transparencia con simulador y deportes. Hay capturas de referencia en
+`docs/revisiones/stitch-2026-10-03/`.
+
+### Lo que no sirve: datos inventados
+
+El encargo decía «no inventes datos, teléfonos, lugares ni secciones».
+Stitch lo ignoró, y casi todo lo concreto es falso:
+
+- **Direcciones.** El CESFAM Santo Tomás real está en Santo Tomás N°0987,
+  y Stitch lo pone en Baldomero Lillo #1927. La 41ª Comisaría está en
+  Baldomero Lillo N°1901, y Stitch dice Av. Santa Rosa #13100. Además
+  inventa CESFAM («San Rafael», «El Roble»), una «Farmacia Comunal
+  Central» y una «Farmacia Móvil».
+- **Teléfonos.** Todos los «22 540 xxxx» y un «SOS 1457» que no existe.
+- **Cifras.** «42 equipamientos» (son 24), «38 talleres» (son 71),
+  presupuesto de «$84.200 M», «74,2 % de licitación», «92,8 % de
+  cumplimiento», «triaje SAPU 35 min», «stock auditado hoy», «cupos
+  libres» y la temperatura del día.
+- **Mapa.** No es un mapa: es un dibujo de calles rectas, o la misma
+  imagen de mapa repetida tres veces.
+- **Fotos generadas con IA presentadas como reales.** Una Plaza de Armas
+  con un edificio con cúpula que no existe, un estadio y un punto limpio,
+  con coordenadas inventadas.
+- **Textos que el sitio ya no usa.** «Beta», «sin afiliación partidista»,
+  «sin intermediarios políticos» y «cuánto ganan las autoridades»: rozan
+  lo político o los nombres de funcionarios, que el sitio evita.
+- **Secciones nuevas** no pedidas: Salud, Urgencias y Farmacias.
+
+Nada de eso se copia. Lo que vale de Stitch son los **patrones de
+interacción**.
+
+### Lo que sí conviene (ordenado por valor para el vecino)
+
+| Patrón de Stitch | Qué tenemos hoy | Recomendación |
+|---|---|---|
+| **Hoja inferior en el celular** (geoportal móvil): al tocar un punto sube una ficha con «Cómo llegar» grande, Street View, horario y llamar, con el mapa visible arriba | Ventana emergente de Leaflet, chica en el celular | **Integrar.** Es la mejora más clara para el mapa en el celular |
+| **«Lugares cercanos»** en fila horizontal dentro de la ficha, con distancia | «Cerca de mí» ordena la lista | Integrar dentro de la hoja inferior, usando la ubicación solo en el navegador |
+| **Lista ligera sin mapa** («modo ligero»): tarjetas grandes con Llamar, Cómo llegar y Copiar dirección, sin cargar Leaflet | La lista existe, pero junto al mapa | **Integrar** como vista por defecto con conexión lenta y como alternativa siempre disponible. Encaja con «simple en un celular de gama media» |
+| **«Guardar para usar sin internet»**: teléfonos y direcciones en un PDF liviano o CSV | Nada | Integrar con datos reales: PDF de teléfonos útiles y CSV/GeoJSON de lugares, cada uno con su fuente. Refuerza la promesa de datos abiertos |
+| **«¿Viste un dato cambiado? Avisar»** | Nada | Integrar con un enlace a un formulario o correo, sin pedir datos personales. No necesita base de datos |
+| **Filtros de deportes por edad y por sector** | Filtros por deporte y día | Integrar por sector, que ya existe desde el punto 3. Por edad, solo si la fuente publica la categoría de cada programa |
+| **Ficha de trámite** con cuatro casillas (para quién, costo, dónde, plazo) y paso a paso | Las fichas de servicios tienen texto | Buena plantilla para Servicios, llenándola solo con datos de la fuente oficial |
+| **Simulador «si fueran $100.000»** en Transparencia, con barras por área | Ejecución presupuestaria real en tablas | Coincide con el «de cada $100» de Canva: hacerlo con cifras reales |
+| **Barra inferior en el celular** (Inicio, Trámites, Lugares, Urgencias, Agenda) | Menú con botón | Probar en la portada nueva. También la propuso Codex: dos fuentes coinciden |
+| **Búsquedas rápidas** bajo el buscador | Nada | Igual que en la maqueta de Canva: integrar |
+| Leyenda fija sobre el mapa y «mostrando X de Y» | Chips con conteo | Mejora menor, barata |
+
+### Descartado
+
+- El «simulador de ahorro en farmacia»: no hay una lista de precios
+  oficial que lo respalde.
+- El «estado de la red de salud» con indicadores en vivo: no existen esos
+  datos públicos.
+- La «cuadrilla comunitaria» que audita: no existe.
+
+### Criterios para el mapa en la próxima etapa (ferias, comercio, talleres)
 
 - **Capas, no más marcadores.** Cada tema es una capa que se activa: ferias
   libres, comercio local, cultura o puntos verdes. Por defecto se ven solo
@@ -179,32 +235,29 @@ equivalente. Con eso a la vista, estos son los criterios para evaluarlo
   de calle en ciertos días. Se dibuja como línea sobre la calle y se filtra
   por «hoy» o por día. La capa `FERIAS_LIBRES` de GeoPintana es la fuente
   candidata.
-- **Ficha lateral, no ventana emergente, en el celular.** Al tocar un lugar
-  sube una hoja desde abajo con Cómo llegar, Ver la calle y Llamar, y el
-  mapa sigue visible.
-- **«Abierto ahora»** solo cuando la fuente publique horarios. Si no, no se
-  muestra.
-- **Nada que atrape el dedo.** Hoy la rueda del mouse no hace zoom, pero
-  en el celular un dedo mueve el mapa en vez de bajar la página (mapa de
-  480 px). Conviene que el mapa se mueva con dos dedos y que un aviso
-  explique cómo, como en Google Maps. Esto sirve también para el mapa actual.
+- **«Abierto ahora»** solo cuando la fuente publique horarios.
+- **Nada que atrape el dedo.** Hoy, en el celular, un dedo mueve el mapa en
+  vez de bajar la página. Conviene que el mapa se mueva con dos dedos y que
+  un aviso lo explique, como en Google Maps.
 - **Mismo mapa base.** Nada de Google Maps sobre OpenStreetMap: los
   términos de Google no lo permiten.
 
-**Para revisarla:** en Stitch, en cada pantalla, usar exportar código
-(HTML) o copiar a Figma, o al menos capturas en 390 y 1280 px, y pasarlas
-como las maquetas de Canva.
-
 ## Próximo paso propuesto
 
-Una rama `propuesta-portada-v2`, revisada en vista previa antes de
-producción, con los puntos 1 a 4 de la sección 1:
+Dos ramas, cada una revisada en vista previa antes de producción:
 
-- Buscador bajo el título y aviso de independencia en una línea.
-- Cuatro accesos por necesidad y fila de teléfonos con los números de
-  emergencia (131, 132, 133 y 1441 ya están en `phones.ts` con fuente).
-- Menú del celular con íconos.
-- Temas sugeridos en el buscador.
+1. **`propuesta-portada-v2`**:
+   - Buscador bajo el título, con búsquedas rápidas.
+   - Aviso de independencia en una línea.
+   - Cuatro accesos por necesidad.
+   - Fila de emergencias con 131, 132, 133 y 1441, que ya están en
+     `phones.ts` con fuente.
+   - Menú del celular con íconos y prueba de barra inferior.
+2. **`propuesta-mapa-movil`**:
+   - Hoja inferior con «Cómo llegar» y lugares cercanos.
+   - Mover el mapa con dos dedos.
+   - Lista ligera sin mapa.
+   - Descarga de teléfonos y lugares para usar sin internet.
 
-Después, los íconos nuevos de GPT (limpios) en el directorio, y la unión de
-Directorio y Mapa.
+Después, los íconos nuevos de GPT (limpios) en el directorio, la unión de
+Directorio y Mapa, y el «de cada $100» con cifras reales.
