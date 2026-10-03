@@ -58,7 +58,7 @@ enlaza hoy; conviene abrir ambos desde Chile en la próxima revisión.
 | lp-ta-pasivos-julio-2026 | Municipalidad de La Pintana | Informe de pasivos, julio 2026, área municipal | **pendiente** | 2026-09-04 | — | 67 filas (58 con prefijo 215, 9 con 115). Falta confirmar la clasificación contable; las familias no se suman entre sí |
 | cl-minsal-salud-responde | Ministerio de Salud | [Salud Responde](https://saludresponde.minsal.cl/) | verificado | 2026-09-27 | 2027-03-27 | 600 360 7777, en el pie del sitio oficial |
 | cl-minsal-4141 | Ministerio de Salud | [Prevención del suicidio *4141](https://www.minsal.cl/prevencion-del-suicidio/) | verificado | 2026-09-27 | 2027-03-27 | Gratuita, confidencial, 24 horas |
-| cl-emergencias | SAMU, Bomberos, Carabineros, PDI | Números 131, 132, 133 y 134 | **pendiente** | 2026-09-27 | — | Sitios de Carabineros, Bomberos y ChileAtiende no responden desde fuera de Chile; confirmar navegando desde Chile |
+| cl-emergencias | SAMU, Bomberos, Carabineros, PDI | Números 131, 132, 133 y 134 | verificado | 2026-10-03 | 2027-04-03 | Confirmados por el equipo desde Chile (los sitios oficiales no responden desde fuera del país) |
 | cl-bne | Bolsa Nacional de Empleo | [bne.cl](https://www.bne.cl/) | verificado | 2026-09-20 | 2027-03-20 | Usada por el orientador de beneficios; enlazamos al catálogo, no a ofertas puntuales |
 | cl-sence | SENCE | [sence.gob.cl/personas](https://www.sence.gob.cl/personas) | verificado | 2026-09-20 | 2027-03-20 | Usada por el orientador de beneficios; no se afirman requisitos ni cupos |
 | cl-sercotec | SERCOTEC | [sercotec.cl](https://www.sercotec.cl/) | verificado | 2026-09-20 | 2027-03-20 | Usada por el orientador de beneficios; las convocatorias cambian, por eso solo enlazamos |

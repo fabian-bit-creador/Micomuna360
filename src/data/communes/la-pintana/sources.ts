@@ -591,11 +591,11 @@ export const sources: DataSource[] = [
     featured: false,
     url: "https://www.chileatiende.gob.cl/",
     publishedAt: null,
-    verifiedAt: "2026-09-27",
-    status: "pendiente",
-    validUntil: null,
+    verifiedAt: "2026-10-03",
+    status: "verificado",
+    validUntil: "2027-04-03",
     notes:
-      "Números nacionales de uso general. No se pudieron confirmar en carabineros.cl, bomberos.cl ni chileatiende.gob.cl porque esos sitios rechazan conexiones desde fuera de Chile; falta revisarlos navegando desde Chile.",
+      "Números nacionales de uso general. Confirmados el 2026-10-03 por el equipo de MiComuna360 desde Chile: carabineros.cl, bomberos.cl y chileatiende.gob.cl rechazan conexiones desde fuera del país, así que no se pueden revisar de forma automática.",
   },
 ];
 

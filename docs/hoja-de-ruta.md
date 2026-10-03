@@ -23,7 +23,7 @@ La información vieja es el mayor riesgo del sitio.
 | Tarea | Detalle |
 |---|---|
 | Agenda | La cartelera cultural se revisa cada mes (su fuente vence el 2026-10-31). Las actividades pasadas se ocultan solas, pero las nuevas hay que cargarlas. |
-| Números de emergencia | 131, 132, 133 y 134 están publicados como «pendiente de revisión»: falta confirmarlos en sitios oficiales navegando desde Chile. |
+| Números de emergencia | 131, 132, 133 y 134 confirmados desde Chile el 2026-10-03; se revisan de nuevo antes del 2027-04-03. |
 | Revisión de fuentes | Cada fuente tiene `validUntil`. Deportes vence el 2026-12-31 (cambio de semestre) y la mayoría de las fuentes municipales el 2026-12-27. Al vencer, la ficha se muestra como «revisión vencida» sola. |
 | Controles automáticos | Revisión en cada cambio con lint, build y validación de datos (GitHub Actions), y una rama estable protegida para producción. |
 | Pruebas de recorridos | Pruebas automáticas de lo que usa un vecino: buscar, revisar beneficios, filtrar deportes, abrir el mapa, llamar. |
@@ -42,7 +42,7 @@ verificada.
    Deportes.
 4. **Ferias libres**: días y calles, desde la información municipal.
 5. **Seguridad**: casos policiales por 100.000 habitantes (CEAD), con
-   contexto. El archivo debe descargarse desde Chile.
+   contexto. En espera por decisión del 2026-10-03.
 6. **Más fotos reales**: propias o con licencia libre, con crédito.
 7. **Una segunda comuna real**: confirma que agregar comunas no requiere
    tocar las páginas.
@@ -80,12 +80,12 @@ Después, en este orden (de menor a mayor riesgo):
 - **Mapa comunal**: «cerca de mí», lista sincronizada, Street View y
   sectores con «¿en qué sector estoy?» (hechos). En el celular: hoja
   inferior, lugares cercanos, dos dedos, vista lista y descargas
-  (propuesta `propuesta-mapa-movil`).
+  (publicado el 2026-10-03).
 - **Instalable en el celular** (PWA), con teléfonos y direcciones disponibles
   sin conexión.
 - **Portada v2**: buscador arriba con lo más buscado, emergencias a un
   toque, cuatro accesos, foto real y barra inferior en el celular
-  (propuesta `propuesta-portada-v2`).
+  (publicada el 2026-10-03).
 - **Unir Directorio y Mapa** en una sola sección «Lugares».
 
 ## Auditoría de septiembre de 2026
