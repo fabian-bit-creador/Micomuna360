@@ -6,6 +6,7 @@ import {
   ExecutionMeter,
 } from "@/components/data/execution-meter";
 import { SourceBadge } from "@/components/shared/source-badge";
+import { PerHundred } from "@/components/transparency/per-hundred";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent } from "@/components/ui/card";
 import { formatClp, formatClpCompact, formatDate } from "@/lib/format";
@@ -237,6 +238,62 @@ export function BudgetSection({ lines, documents, source }: BudgetSectionProps) 
         </CardContent>
       </Card>
 
+      {/* En qué se fue cada $100 pagado */}
+      <Card className="mt-4 py-6">
+        <CardContent className="px-6">
+          <h3 className="font-bold text-primary">
+            ¿En qué se fue cada $100 pagado?
+          </h3>
+          <p className="mt-1 text-sm text-muted-foreground">
+            Entre el 1 de enero y el {cutoffText}, el municipio pagó{" "}
+            {formatClpCompact(pesos(spending.paidK))}. Si hubieran sido $100,
+            así se habrían repartido:
+          </p>
+          <PerHundred
+            className="mt-5"
+            caption={`De cada $100 pagados por el municipio entre enero y el ${cutoffText}, cuánto fue a cada tipo de gasto.`}
+            parts={rowsOf("municipal", "gastos")
+              .filter((l) => l.paidK > 0)
+              .map((l) => ({ id: l.id, label: l.label, value: pesos(l.paidK) }))}
+          />
+          <aside
+            aria-labelledby="antes-de-comparar"
+            className="mt-6 rounded-lg bg-accent px-4 py-3 text-sm"
+          >
+            <h4 id="antes-de-comparar" className="font-bold text-primary">
+              Antes de comparar
+            </h4>
+            <ul className="mt-2 space-y-1.5 text-muted-foreground">
+              <li>
+                <strong className="text-foreground">Mira el período.</strong>{" "}
+                Son pagos de enero a {cutoffText.replace(/^\d+ de /, "")}, no
+                del año completo: compara con el mismo período de otro año.
+              </li>
+              <li>
+                <strong className="text-foreground">
+                  Pagado no es lo mismo que presupuestado.
+                </strong>{" "}
+                El presupuesto es lo que se puede gastar; lo pagado es lo que
+                ya salió de la caja.
+              </li>
+              <li>
+                <strong className="text-foreground">
+                  Revisa el documento de origen.
+                </strong>{" "}
+                Los informes oficiales están en{" "}
+                <a
+                  href="#informes-oficiales"
+                  className="font-semibold text-brand-teal-ink underline underline-offset-4"
+                >
+                  cómo leer estas cifras
+                </a>
+                .
+              </li>
+            </ul>
+          </aside>
+        </CardContent>
+      </Card>
+
       {/* En qué se está usando */}
       <Card className="mt-4 py-6">
         <CardContent className="px-6">
@@ -335,7 +392,10 @@ export function BudgetSection({ lines, documents, source }: BudgetSectionProps) 
       )}
 
       {/* Cómo leer y cómo verificamos */}
-      <details className="mt-4 rounded-lg border bg-card px-5 py-4">
+      <details
+        id="como-leer"
+        className="mt-4 scroll-mt-24 rounded-lg border bg-card px-5 py-4"
+      >
         <summary className="cursor-pointer text-sm font-semibold">
           Cómo leer estas cifras y cómo las verificamos
         </summary>
@@ -428,7 +488,9 @@ export function BudgetSection({ lines, documents, source }: BudgetSectionProps) 
           </div>
 
           {docs.length > 0 && (
-            <ul className="flex flex-wrap gap-2 pt-1">
+            /* Al seguir el enlace #informes-oficiales, el navegador abre el
+               desplegable que lo contiene. */
+            <ul id="informes-oficiales" className="flex flex-wrap gap-2 pt-1">
               {docs.map((doc) => (
                 <li key={doc.id}>
                   <a

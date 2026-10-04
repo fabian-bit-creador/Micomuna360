@@ -244,6 +244,22 @@ test.describe("Ferias libres", () => {
   });
 });
 
+test.describe("Transparencia", () => {
+  test("«de cada $100 pagados» suma exactamente $100", async ({ page }) => {
+    await page.goto("/la-pintana/transparencia");
+    const card = page
+      .locator("div")
+      .filter({ has: page.getByRole("heading", { name: "¿En qué se fue cada $100 pagado?" }) })
+      .last();
+    const figure = card.getByRole("figure");
+    const amounts = await figure.locator("li > span:first-child").allInnerTexts();
+    expect(amounts.length).toBeGreaterThan(2);
+    const total = amounts.reduce((sum, a) => sum + Number(a.replace("$", "")), 0);
+    expect(total).toBe(100);
+    await expect(card.getByRole("heading", { name: "Antes de comparar" })).toBeVisible();
+  });
+});
+
 test.describe("Teléfonos y descargas", () => {
   test("los teléfonos útiles se llaman con un toque", async ({ page }) => {
     await page.goto("/la-pintana/telefonos");

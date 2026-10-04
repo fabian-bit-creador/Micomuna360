@@ -39,7 +39,8 @@ verificada.
 2. **Agenda con más fuentes**: actividades del municipio y talleres
    vecinales, además de cultura y deporte.
 3. **Cultura**: talleres de la Corporación Cultural, con el mismo formato de
-   Deportes.
+   Deportes. En espera: su sitio solo publica la oferta de 2023 y se le
+   pidió la de 2026 (2026-10-04).
 4. ~~Ferias libres~~: 16 ferias libres y 3 persas en el mapa y por día,
    desde la capa de GeoPintana (2026-10-04). Sus datos son de diciembre de
    2022: confirmarlos con la Dirección de Desarrollo Económico cuando se
