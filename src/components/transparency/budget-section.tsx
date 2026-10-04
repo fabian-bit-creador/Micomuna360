@@ -6,7 +6,7 @@ import {
   ExecutionMeter,
 } from "@/components/data/execution-meter";
 import { SourceBadge } from "@/components/shared/source-badge";
-import { PerHundred } from "@/components/transparency/per-hundred";
+import { PerScale } from "@/components/transparency/per-scale";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent } from "@/components/ui/card";
 import { formatClp, formatClpCompact, formatDate } from "@/lib/format";
@@ -238,20 +238,20 @@ export function BudgetSection({ lines, documents, source }: BudgetSectionProps) 
         </CardContent>
       </Card>
 
-      {/* En qué se fue cada $100 pagado */}
+      {/* En qué se fue cada $100.000 pagados */}
       <Card className="mt-4 py-6">
         <CardContent className="px-6">
           <h3 className="font-bold text-primary">
-            ¿En qué se fue cada $100 pagado?
+            ¿En qué se fue cada $100.000 pagados?
           </h3>
           <p className="mt-1 text-sm text-muted-foreground">
             Entre el 1 de enero y el {cutoffText}, el municipio pagó{" "}
-            {formatClpCompact(pesos(spending.paidK))}. Si hubieran sido $100,
-            así se habrían repartido:
+            {formatClpCompact(pesos(spending.paidK))}. Si hubieran sido
+            $100.000, así se habrían repartido:
           </p>
-          <PerHundred
+          <PerScale
             className="mt-5"
-            caption={`De cada $100 pagados por el municipio entre enero y el ${cutoffText}, cuánto fue a cada tipo de gasto.`}
+            caption={`De cada $100.000 pagados por el municipio entre enero y el ${cutoffText}, cuánto fue a cada tipo de gasto.`}
             parts={rowsOf("municipal", "gastos")
               .filter((l) => l.paidK > 0)
               .map((l) => ({ id: l.id, label: l.label, value: pesos(l.paidK) }))}

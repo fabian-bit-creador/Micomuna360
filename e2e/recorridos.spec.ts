@@ -245,17 +245,22 @@ test.describe("Ferias libres", () => {
 });
 
 test.describe("Transparencia", () => {
-  test("«de cada $100 pagados» suma exactamente $100", async ({ page }) => {
+  test("«de cada $100.000 pagados» suma exactamente $100.000", async ({
+    page,
+  }) => {
     await page.goto("/la-pintana/transparencia");
     const card = page
       .locator("div")
-      .filter({ has: page.getByRole("heading", { name: "¿En qué se fue cada $100 pagado?" }) })
+      .filter({ has: page.getByRole("heading", { name: "¿En qué se fue cada $100.000 pagados?" }) })
       .last();
     const figure = card.getByRole("figure");
     const amounts = await figure.locator("li > span:first-child").allInnerTexts();
     expect(amounts.length).toBeGreaterThan(2);
-    const total = amounts.reduce((sum, a) => sum + Number(a.replace("$", "")), 0);
-    expect(total).toBe(100);
+    const total = amounts.reduce(
+      (sum, a) => sum + Number(a.replace(/[^\d]/g, "")),
+      0
+    );
+    expect(total).toBe(100_000);
     await expect(card.getByRole("heading", { name: "Antes de comparar" })).toBeVisible();
   });
 });
