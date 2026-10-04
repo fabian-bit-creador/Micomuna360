@@ -1,0 +1,173 @@
+{
+ "Anticura 13156": {
+  "method": "calle",
+  "tramos": 1,
+  "puntos": 4,
+  "sectores": [
+   "SECTOR CENTRO"
+  ],
+  "sector": "SECTOR CENTRO"
+ },
+ "Apóstol Felipe 10718": {
+  "method": "casa",
+  "lat": -33.5587083,
+  "lng": -70.6243793,
+  "sector": "SECTOR SANTO TOMAS"
+ },
+ "Bahía Catalina 10935": {
+  "method": "casa",
+  "lat": -33.5615758,
+  "lng": -70.6106424,
+  "sector": "SECTOR SANTO TOMAS"
+ },
+ "Cabo Gutierrez 02786": {
+  "method": "calle",
+  "tramos": 1,
+  "puntos": 3,
+  "sectores": [
+   "SECTOR EL CASTILLO"
+  ],
+  "sector": "SECTOR EL CASTILLO"
+ },
+ "Calle C 1140 A": {
+  "method": "calle",
+  "tramos": 2,
+  "puntos": 19,
+  "sectores": [
+   "SECTOR CENTRO"
+  ],
+  "sector": "SECTOR CENTRO"
+ },
+ "Daniel Rebolledo 0672": {
+  "method": "calle",
+  "tramos": 3,
+  "puntos": 17,
+  "sectores": [
+   "SECTOR CENTRO",
+   "fuera"
+  ]
+ },
+ "Edith Madge de Huneeus 0630": {
+  "method": "calle",
+  "tramos": 2,
+  "puntos": 40,
+  "sectores": [
+   "SECTOR SANTO TOMAS"
+  ],
+  "sector": "SECTOR SANTO TOMAS"
+ },
+ "Francisco de Zurbaran 1716": {
+  "method": "casa",
+  "lat": -33.5615279,
+  "lng": -70.6499101,
+  "sector": "SECTOR EL ROBLE"
+ },
+ "Gabriela Figueroa 11032": {
+  "method": "calle",
+  "tramos": 2,
+  "puntos": 33,
+  "sectores": [
+   "SECTOR SANTO TOMAS"
+  ],
+  "sector": "SECTOR SANTO TOMAS"
+ },
+ "Gala 10735": {
+  "method": "casa",
+  "lat": -33.5580383,
+  "lng": -70.6510513,
+  "sector": "SECTOR EL ROBLE"
+ },
+ "José Echeverría 13831": {
+  "method": "calle",
+  "tramos": 1,
+  "puntos": 4,
+  "sectores": [
+   "SECTOR EL CASTILLO"
+  ],
+  "sector": "SECTOR EL CASTILLO"
+ },
+ "José Manuel Balmaceda 1413": {
+  "method": "calle",
+  "tramos": 2,
+  "puntos": 27,
+  "sectores": [
+   "SECTOR CENTRO"
+  ],
+  "sector": "SECTOR CENTRO"
+ },
+ "José Toribio Medina 12250": {
+  "method": "calle",
+  "tramos": 1,
+  "puntos": 37,
+  "sectores": [
+   "SECTOR CENTRO"
+  ],
+  "sector": "SECTOR CENTRO"
+ },
+ "La Recova 10982": {
+  "method": "casa",
+  "lat": -33.5630051,
+  "lng": -70.6151086,
+  "sector": "SECTOR SANTO TOMAS"
+ },
+ "Los Almendros Poniente 10726": {
+  "method": "calle",
+  "tramos": 1,
+  "puntos": 4,
+  "sectores": [
+   "SECTOR EL ROBLE",
+   "fuera"
+  ]
+ },
+ "Los Olivillos 0905": {
+  "method": "calle",
+  "tramos": 1,
+  "puntos": 10,
+  "sectores": [
+   "SECTOR LA PLATINA"
+  ],
+  "sector": "SECTOR LA PLATINA"
+ },
+ "Los Olmecas 10650": {
+  "method": "casa",
+  "lat": -33.5584803,
+  "lng": -70.6170288,
+  "sector": "SECTOR SANTO TOMAS"
+ },
+ "Martín Sánchez 0641": {
+  "method": "calle",
+  "tramos": 2,
+  "puntos": 32,
+  "sectores": [
+   "SECTOR ANTUMAPU"
+  ],
+  "sector": "SECTOR ANTUMAPU"
+ },
+ "Miguel Ángel 03611": {
+  "method": "casa",
+  "lat": -33.5856789,
+  "lng": -70.6119319,
+  "sector": "SECTOR LAS ROSAS"
+ },
+ "Nueva Gabriela 1357": {
+  "method": "calle",
+  "tramos": 0,
+  "puntos": 0,
+  "sectores": []
+ },
+ "Pedro Prado 12697": {
+  "method": "casa",
+  "lat": -33.5800279,
+  "lng": -70.6497124,
+  "sector": "SECTOR CENTRO"
+ },
+ "Santa Rebeca 2079": {
+  "method": "calle",
+  "tramos": 1,
+  "puntos": 3,
+  "sectores": [
+   "SECTOR EL ROBLE"
+  ],
+  "sector": "SECTOR EL ROBLE"
+ }
+}

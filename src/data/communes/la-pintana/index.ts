@@ -14,6 +14,7 @@ import { reportedLiabilities } from "./transparency/liabilities";
 import { services } from "./services";
 import { sources } from "./sources";
 import { sportsPrograms } from "./sports";
+import { addressSectors } from "./sports-sectors";
 import { streetMarkets } from "./street-markets";
 import { territory } from "./territory";
 
@@ -52,6 +53,7 @@ export const laPintanaData: CommuneData = {
   enrollment,
   sportsPrograms,
   streetMarkets,
+  addressSectors,
   photos,
   sectionSources: {
     transparencyAuthority: "cl-consejo-transparencia",

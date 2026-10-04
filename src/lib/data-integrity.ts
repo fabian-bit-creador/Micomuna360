@@ -592,6 +592,27 @@ export function validateCommuneData(
     }
   }
 
+  // Sectores de las direcciones de talleres: cada una corresponde a un
+  // programa sin recinto y apunta a un sector que existe.
+  const sectorIds = new Set(data.territory?.sectors.map((s) => s.id) ?? []);
+  const loose = new Set(
+    data.sportsPrograms.filter((p) => !p.placeId).map((p) => p.address)
+  );
+  for (const dup of duplicates(data.addressSectors.map((a) => a.address))) {
+    fail(`dirección con sector repetida: ${dup}`);
+  }
+  for (const entry of data.addressSectors) {
+    if (!sectorIds.has(entry.sectorId)) {
+      fail(`la dirección "${entry.address}" apunta al sector inexistente "${entry.sectorId}"`);
+    }
+    if (!sourceIds.has(entry.sourceId)) {
+      fail(`la dirección "${entry.address}" referencia la fuente inexistente "${entry.sourceId}"`);
+    }
+    if (!loose.has(entry.address)) {
+      fail(`la dirección "${entry.address}" no corresponde a ningún taller sin recinto`);
+    }
+  }
+
   // Ferias: comparten el mapa con los lugares, así que sus ids no pueden
   // repetirse con los de un lugar (el #id de la URL abre uno u otro).
   const mapIds = new Set(data.places.map((p) => p.id));

@@ -1,5 +1,6 @@
 import {
   getCommuneData,
+  type AddressSector,
   type SectionPhotos,
   type SectionSources,
 } from "@/data/communes";
@@ -37,7 +38,13 @@ export async function getSportsPrograms(
   return [...getCommuneData(communeId).sportsPrograms];
 }
 
-/** Fotos con crédito de la comuna. */
+/** Sector de las direcciones de talleres que no están en el directorio. */
+export async function getAddressSectors(
+  communeId: string
+): Promise<AddressSector[]> {
+  return [...getCommuneData(communeId).addressSectors];
+}
+
 /** Ferias libres y persas autorizadas, con su tramo de calle. */
 export async function getStreetMarkets(
   communeId: string
@@ -45,6 +52,7 @@ export async function getStreetMarkets(
   return [...getCommuneData(communeId).streetMarkets];
 }
 
+/** Fotos con crédito de la comuna. */
 export async function getPhotos(communeId: string): Promise<Photo[]> {
   return [...getCommuneData(communeId).photos];
 }

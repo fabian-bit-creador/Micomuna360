@@ -98,6 +98,21 @@ test.describe("Deportes", () => {
       await expect(card).toContainText(/sábado/i);
     }
   });
+
+  test("filtrar por sector deja solo escuelas y talleres de ese sector", async ({
+    page,
+  }) => {
+    await page.goto("/la-pintana/deportes");
+    await page
+      .getByRole("combobox", { name: "Sector" })
+      .selectOption("Santo Tomás");
+    await expect(page.getByText(/en el sector Santo Tomás/)).toBeVisible();
+    const cards = page.locator("details[open] li");
+    await expect(cards.first()).toBeVisible();
+    for (const card of await cards.all()) {
+      await expect(card).toContainText("Sector Santo Tomás");
+    }
+  });
 });
 
 test.describe("Mapa", () => {

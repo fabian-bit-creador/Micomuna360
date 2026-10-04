@@ -6,6 +6,7 @@ import { losAromosData } from "./los-aromos";
 import type { CommuneData } from "./types";
 
 export type {
+  AddressSector,
   CommuneBoundary,
   CommuneData,
   CommuneTerritory,
@@ -54,6 +55,7 @@ const empty: CommuneData = {
   enrollment: [],
   sportsPrograms: [],
   streetMarkets: [],
+  addressSectors: [],
   photos: [],
   sectionSources: {},
   sectionPhotos: {},

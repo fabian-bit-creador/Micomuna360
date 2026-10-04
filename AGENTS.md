@@ -118,3 +118,17 @@ despliegues repetidos:
   celular (`e2e/`; requiere el build). Corren también en GitHub Actions
   (`.github/workflows/revision.yml`) en producción y en las ramas
   `propuesta-*`. Al cambiar un texto o una etiqueta que usan, actualizarlas.
+
+## Cómo verificar un cambio
+
+La revisión completa (lint, datos, build y todas las pruebas) corre en
+GitHub Actions con cada push, sin costo de tokens. En local se hace lo
+justo:
+
+- Siempre: `npm run lint`, `npx tsc --noEmit` y, si se tocaron datos o
+  páginas, `npm run build` (valida los datos).
+- Pruebas: solo las de la sección tocada (`npx playwright test -g "<Sección>"`),
+  más la nueva si se agregó.
+- Capturas de pantalla y revisión de contraste: solo en cambios visibles.
+- Después del push, una consulta al resultado de la revisión en GitHub. La
+  suite completa en local, solo para investigar una falla de la revisión.

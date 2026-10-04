@@ -34,15 +34,18 @@ function directionsUrl(address: string, communeName: string) {
 }
 
 /**
- * Buscador de escuelas y talleres deportivos: por deporte, día y tipo.
- * Filtra en el navegador; no guarda ni envía nada.
+ * Buscador de escuelas y talleres deportivos: por deporte, día, tipo y
+ * sector. Filtra en el navegador; no guarda ni envía nada.
  */
 export function SportsFinder({
   programs,
+  sectorOf,
   communeId,
   communeName,
 }: {
   programs: SportsProgram[];
+  /** Sector de cada programa por su id; los que no tienen, no figuran. */
+  sectorOf: Record<string, string>;
   communeId: string;
   communeName: string;
 }) {
@@ -54,6 +57,13 @@ export function SportsFinder({
       ),
     [programs]
   );
+  const sectors = useMemo(() => {
+    const counts = new Map<string, number>();
+    for (const name of Object.values(sectorOf)) {
+      counts.set(name, (counts.get(name) ?? 0) + 1);
+    }
+    return [...counts.entries()].sort(([a], [b]) => a.localeCompare(b, "es"));
+  }, [sectorOf]);
   const fromUrl = useMemo(() => {
     const d = new URLSearchParams(hash).get("d");
     return d && disciplines.includes(d) ? d : "";
@@ -66,6 +76,7 @@ export function SportsFinder({
   const discipline = chosen && chosen.hash === hash ? chosen.value : fromUrl;
   const [day, setDay] = useState<Weekday | "">("");
   const [kind, setKind] = useState<Kind>("todas");
+  const [sector, setSector] = useState("");
 
   const results = useMemo(
     () =>
@@ -73,9 +84,10 @@ export function SportsFinder({
         (p) =>
           (!discipline || p.discipline === discipline) &&
           (!day || p.days.includes(day)) &&
-          (kind === "todas" || p.kind === kind)
+          (kind === "todas" || p.kind === kind) &&
+          (!sector || sectorOf[p.id] === sector)
       ),
-    [programs, discipline, day, kind]
+    [programs, sectorOf, discipline, day, kind, sector]
   );
   const groups = useMemo(() => {
     const map = new Map<string, SportsProgram[]>();
@@ -92,8 +104,9 @@ export function SportsFinder({
     setChosen({ hash, value: "" });
     setDay("");
     setKind("todas");
+    setSector("");
   };
-  const filtered = Boolean(discipline || day || kind !== "todas");
+  const filtered = Boolean(discipline || day || kind !== "todas" || sector);
 
   return (
     <div>
@@ -114,6 +127,23 @@ export function SportsFinder({
               ))}
             </select>
           </label>
+          {sectors.length > 0 && (
+            <label className="grid gap-1.5 text-sm font-semibold text-primary">
+              Sector
+              <select
+                value={sector}
+                onChange={(e) => setSector(e.target.value)}
+                className="h-11 rounded-lg border bg-background px-3 text-base font-normal text-foreground focus-visible:ring-[3px] focus-visible:ring-ring/50 focus-visible:outline-none"
+              >
+                <option value="">Toda la comuna</option>
+                {sectors.map(([name, count]) => (
+                  <option key={name} value={name}>
+                    {name} ({count})
+                  </option>
+                ))}
+              </select>
+            </label>
+          )}
           <fieldset className="grid gap-1.5">
             <legend className="mb-1.5 text-sm font-semibold text-primary">
               Tipo
@@ -180,6 +210,7 @@ export function SportsFinder({
           {discipline &&
             ` de ${discipline === discipline.toUpperCase() ? discipline : discipline.toLowerCase()}`}
           {day && ` los ${weekdays.find((w) => w.id === day)!.plural}`}
+          {sector && ` en el sector ${sector}`}
         </p>
         {filtered && (
           <Button variant="ghost" size="sm" onClick={reset}>
@@ -259,6 +290,7 @@ export function SportsFinder({
                         )}
                         <span className="text-muted-foreground">
                           {p.address}
+                          {sectorOf[p.id] && ` · Sector ${sectorOf[p.id]}`}
                         </span>
                       </span>
                     </p>

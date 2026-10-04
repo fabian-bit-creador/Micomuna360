@@ -43,10 +43,32 @@ No se publican montos porque varían por escuela.
 horas válidas con término posterior al inicio, fuente existente y, si enlaza
 un lugar, que ese lugar exista.
 
+## Sector de cada escuela o taller (2026-10-04)
+
+El buscador filtra por los 12 sectores de GeoPintana (`lp-geo-territorio`):
+
+1. Los programas en un recinto del directorio toman el sector de las
+   coordenadas del recinto.
+2. Las 22 direcciones de talleres de barrio se ubicaron en OpenStreetMap
+   (Nominatim, fuente `osm-nominatim`). Se acepta el sector solo si:
+   - la dirección se encuentra al número exacto y cae en un sector (8), o
+   - la calle completa queda dentro de un solo sector (11).
+3. Quedan sin sector 3 direcciones: dos calles cruzan el límite comunal y
+   una no está en OpenStreetMap. Esos talleres aparecen solo en «Toda la
+   comuna».
+
+Resultado: 67 de las 71 fichas tienen sector. Solo se publica el sector;
+las coordenadas de las sedes de barrio no se muestran.
+`sectores-direcciones.json` guarda lo que respondió OpenStreetMap y
+`sectores.py` genera `src/data/communes/la-pintana/sports-sectors.ts`.
+`data-integrity.ts` valida que cada sector exista y que cada dirección sea
+de un taller sin recinto.
+
 ## Respaldo
 
 - `programas.csv`: las 71 fichas publicadas, con el nombre oficial original.
-- `SHA256SUMS.txt`: huella del CSV.
+- `sectores-direcciones.json`: ubicación de las direcciones de barrio.
+- `SHA256SUMS.txt`: huella de ambos archivos.
 
 El texto completo de la página no se guarda porque incluye los nombres de
 los profesores.

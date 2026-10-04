@@ -279,6 +279,21 @@ export const sources: DataSource[] = [
       "Horarios del SAPU y del SAR confirmados aquí. Las direcciones de cada SAPU no figuran en esta página: provienen del geoportal comunal.",
   },
   {
+    id: "osm-nominatim",
+    institution: "OpenStreetMap",
+    pageName: "Nominatim — búsqueda de direcciones",
+    description:
+      "Ubicación de las direcciones de los talleres deportivos de barrio, para saber en qué sector quedan.",
+    featured: false,
+    url: "https://nominatim.openstreetmap.org/",
+    publishedAt: null,
+    verifiedAt: "2026-10-04",
+    status: "verificado",
+    validUntil: "2026-12-31",
+    notes:
+      "Se ubicaron las 22 direcciones de talleres que no están en un recinto del directorio: 8 al número exacto y 11 por calle, solo cuando la calle entera cae dentro de un mismo sector de GeoPintana. Tres quedan sin sector (dos calles cruzan el límite comunal y una no está en OpenStreetMap). Solo se usa el sector, no se publican las coordenadas. Respaldo en docs/fuentes/la-pintana-deportes-2026-09/sectores-direcciones.json.",
+  },
+  {
     id: "lp-geo-ferias",
     institution: "Municipalidad de La Pintana",
     pageName: "GeoPintana — ferias libres y persas",

@@ -18,6 +18,8 @@ import { SportsFinder } from "@/components/sports/sports-finder";
 import { Card, CardContent } from "@/components/ui/card";
 import { getCommune } from "@/config/communes";
 import {
+  getAddressSectors,
+  getCommuneTerritory,
   getDataSource,
   getPhotos,
   getPlaces,
@@ -25,6 +27,7 @@ import {
   getSectionSource,
   getSportsPrograms,
 } from "@/lib/repositories";
+import { findArea } from "@/lib/maps";
 import { communeMetadata } from "@/lib/seo";
 
 export async function generateMetadata({
@@ -50,12 +53,15 @@ export default async function DeportesPage({
     return <FeatureUnavailable commune={commune} title="Deportes" />;
   }
 
-  const [programs, photos, places, enrollment] = await Promise.all([
-    getSportsPrograms(commune.id),
-    getPhotos(commune.id),
-    getPlaces(commune.id),
-    getSectionSource(commune.id, "sportsEnrollment"),
-  ]);
+  const [programs, photos, places, enrollment, territory, addressSectors] =
+    await Promise.all([
+      getSportsPrograms(commune.id),
+      getPhotos(commune.id),
+      getPlaces(commune.id),
+      getSectionSource(commune.id, "sportsEnrollment"),
+      getCommuneTerritory(commune.id),
+      getAddressSectors(commune.id),
+    ]);
   const listing = programs.length
     ? await getDataSource(commune.id, programs[0].sourceId)
     : null;
@@ -74,6 +80,23 @@ export default async function DeportesPage({
     }))
     .sort((a, b) => b.count - a.count);
   const neighborhood = programs.filter((p) => !p.placeId);
+
+  /* Sector de cada programa: por las coordenadas de su recinto o, en los
+     talleres de barrio, por su dirección ubicada (sports-sectors.ts). Los
+     que no tienen sector salen solo en «Toda la comuna». */
+  const sectorById = new Map(territory?.sectors.map((s) => [s.id, s.name]));
+  const byAddress = new Map(
+    addressSectors.map((a) => [a.address, sectorById.get(a.sectorId)])
+  );
+  const sectorOf: Record<string, string> = {};
+  for (const p of programs) {
+    const place = p.placeId ? places.find((pl) => pl.id === p.placeId) : null;
+    const name =
+      place && territory && typeof place.lat === "number" && typeof place.lng === "number"
+        ? findArea({ lat: place.lat, lng: place.lng }, territory.sectors)?.name
+        : byAddress.get(p.address);
+    if (name) sectorOf[p.id] = name;
+  }
   const neighborhoodText = neighborhood.every((p) => p.kind === "taller")
     ? `Los otros ${neighborhood.length} talleres`
     : `Las otras ${neighborhood.length} escuelas y talleres`;
@@ -175,6 +198,7 @@ export default async function DeportesPage({
         </h2>
         <SportsFinder
           programs={programs}
+          sectorOf={sectorOf}
           communeId={commune.id}
           communeName={commune.name}
         />

@@ -26,7 +26,7 @@ La información vieja es el mayor riesgo del sitio.
 | Números de emergencia | 131, 132, 133 y 134 confirmados desde Chile el 2026-10-03; se revisan de nuevo antes del 2027-04-03. |
 | Revisión de fuentes | Cada fuente tiene `validUntil`. Deportes vence el 2026-12-31 (cambio de semestre) y la mayoría de las fuentes municipales el 2026-12-27. Al vencer, la ficha se muestra como «revisión vencida» sola. |
 | Controles automáticos | Hecho el 2026-10-03: `.github/workflows/revision.yml` corre lint, validación de datos y build en la rama de producción, en las ramas `propuesta-*` y en cada pull request. Falta proteger la rama de producción en GitHub (Settings → Branches) para que exija esa revisión. |
-| Pruebas de recorridos | Hecho el 2026-10-03: 42 pruebas en escritorio y celular (`e2e/`): buscar, «lo más buscado», emergencias, beneficios, deportes, mapa, sectores, teléfonos, descargas y navegación. Corren en cada cambio. Sumar una prueba por cada sección nueva. |
+| Pruebas de recorridos | Hecho el 2026-10-03: 42 pruebas en escritorio y celular (`e2e/`): buscar, «lo más buscado», emergencias, beneficios, deportes, mapa, sectores, teléfonos, descargas y navegación. Corren completas en GitHub Actions en cada push (no gastan tokens); en local solo las de la sección tocada (ver «Cómo verificar» en `AGENTS.md`). Sumar una prueba por cada sección nueva. |
 | Rendimiento | Medir en un celular de gama media con red móvil. Transparencia es la página más pesada: cargar sus tablas largas bajo demanda. |
 
 ## 2. Más información pública (sin cuenta)

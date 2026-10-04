@@ -51,6 +51,18 @@ export interface CommuneTerritory {
   neighborhoodUnits: TerritoryArea[];
 }
 
+/**
+ * Sector de una dirección que no está en el directorio (p. ej. un taller
+ * deportivo en una sede de barrio), ubicada con su fuente.
+ */
+export interface AddressSector {
+  address: string;
+  sectorId: string;
+  /** «numero»: la dirección exacta; «calle»: la calle entera en un sector. */
+  method: "numero" | "calle";
+  sourceId: string;
+}
+
 /** Dataset completo de una comuna. Los repositorios leen de aquí. */
 export interface CommuneData {
   categories: Category[];
@@ -90,6 +102,8 @@ export interface CommuneData {
   enrollment: EnrollmentByDependency[];
   /** Escuelas y talleres deportivos. */
   sportsPrograms: SportsProgram[];
+  /** Sector de las direcciones de talleres que no están en el directorio. */
+  addressSectors: AddressSector[];
   /** Ferias libres y persas autorizadas, con su tramo de calle. */
   streetMarkets: StreetMarket[];
   /** Fotos reales con crédito (lugares y portadas de sección). */
