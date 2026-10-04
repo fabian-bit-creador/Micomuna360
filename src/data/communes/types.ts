@@ -21,6 +21,7 @@ import type {
   Procedure,
   Profile,
   SportsProgram,
+  StreetMarket,
   UsefulPhone,
 } from "@/types";
 
@@ -89,6 +90,8 @@ export interface CommuneData {
   enrollment: EnrollmentByDependency[];
   /** Escuelas y talleres deportivos. */
   sportsPrograms: SportsProgram[];
+  /** Ferias libres y persas autorizadas, con su tramo de calle. */
+  streetMarkets: StreetMarket[];
   /** Fotos reales con crédito (lugares y portadas de sección). */
   photos: Photo[];
   /**

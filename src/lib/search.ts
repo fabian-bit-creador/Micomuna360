@@ -1,5 +1,6 @@
 import type { CommuneConfig } from "@/config/communes";
 import { getCommuneData } from "@/data/communes";
+import { formatMarketSchedule } from "@/lib/weekdays";
 
 /** Entrada del índice del buscador ciudadano (serializable a cliente). */
 export interface SearchEntry {
@@ -133,6 +134,18 @@ export function buildSearchIndex(commune: CommuneConfig): SearchEntry[] {
       });
     }
   }
+  if (commune.features.realMap) {
+    for (const m of data.streetMarkets) {
+      const kind = m.kind === "feria" ? "Feria libre" : "Persa";
+      entries.push({
+        title: `${kind} ${m.name}`,
+        description: `${formatMarketSchedule(m)} · ${m.location}`,
+        href: `${base}/mapa#${m.id}`,
+        group: "Ferias",
+        external: false,
+      });
+    }
+  }
   if (commune.features.phones) {
     for (const t of data.phones) {
       entries.push({
@@ -223,6 +236,7 @@ const frequentSearches = [
   "Permiso de circulación",
   "Registro Social de Hogares",
   "CESFAM",
+  "Feria libre",
   "Fútbol",
 ];
 

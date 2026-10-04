@@ -279,6 +279,21 @@ export const sources: DataSource[] = [
       "Horarios del SAPU y del SAR confirmados aquí. Las direcciones de cada SAPU no figuran en esta página: provienen del geoportal comunal.",
   },
   {
+    id: "lp-geo-ferias",
+    institution: "Municipalidad de La Pintana",
+    pageName: "GeoPintana — ferias libres y persas",
+    description:
+      "Capa pública del geoportal municipal con el tramo de calle, los días, el horario y los puestos de cada feria libre y persa autorizada.",
+    featured: false,
+    url: "https://services7.arcgis.com/Jc7ZuHKHcN6HGMlG/arcgis/rest/services/FERIAS_LIBRES/FeatureServer/1",
+    publishedAt: "2022-12-19",
+    verifiedAt: "2026-10-04",
+    status: "verificado",
+    validUntil: "2027-01-04",
+    notes:
+      "Capa FERIAS_LIBRES (datos editados el 2022-12-19), basada en el «Diagnóstico de ferias libres y persas» de la Dirección de Desarrollo Económico (2021) y en los decretos 1900/1279 de 2006, 2300/11/1763 de 2020 y 00184/2021. Se publican las 16 ferias libres y 3 persas autorizadas (20 de 46 polígonos: Joaquín Edwards Bello tiene dos circuitos); se excluyen las ampliaciones de cachureo y las zonas que la capa marca como no autorizadas. pintana.cl no publica los días de las ferias, así que no se pudo contrastar con otra fuente municipal. Respaldo en docs/fuentes/la-pintana-ferias-2026-10.",
+  },
+  {
     id: "lp-geo-territorio",
     institution: "Municipalidad de La Pintana",
     pageName: "GeoPintana — sectores y unidades vecinales",

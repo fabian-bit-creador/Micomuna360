@@ -85,6 +85,11 @@ export function PlaceSheet({
               </>
             )}
           </p>
+          {place.schedule && (
+            <p className="mt-1 text-sm font-semibold text-foreground">
+              {place.schedule}
+            </p>
+          )}
           {place.sector && (
             <p className="text-sm text-muted-foreground">
               Sector {place.sector}

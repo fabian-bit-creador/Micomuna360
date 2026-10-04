@@ -12,6 +12,7 @@ import type {
   Procedure,
   ProcedureCategory,
   SportsProgram,
+  StreetMarket,
   UsefulPhone,
 } from "@/types";
 
@@ -37,6 +38,13 @@ export async function getSportsPrograms(
 }
 
 /** Fotos con crédito de la comuna. */
+/** Ferias libres y persas autorizadas, con su tramo de calle. */
+export async function getStreetMarkets(
+  communeId: string
+): Promise<StreetMarket[]> {
+  return [...getCommuneData(communeId).streetMarkets];
+}
+
 export async function getPhotos(communeId: string): Promise<Photo[]> {
   return [...getCommuneData(communeId).photos];
 }

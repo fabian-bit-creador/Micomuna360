@@ -26,3 +26,32 @@ export function formatDays(days: Weekday[]): string {
         : `${labels.slice(0, -1).join(", ")} y ${labels[labels.length - 1]}`;
   return text.charAt(0).toUpperCase() + text.slice(1);
 }
+
+/** Día de la semana de hoy en Chile (las ferias siguen la hora local). */
+export function todayInChile(now: Date = new Date()): Weekday {
+  const name = new Intl.DateTimeFormat("en-US", {
+    weekday: "long",
+    timeZone: "America/Santiago",
+  }).format(now);
+  const order: Record<string, Weekday> = {
+    Monday: "lunes",
+    Tuesday: "martes",
+    Wednesday: "miercoles",
+    Thursday: "jueves",
+    Friday: "viernes",
+    Saturday: "sabado",
+    Sunday: "domingo",
+  };
+  return order[name];
+}
+
+/** «Jueves y domingo, de 09:00 a 14:45» (y festivos, si corresponde). */
+export function formatMarketSchedule(market: {
+  days: Weekday[];
+  holidays: boolean;
+  startTime: string;
+  endTime: string;
+}): string {
+  const days = formatDays(market.days);
+  return `${days}${market.holidays ? " y festivos" : ""}, de ${market.startTime} a ${market.endTime}`;
+}

@@ -74,7 +74,8 @@ Series: `#17375E`, `#1E8E89`, `#67B7D1`, `#C95B5B`, `#E9B949` (en oscuro,
 versiones más claras: `chart-1…5`). Todo gráfico tiene una tabla
 alternativa. Los marcadores del mapa usan su propia paleta validada para
 distinguirse sobre OpenStreetMap: municipal `#2A78D6`, salud `#1BAF7A`,
-deporte `#EB6834`, seguridad `#4A3AA7`, siempre con un glifo blanco.
+deporte `#EB6834`, seguridad `#4A3AA7` y ferias `#C2398A`, siempre con un glifo
+blanco.
 
 ## Tipografía
 

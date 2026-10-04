@@ -6,6 +6,7 @@ import L from "./leaflet-global";
 import "leaflet.markercluster";
 
 import type { TerritoryArea } from "@/data/communes";
+import type { Weekday } from "@/types";
 import { googleMapsUrls } from "@/lib/maps";
 
 import "leaflet/dist/leaflet.css";
@@ -26,6 +27,12 @@ export interface MapPlace {
   unit?: string | null;
   /** Teléfono publicado del lugar, si tiene. */
   phone?: string | null;
+  /** Días y horario, en palabras (ferias). */
+  schedule?: string | null;
+  /** Días en que funciona (ferias), para el filtro «hoy». */
+  days?: Weekday[];
+  /** Franja que ocupa en la calle [lat, lng] (ferias). */
+  shape?: [number, number][] | null;
 }
 
 interface MapViewProps {
@@ -68,6 +75,9 @@ const glyphs: Record<string, string> = {
     '<circle cx="12" cy="12" r="7" stroke="#fff" stroke-width="2.4" fill="none"/><path d="M5 12h14M12 5c3 3 3 11 0 14M12 5c-3 3-3 11 0 14" stroke="#fff" stroke-width="1.6" fill="none"/>',
   seguridad:
     '<path d="M12 3l7 3v5c0 4.4-3 7.8-7 10-4-2.2-7-5.6-7-10V6z" fill="#fff"/>',
+  /* Toldo de feria. */
+  feria:
+    '<path d="M3 9l2-5h14l2 5c0 1.4-1.1 2.5-2.5 2.5S16 10.4 16 9c0 1.4-1.1 2.5-2.5 2.5S11 10.4 11 9c0 1.4-1.1 2.5-2.5 2.5S6 10.4 6 9c0 1.4-1.1 2.5-2.5 2.5" fill="#fff"/><path d="M5 13v7h14v-7" stroke="#fff" stroke-width="2.2" fill="none" stroke-linejoin="round"/>',
 };
 
 function escapeHtml(text: string): string {
@@ -112,6 +122,7 @@ export default function MapView({
   const markersRef = useRef(new Map<string, L.Marker>());
   const userLayerRef = useRef<L.LayerGroup | null>(null);
   const areaLayerRef = useRef<L.LayerGroup | null>(null);
+  const shapeLayerRef = useRef<L.LayerGroup | null>(null);
   /* El aviso al padre se guarda en una ref para no recrear los marcadores
      cada vez que cambia la función. */
   const onSelectRef = useRef(onSelect);
@@ -164,6 +175,8 @@ export default function MapView({
     labelPane.style.zIndex = "450";
     labelPane.style.pointerEvents = "none";
     areaLayerRef.current = L.layerGroup().addTo(map);
+    /* Franjas de las ferias: bajo los marcadores. */
+    shapeLayerRef.current = L.layerGroup().addTo(map);
     clusterRef.current = L.markerClusterGroup({
       showCoverageOnHover: false,
       maxClusterRadius: 44,
@@ -199,14 +212,17 @@ export default function MapView({
       clusterRef.current = null;
       userLayerRef.current = null;
       areaLayerRef.current = null;
+      shapeLayerRef.current = null;
     };
   }, [center.lat, center.lng, zoom, boundary]);
 
   // Redibujar marcadores cuando cambian los filtros.
   useEffect(() => {
     const cluster = clusterRef.current;
+    const shapes = shapeLayerRef.current;
     if (!cluster) return;
     cluster.clearLayers();
+    shapes?.clearLayers();
 
     const markers = new Map<string, L.Marker>();
     for (const place of places) {
@@ -221,6 +237,20 @@ export default function MapView({
         popupAnchor: [0, -15],
       });
       const marker = L.marker([place.lat, place.lng], { icon, title: place.name });
+      if (place.shape && shapes) {
+        L.polygon(place.shape, {
+          color,
+          weight: 2,
+          fillColor: color,
+          fillOpacity: 0.45,
+        })
+          .on("click", () =>
+            cluster.zoomToShowLayer(marker, () =>
+              sheetMode ? onSelectRef.current?.(place.id) : marker.openPopup()
+            )
+          )
+          .addTo(shapes);
+      }
       if (sheetMode) {
         marker.on("click", () => onSelectRef.current?.(place.id));
         cluster.addLayer(marker);
@@ -232,6 +262,11 @@ export default function MapView({
         `<div style="min-width:200px">
           <strong style="display:block;font-size:14px">${escapeHtml(place.name)}</strong>
           <span style="display:block;margin-top:2px;color:#4b5563">${escapeHtml(place.address)}</span>
+          ${
+            place.schedule
+              ? `<span style="display:block;margin-top:4px;font-weight:700;color:#374151">${escapeHtml(place.schedule)}</span>`
+              : ""
+          }
           ${
             place.sector
               ? `<span style="display:block;margin-top:2px;color:#4b5563">Sector ${escapeHtml(place.sector)}${place.unit ? ` · ${escapeHtml(place.unit)}` : ""}</span>`

@@ -88,6 +88,10 @@ indicadores) con la fuente y la fecha de verificación de cada dato. El
   del directorio (`components/places/place-directory.tsx`) van bajo el mapa
   en la misma página: `#<id>` abre el lugar en el mapa y `#ficha-<id>` lleva
   a su ficha; `/directorio` redirige a `/mapa` en las comunas con mapa real.
+  Las ferias libres y persas (`street-markets.ts`) van en el mismo mapa
+  como categoría «Ferias», con la franja de calle que ocupan, y en una
+  sección semanal bajo el mapa; «hoy» se calcula en el navegador con la
+  hora de Chile (`todayInChile`).
 
 ## Despliegue
 

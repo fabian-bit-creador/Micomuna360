@@ -53,6 +53,7 @@ const empty: CommuneData = {
   contextIndicators: [],
   enrollment: [],
   sportsPrograms: [],
+  streetMarkets: [],
   photos: [],
   sectionSources: {},
   sectionPhotos: {},

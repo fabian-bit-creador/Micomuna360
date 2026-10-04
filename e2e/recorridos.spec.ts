@@ -191,6 +191,59 @@ test.describe("Mapa", () => {
   });
 });
 
+test.describe("Ferias libres", () => {
+  test("las ferias de la semana se filtran por día", async ({ page }) => {
+    await page.goto("/la-pintana/mapa");
+    const section = page.getByRole("region", { name: "Ferias libres y persas" });
+    await section.getByRole("button", { name: "Toda la semana" }).click();
+    await expect(section.getByText(/^19 ferias en la semana$/)).toBeVisible();
+    // El martes hay ferias; todas las que aparecen funcionan el martes.
+    await section.getByRole("button", { name: /^martes/ }).click();
+    const cards = section.getByRole("listitem");
+    await expect(cards.first()).toBeVisible();
+    for (const card of await cards.all()) {
+      await expect(card).toContainText(/martes/i);
+    }
+  });
+
+  test("una feria se abre en el mapa con sus días y horario", async ({
+    page,
+    isMobile,
+  }) => {
+    await page.goto("/la-pintana/mapa");
+    await expect(page.locator(".leaflet-container")).toBeVisible();
+    const section = page.getByRole("region", { name: "Ferias libres y persas" });
+    await section.getByRole("button", { name: "Toda la semana" }).click();
+    const card = section.getByRole("listitem").filter({ hasText: "John Kennedy" });
+    await card.getByRole("link", { name: "Ver en el mapa" }).click();
+    const ficha = isMobile
+      ? page.locator('section[aria-labelledby="ficha-lugar"]')
+      : page.locator(".leaflet-popup");
+    await expect(ficha).toContainText("Feria libre John Kennedy");
+    await expect(ficha).toContainText(/Miércoles y sábado, de 09:00 a 14:45/);
+  });
+
+  test("el mapa ofrece las ferias de hoy", async ({ page }) => {
+    await page.goto("/la-pintana/mapa");
+    const chip = page.getByRole("button", { name: /^Ferias de hoy \(\d+\)$/ });
+    const ferias = page.getByRole("button", { name: /^Ferias \(19\)$/ });
+    await expect(ferias).toBeVisible();
+    // Los lunes no funciona ninguna feria ni persa: ese día no hay filtro.
+    const weekday = new Intl.DateTimeFormat("en-US", {
+      weekday: "long",
+      timeZone: "America/Santiago",
+    }).format(new Date());
+    if (weekday === "Monday") {
+      await expect(chip).toHaveCount(0);
+      return;
+    }
+    await chip.click();
+    await expect(chip).toHaveAttribute("aria-pressed", "true");
+    const list = page.getByRole("region", { name: "Lugares" });
+    expect(await list.getByRole("listitem").count()).toBeGreaterThan(0);
+  });
+});
+
 test.describe("Teléfonos y descargas", () => {
   test("los teléfonos útiles se llaman con un toque", async ({ page }) => {
     await page.goto("/la-pintana/telefonos");

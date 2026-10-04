@@ -40,7 +40,10 @@ verificada.
    vecinales, además de cultura y deporte.
 3. **Cultura**: talleres de la Corporación Cultural, con el mismo formato de
    Deportes.
-4. **Ferias libres**: días y calles, desde la información municipal.
+4. ~~Ferias libres~~: 16 ferias libres y 3 persas en el mapa y por día,
+   desde la capa de GeoPintana (2026-10-04). Sus datos son de diciembre de
+   2022: confirmarlos con la Dirección de Desarrollo Económico cuando se
+   pueda.
 5. **Seguridad**: casos policiales por 100.000 habitantes (CEAD), con
    contexto. En espera por decisión del 2026-10-03.
 6. **Más fotos reales**: propias o con licencia libre, con crédito.

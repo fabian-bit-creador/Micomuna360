@@ -37,6 +37,7 @@ export const losAromosData: CommuneData = {
   contextIndicators: [],
   enrollment: [],
   sportsPrograms: [],
+  streetMarkets: [],
   photos: [],
   sectionSources: {},
   sectionPhotos: {},

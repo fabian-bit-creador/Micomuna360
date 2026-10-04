@@ -509,6 +509,33 @@ export interface SportsProgram {
 }
 
 /**
+ * Feria libre o persa autorizada: un tramo de calle que funciona ciertos
+ * días. Se dibuja como franja sobre la calle y se lista por día.
+ */
+export interface StreetMarket {
+  id: string;
+  name: string;
+  /** «feria» (feria libre) o «persa» (feria persa o de cachureo). */
+  kind: "feria" | "persa";
+  days: Weekday[];
+  /** También funciona los días festivos. */
+  holidays: boolean;
+  /** Horario "HH:MM". */
+  startTime: string;
+  endTime: string;
+  /** Puestos autorizados, si la fuente los informa. */
+  stalls: number | null;
+  /** Tramo de calle, en palabras. */
+  location: string;
+  note: string | null;
+  /** Punto interior para el marcador [lat, lng]. */
+  label: [number, number];
+  /** Franja ocupada por la feria [lat, lng]. */
+  ring: [number, number][];
+  sourceId: string;
+}
+
+/**
  * Foto real publicada en el sitio, con su crédito. Solo fotos propias, con
  * licencia libre o con permiso escrito (docs/imagenes.md).
  */

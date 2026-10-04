@@ -592,6 +592,45 @@ export function validateCommuneData(
     }
   }
 
+  // Ferias: comparten el mapa con los lugares, así que sus ids no pueden
+  // repetirse con los de un lugar (el #id de la URL abre uno u otro).
+  const mapIds = new Set(data.places.map((p) => p.id));
+  for (const market of data.streetMarkets) {
+    if (mapIds.has(market.id)) fail(`feria o lugar duplicado "${market.id}"`);
+    mapIds.add(market.id);
+    if (!sourceIds.has(market.sourceId)) {
+      fail(`feria "${market.id}" referencia la fuente inexistente "${market.sourceId}"`);
+    }
+    if (market.days.length === 0) fail(`feria "${market.id}" no tiene días`);
+    if (
+      !hhmm.safeParse(market.startTime).success ||
+      !hhmm.safeParse(market.endTime).success ||
+      market.endTime <= market.startTime
+    ) {
+      fail(`feria "${market.id}" tiene un horario inválido`);
+    }
+    if (market.stalls !== null && (!Number.isInteger(market.stalls) || market.stalls <= 0)) {
+      fail(`feria "${market.id}" tiene una cantidad de puestos inválida`);
+    }
+    if (market.ring.length < 4) fail(`feria "${market.id}" tiene menos de 4 puntos`);
+    if (
+      bounds &&
+      market.ring.some(
+        ([lat, lng]) =>
+          lat < bounds.south || lat > bounds.north || lng < bounds.west || lng > bounds.east
+      )
+    ) {
+      fail(`feria "${market.id}" se sale del rectángulo de la comuna`);
+    }
+    const [lat, lng] = market.label;
+    if (!insideRing(lat, lng, market.ring)) {
+      fail(`el marcador de la feria "${market.id}" cae fuera de su tramo`);
+    }
+    if (data.territory && !findArea({ lat, lng }, data.territory.sectors)) {
+      fail(`feria "${market.id}" no cae en ningún sector`);
+    }
+  }
+
   if (problems.length > 0) {
     throw new Error(
       `Datos inválidos en la comuna "${communeId}":\n  - ${problems.join("\n  - ")}`

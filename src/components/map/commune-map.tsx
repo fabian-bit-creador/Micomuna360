@@ -19,6 +19,7 @@ import {
   googleMapsUrls,
 } from "@/lib/maps";
 import { telHref } from "@/lib/format";
+import { todayInChile } from "@/lib/weekdays";
 import { cn } from "@/lib/utils";
 
 import type { MapPlace } from "./map-view";
@@ -36,8 +37,9 @@ const MapView = dynamic(() => import("./map-view"), {
  * Color por categoría. Los marcadores van sobre el mapa base claro de
  * OpenStreetMap (que no cambia con el tema), así que la paleta se validó en
  * modo claro y con todos los pares (un mapa es un gráfico de dispersión):
- * municipal, salud, deporte y seguridad pasan las seis comprobaciones del
- * validador de dataviz. El resto de categorías aún no aparece en ningún
+ * municipal, salud, deporte, seguridad y ferias pasan las seis
+ * comprobaciones del validador de dataviz (peor par para daltonismo:
+ * deporte–salud, ΔE 9,2). El resto de categorías aún no aparece en ningún
  * mapa real; al sumarlas hay que volver a validar. Cada marcador lleva
  * además un glifo propio, así que el color nunca es la única pista.
  */
@@ -46,6 +48,7 @@ const categoryColors: Record<string, string> = {
   deporte: "#eb6834",
   salud: "#1baf7a",
   seguridad: "#4a3aa7",
+  feria: "#c2398a",
   educacion: "#eda100",
   comunitario: "#e87ba4",
   medioambiente: "#008300",
@@ -59,7 +62,11 @@ const categoryLabels: Record<string, string> = {
   comunitario: "Comunitario",
   medioambiente: "Medioambiente",
   seguridad: "Seguridad",
+  feria: "Ferias",
 };
+
+/* Filtro especial: las ferias que funcionan hoy. */
+const TODAY = "__hoy";
 
 interface CommuneMapProps {
   places: MapPlace[];
@@ -169,9 +176,21 @@ export function CommuneMap({
   const myUnit =
     position && territory ? findArea(position, territory.neighborhoodUnits) : null;
 
+  /* El día se lee en el navegador: la página se genera cada hora en el
+     servidor y no puede saber qué día es para el vecino. */
+  const today = useSyncExternalStore(noSubscribe, todayInChile, () => null);
+  const todayCount = today
+    ? places.filter((p) => p.days?.includes(today)).length
+    : 0;
+
   const inCategory = useMemo(
-    () => (active ? places.filter((p) => p.category === active) : places),
-    [places, active]
+    () =>
+      active === TODAY
+        ? places.filter((p) => today && p.days?.includes(today))
+        : active
+          ? places.filter((p) => p.category === active)
+          : places,
+    [places, active, today]
   );
   const visible = useMemo(
     () =>
@@ -293,6 +312,21 @@ export function CommuneMap({
               </button>
             );
           })}
+          {todayCount > 0 && (
+            <button
+              type="button"
+              onClick={() => setActive(active === TODAY ? null : TODAY)}
+              aria-pressed={active === TODAY}
+              className={cn(chipClass(active === TODAY), "flex items-center gap-2")}
+            >
+              <span
+                aria-hidden="true"
+                className="size-2.5 rounded-full"
+                style={{ background: categoryColors.feria }}
+              />
+              Ferias de hoy ({todayCount})
+            </button>
+          )}
         </div>
         {/* Solo en el celular: mapa o lista, a elección */}
         <div
@@ -504,6 +538,11 @@ export function CommuneMap({
                         </>
                       )}
                     </span>
+                    {place.schedule && (
+                      <span className="mt-0.5 block text-xs font-semibold text-foreground">
+                        {place.schedule}
+                      </span>
+                    )}
                   </button>
                   <div className="mt-1 flex flex-wrap items-center gap-x-3 text-xs font-semibold">
                     {place.phone && (
