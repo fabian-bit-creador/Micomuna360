@@ -262,6 +262,9 @@ test.describe("Transparencia", () => {
     );
     expect(total).toBe(100_000);
     await expect(card.getByRole("heading", { name: "Antes de comparar" })).toBeVisible();
+    // Toda la página usa la misma escala.
+    await expect(page.getByText(/De cada \$100\.000 disponibles/)).toBeVisible();
+    await expect(page.getByText(/de cada \$100(?!\.000)/)).toHaveCount(0);
   });
 });
 

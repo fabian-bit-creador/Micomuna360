@@ -6,7 +6,7 @@ import {
   ExecutionMeter,
 } from "@/components/data/execution-meter";
 import { SourceBadge } from "@/components/shared/source-badge";
-import { PerScale } from "@/components/transparency/per-scale";
+import { PerScale, perScale } from "@/components/transparency/per-scale";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent } from "@/components/ui/card";
 import { formatClp, formatClpCompact, formatDate } from "@/lib/format";
@@ -21,9 +21,6 @@ interface BudgetSectionProps {
 /** El informe trabaja en miles de pesos; la página muestra pesos. */
 const pesos = (thousands: number) => thousands * 1000;
 
-/** "De cada $100…" sin decimales, que es como se lee en voz alta. */
-const per100 = (part: number, whole: number) =>
-  whole > 0 ? Math.round((part / whole) * 100) : 0;
 
 /** Parte del año transcurrida a la fecha de corte (0–1). */
 function elapsedYear(iso: string): number {
@@ -163,7 +160,7 @@ export function BudgetSection({ lines, documents, source }: BudgetSectionProps) 
     id: o.id,
     label: o.label,
     value: pesos(o.value),
-    detail: `$${per100(o.value, income.initialK)} de cada $100`,
+    detail: `${perScale(o.value, income.initialK)} de cada $100.000`,
   }));
 
   /* Área de salud: presupuesto propio, con su propio origen. */
@@ -195,13 +192,13 @@ export function BudgetSection({ lines, documents, source }: BudgetSectionProps) 
         {Math.round(elapsed * 100) === 50
           ? "la mitad"
           : `el ${Math.round(elapsed * 100)}%`}{" "}
-        del año. De cada $100 disponibles,{" "}
+        del año. De cada $100.000 disponibles,{" "}
         <strong className="text-foreground">
-          ya se habían comprometido ${per100(spending.committedK, spending.currentK)}
+          ya se habían comprometido {perScale(spending.committedK, spending.currentK)}
         </strong>{" "}
         y{" "}
         <strong className="text-foreground">
-          pagado ${per100(spending.paidK, spending.currentK)}
+          pagado {perScale(spending.paidK, spending.currentK)}
         </strong>
         .
       </p>
@@ -218,12 +215,12 @@ export function BudgetSection({ lines, documents, source }: BudgetSectionProps) 
             <Stat
               label="Comprometido"
               value={pesos(spending.committedK)}
-              detail={`$${per100(spending.committedK, spending.currentK)} de cada $100`}
+              detail={`${perScale(spending.committedK, spending.currentK)} de cada $100.000`}
             />
             <Stat
               label="Pagado"
               value={pesos(spending.paidK)}
-              detail={`$${per100(spending.paidK, spending.currentK)} de cada $100`}
+              detail={`${perScale(spending.paidK, spending.currentK)} de cada $100.000`}
             />
           </div>
           {growthK > 0 && (
@@ -358,18 +355,18 @@ export function BudgetSection({ lines, documents, source }: BudgetSectionProps) 
                     {formatClpCompact(pesos(health.currentK))}
                   </strong>{" "}
                   disponibles en el año, de los que al {cutoffText} se había
-                  comprometido ${per100(health.committedK, health.currentK)} y
-                  pagado ${per100(health.paidK, health.currentK)} de cada $100.
+                  comprometido {perScale(health.committedK, health.currentK)} y
+                  pagado {perScale(health.paidK, health.currentK)} de cada $100.000.
                 </p>
                 {fromHealthService && fromMunicipality && (
                   <p className="mt-2 text-sm text-muted-foreground">
-                    De cada $100 del presupuesto aprobado para salud,{" "}
+                    De cada $100.000 del presupuesto aprobado para salud,{" "}
                     <strong className="text-foreground">
-                      ${per100(fromHealthService.initialK, healthIncome.initialK)}{" "}
+                      {perScale(fromHealthService.initialK, healthIncome.initialK)}{" "}
                       vienen del Servicio de Salud
                     </strong>{" "}
-                    (aportes del Estado) y $
-                    {per100(fromMunicipality.initialK, healthIncome.initialK)}{" "}
+                    (aportes del Estado) y{" "}
+                    {perScale(fromMunicipality.initialK, healthIncome.initialK)}{" "}
                     los pone el municipio.
                   </p>
                 )}

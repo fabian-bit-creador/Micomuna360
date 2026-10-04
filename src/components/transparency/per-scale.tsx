@@ -14,6 +14,15 @@ export const SCALE = 100_000;
 const STEP = 100;
 
 /**
+ * «$53.500 de cada $100.000»: la parte de un total en la escala de la
+ * página, redondeada a $100, que es como se lee en voz alta.
+ */
+export function perScale(part: number, whole: number): string {
+  if (whole <= 0) return formatClp(0);
+  return formatClp(Math.round(((part / whole) * SCALE) / STEP) * STEP);
+}
+
+/**
  * Reparte $100.000 entre las partes, en pasos de $100, con el método del
  * mayor resto: los montos suman exactamente $100.000, que es lo que el
  * vecino va a comprobar.
