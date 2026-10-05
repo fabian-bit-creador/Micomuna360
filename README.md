@@ -23,7 +23,7 @@ comuna tiene su configuración y su propio conjunto de datos:
 | Sección | Ruta | Descripción |
 | --- | --- | --- |
 | Inicio | `/[comuna]` | Portada con buscador y accesos a cada sección |
-| Servicios | `/servicios` | Trámites y pagos con enlace al sitio oficial de cada institución. El permiso de circulación y la licencia de conducir tienen ficha completa: para quién, costo, dónde, plazo, paso a paso y qué llevar |
+| Servicios | `/servicios` | Trámites y pagos con enlace al sitio oficial de cada institución. El permiso de circulación y la licencia de conducir tienen ficha plegable (se abre al presionarla o al llegar con `#<id>` de la tarjeta): para quién, costo, dónde, plazo, paso a paso y qué llevar |
 | Beneficios | `/beneficios` | Orientador «¿A qué puedo postular?» según la situación del hogar; funciona en el navegador, sin pedir datos personales |
 | Deportes | `/deportes` | Escuelas y talleres deportivos con días, horario, lugar y cómo inscribirse; filtro por deporte, día, tipo y sector |
 | Mapa y lugares | `/mapa` | Municipio, centros de salud, recintos deportivos y seguridad sobre OpenStreetMap (límite comunal, sectores, marcadores agrupados, lista sincronizada, «cerca de mí», Street View) y, debajo, las ferias libres y persas de cada día y la ficha de cada lugar con horario, teléfono, fuente y cómo llegar. `/directorio` redirige aquí; solo la comuna de ejemplo, sin mapa real, lo mantiene como página propia |

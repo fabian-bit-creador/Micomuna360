@@ -85,7 +85,15 @@ test.describe("Beneficios", () => {
 });
 
 test.describe("Servicios", () => {
-  test("la ficha de la licencia muestra las cuatro casillas y lleva al mapa", async ({
+  test("la ficha parte cerrada y se abre al presionarla", async ({ page }) => {
+    await page.goto("/la-pintana/servicios");
+    const card = page.locator("#svc-permiso-circulacion");
+    await expect(card.getByText("Para quién", { exact: true })).toBeHidden();
+    await card.getByText(/Ver ficha/).click();
+    await expect(card.getByText("Para quién", { exact: true })).toBeVisible();
+  });
+
+  test("llegar con #tarjeta abre su ficha, con las cuatro casillas y el mapa", async ({
     page,
   }) => {
     await page.goto("/la-pintana/servicios#svc-licencia-conducir");

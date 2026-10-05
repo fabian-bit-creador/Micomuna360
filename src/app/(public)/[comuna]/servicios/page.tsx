@@ -4,6 +4,7 @@ import { ExternalLinkIcon } from "lucide-react";
 
 import { FeatureUnavailable } from "@/components/layout/feature-unavailable";
 import { SectionHeader } from "@/components/layout/section-header";
+import { GuideDisclosure } from "@/components/services/guide-disclosure";
 import { ServiceGuide } from "@/components/services/service-guide";
 import { CivicIconChip } from "@/components/shared/civic-icon";
 import { SourceBadge } from "@/components/shared/source-badge";
@@ -104,7 +105,7 @@ export default async function ServiciosPage({
                       id={service.id}
                       className={cn(
                         "scroll-mt-24 gap-0 py-5",
-                        service.guide && "md:col-span-2"
+                        service.guide && "md:has-[details[open]]:col-span-2"
                       )}
                     >
                       <CardContent className="px-5">
@@ -123,11 +124,13 @@ export default async function ServiciosPage({
                           </div>
                         </div>
                         {service.guide ? (
-                          <ServiceGuide
-                            guide={service.guide}
-                            steps={service.steps}
-                            place={placeOf(service.guide.placeId)}
-                          />
+                          <GuideDisclosure cardId={service.id}>
+                            <ServiceGuide
+                              guide={service.guide}
+                              steps={service.steps}
+                              place={placeOf(service.guide.placeId)}
+                            />
+                          </GuideDisclosure>
                         ) : (
                           service.steps.length > 0 && (
                           <ol className="mt-3 ml-15 list-decimal space-y-1 pl-4 text-sm text-muted-foreground">
