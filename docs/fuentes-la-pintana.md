@@ -28,8 +28,8 @@ enlaza hoy; conviene abrir ambos desde Chile en la próxima revisión.
 | lp-muni-direcciones | Municipalidad | [Direcciones Municipales](https://pintana.cl/?page_id=7033) | verificado | 2026-09-27 | 2026-12-27 | Dirección Santa Rosa 12.975 y horarios confirmados navegando directo el 2026-09-27 |
 | lp-muni-tramites | Municipalidad | [Trámites](https://pintana.cl/?page_id=2460) | verificado | 2026-09-27 | 2026-12-27 | — |
 | lp-muni-pagos | Municipalidad | [Pagos online](https://pintana.cl/?page_id=4122) | verificado | 2026-09-27 | 2026-12-27 | Pago permiso circulación con RUT + patente |
-| lp-muni-permisos | Municipalidad | [Permisos de circulación](https://pintana.cl/?page_id=7910) | verificado | 2026-09-27 | 2026-12-27 | — |
-| lp-muni-licencias | Municipalidad | [Licencias de conducir](https://pintana.cl/?page_id=8115) | verificado | 2026-09-27 | 2026-12-27 | Reserva en plataforma externa e-com; cupos el 1er día hábil del mes |
+| lp-muni-permisos | Municipalidad | [Permisos de circulación](https://pintana.cl/?page_id=7910) | verificado | 2026-10-05 | 2027-01-05 | Ficha del trámite: requisitos, cálculo del valor, traslado en 48 horas, horario y teléfono. Indica Baldomero Lillo N°1666 (la página de licencias dice N°1966). Respaldo en `docs/fuentes/la-pintana-tramites-2026-10/` |
+| lp-muni-licencias | Municipalidad | [Licencias de conducir](https://pintana.cl/?page_id=8115) | verificado | 2026-10-05 | 2027-01-05 | Reserva en plataforma externa; cupos el 1er día hábil del mes. Ficha del trámite: requisitos, horarios y advertencias; el valor no se publica. Respaldo en `docs/fuentes/la-pintana-tramites-2026-10/` |
 | lp-dideco | DIDECO | [dideco.cl](https://www.dideco.cl/) | verificado | 2026-09-27 | 2026-12-27 | — |
 | lp-smartdideco | DIDECO | [SmartDIDECO](https://www.lapintana.smartdideco.cl/) | verificado | 2026-09-27 | 2026-12-27 | Plataforma de programas y atenciones. Vigente según el enlace publicado en dideco.cl; el servidor rechaza conexiones desde fuera de Chile |
 | lp-deportes | Corp. de Deportes | [pintanadeportes.cl](https://www.pintanadeportes.cl/) | verificado | 2026-09-27 | 2026-12-27 | — |

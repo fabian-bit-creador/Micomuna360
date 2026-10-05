@@ -285,6 +285,29 @@ export interface CitizenService {
   /** Nombre de ícono del kit cívico. */
   icon: string;
   sourceId: string;
+  /** Ficha de cuatro casillas, solo para trámites con página oficial completa. */
+  guide?: ServiceGuide;
+}
+
+/**
+ * Las cuatro casillas de un trámite (para quién, costo, dónde, plazo) más
+ * lo que hay que llevar. Todo sale de la fuente del servicio; lo que la
+ * fuente no publica va en null y la ficha lo dice.
+ */
+export interface ServiceGuide {
+  forWhom: string;
+  cost: string | null;
+  where: string;
+  deadline: string | null;
+  /** Lugar del directorio donde se atiende en persona. */
+  placeId: string | null;
+  /** Horario de atención presencial, tal como lo publica la fuente. */
+  hours: string | null;
+  phone: string | null;
+  /** Qué llevar o tener a mano. */
+  documents: string[];
+  /** Advertencias que la fuente destaca (impedimentos, recomendaciones). */
+  warnings: string[];
 }
 
 /**

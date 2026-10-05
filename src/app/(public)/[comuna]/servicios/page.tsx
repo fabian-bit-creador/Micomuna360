@@ -4,6 +4,7 @@ import { ExternalLinkIcon } from "lucide-react";
 
 import { FeatureUnavailable } from "@/components/layout/feature-unavailable";
 import { SectionHeader } from "@/components/layout/section-header";
+import { ServiceGuide } from "@/components/services/service-guide";
 import { CivicIconChip } from "@/components/shared/civic-icon";
 import { SourceBadge } from "@/components/shared/source-badge";
 import { Badge } from "@/components/ui/badge";
@@ -11,7 +12,12 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { getCommune } from "@/config/communes";
 import { siteConfig } from "@/config/site";
-import { getCitizenServices, getDataSource } from "@/lib/repositories";
+import {
+  getCitizenServices,
+  getDataSource,
+  getPlaces,
+} from "@/lib/repositories";
+import { cn } from "@/lib/utils";
 import type { CitizenService } from "@/types";
 import { communeMetadata } from "@/lib/seo";
 
@@ -47,7 +53,20 @@ export default async function ServiciosPage({
     return <FeatureUnavailable commune={commune} title="Servicios" />;
   }
 
-  const services = await getCitizenServices(commune.id);
+  const [services, places] = await Promise.all([
+    getCitizenServices(commune.id),
+    getPlaces(commune.id),
+  ]);
+  const placeOf = (id: string | null | undefined) => {
+    const place = id ? places.find((p) => p.id === id) : null;
+    return place
+      ? {
+          name: place.name,
+          address: place.address,
+          href: `/${commune.id}/mapa#${place.id}`,
+        }
+      : null;
+  };
   const sources = new Map(
     await Promise.all(
       services.map(
@@ -83,7 +102,10 @@ export default async function ServiciosPage({
                     <Card
                       key={service.id}
                       id={service.id}
-                      className="scroll-mt-24 gap-0 py-5"
+                      className={cn(
+                        "scroll-mt-24 gap-0 py-5",
+                        service.guide && "md:col-span-2"
+                      )}
                     >
                       <CardContent className="px-5">
                         <div className="flex items-start gap-4">
@@ -100,12 +122,20 @@ export default async function ServiciosPage({
                             </p>
                           </div>
                         </div>
-                        {service.steps.length > 0 && (
+                        {service.guide ? (
+                          <ServiceGuide
+                            guide={service.guide}
+                            steps={service.steps}
+                            place={placeOf(service.guide.placeId)}
+                          />
+                        ) : (
+                          service.steps.length > 0 && (
                           <ol className="mt-3 ml-15 list-decimal space-y-1 pl-4 text-sm text-muted-foreground">
                             {service.steps.map((step) => (
                               <li key={step}>{step}</li>
                             ))}
                           </ol>
+                          )
                         )}
                         <div className="mt-4 flex flex-wrap items-center gap-3">
                           <Button asChild size="sm">

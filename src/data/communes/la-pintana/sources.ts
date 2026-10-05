@@ -82,10 +82,11 @@ export const sources: DataSource[] = [
     featured: false,
     url: "https://pintana.cl/?page_id=7910",
     publishedAt: null,
-    verifiedAt: "2026-09-27",
+    verifiedAt: "2026-10-05",
     status: "verificado",
-    validUntil: "2026-12-27",
-    notes: null,
+    validUntil: "2027-01-05",
+    notes:
+      "Requisitos, cálculo del valor, plazo de traslado (48 horas), horario y teléfono de la Dirección de Tránsito para la ficha del trámite. Esta página indica Baldomero Lillo N°1666, mientras la de licencias y el geoportal ubican la Dirección de Tránsito en el N°1966: la ficha enlaza al lugar del directorio (N°1966). Respaldo en docs/fuentes/la-pintana-tramites-2026-10/.",
   },
   {
     id: "lp-muni-licencias",
@@ -96,11 +97,11 @@ export const sources: DataSource[] = [
     featured: false,
     url: "https://pintana.cl/?page_id=8115",
     publishedAt: null,
-    verifiedAt: "2026-09-27",
+    verifiedAt: "2026-10-05",
     status: "verificado",
-    validUntil: "2026-12-27",
+    validUntil: "2027-01-05",
     notes:
-      "La reserva se realiza en la plataforma externa e-com utilizada por el municipio; los cupos se abren el primer día hábil de cada mes.",
+      "La reserva se realiza en la plataforma externa e-com utilizada por el municipio; los cupos se abren el primer día hábil de cada mes. Requisitos, horarios y advertencias de la ficha del trámite revisados el 2026-10-05 (respaldo en docs/fuentes/la-pintana-tramites-2026-10/).",
   },
   {
     id: "lp-dideco",

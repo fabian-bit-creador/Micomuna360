@@ -50,6 +50,11 @@ verificada.
 6. **Más fotos reales**: propias o con licencia libre, con crédito.
 7. **Una segunda comuna real**: confirma que agregar comunas no requiere
    tocar las páginas.
+8. **Más fichas de trámite** (para quién, costo, dónde, plazo, paso a paso
+   y qué llevar): hechas el permiso de circulación y la licencia de
+   conducir (2026-10-05). Siguen los trámites del Departamento Social y
+   del Registro Social de Hogares, cuando una página oficial publique esos
+   datos.
 
 ## 3. Funciones con participación (requieren base de datos)
 

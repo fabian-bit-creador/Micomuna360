@@ -84,6 +84,22 @@ test.describe("Beneficios", () => {
   });
 });
 
+test.describe("Servicios", () => {
+  test("la ficha de la licencia muestra las cuatro casillas y lleva al mapa", async ({
+    page,
+  }) => {
+    await page.goto("/la-pintana/servicios#svc-licencia-conducir");
+    const card = page.locator("#svc-licencia-conducir");
+    for (const label of ["Para quién", "Costo", "Dónde", "Plazo"]) {
+      await expect(card.getByText(label, { exact: true })).toBeVisible();
+    }
+    // La página oficial no publica el valor: la ficha lo dice, no lo inventa.
+    await expect(card.getByText(/no lo publica/)).toBeVisible();
+    await card.getByRole("link", { name: /Baldomero Lillo/ }).click();
+    await expect(page).toHaveURL(/\/la-pintana\/mapa#lp-pl-transito$/);
+  });
+});
+
 test.describe("Deportes", () => {
   test("filtra rugby los sábados", async ({ page }) => {
     await page.goto("/la-pintana/deportes");

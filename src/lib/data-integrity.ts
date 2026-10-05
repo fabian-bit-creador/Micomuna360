@@ -136,6 +136,19 @@ const serviceSchema = z.object({
   institution: z.string().min(1),
   externalUrl: httpsUrl,
   sourceId: z.string().min(1),
+  guide: z
+    .object({
+      forWhom: z.string().min(1),
+      cost: z.string().min(1).nullable(),
+      where: z.string().min(1),
+      deadline: z.string().min(1).nullable(),
+      placeId: z.string().min(1).nullable(),
+      hours: z.string().min(1).nullable(),
+      phone: z.string().min(1).nullable(),
+      documents: z.array(z.string().min(1)),
+      warnings: z.array(z.string().min(1)),
+    })
+    .optional(),
 });
 
 const placeSchema = z.object({
@@ -315,6 +328,10 @@ export function validateCommuneData(
       fail(
         `servicio "${service.id}" referencia la fuente inexistente "${service.sourceId}"`
       );
+    }
+    const placeId = service.guide?.placeId;
+    if (placeId && !data.places.some((p) => p.id === placeId)) {
+      fail(`servicio "${service.id}" referencia el lugar inexistente "${placeId}"`);
     }
   }
 
