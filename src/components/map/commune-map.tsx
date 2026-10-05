@@ -18,6 +18,7 @@ import {
   formatDistance,
   googleMapsUrls,
 } from "@/lib/maps";
+import { onHashNavigation } from "@/lib/hash";
 import { telHref } from "@/lib/format";
 import { todayInChile } from "@/lib/weekdays";
 import { cn } from "@/lib/utils";
@@ -223,23 +224,26 @@ export function CommuneMap({
       .slice(0, 6);
   }, [visible, selected]);
 
-  /* «Ver en el mapa» desde una ficha de la misma página cambia el #: se
-     abre ese lugar (sin filtros que lo oculten) y el mapa sube a la vista. */
-  useEffect(() => {
-    const onHashChange = () => {
-      const id = decodeURIComponent(window.location.hash.slice(1));
-      if (!places.some((p) => p.id === id)) return;
-      setActive(null);
-      setSectorId(null);
-      setViewChoice((current) => (current === "list" ? "map" : current));
-      setSelectedId(id);
-      document
-        .getElementById("mapa-comunal")
-        ?.scrollIntoView({ behavior: "smooth", block: "center" });
-    };
-    window.addEventListener("hashchange", onHashChange);
-    return () => window.removeEventListener("hashchange", onHashChange);
-  }, [places]);
+  /* Llegar con #<id> o presionar «Ver en el mapa» en una ficha de la misma
+     página: se abre ese lugar (sin filtros que lo oculten), en vista de mapa
+     aunque el teléfono ahorre datos, y el mapa sube a la vista. */
+  useEffect(
+    () =>
+      onHashNavigation(
+        (id) => {
+          if (!places.some((p) => p.id === id)) return;
+          setActive(null);
+          setSectorId(null);
+          setViewChoice("map");
+          setSelectedId(id);
+          document
+            .getElementById("mapa-comunal")
+            ?.scrollIntoView({ behavior: "smooth", block: "center" });
+        },
+        { initial: true }
+      ),
+    [places]
+  );
 
   function findMe() {
     if (!("geolocation" in navigator)) {

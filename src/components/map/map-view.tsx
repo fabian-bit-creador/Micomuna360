@@ -126,6 +126,9 @@ export default function MapView({
   /* El aviso al padre se guarda en una ref para no recrear los marcadores
      cada vez que cambia la función. */
   const onSelectRef = useRef(onSelect);
+  /* El #id de llegada se atiende una sola vez: después, filtrar o cambiar
+     de sector debe encuadrar lo filtrado y no volver a ese lugar. */
+  const hashHandledRef = useRef(false);
   useEffect(() => {
     onSelectRef.current = onSelect;
   }, [onSelect]);
@@ -287,8 +290,11 @@ export default function MapView({
     }
     markersRef.current = markers;
 
-    // Si se llegó con #id (desde el directorio), abrir ese lugar.
-    const targetId = decodeURIComponent(window.location.hash.slice(1));
+    // Si se llegó con #id (buscador, Servicios, una ficha), abrir ese lugar.
+    const targetId = hashHandledRef.current
+      ? ""
+      : decodeURIComponent(window.location.hash.slice(1));
+    hashHandledRef.current = true;
     const target = markers.get(targetId);
     if (target) {
       cluster.zoomToShowLayer(target, () =>

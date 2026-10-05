@@ -13,6 +13,22 @@ export function googleMapsUrls({ lat, lng }: { lat: number; lng: number }) {
   };
 }
 
+/**
+ * Enlace interno a un lugar del directorio. Con mapa real, el lugar se abre
+ * en el mapa (o baja a su ficha si no tiene coordenadas), que comparten la
+ * misma página; sin mapa, va a su ficha en el directorio.
+ */
+export function placeHref(
+  commune: { id: string; features: { realMap: boolean } },
+  place: { id: string; lat?: number | null }
+): string {
+  const base = `/${commune.id}`;
+  if (!commune.features.realMap) return `${base}/directorio#${place.id}`;
+  return typeof place.lat === "number"
+    ? `${base}/mapa#${place.id}`
+    : `${base}/mapa#ficha-${place.id}`;
+}
+
 /** Distancia en línea recta entre dos puntos, en metros (fórmula de haversine). */
 export function distanceMeters(
   a: { lat: number; lng: number },

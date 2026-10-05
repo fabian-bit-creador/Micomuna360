@@ -203,6 +203,63 @@ test.describe("Mapa", () => {
     }
   });
 
+  test("con ahorro de datos, «Ver en el mapa» pasa de la lista al mapa", async ({
+    page,
+    isMobile,
+  }) => {
+    test.skip(!isMobile, "La vista de lista es del celular");
+    await page.addInitScript(() => {
+      Object.defineProperty(navigator, "connection", {
+        value: { saveData: true },
+      });
+    });
+    await page.goto("/la-pintana/mapa");
+    await expect(page.getByRole("button", { name: "Lista", exact: true })).toHaveAttribute(
+      "aria-pressed",
+      "true"
+    );
+    await expect(page.locator(".leaflet-container")).toHaveCount(0);
+    const fichas = page.getByRole("region", { name: "Ficha de cada lugar" });
+    const card = fichas.locator("[id^='ficha-']").first();
+    const name = (await card.getByRole("heading").innerText()).trim();
+    await card.getByRole("link", { name: "Ver en el mapa" }).click();
+    await expect(page.locator(".leaflet-container")).toBeVisible();
+    await expect(page.locator("#ficha-lugar")).toHaveText(name);
+  });
+
+  test("«Ver en el mapa» funciona de nuevo en el mismo lugar y no vuelve al filtrar", async ({
+    page,
+    isMobile,
+  }) => {
+    await page.goto("/la-pintana/mapa");
+    await expect(page.locator(".leaflet-container")).toBeVisible();
+    const fichas = page.getByRole("region", { name: "Ficha de cada lugar" });
+    const card = fichas.locator("[id^='ficha-']").nth(3);
+    const name = (await card.getByRole("heading").innerText()).trim();
+    const opened = isMobile
+      ? page.locator("#ficha-lugar")
+      : page.locator(".leaflet-popup");
+    const close = () =>
+      isMobile
+        ? page.getByRole("button", { name: "Cerrar ficha" }).click()
+        : page.locator(".leaflet-popup-close-button").click();
+
+    await card.getByRole("link", { name: "Ver en el mapa" }).click();
+    await expect(opened).toContainText(name);
+    await close();
+    await expect(opened).toHaveCount(0);
+
+    // Mismo enlace otra vez: el # no cambia, pero el lugar se vuelve a abrir.
+    await card.getByRole("link", { name: "Ver en el mapa" }).click();
+    await expect(opened).toContainText(name);
+    await close();
+
+    // Filtrar no debe reabrir el lugar que quedó en el #.
+    await page.getByRole("button", { name: /^Ferias \(\d+\)$/ }).click();
+    await page.waitForTimeout(500);
+    await expect(opened).toHaveCount(0);
+  });
+
   test("«Ficha» en la lista lleva a la ficha completa del lugar", async ({
     page,
   }) => {
@@ -260,6 +317,27 @@ test.describe("Ferias libres", () => {
       : page.locator(".leaflet-popup");
     await expect(ficha).toContainText("Feria libre John Kennedy");
     await expect(ficha).toContainText(/Miércoles y sábado, de 09:00 a 14:45/);
+  });
+
+  test("un enlace a la ficha de una feria la muestra aunque no sea hoy", async ({
+    page,
+  }) => {
+    // Una feria que no funciona hoy: El Bosque (jueves y domingo) o, esos
+    // días, John Kennedy (miércoles y sábado).
+    const weekday = new Intl.DateTimeFormat("en-US", {
+      weekday: "long",
+      timeZone: "America/Santiago",
+    }).format(new Date());
+    const id = ["Thursday", "Sunday"].includes(weekday)
+      ? "ficha-lp-feria-john-kennedy"
+      : "ficha-lp-feria-el-bosque";
+    await page.goto(`/la-pintana/mapa#${id}`);
+    // «Hoy» se calcula en el navegador: esperar a que la página esté lista.
+    const section = page.getByRole("region", { name: "Ferias libres y persas" });
+    await expect(section.getByRole("button", { name: /\(hoy\)/ })).toBeVisible();
+    const card = page.locator(`[id='${id}']`);
+    await expect(card).toBeVisible();
+    await expect(card).toBeInViewport();
   });
 
   test("el mapa ofrece las ferias de hoy", async ({ page }) => {

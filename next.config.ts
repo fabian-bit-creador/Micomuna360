@@ -47,7 +47,8 @@ const securityHeaders = [
      válido para usar sus teselas, pero no necesita la ruta completa. */
   { key: "Referrer-Policy", value: "strict-origin-when-cross-origin" },
   { key: "X-Frame-Options", value: "DENY" },
-  /* El sitio no usa cámara, micrófono, ubicación ni pagos. */
+  /* Sin cámara, micrófono ni pagos. La ubicación solo para el propio sitio
+     («Cerca de mí» en el mapa, que no la guarda ni la envía). */
   {
     key: "Permissions-Policy",
     value:

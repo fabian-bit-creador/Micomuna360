@@ -18,6 +18,7 @@ import {
   getDataSource,
   getPlaces,
 } from "@/lib/repositories";
+import { placeHref } from "@/lib/maps";
 import { cn } from "@/lib/utils";
 import type { CitizenService } from "@/types";
 import { communeMetadata } from "@/lib/seo";
@@ -64,7 +65,7 @@ export default async function ServiciosPage({
       ? {
           name: place.name,
           address: place.address,
-          href: `/${commune.id}/mapa#${place.id}`,
+          href: placeHref(commune, place),
         }
       : null;
   };

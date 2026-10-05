@@ -3,6 +3,8 @@
 import { useEffect, useRef, type ReactNode } from "react";
 import { ChevronDownIcon } from "lucide-react";
 
+import { onHashNavigation } from "@/lib/hash";
+
 /**
  * Ficha plegable de un trámite. Parte cerrada para que la página no se
  * alargue; se abre sola si se llega con #<id> de la tarjeta (desde el
@@ -17,16 +19,16 @@ export function GuideDisclosure({
 }) {
   const ref = useRef<HTMLDetailsElement>(null);
 
-  useEffect(() => {
-    const open = () => {
-      if (decodeURIComponent(window.location.hash.slice(1)) === cardId) {
-        ref.current?.setAttribute("open", "");
-      }
-    };
-    open();
-    window.addEventListener("hashchange", open);
-    return () => window.removeEventListener("hashchange", open);
-  }, [cardId]);
+  useEffect(
+    () =>
+      onHashNavigation(
+        (hash) => {
+          if (hash === cardId) ref.current?.setAttribute("open", "");
+        },
+        { initial: true }
+      ),
+    [cardId]
+  );
 
   return (
     <details ref={ref} className="group mt-4">

@@ -4,6 +4,7 @@ import { useEffect, useState, useSyncExternalStore } from "react";
 import { MapIcon, NavigationIcon, StoreIcon } from "lucide-react";
 
 import { Badge } from "@/components/ui/badge";
+import { onHashNavigation } from "@/lib/hash";
 import { googleMapsUrls } from "@/lib/maps";
 import { cn } from "@/lib/utils";
 import { formatMarketSchedule, todayInChile, weekdays } from "@/lib/weekdays";
@@ -28,20 +29,23 @@ export function MarketWeek({ markets }: { markets: MarketCard[] }) {
   const shown =
     day === "todas" ? markets : markets.filter((m) => m.days.includes(day));
 
-  /* «Ficha» en la lista del mapa lleva a #ficha-<id>: si esa feria no está
-     en el día elegido, se muestran todas y se baja hasta ella. */
-  useEffect(() => {
-    const reveal = () => {
-      const hash = decodeURIComponent(window.location.hash.slice(1));
-      if (!markets.some((m) => m.cardId === hash)) return;
-      setChosen("todas");
-      requestAnimationFrame(() =>
-        document.getElementById(hash)?.scrollIntoView({ block: "start" })
-      );
-    };
-    window.addEventListener("hashchange", reveal);
-    return () => window.removeEventListener("hashchange", reveal);
-  }, [markets]);
+  /* Llegar con #ficha-<id> («Ficha» en la lista del mapa o un enlace
+     compartido): si esa feria no está en el día elegido, se muestran todas
+     y se baja hasta ella. */
+  useEffect(
+    () =>
+      onHashNavigation(
+        (hash) => {
+          if (!markets.some((m) => m.cardId === hash)) return;
+          setChosen("todas");
+          requestAnimationFrame(() =>
+            document.getElementById(hash)?.scrollIntoView({ block: "start" })
+          );
+        },
+        { initial: true }
+      ),
+    [markets]
+  );
 
   return (
     <div>

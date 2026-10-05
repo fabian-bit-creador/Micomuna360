@@ -1,4 +1,4 @@
-import { getCommune, listCommunes } from "@/config/communes";
+import { getCommune, listCommunes, type CommuneConfig } from "@/config/communes";
 import { getCommuneData } from "@/data/communes";
 import { findArea } from "@/lib/maps";
 
@@ -13,10 +13,21 @@ export const dynamicParams = false;
 const files = ["lugares.csv", "lugares.geojson", "telefonos.csv"] as const;
 type FileName = (typeof files)[number];
 
+/* Cada archivo existe solo si su sección está activa: lo que no está
+   verificado no se publica, tampoco como descarga. */
+function enabled(commune: CommuneConfig, archivo: FileName): boolean {
+  if (commune.isDemo) return false;
+  return archivo === "telefonos.csv"
+    ? commune.features.phones
+    : commune.features.directory;
+}
+
 export function generateStaticParams() {
-  return listCommunes()
-    .filter((c) => !c.isDemo)
-    .flatMap((c) => files.map((archivo) => ({ comuna: c.id, archivo })));
+  return listCommunes().flatMap((c) =>
+    files
+      .filter((archivo) => enabled(c, archivo))
+      .map((archivo) => ({ comuna: c.id, archivo }))
+  );
 }
 
 /* Punto y coma y BOM: Excel en español lo abre en columnas y con tildes. */
@@ -34,7 +45,11 @@ export async function GET(
 ) {
   const { comuna, archivo } = await params;
   const commune = getCommune(comuna);
-  if (!commune || commune.isDemo || !files.includes(archivo as FileName)) {
+  if (
+    !commune ||
+    !files.includes(archivo as FileName) ||
+    !enabled(commune, archivo as FileName)
+  ) {
     return new Response("No encontrado", { status: 404 });
   }
   const data = getCommuneData(commune.id);

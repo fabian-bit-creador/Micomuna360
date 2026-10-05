@@ -168,13 +168,15 @@ export default async function MapaPage({
               >
                 Mapa (GeoJSON)
               </a>
-              <a
-                href={`/${commune.id}/descargas/telefonos.csv`}
-                download
-                className="inline-flex min-h-9 items-center text-brand-teal-ink underline underline-offset-4"
-              >
-                Teléfonos útiles (CSV)
-              </a>
+              {commune.features.phones && (
+                <a
+                  href={`/${commune.id}/descargas/telefonos.csv`}
+                  download
+                  className="inline-flex min-h-9 items-center text-brand-teal-ink underline underline-offset-4"
+                >
+                  Teléfonos útiles (CSV)
+                </a>
+              )}
             </div>
           </section>
 
