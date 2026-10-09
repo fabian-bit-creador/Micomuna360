@@ -11,6 +11,7 @@ import {
 
 import { telHref } from "@/lib/format";
 import { formatDistance, googleMapsUrls } from "@/lib/maps";
+import { cn } from "@/lib/utils";
 
 import type { MapPlace } from "./map-view";
 
@@ -24,6 +25,8 @@ interface PlaceSheetProps {
   nearby: { place: MapPlace; distance: number }[];
   onSelect: (id: string) => void;
   onClose: () => void;
+  /** Sobre el mapa ampliado: va pegada al borde, sin barra inferior. */
+  overlay?: boolean;
 }
 
 /**
@@ -38,6 +41,7 @@ export function PlaceSheet({
   nearby,
   onSelect,
   onClose,
+  overlay = false,
 }: PlaceSheetProps) {
   const urls = googleMapsUrls(place);
   const titleRef = useRef<HTMLHeadingElement>(null);
@@ -50,7 +54,12 @@ export function PlaceSheet({
   return (
     <section
       aria-labelledby="ficha-lugar"
-      className="fixed inset-x-0 bottom-[calc(3.5rem+env(safe-area-inset-bottom))] z-40 max-h-[62dvh] overflow-y-auto rounded-t-2xl border-t bg-card px-4 pt-2 pb-4 shadow-[0_-8px_24px_rgba(0,0,0,0.18)] lg:hidden"
+      className={cn(
+        "fixed inset-x-0 max-h-[62dvh] overflow-y-auto rounded-t-2xl border-t bg-card px-4 pt-2 shadow-[0_-8px_24px_rgba(0,0,0,0.18)] lg:hidden",
+        overlay
+          ? "bottom-0 z-[60] pb-[calc(1rem+env(safe-area-inset-bottom))]"
+          : "bottom-[calc(3.5rem+env(safe-area-inset-bottom))] z-40 pb-4"
+      )}
     >
       <span
         aria-hidden="true"

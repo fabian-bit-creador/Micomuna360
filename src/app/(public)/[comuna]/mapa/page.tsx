@@ -129,7 +129,7 @@ export default async function MapaPage({
         icon="mapa"
         eyebrow="Territorio"
         title={`Mapa y lugares de ${commune.name}`}
-        description="Municipio, salud, deporte, seguridad y ferias libres sobre el mapa abierto de OpenStreetMap. Bajo el mapa están las ferias de cada día y la ficha de cada lugar, con su fuente, horario y teléfono verificados."
+        description="Municipio, salud, deporte, seguridad y ferias libres. Más abajo, las ferias de cada día y la ficha de cada lugar con su fuente."
       />
 
       {mapPlaces.length > 0 ? (

@@ -89,7 +89,9 @@ Después, en este orden (de menor a mayor riesgo):
 - **Mapa comunal**: «cerca de mí», lista sincronizada, Street View y
   sectores con «¿en qué sector estoy?» (hechos). En el celular: hoja
   inferior, lugares cercanos, dos dedos, vista lista y descargas
-  (publicado el 2026-10-03).
+  (publicado el 2026-10-03). Más fácil de manejar (2026-10-09): «Ampliar»
+  a pantalla completa, botones grandes, menos filtros a la vista, contador
+  con «Quitar filtros» y nombres de sectores que no se tapan.
 - **Instalable en el celular** (PWA), con teléfonos y direcciones disponibles
   sin conexión.
 - **Portada v2**: buscador arriba con lo más buscado, emergencias a un

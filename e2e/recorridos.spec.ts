@@ -271,19 +271,87 @@ test.describe("Mapa", () => {
     await expect(page.locator(`[id="${id}"]`)).toBeInViewport();
   });
 
-  test("filtra los lugares de un sector", async ({ page }) => {
+  test("filtra los lugares de un sector y se pueden quitar los filtros", async ({
+    page,
+  }) => {
     await page.goto("/la-pintana/mapa");
-    const list = page.getByRole("region", { name: "Lugares" });
-    const total = await list.getByRole("listitem").count();
+    await expect(page.getByText(/^43 lugares en el mapa$/)).toBeVisible();
     const select = page.getByLabel("Lugares del sector");
     const option = await select
       .locator("option")
       .filter({ hasText: /^Centro \(/ })
       .getAttribute("value");
     await select.selectOption(option!);
-    const inSector = await list.getByRole("listitem").count();
-    expect(inSector).toBeGreaterThan(0);
-    expect(inSector).toBeLessThan(total);
+    const counter = page.getByText(/^Mostrando \d+ de 43 lugares$/);
+    await expect(counter).toBeVisible();
+    const shown = Number((await counter.innerText()).match(/\d+/)![0]);
+    expect(shown).toBeGreaterThan(0);
+    expect(shown).toBeLessThan(43);
+    await page.getByRole("button", { name: "Quitar filtros" }).click();
+    await expect(page.getByText(/^43 lugares en el mapa$/)).toBeVisible();
+    await expect(select).toHaveValue("");
+  });
+
+  test("el mapa se amplía a pantalla completa y vuelve", async ({ page }) => {
+    await page.goto("/la-pintana/mapa");
+    const map = page.locator("#mapa-comunal");
+    await expect(page.locator(".leaflet-container")).toBeVisible();
+    await page.getByRole("button", { name: "Ampliar" }).click();
+    const viewport = page.viewportSize()!;
+    await expect(async () => {
+      const box = (await map.boundingBox())!;
+      expect(box.height).toBeGreaterThan(viewport.height - 2);
+      expect(box.width).toBeGreaterThan(viewport.width - 2);
+    }).toPass();
+    // Leaflet conserva sus clases al cambiar de tamaño (si no, el mapa se rompe).
+    await expect(page.locator(".leaflet-container")).toBeVisible();
+    await expect(page.getByRole("button", { name: "Acercar" })).toBeVisible();
+    await expect(page.getByRole("button", { name: "Ver toda la comuna" })).toBeVisible();
+    await page.keyboard.press("Escape");
+    await expect(page.getByRole("button", { name: "Ampliar" })).toBeVisible();
+    await expect(page.locator(".leaflet-container")).toBeVisible();
+    expect((await map.boundingBox())!.height).toBeLessThan(viewport.height);
+  });
+
+  test("los nombres de los sectores no se tapan entre sí ni con los marcadores", async ({
+    page,
+  }) => {
+    await page.goto("/la-pintana/mapa");
+    await expect(page.locator(".leaflet-marker-icon").first()).toBeVisible();
+    await page.waitForTimeout(800);
+    const result = await page.evaluate(() => {
+      const box = (e: Element) => e.getBoundingClientRect();
+      const labels = [...document.querySelectorAll("[data-area-label]")]
+        .filter((e) => getComputedStyle(e).visibility !== "hidden")
+        .map(box);
+      const markers = [
+        ...document.querySelectorAll(".leaflet-marker-pane .leaflet-marker-icon"),
+      ].map(box);
+      const hit = (a: DOMRect, b: DOMRect) =>
+        a.left < b.right && a.right > b.left && a.top < b.bottom && a.bottom > b.top;
+      let crashes = 0;
+      labels.forEach((a, i) => {
+        labels.slice(i + 1).forEach((b) => crashes += Number(hit(a, b)));
+        markers.forEach((m) => crashes += Number(hit(a, m)));
+      });
+      return { visible: labels.length, crashes };
+    });
+    expect(result.visible).toBeGreaterThan(3);
+    expect(result.crashes).toBe(0);
+  });
+
+  test("en el celular, bajo el mapa van 5 lugares y el resto en la lista", async ({
+    page,
+    isMobile,
+  }) => {
+    test.skip(!isMobile, "En escritorio la lista completa va al lado del mapa");
+    await page.goto("/la-pintana/mapa");
+    await expect(page.locator(".leaflet-container")).toBeVisible();
+    const list = page.getByRole("region", { name: "Lugares" });
+    await expect(list.getByRole("listitem")).toHaveCount(5);
+    await list.getByRole("button", { name: "Ver los 43 lugares en una lista" }).click();
+    await expect(page.locator(".leaflet-container")).toBeHidden();
+    await expect(list.getByRole("listitem")).toHaveCount(43);
   });
 });
 

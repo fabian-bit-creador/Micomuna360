@@ -119,7 +119,7 @@ function useLowData(): boolean {
 const divisionLabels: Record<Division, string> = {
   sectors: "Sectores",
   units: "Unidades vecinales",
-  none: "Sin divisiones",
+  none: "Ninguna",
 };
 
 const chipClass = (active: boolean) =>
@@ -169,6 +169,23 @@ export function CommuneMap({
   const [viewChoice, setViewChoice] = useState<"map" | "list" | null>(null);
   const view = viewChoice ?? (lowData ? "list" : "map");
   const showMap = isDesktop || view === "map";
+  /* Mapa a pantalla completa: un dedo lo mueve y la página no se desliza
+     debajo. Escape lo cierra. */
+  const [expanded, setExpanded] = useState(false);
+  useEffect(() => {
+    if (!expanded) return;
+    const root = document.documentElement;
+    const previous = root.style.overflow;
+    root.style.overflow = "hidden";
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape") setExpanded(false);
+    };
+    window.addEventListener("keydown", onKey);
+    return () => {
+      root.style.overflow = previous;
+      window.removeEventListener("keydown", onKey);
+    };
+  }, [expanded]);
 
   const sectors = useMemo(() => territory?.sectors ?? [], [territory]);
   const sector = sectors.find((s) => s.id === sectorId) ?? null;
@@ -213,6 +230,18 @@ export function CommuneMap({
       .map((p) => ({ place: p, distance: distanceMeters(position, p) }))
       .sort((a, b) => a.distance - b.distance);
   }, [visible, position]);
+
+  const filtered = active !== null || sectorId !== null;
+  function clearFilters() {
+    setActive(null);
+    setSectorId(null);
+  }
+  /* En el celular, bajo el mapa van solo los primeros lugares (o los más
+     cercanos): una lista larga con su propio scroll dentro de la página
+     cuesta manejarla con el dedo. La lista completa está a un toque. */
+  const COMPACT = 5;
+  const compactList = !isDesktop && showMap;
+  const shownList = compactList ? listed.slice(0, COMPACT) : listed;
 
   const selected = visible.find((p) => p.id === selectedId) ?? null;
   const nearby = useMemo(() => {
@@ -296,6 +325,21 @@ export function CommuneMap({
           >
             Todos ({places.length})
           </button>
+          {todayCount > 0 && (
+            <button
+              type="button"
+              onClick={() => setActive(active === TODAY ? null : TODAY)}
+              aria-pressed={active === TODAY}
+              className={cn(chipClass(active === TODAY), "flex items-center gap-2")}
+            >
+              <span
+                aria-hidden="true"
+                className="size-2.5 rounded-full"
+                style={{ background: categoryColors.feria }}
+              />
+              Ferias de hoy ({todayCount})
+            </button>
+          )}
           {categories.map((category) => {
             const count = places.filter((p) => p.category === category).length;
             const isActive = active === category;
@@ -316,21 +360,6 @@ export function CommuneMap({
               </button>
             );
           })}
-          {todayCount > 0 && (
-            <button
-              type="button"
-              onClick={() => setActive(active === TODAY ? null : TODAY)}
-              aria-pressed={active === TODAY}
-              className={cn(chipClass(active === TODAY), "flex items-center gap-2")}
-            >
-              <span
-                aria-hidden="true"
-                className="size-2.5 rounded-full"
-                style={{ background: categoryColors.feria }}
-              />
-              Ferias de hoy ({todayCount})
-            </button>
-          )}
         </div>
         {/* Solo en el celular: mapa o lista, a elección */}
         <div
@@ -349,7 +378,10 @@ export function CommuneMap({
               type="button"
               onClick={() => {
                 setViewChoice(value);
-                if (value === "list") setSelectedId(null);
+                if (value === "list") {
+                  setSelectedId(null);
+                  setExpanded(false);
+                }
               }}
               aria-pressed={view === value}
               className={cn(
@@ -387,30 +419,15 @@ export function CommuneMap({
       </div>
 
       {territory && (
-        <div className="mb-4 flex flex-wrap items-center gap-x-4 gap-y-2">
-          <div
-            className="-mx-4 flex w-[calc(100%+2rem)] gap-2 overflow-x-auto px-4 pb-1 [scrollbar-width:none] sm:mx-0 sm:w-auto sm:flex-wrap sm:overflow-visible sm:px-0 sm:pb-0"
-            role="group"
-            aria-label="Divisiones de la comuna en el mapa"
-          >
-            {(["sectors", "units", "none"] as const).map((value) => (
-              <button
-                key={value}
-                type="button"
-                onClick={() => setDivision(value)}
-                aria-pressed={division === value}
-                className={chipClass(division === value)}
-              >
-                {divisionLabels[value]}
-              </button>
-            ))}
-          </div>
-          <label className="flex items-center gap-2 text-sm font-semibold text-muted-foreground">
+        /* Dos listas desplegables en una sola fila: el sector filtra los
+           lugares; «Divisiones» solo cambia lo que se dibuja en el mapa. */
+        <div className="mb-3 grid grid-cols-2 gap-3 sm:flex sm:flex-wrap sm:items-center sm:gap-x-5">
+          <label className="grid min-w-0 gap-1 text-xs font-semibold text-muted-foreground sm:flex sm:items-center sm:gap-2 sm:text-sm">
             Lugares del sector
             <select
               value={sectorId ?? ""}
               onChange={(e) => setSectorId(e.target.value || null)}
-              className="min-h-9 rounded-md border bg-card px-2 py-1.5 text-sm font-semibold text-foreground"
+              className="h-11 min-w-0 rounded-lg border bg-card px-2 text-sm font-semibold text-foreground sm:h-9"
             >
               <option value="">Todos los sectores</option>
               {sectors.map((s) => (
@@ -420,10 +437,46 @@ export function CommuneMap({
               ))}
             </select>
           </label>
+          <label className="grid min-w-0 gap-1 text-xs font-semibold text-muted-foreground sm:flex sm:items-center sm:gap-2 sm:text-sm">
+            Divisiones en el mapa
+            <select
+              value={division}
+              onChange={(e) => setDivision(e.target.value as Division)}
+              className="h-11 min-w-0 rounded-lg border bg-card px-2 text-sm font-semibold text-foreground sm:h-9"
+            >
+              {(["sectors", "units", "none"] as const).map((value) => (
+                <option key={value} value={value}>
+                  {divisionLabels[value]}
+                </option>
+              ))}
+            </select>
+          </label>
         </div>
       )}
 
       <div aria-live="polite" className="mb-3 text-sm text-muted-foreground">
+        <p className="flex min-h-9 flex-wrap items-center gap-x-3">
+          {filtered ? (
+            <span>
+              Mostrando <strong className="text-foreground">{visible.length}</strong>{" "}
+              de {places.length} lugares
+            </span>
+          ) : (
+            <span>
+              <strong className="text-foreground">{places.length}</strong> lugares
+              en el mapa
+            </span>
+          )}
+          {filtered && (
+            <button
+              type="button"
+              onClick={clearFilters}
+              className="inline-flex min-h-9 items-center font-semibold text-brand-teal-ink underline underline-offset-4"
+            >
+              Quitar filtros
+            </button>
+          )}
+        </p>
         {locate.state === "error" && <p>{locate.message}</p>}
         {position && (
           <>
@@ -461,7 +514,11 @@ export function CommuneMap({
       <div className="grid gap-4 lg:grid-cols-[272px_minmax(0,1fr)]">
         <div
           id="mapa-comunal"
-          className={cn("scroll-mt-24 lg:order-2", !showMap && "hidden")}
+          className={cn(
+            "scroll-mt-24 lg:order-2",
+            !showMap && "hidden",
+            expanded && "fixed inset-0 z-50 bg-background"
+          )}
         >
           {showMap && (
             <MapView
@@ -478,6 +535,10 @@ export function CommuneMap({
               onSelect={setSelectedId}
               userPosition={position}
               sheetMode={!isDesktop}
+              expanded={expanded}
+              onToggleExpanded={() => setExpanded((e) => !e)}
+              onLocate={findMe}
+              locating={locate.state === "locating"}
             />
           )}
         </div>
@@ -486,6 +547,9 @@ export function CommuneMap({
             accesible al mapa. */}
         <section aria-label="Lugares" className="lg:order-1">
           <h2 className="sr-only">Lugares en el mapa</h2>
+          {compactList && position && listed.length > 0 && (
+            <p className="mb-1.5 text-sm font-semibold">Los más cercanos a ti</p>
+          )}
           {listed.length === 0 && (
             <p className="rounded-lg border bg-card px-3 py-3 text-sm text-muted-foreground">
               No hay lugares{active ? " de esta categoría" : ""} en el sector{" "}
@@ -495,10 +559,10 @@ export function CommuneMap({
           <ul
             className={cn(
               "space-y-1.5",
-              showMap && "max-h-[360px] overflow-y-auto pr-1 lg:max-h-[680px]"
+              showMap && "lg:max-h-[680px] lg:overflow-y-auto lg:pr-1"
             )}
           >
-            {listed.map(({ place, distance }) => {
+            {shownList.map(({ place, distance }) => {
               const urls = googleMapsUrls(place);
               const isSelected = selectedId === place.id;
               return (
@@ -587,6 +651,19 @@ export function CommuneMap({
               );
             })}
           </ul>
+          {compactList && listed.length > COMPACT && (
+            <button
+              type="button"
+              onClick={() => {
+                setViewChoice("list");
+                setSelectedId(null);
+              }}
+              className="mt-2 flex min-h-11 w-full items-center justify-center gap-2 rounded-lg border bg-card text-sm font-semibold text-brand-teal-ink hover:bg-accent"
+            >
+              <ListIcon aria-hidden="true" className="size-4" />
+              Ver los {listed.length} lugares en una lista
+            </button>
+          )}
         </section>
       </div>
 
@@ -599,6 +676,7 @@ export function CommuneMap({
           nearby={nearby}
           onSelect={setSelectedId}
           onClose={() => setSelectedId(null)}
+          overlay={expanded}
         />
       )}
     </div>

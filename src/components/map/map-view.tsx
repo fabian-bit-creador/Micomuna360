@@ -1,6 +1,14 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import {
+  FocusIcon,
+  LocateFixedIcon,
+  Maximize2Icon,
+  MinusIcon,
+  PlusIcon,
+  XIcon,
+} from "lucide-react";
 
 import L from "./leaflet-global";
 import "leaflet.markercluster";
@@ -62,6 +70,28 @@ interface MapViewProps {
    * inferior: el mapa no abre ventanas emergentes, solo avisa la selección.
    */
   sheetMode?: boolean;
+  /**
+   * Mapa ampliado a toda la pantalla: ahí un dedo mueve el mapa y la rueda
+   * del mouse acerca, porque ya no hay página que bajar.
+   */
+  expanded?: boolean;
+  onToggleExpanded?: () => void;
+  /** Botón «Mi ubicación» sobre el mapa (el mismo «Cerca de mí»). */
+  onLocate?: () => void;
+  locating?: boolean;
+}
+
+/** Botón redondo sobre el mapa: 44 px, fácil de tocar. */
+const controlClass =
+  "flex size-11 items-center justify-center rounded-lg border bg-white text-[#17375e] shadow-md hover:bg-[#eef3f8] focus-visible:ring-[3px] focus-visible:ring-ring/50 focus-visible:outline-none disabled:opacity-60";
+
+/** Superficie aproximada de un polígono (para ordenar rótulos). */
+function ringArea(ring: [number, number][]): number {
+  let sum = 0;
+  for (let i = 0, j = ring.length - 1; i < ring.length; j = i++) {
+    sum += (ring[j][1] + ring[i][1]) * (ring[j][0] - ring[i][0]);
+  }
+  return Math.abs(sum / 2);
 }
 
 /* Glifo blanco por categoría (trazos simples, 24×24), para no depender
@@ -114,8 +144,14 @@ export default function MapView({
   onSelect,
   userPosition = null,
   sheetMode = false,
+  expanded = false,
+  onToggleExpanded,
+  onLocate,
+  locating = false,
 }: MapViewProps) {
-  const [showGestureHint, setShowGestureHint] = useState(false);
+  /* Aviso breve sobre el mapa (cómo moverlo o acercarlo). */
+  const [hint, setHint] = useState<string | null>(null);
+  const touchRef = useRef(false);
   const containerRef = useRef<HTMLDivElement>(null);
   const mapRef = useRef<L.Map | null>(null);
   const clusterRef = useRef<L.MarkerClusterGroup | null>(null);
@@ -129,6 +165,9 @@ export default function MapView({
   /* El #id de llegada se atiende una sola vez: después, filtrar o cambiar
      de sector debe encuadrar lo filtrado y no volver a ese lugar. */
   const hashHandledRef = useRef(false);
+  /* Reacomoda los rótulos de sectores (ver más abajo); los marcadores la
+     llaman cuando cambian. */
+  const syncLabelsRef = useRef<() => void>(() => {});
   useEffect(() => {
     onSelectRef.current = onSelect;
   }, [onSelect]);
@@ -139,18 +178,16 @@ export default function MapView({
     /* En pantallas táctiles un dedo baja la página y dos mueven el mapa
        (el gesto de pellizco de Leaflet también lo desplaza). */
     const touch = window.matchMedia("(pointer: coarse)").matches;
+    touchRef.current = touch;
     const map = L.map(containerRef.current, {
       center: [center.lat, center.lng],
       zoom,
       // Evita capturar el scroll de la página al pasar por encima.
       scrollWheelZoom: false,
+      // Los botones de acercar y alejar son propios (más grandes, en español).
       zoomControl: false,
       dragging: !touch,
     });
-    // Controles y botones en español (Leaflet los trae en inglés).
-    L.control
-      .zoom({ zoomInTitle: "Acercar", zoomOutTitle: "Alejar" })
-      .addTo(map);
     map.on("popupopen", (e) => {
       e.popup
         .getElement()
@@ -198,18 +235,47 @@ export default function MapView({
     mapRef.current = map;
 
     let hintTimer: number | undefined;
-    const container = containerRef.current;
-    const onTouchMove = (e: TouchEvent) => {
-      if (e.touches.length !== 1) return;
-      setShowGestureHint(true);
+    const flash = (text: string) => {
+      setHint(text);
       window.clearTimeout(hintTimer);
-      hintTimer = window.setTimeout(() => setShowGestureHint(false), 1500);
+      hintTimer = window.setTimeout(() => setHint(null), 1500);
+    };
+    const container = containerRef.current;
+    /* Celular: un dedo baja la página; si intenta mover el mapa, se le
+       explica cómo. Ampliado, un dedo ya mueve el mapa. */
+    const onTouchMove = (e: TouchEvent) => {
+      if (e.touches.length !== 1 || map.dragging.enabled()) return;
+      flash("Usa dos dedos para mover el mapa, o presiona «Ampliar»");
+    };
+    /* Computador: la rueda baja la página; con Ctrl (o el gesto de
+       pellizco del panel táctil) acerca y aleja. */
+    let lastWheel = 0;
+    const onWheel = (e: WheelEvent) => {
+      if (map.scrollWheelZoom.enabled()) return;
+      if (!e.ctrlKey && !e.metaKey) {
+        flash("Para acercar, usa Ctrl + la rueda del mouse o los botones + y −");
+        return;
+      }
+      e.preventDefault();
+      const now = Date.now();
+      if (now - lastWheel < 250) return;
+      lastWheel = now;
+      map.setZoomAround(
+        map.mouseEventToContainerPoint(e),
+        map.getZoom() + (e.deltaY < 0 ? 1 : -1)
+      );
     };
     if (touch) container.addEventListener("touchmove", onTouchMove, { passive: true });
+    else container.addEventListener("wheel", onWheel, { passive: false });
 
     return () => {
       container.removeEventListener("touchmove", onTouchMove);
+      container.removeEventListener("wheel", onWheel);
       window.clearTimeout(hintTimer);
+      /* Leaflet deja un temporizador de 250 ms al animar el zoom que falla
+         si el mapa ya se quitó (p. ej. al pasar a la lista justo al cargar);
+         ese temporizador no hace nada si no hay una animación en curso. */
+      (map as L.Map & { _animatingZoom?: boolean })._animatingZoom = false;
       map.remove();
       mapRef.current = null;
       clusterRef.current = null;
@@ -310,6 +376,9 @@ export default function MapView({
     } else if (frame && mapRef.current) {
       mapRef.current.fitBounds(L.latLngBounds(frame), { padding: [24, 24] });
     }
+    /* Los grupos de marcadores cambian: reacomodar los rótulos cuando
+       terminen de moverse. */
+    requestAnimationFrame(() => syncLabelsRef.current());
   }, [places, colors, boundary, frame, sheetMode]);
 
   // Sectores o unidades vecinales, con su rótulo, y el sector destacado.
@@ -318,6 +387,7 @@ export default function MapView({
     const map = mapRef.current;
     if (!layer || !map) return;
     layer.clearLayers();
+    const labels: { el: HTMLElement | null; priority: number }[] = [];
     for (const area of areas) {
       L.polygon(area.ring, {
         color: "#17375e",
@@ -327,17 +397,25 @@ export default function MapView({
         interactive: false,
       }).addTo(layer);
       const text = escapeHtml(area.shortName ?? area.name);
-      L.marker(area.label, {
+      const label = L.marker(area.label, {
         pane: "areaLabels",
         interactive: false,
         keyboard: false,
         icon: L.divIcon({
           className: "",
-          html: `<span style="display:flex;align-items:center;justify-content:center;width:112px;height:40px;margin:-20px 0 0 -56px;text-align:center;font:700 ${area.shortName ? 11 : 12}px/1.15 var(--font-sans),sans-serif;color:#17375e;text-shadow:0 0 2px #fff,0 0 3px #fff,0 0 4px #fff">${text}</span>`,
+          /* Caja del tamaño del texto, centrada en el punto: así se puede
+             saber si choca con otro rótulo. */
+          html: `<span data-area-label style="display:block;width:max-content;max-width:112px;transform:translate(-50%,-50%);text-align:center;font:700 ${area.shortName ? 11 : 12}px/1.15 var(--font-sans),sans-serif;color:#17375e;text-shadow:0 0 2px #fff,0 0 3px #fff,0 0 4px #fff">${text}</span>`,
           iconSize: [0, 0],
         }),
       }).addTo(layer);
+      labels.push({
+        el: (label.getElement()?.firstElementChild as HTMLElement | null) ?? null,
+        /* Primero el sector destacado; después, los más grandes. */
+        priority: (highlight?.id === area.id ? 1e6 : 0) + ringArea(area.ring) * 1e4,
+      });
     }
+    labels.sort((a, b) => b.priority - a.priority);
     if (highlight) {
       L.polygon(highlight.ring, {
         color: "#136a66",
@@ -347,15 +425,49 @@ export default function MapView({
         interactive: false,
       }).addTo(layer);
     }
-    /* Rótulos solo cuando caben: con poco zoom se tapan entre sí. */
+    /* Rótulos solo cuando caben: con poco zoom no se muestran, y un rótulo
+       que chocaría con otro más importante se oculta hasta acercarse. */
     const pane = map.getPane("areaLabels");
     const syncLabels = () => {
-      if (pane) pane.style.display = map.getZoom() < labelMinZoom ? "none" : "";
+      const show = map.getZoom() >= labelMinZoom;
+      if (pane) pane.style.display = show ? "" : "none";
+      if (!show) return;
+      /* Los marcadores y grupos mandan: un rótulo que quedaría debajo de
+         uno se oculta (se lee al acercarse o en la lista de sectores). */
+      const placed: DOMRect[] = [
+        ...map
+          .getPane("markerPane")!
+          .querySelectorAll<HTMLElement>(".leaflet-marker-icon"),
+        /* Y los botones sobre el mapa (ampliar, acercar…). */
+        ...(map
+          .getContainer()
+          .parentElement?.querySelectorAll<HTMLElement>(":scope > div > button, :scope > div > div > button") ??
+          []),
+      ].map((m) => m.getBoundingClientRect());
+      for (const { el } of labels) {
+        if (!el) continue;
+        el.style.visibility = "";
+        const r = el.getBoundingClientRect();
+        const hit = placed.some(
+          (p) =>
+            r.left < p.right + 4 &&
+            r.right > p.left - 4 &&
+            r.top < p.bottom + 2 &&
+            r.bottom > p.top - 2
+        );
+        if (hit) el.style.visibility = "hidden";
+        else placed.push(r);
+      }
     };
     syncLabels();
-    map.on("zoomend", syncLabels);
+    syncLabelsRef.current = syncLabels;
+    const cluster = clusterRef.current;
+    map.on("zoomend moveend resize", syncLabels);
+    cluster?.on("animationend", syncLabels);
     return () => {
-      map.off("zoomend", syncLabels);
+      map.off("zoomend moveend resize", syncLabels);
+      cluster?.off("animationend", syncLabels);
+      syncLabelsRef.current = () => {};
     };
   }, [areas, highlight, labelMinZoom]);
 
@@ -389,22 +501,122 @@ export default function MapView({
     map.setView([userPosition.lat, userPosition.lng], Math.max(map.getZoom(), 15));
   }, [userPosition]);
 
+  // Ampliado: el mapa toma su nuevo tamaño y un dedo (o la rueda) lo mueve.
+  useEffect(() => {
+    const map = mapRef.current;
+    if (!map) return;
+    map.invalidateSize();
+    if (expanded) {
+      map.dragging.enable();
+      map.scrollWheelZoom.enable();
+    } else {
+      if (touchRef.current) map.dragging.disable();
+      map.scrollWheelZoom.disable();
+    }
+  }, [expanded]);
+
+  /* «Ver toda la comuna»: vuelve a encuadrar lo que está filtrado. */
+  function showAll() {
+    const map = mapRef.current;
+    if (!map) return;
+    map.closePopup();
+    const points = [
+      ...places.map((p) => [p.lat, p.lng] as [number, number]),
+      ...(frame ?? boundary ?? []),
+    ];
+    if (points.length > 1) {
+      map.fitBounds(L.latLngBounds(points), { padding: [24, 24], maxZoom: 16 });
+    }
+  }
+
   return (
-    <div className="relative">
+    /* El tamaño y el borde van en este contenedor: Leaflet agrega sus
+       propias clases al div del mapa, y si React le cambiara la clase al
+       ampliar, las borraría. */
+    <div
+      className={
+        expanded
+          ? "relative h-full overflow-hidden"
+          : "relative h-[480px] overflow-hidden rounded-xl border md:h-[640px] lg:h-[680px]"
+      }
+    >
       <div
         ref={containerRef}
         role="application"
         aria-label="Mapa de lugares de la comuna"
         /* z-0 aísla el apilado de Leaflet para que sus capas y fichas no
            se dibujen por encima del encabezado fijo. */
-        className="relative z-0 h-[480px] w-full rounded-xl border md:h-[640px] lg:h-[680px]"
+        className="relative z-0 h-full w-full"
       />
       <p
         aria-hidden="true"
-        className={`pointer-events-none absolute inset-0 z-10 flex items-center justify-center rounded-xl bg-black/45 px-6 text-center text-base font-semibold text-white transition-opacity duration-300 ${showGestureHint ? "opacity-100" : "opacity-0"}`}
+        className={`pointer-events-none absolute inset-0 z-10 flex items-center justify-center bg-black/45 px-6 text-center text-base font-semibold text-white transition-opacity duration-300 ${hint ? "opacity-100" : "opacity-0"}`}
       >
-        Usa dos dedos para mover el mapa
+        {hint}
       </p>
+
+      <div className="absolute top-3 right-3 z-20 flex flex-col items-end gap-2">
+        {onToggleExpanded && (
+          <button
+            type="button"
+            onClick={onToggleExpanded}
+            className="flex min-h-11 items-center gap-1.5 rounded-lg border bg-white px-3 text-sm font-semibold text-[#17375e] shadow-md hover:bg-[#eef3f8] focus-visible:ring-[3px] focus-visible:ring-ring/50 focus-visible:outline-none"
+          >
+            {expanded ? (
+              <>
+                <XIcon aria-hidden="true" className="size-5" />
+                Cerrar mapa
+              </>
+            ) : (
+              <>
+                <Maximize2Icon aria-hidden="true" className="size-4" />
+                Ampliar
+              </>
+            )}
+          </button>
+        )}
+        <div className="flex flex-col gap-1">
+          <button
+            type="button"
+            onClick={() => mapRef.current?.zoomIn()}
+            aria-label="Acercar"
+            title="Acercar"
+            className={controlClass}
+          >
+            <PlusIcon aria-hidden="true" className="size-5" />
+          </button>
+          <button
+            type="button"
+            onClick={() => mapRef.current?.zoomOut()}
+            aria-label="Alejar"
+            title="Alejar"
+            className={controlClass}
+          >
+            <MinusIcon aria-hidden="true" className="size-5" />
+          </button>
+        </div>
+        <button
+          type="button"
+          onClick={showAll}
+          aria-label="Ver toda la comuna"
+          title="Ver toda la comuna"
+          className={controlClass}
+        >
+          <FocusIcon aria-hidden="true" className="size-5" />
+        </button>
+        {onLocate && (
+          <button
+            type="button"
+            onClick={onLocate}
+            disabled={locating}
+            aria-label="Mi ubicación"
+            title="Mi ubicación"
+            className={controlClass}
+          >
+            <LocateFixedIcon aria-hidden="true" className="size-5" />
+          </button>
+        )}
+      </div>
     </div>
   );
 }

@@ -82,7 +82,14 @@ indicadores) con la fuente y la fecha de verificación de cada dato. El
   guardarla ni enviarla; ahí mismo se calcula el sector y la unidad vecinal
   del vecino (`findArea`, capas oficiales en `territory.ts`). En el celular
   la ficha va en una hoja inferior, el mapa se mueve con dos dedos (un dedo
-  baja la página) y hay vista de lista que no descarga Leaflet. Los lugares
+  baja la página) o con uno al ampliarlo a pantalla completa («Ampliar»);
+  bajo el mapa van 5 lugares y el resto en la vista de lista, que no
+  descarga Leaflet. En el computador la rueda baja la página y Ctrl + rueda
+  acerca. Los botones del mapa son propios (44 px, en español), con un
+  contador «Mostrando X de Y» y «Quitar filtros»; los rótulos de sectores
+  se ocultan si chocarían con otro rótulo, un marcador o un botón. Leaflet
+  agrega clases al div del mapa: su `className` no se cambia desde React
+  (el tamaño va en el contenedor). Los lugares
   y teléfonos se descargan en CSV/GeoJSON con su fuente
   (`[comuna]/descargas/[archivo]`), solo para comunas reales. Las fichas
   del directorio (`components/places/place-directory.tsx`) van bajo el mapa
