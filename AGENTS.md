@@ -46,7 +46,8 @@ indicadores) con la fuente y la fecha de verificación de cada dato. El
   `src/lib/data-integrity.ts` valida los datasets al cargar, así que un dato
   inconsistente aparece como error de build. Los respaldos de cada carga
   (CSV, metodología, SHA-256) van en `docs/fuentes/`, y el registro legible
-  de fuentes en `docs/fuentes-la-pintana.md`.
+  de fuentes en `docs/fuentes-la-pintana.md`. Para cargar o renovar una
+  fuente se sigue la habilidad `.claude/skills/cargar-fuente/`.
 - **Indicadores**: se presentan como contexto (historia propia y promedio
   regional), sin rankings ni calificaciones.
 - **Privacidad** (Ley 21.719): no se piden ni publican datos personales ni
