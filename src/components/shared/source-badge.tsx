@@ -6,6 +6,7 @@ import {
   UnlinkIcon,
 } from "lucide-react";
 
+import { ReportLink } from "@/components/shared/report-link";
 import { formatDate } from "@/lib/format";
 import { getSourceFreshness, type SourceFreshness } from "@/lib/sources";
 import { cn } from "@/lib/utils";
@@ -80,6 +81,10 @@ export function SourceBadge({
       </span>
       <span aria-hidden="true">·</span>
       <span>consultado el {formatDate(source.verifiedAt)}</span>
+      <ReportLink
+        source={`${source.institution} — ${source.pageName} (${source.id})`}
+        separator
+      />
     </p>
   );
 }

@@ -71,6 +71,8 @@ Después, en este orden (de menor a mayor riesgo):
 
 1. **«¿Este dato está mal?»**: botón en cada ficha para avisar un error,
    sin cuenta y con protección contra spam. Es lo más útil y lo más simple.
+   Mientras no haya base de datos, lo cubre un formulario de Google sin
+   datos personales («¿Viste un dato cambiado? Avísanos», 2026-10-25).
 2. **Negocios locales**: el dueño pide aparecer y entrega su foto y datos de
    contacto, con autorización escrita; alguien verifica que el negocio exista
    (patente o visita). Sin reseñas ni estrellas al comienzo: exigen

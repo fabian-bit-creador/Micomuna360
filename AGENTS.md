@@ -54,7 +54,11 @@ indicadores) con la fuente y la fecha de verificación de cada dato. El
   nombres de funcionarios. Lo que el vecino marca en herramientas como el
   orientador de beneficios se procesa en el navegador; los parámetros que
   describen su situación van en el fragmento de la URL (`#`), no en la
-  consulta (`?`). Si se agregan solicitudes vecinales, las marcadas
+  consulta (`?`). «¿Viste un dato cambiado? Avísanos» (junto a cada fuente
+  y en el pie) abre un formulario de Google sin campos personales
+  (`reportForm` en `src/config/site.ts`, `src/lib/report.ts`): lleva solo
+  la ruta de la página y la fuente, nunca el `#` ni el `?`, y no aparece en
+  la comuna de ejemplo. Si se agregan solicitudes vecinales, las marcadas
   `is_sensitive` no aparecen en mapas ni listados públicos.
 - **Vigencia de fuentes**: `getSourceFreshness` (`src/lib/sources.ts`)
   compara `validUntil` con la fecha de Chile; las páginas de cada comuna se

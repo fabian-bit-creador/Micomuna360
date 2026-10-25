@@ -9,6 +9,15 @@ export const siteUrl = process.env.NEXT_PUBLIC_SITE_URL
     ? `https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}`
     : "https://micomuna360.vercel.app";
 
+/**
+ * Formulario «¿Viste un dato cambiado?» (Google Forms, sin campos para datos
+ * personales). `url` es la dirección del formulario (…/viewform); `page` y
+ * `source` son los campos «entry.N» de la página y del dato, tomados del
+ * enlace prellenado que entrega Forms. null: el enlace no se muestra.
+ */
+export const reportForm: { url: string; page: string; source: string } | null =
+  null;
+
 /** Identidad y textos oficiales de la marca (ver docs/identidad y design-brief). */
 export const siteConfig = {
   name: "MiComuna360",

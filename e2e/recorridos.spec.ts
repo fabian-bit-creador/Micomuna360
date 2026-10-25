@@ -1,3 +1,5 @@
+import { reportForm } from "../src/config/site";
+
 import { expect, test } from "./fixtures";
 
 /*
@@ -450,6 +452,32 @@ test.describe("Transparencia", () => {
     // Toda la página usa la misma escala.
     await expect(page.getByText(/De cada \$100\.000 disponibles/)).toBeVisible();
     await expect(page.getByText(/de cada \$100(?!\.000)/)).toHaveCount(0);
+  });
+});
+
+test.describe("¿Viste un dato cambiado?", () => {
+  test.skip(!reportForm, "Aún no hay formulario configurado (src/config/site.ts)");
+
+  test("el aviso lleva la página y el dato, nunca la situación del vecino", async ({
+    page,
+  }) => {
+    await page.goto("/la-pintana/servicios");
+    const link = page.getByRole("link", { name: /Viste un dato cambiado/ }).first();
+    const href = new URL((await link.getAttribute("href"))!);
+    expect(href.origin + href.pathname).toBe(reportForm!.url);
+    expect(href.searchParams.get(reportForm!.page)).toBe("/la-pintana/servicios");
+    expect(href.searchParams.get(reportForm!.source)).toMatch(/\(lp-[a-z-]+\)$/);
+
+    // Lo marcado en el orientador va en el # y no sale de la página.
+    await page.goto("/la-pintana/beneficios#edad=adulto-mayor");
+    const hrefs = await page
+      .getByRole("link", { name: /Viste un dato cambiado/ })
+      .evaluateAll((els) => els.map((e) => (e as HTMLAnchorElement).href));
+    expect(hrefs.length).toBeGreaterThan(0);
+    for (const h of hrefs) expect(h).not.toMatch(/adulto|%23/);
+
+    await page.goto("/los-aromos");
+    await expect(page.getByRole("link", { name: /Viste un dato cambiado/ })).toHaveCount(0);
   });
 });
 

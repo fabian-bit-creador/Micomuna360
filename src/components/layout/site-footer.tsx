@@ -1,6 +1,7 @@
 import Link from "next/link";
 
 import { Logo } from "@/components/layout/logo";
+import { ReportLink } from "@/components/shared/report-link";
 import { WaveDivider } from "@/components/layout/wave-divider";
 import { listPublicCommunes, type CommuneConfig } from "@/config/communes";
 import { communeNav } from "@/config/nav";
@@ -77,6 +78,9 @@ export function SiteFooter({ commune }: { commune?: CommuneConfig }) {
                 información pública con su fuente y fecha de verificación, y
                 enlazamos a los sitios oficiales para cada trámite.
               </p>
+            )}
+            {commune && !commune.isDemo && (
+              <ReportLink className="inline-flex min-h-9 items-center font-semibold text-brand-ivory hover:text-brand-ivory" />
             )}
           </div>
         </div>
