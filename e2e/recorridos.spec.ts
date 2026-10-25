@@ -453,6 +453,25 @@ test.describe("Transparencia", () => {
   });
 });
 
+test.describe("Agenda", () => {
+  test("la agenda no muestra actividades pasadas y cita su fuente", async ({
+    page,
+  }) => {
+    await page.goto("/la-pintana/actividades");
+    const dates = await page.locator("time[datetime]").evaluateAll((els) =>
+      els.map((e) => e.getAttribute("datetime")!)
+    );
+    if (dates.length === 0) {
+      await expect(page.getByText(/No hay actividades publicadas/)).toBeVisible();
+      return;
+    }
+    // Una actividad en curso puede haber empezado hoy, pero no antes.
+    const yesterday = Date.now() - 24 * 60 * 60 * 1000;
+    for (const date of dates) expect(Date.parse(date)).toBeGreaterThan(yesterday);
+    await expect(page.getByText(/Fuente:/).first()).toBeVisible();
+  });
+});
+
 test.describe("Teléfonos y descargas", () => {
   test("los teléfonos útiles se llaman con un toque", async ({ page }) => {
     await page.goto("/la-pintana/telefonos");

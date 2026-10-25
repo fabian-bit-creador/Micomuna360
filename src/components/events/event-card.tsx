@@ -30,14 +30,17 @@ export async function EventCard({
   return (
     <Card className="gap-0 py-0">
       <CardContent className="flex gap-4 p-4">
-        <div className="flex h-16 w-16 shrink-0 flex-col items-center justify-center rounded-lg bg-accent text-accent-foreground">
+        <time
+          dateTime={event.startsAt}
+          className="flex h-16 w-16 shrink-0 flex-col items-center justify-center rounded-lg bg-accent text-accent-foreground"
+        >
           <span className="font-display text-2xl leading-none font-bold">
             {formatDay(event.startsAt)}
           </span>
           <span className="text-xs font-semibold uppercase">
             {formatMonth(event.startsAt)}
           </span>
-        </div>
+        </time>
         <div className="min-w-0 space-y-1.5">
           <Badge variant="outline" className="text-brand-teal-ink">
             {categoryLabels[event.category] ?? event.category}

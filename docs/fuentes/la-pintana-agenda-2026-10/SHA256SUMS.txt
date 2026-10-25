@@ -1,0 +1,5 @@
+6bedce8bcdeac2ead3a03021e91c9510cc20cf4de05ecbcffc7c57be0a975864  cartelera.txt
+d2d861989274f85d7cec67a787e8be9d26f4707690823ac6c12ef7093febf446  fichas/comunicar-con-poder-masterclass-nacho-gutierrez-lp.txt
+9c2a2cc7afe317dedc3d70defef0aef39263543dbaa70ddd2089475c99ebaa45  fichas/la-princesa-panchita-duoc-uc.txt
+d96d2d6d1347982ee3d62752e915cb2ed1b9816965a8b114dc5d80888a370972  fichas/soy-magia-jean-paul-olhaberry.txt
+9edefa8c11617e04da7af58b395e934bd692c1c97f2bd9346cbd4cc6f017c4c2  agenda.csv

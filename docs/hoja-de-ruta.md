@@ -22,7 +22,7 @@ La información vieja es el mayor riesgo del sitio.
 
 | Tarea | Detalle |
 |---|---|
-| Agenda | La cartelera cultural se revisa cada mes (su fuente vence el 2026-10-31). Las actividades pasadas se ocultan solas, pero las nuevas hay que cargarlas. |
+| Agenda | La cartelera cultural se revisa cada mes, mejor a mediados (su fuente vence el 2026-11-30). Las actividades pasadas se ocultan solas; las nuevas se cargan con `capturar.py` y `generar.py` de la última carpeta `docs/fuentes/la-pintana-agenda-*` (habilidad `cargar-fuente`). |
 | Números de emergencia | 131, 132, 133 y 134 confirmados desde Chile el 2026-10-03; se revisan de nuevo antes del 2027-04-03. |
 | Revisión de fuentes | Cada fuente tiene `validUntil`. Deportes vence el 2026-12-31 (cambio de semestre) y la mayoría de las fuentes municipales el 2026-12-27. Al vencer, la ficha se muestra como «revisión vencida» sola. |
 | Controles automáticos | Hecho el 2026-10-03: `.github/workflows/revision.yml` corre lint, validación de datos y build en la rama de producción, en las ramas `propuesta-*` y en cada pull request. Falta proteger la rama de producción en GitHub (Settings → Branches) para que exija esa revisión. |

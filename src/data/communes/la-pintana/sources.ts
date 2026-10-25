@@ -214,11 +214,11 @@ export const sources: DataSource[] = [
     featured: false,
     url: "https://ticket.culturapintana.cl/cartelera/",
     publishedAt: null,
-    verifiedAt: "2026-09-27",
+    verifiedAt: "2026-10-25",
     status: "verificado",
-    validUntil: "2026-10-31",
+    validUntil: "2026-11-30",
     notes:
-      "Funciones del 28 de septiembre y del 2 y 4 de octubre de 2026, leídas en la ficha de cada obra. Se revisa cada mes.",
+      "Funciones del 25 y 29 de octubre y del 1 de noviembre de 2026, leídas en la ficha de cada una; la cartelera no publica otras posteriores al 25-10-2026. Se revisa cada mes. Respaldo en docs/fuentes/la-pintana-agenda-2026-10/.",
   },
   {
     id: "lp-cultura",
