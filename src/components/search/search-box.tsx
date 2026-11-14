@@ -5,6 +5,7 @@ import Link from "next/link";
 import { ExternalLinkIcon, SearchIcon } from "lucide-react";
 
 import { Input } from "@/components/ui/input";
+import { cn } from "@/lib/utils";
 import type { SearchEntry } from "@/lib/search";
 
 /** Normaliza para búsqueda insensible a tildes y mayúsculas. */
@@ -22,6 +23,8 @@ interface SearchBoxProps {
   limit?: number;
   /** Búsquedas frecuentes, como botones bajo el campo. */
   suggestions?: string[];
+  /** Sobre la placa azul de la portada: rótulo y sugerencias en claro. */
+  onPlate?: boolean;
 }
 
 /**
@@ -33,6 +36,7 @@ export function SearchBox({
   placeholder = "Busca un trámite, lugar, teléfono…",
   limit = 12,
   suggestions = [],
+  onPlate = false,
 }: SearchBoxProps) {
   const [query, setQuery] = useState("");
   const [showAll, setShowAll] = useState(false);
@@ -75,13 +79,21 @@ export function SearchBox({
             setShowAll(false);
           }}
           placeholder={placeholder}
-          className="h-12 rounded-xl bg-card pl-10 text-base shadow-sm"
+          className={cn(
+            "h-12 rounded-lg bg-card pl-10 text-base shadow-none md:text-base",
+            onPlate && "h-14 border-transparent"
+          )}
         />
       </div>
 
       {suggestions.length > 0 && query.trim().length < 2 && (
         <div className="mt-3 sm:flex sm:flex-wrap sm:items-center sm:gap-2">
-          <p className="mb-2 text-sm font-semibold text-muted-foreground sm:mb-0">
+          <p
+            className={cn(
+              "mb-2 text-sm font-semibold sm:mb-0",
+              onPlate ? "text-brand-ivory/85" : "text-muted-foreground"
+            )}
+          >
             Lo más buscado:
           </p>
           {/* En el celular, una sola fila que se desliza de lado. */}
@@ -91,7 +103,12 @@ export function SearchBox({
                 key={term}
                 type="button"
                 onClick={() => setQuery(term)}
-                className="min-h-9 shrink-0 rounded-full border bg-card px-3.5 py-1.5 text-sm font-semibold whitespace-nowrap text-brand-teal-ink transition-colors hover:bg-accent focus-visible:ring-[3px] focus-visible:ring-ring/50 focus-visible:outline-none"
+                className={cn(
+                  "min-h-9 shrink-0 cursor-pointer rounded-md border px-3 py-1.5 text-sm font-semibold whitespace-nowrap transition-colors focus-visible:ring-[3px] focus-visible:outline-none",
+                  onPlate
+                    ? "border-white/35 text-white hover:border-white hover:bg-white/10 focus-visible:ring-white/60"
+                    : "bg-card text-brand-teal-ink hover:bg-accent focus-visible:ring-ring/50"
+                )}
               >
                 {term}
               </button>
@@ -106,7 +123,7 @@ export function SearchBox({
             `${matches.length} ${matches.length === 1 ? "resultado" : "resultados"}`}
         </p>
         {results.length > 0 && (
-          <ul className="mt-2 divide-y overflow-hidden rounded-xl border bg-card shadow-md">
+          <ul className="mt-2 divide-y overflow-hidden rounded-lg border bg-card">
             {results.map((entry) => (
               <li key={`${entry.group}-${entry.title}`}>
                 {entry.external ? (
@@ -145,7 +162,7 @@ export function SearchBox({
           </ul>
         )}
         {showEmpty && (
-          <p className="mt-2 rounded-xl border bg-card px-4 py-3 text-sm text-muted-foreground shadow-md">
+          <p className="mt-2 rounded-lg border bg-card px-4 py-3 text-sm text-muted-foreground">
             Sin resultados para “{query.trim()}”. Prueba con otra palabra
             (p. ej. “permiso”, “licencia”, “deporte”).
           </p>
@@ -159,7 +176,7 @@ function ResultBody({ entry }: { entry: SearchEntry }) {
   return (
     <span className="block">
       <span className="flex items-center gap-2">
-        <span className="text-xs font-bold tracking-wide text-brand-teal-ink uppercase">
+        <span className="text-xs font-semibold text-brand-teal-ink">
           {entry.group}
         </span>
         {entry.external && (

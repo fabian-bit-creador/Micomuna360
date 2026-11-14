@@ -36,7 +36,7 @@ export function BottomNav({ base, nav }: { base: string; nav: NavItem[] }) {
   return (
     <nav
       aria-label="Accesos rápidos"
-      className="fixed inset-x-0 bottom-0 z-40 border-t bg-card/95 pb-[env(safe-area-inset-bottom)] backdrop-blur lg:hidden"
+      className="fixed inset-x-0 bottom-0 z-40 border-t bg-card pb-[env(safe-area-inset-bottom)] lg:hidden"
     >
       <ul className="mx-auto flex max-w-md">
         {items.map(({ suffix, label, Icon }) => {
@@ -48,13 +48,15 @@ export function BottomNav({ base, nav }: { base: string; nav: NavItem[] }) {
                 href={href}
                 aria-current={current ? "page" : undefined}
                 className={cn(
-                  "flex min-h-14 flex-col items-center justify-center gap-0.5 text-xs font-semibold",
-                  current ? "text-primary" : "text-muted-foreground"
+                  "relative flex min-h-14 flex-col items-center justify-center gap-0.5 text-xs font-semibold",
+                  current
+                    ? "font-bold text-primary before:absolute before:inset-x-4 before:top-0 before:h-[3px] before:bg-brand-amber"
+                    : "text-muted-foreground"
                 )}
               >
                 <Icon
                   aria-hidden="true"
-                  className={cn("size-5", current && "text-brand-teal-ink")}
+                  className="size-5"
                 />
                 {label}
               </Link>

@@ -10,7 +10,7 @@
 | 4 | Componentes shadcn/ui vendorizados en `src/components/ui` | La red del entorno de desarrollo bloquea `ui.shadcn.com`; los componentes se escribieron siguiendo las convenciones oficiales (data-slot, cva, Tailwind v4) y son intercambiables con `npx shadcn add`. |
 | 5 | Tokens de marca en `globals.css` (Tailwind v4 `@theme`) | Paleta oficial disponible como clases (`bg-brand-teal`, etc.) y mapeada a los tokens shadcn (primary = azul profundo, secondary = turquesa). |
 | 6 | Tipos de dominio centralizados en `src/types` | Espejo 1:1 del modelo de datos de `docs/modelo-datos.md`. |
-| 7 | Fuente Nunito | Redondeada y humanista: coherente con el tono "cercano, humano, accesible" de la marca. |
+| 7 | Fuentes Archivo (títulos) y Public Sans (texto) | Archivo algo condensada da el tono de señalética; Public Sans se hizo para sitios de servicio público y tiene cifras claras. Reemplazan a Bricolage Grotesque y Nunito (noviembre de 2026; ver `DESIGN.md`). |
 | 8 | Leaflet se carga con `next/dynamic` y `ssr: false` | Leaflet no soporta SSR. |
 
 ## Identidad visual

@@ -70,7 +70,7 @@ export default async function TramitesPage({
             href={`/${commune.id}/tramites/${procedure.slug}`}
             className="group block h-full"
           >
-            <Card className="h-full gap-3 transition-all group-hover:-translate-y-0.5 group-hover:shadow-md">
+            <Card className="h-full gap-3 transition-colors group-hover:border-primary/60">
               <CardHeader className="gap-2">
                 <Badge variant="outline" className="text-brand-teal-ink">
                   {categoryLabels[procedure.category]}

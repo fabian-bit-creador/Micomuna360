@@ -9,17 +9,19 @@
  */
 
 /*
- * Identidad visual MiComuna360 / MuniApp
- * Azul profundo   #17375E  Confianza / seguridad
- * Turquesa cívico #1E8E89  Cercanía / participación
- * Celeste suave   #67B7D1  Información / claridad
- * Rojo terracota  #C95B5B  Acento / inspiración sutil en Chile
- * Blanco marfil   #F7F7F2  Fondo / limpieza
- * Gris pizarra    #4B5563  Texto / equilibrio
+ * Identidad visual MiComuna360: señalética comunal.
+ * Los colores vienen del isotipo y se usan como en una señal: campos
+ * planos, sin degradados ni transparencias decorativas.
+ * Azul comuna     #17375E  Placas (portada, pie), títulos, botones
+ * Turquesa cívico #1E8E89  Enlaces y acciones
+ * Amarillo señal  #F2BD27  Lo que hay que mirar: hoy, sección activa
+ * Rojo terracota  #C95B5B  Emergencias
+ * Celeste         #67B7D1  Gráficos y mapa
+ * Papel           #F2F4F6  Fondo; las fichas van en blanco
  */
 
 :root {
-  --radius: 0.75rem;
+  --radius: 0.5rem;
 
   /* Paleta de marca */
   --brand-navy: #17375e;
@@ -28,72 +30,72 @@
   --brand-terracotta: #c95b5b;
   --brand-ivory: #f7f7f2;
   --brand-slate: #4b5563;
-  --brand-amber: #e9b949;
+  --brand-amber: #f2bd27;
 
   /*
    * Tintas de texto: los colores de marca sirven para fondos, íconos grandes
    * y gráficos; para texto se usan estas variantes, que cumplen WCAG AA
-   * (≥4,5:1) sobre blanco, marfil y los fondos suaves de la marca.
+   * (≥4,5:1) sobre blanco, papel, `muted` y los fondos suaves de la marca.
    */
   --brand-teal-ink: #136a66;
-  --brand-terracotta-ink: #a94444;
-  --brand-sky-ink: #2a7494;
-  --brand-amber-ink: #8a5a06;
+  --brand-terracotta-ink: #a43e3e;
+  --brand-sky-ink: #236887;
+  --brand-amber-ink: #7a5200;
 
   /* Tokens shadcn/ui */
-  --background: #f7f7f2;
-  --foreground: #374151;
+  --background: #f2f4f6;
+  --foreground: #1f2937;
   --card: #ffffff;
-  --card-foreground: #374151;
+  --card-foreground: #1f2937;
   --popover: #ffffff;
-  --popover-foreground: #374151;
+  --popover-foreground: #1f2937;
   --primary: #17375e;
   --primary-foreground: #f7f7f2;
   --secondary: #156e6a;
   --secondary-foreground: #ffffff;
-  --muted: #eceee7;
-  --muted-foreground: #5b6270;
-  --accent: #e6f2f7;
+  --muted: #e8ecf0;
+  --muted-foreground: #566170;
+  --accent: #e3eaf2;
   --accent-foreground: #17375e;
   --destructive: #c95b5b;
   --destructive-foreground: #ffffff;
-  --border: #e3e4dc;
-  --input: #d8dad1;
-  --ring: #67b7d1;
+  --border: #d2d9e0;
+  --input: #8794a3;
+  --ring: #1e8e89;
   --chart-1: #17375e;
   --chart-2: #1e8e89;
   --chart-3: #67b7d1;
   --chart-4: #c95b5b;
-  --chart-5: #e9b949;
+  --chart-5: #f2bd27;
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
     color-scheme: dark;
-    --background: #0f2038;
-    --foreground: #e5e7eb;
-    --card: #17375e;
-    --card-foreground: #e5e7eb;
-    --popover: #17375e;
-    --popover-foreground: #e5e7eb;
-    --primary: #67b7d1;
-    --primary-foreground: #0f2038;
+    --background: #0b1626;
+    --foreground: #e6e9ee;
+    --card: #12233a;
+    --card-foreground: #e6e9ee;
+    --popover: #12233a;
+    --popover-foreground: #e6e9ee;
+    --primary: #8cc6dc;
+    --primary-foreground: #0b1626;
     --secondary: #156e6a;
     --secondary-foreground: #ffffff;
-    --muted: #1c3a5e;
-    --muted-foreground: #b3b9c3;
-    --accent: #1c3a5e;
-    --accent-foreground: #e5e7eb;
+    --muted: #1a2f4b;
+    --muted-foreground: #b1b9c5;
+    --accent: #1a2f4b;
+    --accent-foreground: #e6e9ee;
     --destructive: #d98282;
-    --destructive-foreground: #0f2038;
-    --border: rgba(229, 231, 235, 0.12);
-    --input: rgba(229, 231, 235, 0.18);
+    --destructive-foreground: #0b1626;
+    --border: rgba(230, 233, 238, 0.16);
+    --input: rgba(230, 233, 238, 0.42);
     --ring: #67b7d1;
     --chart-1: #67b7d1;
     --chart-2: #34b3ad;
     --chart-3: #8ecbe0;
     --chart-4: #d98282;
-    --chart-5: #e9b949;
+    --chart-5: #f2bd27;
     --brand-teal-ink: #5ccbc4;
     --brand-terracotta-ink: #eba5a5;
     --brand-sky-ink: #a3d5e6;
@@ -102,8 +104,8 @@
 }
 
 @theme inline {
-  --font-sans: var(--font-nunito), ui-sans-serif, system-ui, sans-serif;
-  --font-display: var(--font-bricolage), var(--font-nunito), ui-sans-serif,
+  --font-sans: var(--font-text), ui-sans-serif, system-ui, sans-serif;
+  --font-display: var(--font-archivo), var(--font-text), ui-sans-serif,
     system-ui, sans-serif;
 
   --color-background: var(--background);
@@ -143,10 +145,12 @@
   --color-brand-slate: var(--brand-slate);
   --color-brand-amber: var(--brand-amber);
 
+  /* Esquinas de placa: poco redondeo, igual en todo el sitio. */
   --radius-sm: calc(var(--radius) - 4px);
   --radius-md: calc(var(--radius) - 2px);
   --radius-lg: var(--radius);
-  --radius-xl: calc(var(--radius) + 4px);
+  --radius-xl: calc(var(--radius) + 2px);
+  --radius-2xl: calc(var(--radius) + 4px);
 }
 
 @layer base {
@@ -161,6 +165,18 @@
   h3,
   h4 {
     @apply text-primary font-display;
+    text-wrap: balance;
+  }
+  /* Archivo algo condensada, como el rótulo de una señal; las cifras con
+     ancho fijo para que teléfonos y montos no bailen. */
+  h1,
+  h2,
+  h3,
+  h4,
+  .font-display {
+    font-stretch: 88%;
+    letter-spacing: -0.012em;
+    font-variant-numeric: tabular-nums lining-nums;
   }
 }
 
@@ -177,21 +193,28 @@
   }
 }
 
-/* Entrada del isotipo 3D: el giro de 14° y el descenso suave del modelo de
-   la marca (docs/marca.md). Se reproduce una vez y queda quieto. */
-@keyframes brand-intro {
+/* El contorno de la comuna se dibuja una vez al cargar la portada
+   (components/home/commune-outline.tsx) y queda quieto. */
+@keyframes outline-draw {
+  from {
+    stroke-dashoffset: 1;
+  }
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+@keyframes outline-fill {
   from {
     opacity: 0;
-    transform: translateY(-14px) rotate(-14deg) scale(0.96);
-  }
-  60% {
-    opacity: 1;
   }
   to {
     opacity: 1;
-    transform: none;
   }
 }
-.brand-intro {
-  animation: brand-intro 1.75s cubic-bezier(0.22, 1, 0.36, 1) both;
+.outline-draw {
+  stroke-dasharray: 1;
+  animation: outline-draw 1.4s cubic-bezier(0.65, 0, 0.35, 1) both;
+}
+.outline-fill {
+  animation: outline-fill 0.5s ease-out 1.1s both;
 }

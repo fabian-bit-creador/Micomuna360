@@ -20,35 +20,6 @@ interface SectionHeaderProps {
   icon?: SectionIconName;
 }
 
-/** Arco 360° en miniatura: firma visual de la marca como eyebrow de sección. */
-function ArcMark() {
-  return (
-    <svg viewBox="0 0 24 24" className="size-4 shrink-0" aria-hidden="true">
-      <path
-        d="M3.5 14.5 A9 9 0 0 1 10 3.7"
-        fill="none"
-        stroke="var(--brand-teal)"
-        strokeWidth="3"
-        strokeLinecap="round"
-      />
-      <path
-        d="M14 3.7 A9 9 0 0 1 20.5 14.5"
-        fill="none"
-        stroke="var(--brand-sky)"
-        strokeWidth="3"
-        strokeLinecap="round"
-      />
-      <path
-        d="M18.5 18.5 A9 9 0 0 1 5.5 18.5"
-        fill="none"
-        stroke="var(--brand-terracotta)"
-        strokeWidth="3"
-        strokeLinecap="round"
-      />
-    </svg>
-  );
-}
-
 export function SectionHeader({
   eyebrow,
   title,
@@ -69,22 +40,26 @@ export function SectionHeader({
       <div className={cn("max-w-2xl", icon && "flex items-start gap-4")}>
         {icon && <SectionIcon name={icon} className="mt-1 sm:size-16" />}
         <div>
-          <p className="mb-2 flex items-center gap-2 text-sm font-bold tracking-wide text-brand-teal-ink uppercase">
-            <ArcMark />
+          {/* Rótulo corto con la marca amarilla de la señalética. */}
+          <p className="mb-1.5 flex items-center gap-2 text-sm font-semibold text-muted-foreground">
+            <span
+              aria-hidden="true"
+              className="h-3 w-1.5 shrink-0 rounded-[1px] bg-brand-amber"
+            />
             {eyebrow}
           </p>
-          <Heading className="text-2xl font-bold tracking-tight md:text-3xl">
+          <Heading className="text-[1.7rem] leading-[1.12] font-bold md:text-4xl">
             {title}
           </Heading>
           {description && (
-            <p className="mt-2 text-muted-foreground">{description}</p>
+            <p className="mt-2.5 text-muted-foreground">{description}</p>
           )}
         </div>
       </div>
       {action && (
         <Link
           href={action.href}
-          className="group inline-flex items-center gap-1 text-sm font-semibold text-brand-teal-ink hover:text-primary"
+          className="group inline-flex min-h-9 items-center gap-1 text-sm font-semibold text-brand-teal-ink underline-offset-4 hover:underline"
         >
           {action.label}
           <ArrowRightIcon className="size-4 transition-transform group-hover:translate-x-0.5" />

@@ -1,17 +1,24 @@
 import type { Metadata } from "next";
-import { Bricolage_Grotesque, Nunito } from "next/font/google";
+import { Archivo, Public_Sans } from "next/font/google";
 
 import { siteConfig, siteUrl } from "@/config/site";
 import "./globals.css";
 
-const nunito = Nunito({
-  variable: "--font-nunito",
+/*
+ * Texto: Public Sans, hecha para sitios de servicio público: neutra, de
+ * letras abiertas y con cifras claras (teléfonos, montos, horarios).
+ * Títulos y cifras destacadas: Archivo, con el eje de ancho para usarla
+ * algo condensada, como el rótulo de una señal (ver DESIGN.md).
+ */
+const text = Public_Sans({
+  variable: "--font-text",
   subsets: ["latin"],
 });
 
-const bricolage = Bricolage_Grotesque({
-  variable: "--font-bricolage",
+const display = Archivo({
+  variable: "--font-archivo",
   subsets: ["latin"],
+  axes: ["wdth"],
 });
 
 export const metadata: Metadata = {
@@ -46,7 +53,7 @@ export default function RootLayout({
   return (
     <html
       lang="es"
-      className={`${nunito.variable} ${bricolage.variable} h-full antialiased`}
+      className={`${text.variable} ${display.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col">{children}</body>
     </html>

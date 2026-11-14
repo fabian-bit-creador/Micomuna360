@@ -17,27 +17,31 @@ pin: la comuna en el centro. Colores oficiales:
 
 | Versión | Archivo en el sitio | Uso |
 |---|---|---|
-| Plana (SVG) | `public/isotipo.svg`, `src/app/icon.svg` | Cabecera, pie, favicon y todo tamaño chico: se lee mejor |
+| Plana (SVG) | `public/isotipo.svg`, `src/app/icon.svg` | Cabecera, pie, favicon: es la versión del sitio |
 | Íconos para el teléfono | `public/icon-192.png`, `public/icon-512.png`, `public/icon-maskable-512.png`, `src/app/apple-icon.png` | Acceso directo en la pantalla de inicio (manifiesto web) |
-| En relieve (render 3D) | `public/brand/isotipo-3d-960.webp` | Portadas: portal, portada de cada comuna y Nosotros (`BrandMark3D`) |
 | En relieve, PNG | `public/brand/isotipo-3d-360.png` | Tarjetas de vista previa `/og` (WhatsApp, redes) |
 
-| Íconos de sección | `public/brand/iconos/*.webp` | Tarjetas de la portada y encabezado de cada sección (`SectionIcon`, prop `icon` de `SectionHeader`) |
+En el sitio se usa el isotipo plano. Sobre fondos oscuros (pie, modo
+oscuro) va en un círculo marfil, para que el pin no se pierda.
 
-El isotipo en relieve entra una sola vez con un giro de 14° y un descenso
-suave (1,75 s) y queda quieto; con «reducir movimiento» aparece directo en su
-posición final. En modo oscuro va sobre un círculo marfil, para que el pin no
-se pierda contra el fondo azul.
+## Lo que cambió en noviembre de 2026
 
-## Íconos de sección
+El sitio pasó a la dirección «señalética comunal» (`DESIGN.md`): campos
+planos, placa azul y amarillo señal. Con eso dejaron de usarse en las
+páginas, porque se leían como imágenes generadas:
 
-Nueve ilustraciones en relieve generadas con Canva (Canva Pro, 27 de
-septiembre de 2026) con la paleta de la marca y el mismo texto de estilo
-para todas (ver «Íconos» en `docs/imagenes.md`). Se muestran sobre una
-ficha blanca de 56 px; en el sitio se usa la versión de 200 px en WebP.
-Los originales de 1264 px quedan en Canva:
+- **El isotipo en relieve** de las portadas (`isotipo-3d-960.webp`). Las
+  portadas abren con el nombre de la comuna y su contorno oficial. El PNG
+  de 360 px sigue en las vistas previa `/og`.
+- **Las nueve ilustraciones en relieve de sección** (`public/brand/iconos/`,
+  hechas en Canva el 27 de septiembre de 2026). `SectionIcon` dibuja ahora
+  un pictograma blanco sobre una placa azul, como una señal informativa.
+- **Las olas** del pie de página.
 
-| Ícono | Medio en Canva |
+Los archivos siguen en el repositorio y los originales en Canva: volver a
+ellos es cambiar `src/components/shared/section-icon.tsx`.
+
+| Ícono en relieve | Medio en Canva |
 |---|---|
 | servicios | [MAHWbyWrvBs](https://www.canva.com/M/MAHWbyWrvBs) |
 | beneficios | [MAHWb9WWtIE](https://www.canva.com/M/MAHWb9WWtIE) |
@@ -48,10 +52,6 @@ Los originales de 1264 px quedan en Canva:
 | transparencia | [MAHWb3t9cFM](https://www.canva.com/M/MAHWb3t9cFM) |
 | datos | [MAHWb2WdrcA](https://www.canva.com/M/MAHWb2WdrcA) |
 | directorio | [MAHWb03buog](https://www.canva.com/M/MAHWb03buog) |
-
-Son ilustraciones de temas generales (no de lugares reales), por eso no
-llevan rótulo de IA en cada tarjeta. Los íconos chicos de botones y menús
-siguen siendo los vectoriales de Lucide.
 
 ## Archivos fuente
 

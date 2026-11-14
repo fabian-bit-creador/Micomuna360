@@ -37,15 +37,12 @@ export function MobileNav({ commune }: { commune: CommuneConfig }) {
                 className="flex min-h-11 items-center gap-3 font-semibold"
               >
                 {item.icon ? (
-                  <SectionIcon
-                    name={item.icon}
-                    className="size-9 rounded-lg"
-                  />
+                  <SectionIcon name={item.icon} className="size-9" />
                 ) : (
                   /* Inicio y Buscar no tienen ilustración: ícono de trazo. */
                   <span
                     aria-hidden="true"
-                    className="flex size-9 shrink-0 items-center justify-center rounded-lg border bg-white text-brand-navy"
+                    className="flex size-9 shrink-0 items-center justify-center rounded-md border border-brand-navy/40 text-primary"
                   >
                     {item.href.endsWith("/buscar") ? (
                       <SearchIcon className="size-4.5" />

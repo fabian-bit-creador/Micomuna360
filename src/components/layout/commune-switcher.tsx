@@ -35,10 +35,8 @@ export function CommuneSwitcher({
       <DropdownMenuTrigger
         aria-label={`Comuna: ${current.name}${current.isDemo ? " (ejemplo con datos ficticios)" : ""}. Cambiar comuna`}
         className={cn(
-          "inline-flex min-h-9 min-w-0 items-center gap-1 rounded-md px-2 py-1 text-xs font-semibold whitespace-nowrap outline-none focus-visible:ring-[3px] focus-visible:ring-ring/50",
-          current.isDemo
-            ? "bg-brand-amber/20 text-brand-amber-ink hover:bg-brand-amber/30"
-            : "bg-brand-teal/15 text-brand-teal-ink hover:bg-brand-teal/25"
+          "inline-flex min-h-9 min-w-0 cursor-pointer items-center gap-1 rounded-md px-1.5 py-1 font-display text-base font-bold whitespace-nowrap text-primary outline-none hover:bg-accent focus-visible:ring-[3px] focus-visible:ring-ring/50",
+          current.isDemo && "text-brand-amber-ink"
         )}
       >
         <span className="truncate">{current.name}</span>
@@ -48,7 +46,10 @@ export function CommuneSwitcher({
             <span>ejemplo</span>
           </>
         )}
-        <ChevronDownIcon aria-hidden="true" className="size-3.5 shrink-0" />
+        <ChevronDownIcon
+          aria-hidden="true"
+          className="size-4 shrink-0 text-muted-foreground"
+        />
       </DropdownMenuTrigger>
       <DropdownMenuContent align="start" className="w-60">
         <DropdownMenuLabel>Cambiar comuna</DropdownMenuLabel>

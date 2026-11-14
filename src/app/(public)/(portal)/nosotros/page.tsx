@@ -1,24 +1,10 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import {
-  CompassIcon,
-  EyeIcon,
-  HandshakeIcon,
-  NewspaperIcon,
-} from "lucide-react";
+import { ArrowRightIcon } from "lucide-react";
 
-import { BrandMark3D } from "@/components/layout/brand-mark-3d";
 import { SectionHeader } from "@/components/layout/section-header";
-import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import {
-  Card,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
 import { siteConfig } from "@/config/site";
-import { cn } from "@/lib/utils";
 import { portalMetadata } from "@/lib/seo";
 
 export const metadata: Metadata = portalMetadata({
@@ -28,33 +14,32 @@ export const metadata: Metadata = portalMetadata({
     "Qué es MiComuna360, por qué existe y cuál es su compromiso con las comunidades.",
 });
 
-const roleColors: Record<string, string> = {
-  teal: "border-t-brand-teal",
-  sky: "border-t-brand-sky",
-  terracotta: "border-t-brand-terracotta",
-};
-
-const howItWorks = [
+/* Las reglas con que se publica cada dato (ver AGENTS.md, «Convenciones»). */
+const howWeWork = [
   {
-    icon: NewspaperIcon,
-    chip: "bg-brand-teal/15 text-brand-teal-ink",
-    title: "Infórmate",
+    title: "Cada dato con su fuente y su fecha",
     description:
-      "Trámites, beneficios, escuelas deportivas y cifras de tu comuna, explicados en simple y sin registrarte.",
+      "Junto a cada trámite, teléfono, lugar o cifra está la institución que lo publicó y el día en que lo revisamos. Si esa revisión vence, el dato lo dice.",
   },
   {
-    icon: CompassIcon,
-    chip: "bg-brand-sky/20 text-brand-navy dark:text-brand-sky-ink",
-    title: "Encuentra y llega",
+    title: "Lo que no está confirmado no se publica",
     description:
-      "Dónde queda cada lugar útil, en el mapa y con cómo llegar, y el sitio oficial donde se hace cada trámite.",
+      "Un horario, un teléfono o una cifra aparecen solo cuando una fuente oficial los confirma. Preferimos un espacio vacío a un dato aproximado.",
   },
   {
-    icon: EyeIcon,
-    chip: "bg-brand-terracotta/15 text-brand-terracotta-ink",
-    title: "Mira cómo se usa lo público",
+    title: "Sin cuenta, sin RUT, sin datos personales",
     description:
-      "El presupuesto municipal y lo que puedes pedirle a tu municipio, con la fuente de cada cifra.",
+      "No pedimos registro. Lo que marcas en el orientador de beneficios o tu ubicación en el mapa se procesa en tu teléfono: no se guarda ni se envía.",
+  },
+  {
+    title: "Independiente del municipio",
+    description:
+      "No somos el sitio oficial de ninguna municipalidad. Para hacer un trámite te llevamos al sitio de la institución responsable.",
+  },
+  {
+    title: "Contexto, no notas",
+    description:
+      "Las cifras de una comuna se muestran con su historia y con el promedio de la región. No ponemos notas ni armamos listas de mejores y peores comunas.",
   },
 ];
 
@@ -62,63 +47,41 @@ export default function NosotrosPage() {
   return (
     <>
       {/* Encabezado */}
-      <section className="border-b bg-gradient-to-b from-accent to-background">
-        <div className="mx-auto flex max-w-6xl items-center justify-between gap-10 px-4 py-14 md:py-20">
-          <div>
-            <Badge variant="secondary" className="mb-4">
-              Nuestro propósito
-            </Badge>
-            <h1 className="max-w-2xl text-3xl font-bold tracking-tight md:text-5xl">
-              Un puente entre tu comuna y tú
-            </h1>
-            <p className="mt-4 max-w-2xl text-lg text-muted-foreground">
-              {siteConfig.description}
-            </p>
-          </div>
-          <BrandMark3D className="hidden size-56 shrink-0 md:block" />
-        </div>
-      </section>
-
-      {/* Misión y visión */}
-      <section className="mx-auto max-w-6xl px-4 py-14">
-        <div className="grid gap-4 md:grid-cols-2">
-          <Card className="border-t-4 border-t-brand-teal">
-            <CardHeader>
-              <div className="mb-1 flex size-11 items-center justify-center rounded-xl bg-accent text-brand-teal-ink">
-                <CompassIcon className="size-6" />
-              </div>
-              <CardTitle className="text-xl">Nuestra misión</CardTitle>
-              <CardDescription className="text-base leading-relaxed">
-                {siteConfig.mision}
-              </CardDescription>
-            </CardHeader>
-          </Card>
-          <Card className="border-t-4 border-t-brand-sky">
-            <CardHeader>
-              <div className="mb-1 flex size-11 items-center justify-center rounded-xl bg-accent text-brand-sky-ink">
-                <EyeIcon className="size-6" />
-              </div>
-              <CardTitle className="text-xl">Nuestra visión</CardTitle>
-              <CardDescription className="text-base leading-relaxed">
-                {siteConfig.vision}
-              </CardDescription>
-            </CardHeader>
-          </Card>
+      <section className="bg-brand-navy text-brand-ivory">
+        <div className="mx-auto max-w-6xl px-4 pt-10 pb-12 md:pt-16 md:pb-16">
+          <p className="text-sm font-semibold text-brand-ivory/80">
+            Qué es {siteConfig.name}
+          </p>
+          <h1 className="mt-2 max-w-3xl text-[clamp(2.4rem,8vw,4.5rem)] leading-[0.98] font-extrabold tracking-[-0.02em] text-white [font-stretch:80%]">
+            Un puente entre tu comuna y tú
+          </h1>
+          <span
+            aria-hidden="true"
+            className="mt-6 block h-1.5 w-16 bg-brand-amber"
+          />
+          <p className="mt-6 max-w-2xl text-lg text-brand-ivory/90">
+            {siteConfig.description}
+          </p>
         </div>
       </section>
 
       {/* Historia de origen */}
-      <section className="border-y bg-card">
-        <div className="mx-auto max-w-3xl px-4 py-14">
+      <section className="mx-auto max-w-6xl px-4 pt-14 md:pt-20">
+        <div className="grid gap-x-16 gap-y-6 lg:grid-cols-[minmax(0,18rem)_minmax(0,1fr)]">
           <SectionHeader
+            className="mb-0 self-start"
             eyebrow="De dónde venimos"
             title="Nació en una comuna como la tuya"
           />
-          <div className="space-y-5 text-lg leading-relaxed">
+          <div className="max-w-2xl space-y-5 text-lg leading-relaxed">
             {siteConfig.historia.map((paragraph, i) => (
               <p
                 key={i}
-                className={cn(i === 0 && "font-semibold text-primary")}
+                className={
+                  i === 0
+                    ? "font-display text-2xl leading-snug font-semibold text-primary"
+                    : undefined
+                }
               >
                 {paragraph}
               </p>
@@ -127,98 +90,93 @@ export default function NosotrosPage() {
         </div>
       </section>
 
-      {/* Así funciona, en simple */}
-      <section className="mx-auto max-w-6xl px-4 py-14">
-        <SectionHeader
-          eyebrow="Así funciona"
-          title="En simple, paso a paso"
-          description="Tres cosas que puedes hacer hoy, sin cuenta ni clave."
-        />
-        <div className="grid gap-4 md:grid-cols-3">
-          {howItWorks.map((step, i) => (
-            <Card key={step.title} className="gap-2 py-5">
-              <CardHeader className="gap-2">
-                <div
-                  className={cn(
-                    "flex size-11 items-center justify-center rounded-xl",
-                    step.chip
-                  )}
-                >
-                  <step.icon className="size-6" />
-                </div>
-                <CardTitle className="text-lg">
-                  {i + 1}. {step.title}
-                </CardTitle>
-                <CardDescription className="text-sm leading-relaxed">
-                  {step.description}
-                </CardDescription>
-              </CardHeader>
-            </Card>
-          ))}
-        </div>
-      </section>
-
-      {/* Valores */}
-      <section className="mx-auto max-w-6xl border-t px-4 py-14">
-        <SectionHeader
-          eyebrow="Lo que nos guía"
-          title="Nuestros valores, en la práctica"
-        />
-        <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-          {siteConfig.valores.map((valor) => (
-            <Card key={valor.name} className="gap-2 py-5">
-              <CardHeader className="gap-1">
-                <CardTitle className="text-brand-teal-ink">{valor.name}</CardTitle>
-                <CardDescription className="text-sm leading-relaxed">
-                  {valor.description}
-                </CardDescription>
-              </CardHeader>
-            </Card>
-          ))}
+      {/* Cómo trabajamos */}
+      <section
+        id="como-trabajamos"
+        className="mx-auto max-w-6xl scroll-mt-24 px-4 pt-14 md:pt-20"
+      >
+        <div className="grid gap-x-16 gap-y-6 lg:grid-cols-[minmax(0,18rem)_minmax(0,1fr)]">
+          <SectionHeader
+            className="mb-0 self-start"
+            eyebrow="Cómo trabajamos"
+            title="Las reglas con que publicamos"
+          />
+          <dl className="max-w-2xl divide-y border-y">
+            {howWeWork.map((rule) => (
+              <div key={rule.title} className="py-4">
+                <dt className="font-display text-lg font-bold text-primary">
+                  {rule.title}
+                </dt>
+                <dd className="mt-1 text-muted-foreground">
+                  {rule.description}
+                </dd>
+              </div>
+            ))}
+          </dl>
         </div>
       </section>
 
       {/* No reemplaza al municipio */}
-      <section className="border-y bg-card">
-        <div className="mx-auto max-w-6xl px-4 py-14">
+      <section className="mx-auto max-w-6xl px-4 pt-14 md:pt-20">
+        <div className="grid gap-x-16 gap-y-6 lg:grid-cols-[minmax(0,18rem)_minmax(0,1fr)]">
           <SectionHeader
+            className="mb-0 self-start"
             eyebrow="Cada uno en su rol"
             title="No reemplazamos a tu municipalidad"
-            description={siteConfig.noReemplaza}
           />
-          <div className="grid gap-4 md:grid-cols-3">
-            {siteConfig.roles.map((rol) => (
-              <Card
-                key={rol.name}
-                className={cn("gap-2 border-t-4 py-5", roleColors[rol.color])}
-              >
-                <CardHeader className="gap-1">
-                  <CardTitle>{rol.name}</CardTitle>
-                  <CardDescription className="text-sm">
-                    {rol.description}
-                  </CardDescription>
-                </CardHeader>
-              </Card>
-            ))}
+          <div className="max-w-2xl">
+            <p className="text-lg leading-relaxed">{siteConfig.noReemplaza}</p>
+            <dl className="mt-6 divide-y border-y">
+              {siteConfig.roles.map((rol) => (
+                <div
+                  key={rol.name}
+                  className="grid gap-x-6 py-3 sm:grid-cols-[10rem_minmax(0,1fr)]"
+                >
+                  <dt className="font-semibold text-primary">{rol.name}</dt>
+                  <dd className="text-muted-foreground">{rol.description}</dd>
+                </div>
+              ))}
+            </dl>
           </div>
         </div>
       </section>
 
-      {/* CTA final */}
-      <section className="mx-auto max-w-6xl px-4 pb-16 text-center">
-        <HandshakeIcon className="mx-auto size-10 text-brand-teal-ink" />
-        <h2 className="mt-4 text-2xl font-bold md:text-3xl">
-          {siteConfig.sublema}
-        </h2>
-        <p className="mx-auto mt-2 max-w-xl text-muted-foreground">
-          Elige tu comuna y encuentra lo que necesitas, con la fuente de cada
-          dato.
-        </p>
-        <div className="mt-6 flex flex-wrap justify-center gap-3">
-          <Button size="lg" asChild>
-            <Link href="/">Elegir tu comuna</Link>
-          </Button>
+      {/* Misión, visión y valores */}
+      <section className="mx-auto max-w-6xl px-4 pt-14 md:pt-20">
+        <div className="grid gap-x-16 gap-y-6 lg:grid-cols-[minmax(0,18rem)_minmax(0,1fr)]">
+          <SectionHeader
+            className="mb-0 self-start"
+            eyebrow="Lo que nos guía"
+            title="Misión, visión y valores"
+          />
+          <div className="max-w-2xl">
+            <h3 className="text-lg font-bold">Nuestra misión</h3>
+            <p className="mt-1 leading-relaxed">{siteConfig.mision}</p>
+            <h3 className="mt-6 text-lg font-bold">Nuestra visión</h3>
+            <p className="mt-1 leading-relaxed">{siteConfig.vision}</p>
+            <h3 className="mt-6 text-lg font-bold">Nuestros valores</h3>
+            <dl className="mt-2 grid gap-x-8 sm:grid-cols-2">
+              {siteConfig.valores.map((valor) => (
+                <div key={valor.name} className="border-t py-3">
+                  <dt className="font-semibold text-primary">{valor.name}</dt>
+                  <dd className="mt-0.5 text-sm text-muted-foreground">
+                    {valor.description}
+                  </dd>
+                </div>
+              ))}
+            </dl>
+          </div>
         </div>
+      </section>
+
+      {/* Cierre */}
+      <section className="mx-auto max-w-6xl px-4 pt-14">
+        <Button size="lg" asChild>
+          <Link href="/">
+            Elegir tu comuna
+            <ArrowRightIcon aria-hidden="true" />
+          </Link>
+        </Button>
       </section>
     </>
   );

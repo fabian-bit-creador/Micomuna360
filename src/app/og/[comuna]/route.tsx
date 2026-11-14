@@ -42,7 +42,7 @@ export async function GET(
           justifyContent: "center",
           padding: "80px",
           position: "relative",
-          background: "linear-gradient(135deg, #17375e 0%, #0f2038 100%)",
+          background: "#17375e",
           color: "#f7f7f2",
           fontFamily: "sans-serif",
         }}

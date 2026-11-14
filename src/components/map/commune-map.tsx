@@ -260,6 +260,18 @@ export function CommuneMap({
     () =>
       onHashNavigation(
         (id) => {
+          /* El # de un sector (el contorno de la portada): los lugares de
+             ese sector, con el mapa encuadrado en él. */
+          if (sectors.some((s) => s.id === id)) {
+            setActive(null);
+            setSelectedId(null);
+            setSectorId(id);
+            setViewChoice("map");
+            document
+              .getElementById("mapa-comunal")
+              ?.scrollIntoView({ behavior: "smooth", block: "center" });
+            return;
+          }
           if (!places.some((p) => p.id === id)) return;
           setActive(null);
           setSectorId(null);
@@ -271,7 +283,7 @@ export function CommuneMap({
         },
         { initial: true }
       ),
-    [places]
+    [places, sectors]
   );
 
   function findMe() {

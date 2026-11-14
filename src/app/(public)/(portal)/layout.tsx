@@ -11,7 +11,7 @@ export default function PortalLayout({
 }: Readonly<{ children: React.ReactNode }>) {
   return (
     <>
-      <header className="sticky top-0 z-40 w-full border-b bg-background/90 backdrop-blur">
+      <header className="sticky top-0 z-40 w-full border-b bg-card">
         <SkipLink />
         <div className="mx-auto flex h-16 max-w-6xl items-center justify-between gap-3 px-4">
           <Logo />

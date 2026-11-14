@@ -98,6 +98,14 @@ Después, en este orden (de menor a mayor riesgo):
   toque, cuatro accesos, foto real y barra inferior en el celular
   (publicada el 2026-10-03).
 - **Directorio y Mapa unidos** en «Mapa y lugares» (2026-10-03): el mapa arriba y la ficha de cada lugar debajo.
+- **Rediseño «señalética comunal»** (2026-11-14, en la rama
+  `claude/happy-hamilton-7x027r`, por aprobar): tipografías Archivo y
+  Public Sans, placa azul con el contorno de la comuna y sus sectores,
+  tablero de secciones, «Hoy en la comuna» con las ferias del día y «La
+  comuna de un vistazo». Detalle en `DESIGN.md`.
+- **Por decidir**: qué comparar en el mapa en salud y educación (hoy la
+  regla es contexto sin rankings) y de dónde sacar qué vende cada feria
+  (GeoPintana solo trae días, horario, tramo y número de puestos).
 
 ## Auditoría de septiembre de 2026
 

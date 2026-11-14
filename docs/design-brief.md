@@ -1,5 +1,10 @@
 # Design brief — MiComuna360 / MuniApp
 
+> **Brief original (2026).** La tipografía, el elemento firma y las olas
+> que describe se reemplazaron en noviembre de 2026 por la dirección
+> «señalética comunal». El sistema vigente está en `DESIGN.md`; este
+> documento queda como registro de dónde partió la marca.
+
 Brief de diseño para usar junto al skill `.claude/skills/frontend-design`.
 Toda decisión visual del proyecto debe derivarse de este documento.
 

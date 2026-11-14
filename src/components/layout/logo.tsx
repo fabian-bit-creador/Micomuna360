@@ -37,13 +37,16 @@ export function Logo({
         priority
         className={cn(
           "size-9",
-          variant === "inverse" && "rounded-full bg-brand-ivory p-0.5"
+          /* Sobre fondos oscuros el pin azul necesita su círculo claro. */
+          variant === "inverse"
+            ? "rounded-full bg-brand-ivory p-0.5"
+            : "dark:rounded-full dark:bg-brand-ivory dark:p-0.5"
         )}
       />
       {!iconOnly && (
         <span
           className={cn(
-            "font-display text-xl font-bold tracking-tight",
+            "font-display text-xl font-extrabold",
             compactOnMobile && "hidden sm:inline"
           )}
         >

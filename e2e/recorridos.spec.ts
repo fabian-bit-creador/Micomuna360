@@ -48,6 +48,47 @@ test.describe("Portada", () => {
       await expect(page.locator(`a[href="tel:${number}"]`).first()).toBeVisible();
     }
   });
+
+  test("elegir un sector en el contorno de la comuna abre el mapa con sus lugares", async ({
+    page,
+  }) => {
+    await page.goto("/la-pintana");
+    // En escritorio el contorno va en la portada; en el celular, más abajo.
+    await page
+      .getByRole("link", { name: "Sector Centro: ver sus lugares en el mapa" })
+      .filter({ visible: true })
+      .click();
+    await expect(page).toHaveURL(/\/la-pintana\/mapa#sector-centro$/);
+    await expect(page.getByLabel("Lugares del sector")).toHaveValue(
+      "sector-centro"
+    );
+    await expect(page.getByText(/^Mostrando \d+ de 43 lugares$/)).toBeVisible();
+  });
+
+  test("la portada dice qué ferias hay hoy y las abre en el mapa", async ({
+    page,
+  }) => {
+    await page.goto("/la-pintana");
+    // Los lunes no funciona ninguna feria ni persa.
+    const weekday = new Intl.DateTimeFormat("en-US", {
+      weekday: "long",
+      timeZone: "America/Santiago",
+    }).format(new Date());
+    if (weekday === "Monday") {
+      await expect(
+        page.getByRole("heading", { name: /^Hoy lunes no hay ferias/ })
+      ).toBeVisible();
+      return;
+    }
+    await expect(
+      page.getByRole("heading", { name: /^Hoy hay (una feria|\d+ ferias)$/ })
+    ).toBeVisible();
+    const first = page.locator('a[href^="/la-pintana/mapa#lp-"]').first();
+    await expect(first).toBeVisible();
+    await first.click();
+    await expect(page).toHaveURL(/\/la-pintana\/mapa#lp-/);
+    await expect(page.getByText(/^Feria libre|^Persa/).first()).toBeVisible();
+  });
 });
 
 test.describe("Beneficios", () => {

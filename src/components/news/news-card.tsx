@@ -23,7 +23,7 @@ export function NewsCard({
       href={`/${communeSlug}/noticias/${article.slug}`}
       className="group block h-full"
     >
-      <Card className="h-full gap-3 transition-all group-hover:-translate-y-0.5 group-hover:shadow-md">
+      <Card className="h-full gap-3 transition-colors group-hover:border-primary/60">
         <CardHeader className="gap-2">
           <div className="flex items-center justify-between gap-2">
             <NewsTypeBadge type={article.type} />

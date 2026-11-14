@@ -244,7 +244,7 @@ function MapCanvas() {
 
       {/* Rótulos de sectores */}
       <g
-        fontFamily="var(--font-nunito), sans-serif"
+        fontFamily="var(--font-text), sans-serif"
         fontSize="15"
         fontWeight="700"
         fill="var(--brand-navy)"

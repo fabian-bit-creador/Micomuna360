@@ -1,11 +1,18 @@
-import Image from "next/image";
+import {
+  BarChart3Icon,
+  BookOpenIcon,
+  CalendarDaysIcon,
+  FileTextIcon,
+  HandCoinsIcon,
+  MapPinnedIcon,
+  PhoneIcon,
+  ScaleIcon,
+  VolleyballIcon,
+  type LucideIcon,
+} from "lucide-react";
 
 import { cn } from "@/lib/utils";
 
-/**
- * Íconos de sección en relieve, generados en Canva con la paleta de la
- * marca (public/brand/iconos; registro en docs/marca.md).
- */
 export type SectionIconName =
   | "agenda"
   | "beneficios"
@@ -17,10 +24,22 @@ export type SectionIconName =
   | "telefonos"
   | "transparencia";
 
+const glyphs: Record<SectionIconName, LucideIcon> = {
+  agenda: CalendarDaysIcon,
+  beneficios: HandCoinsIcon,
+  datos: BarChart3Icon,
+  deportes: VolleyballIcon,
+  directorio: BookOpenIcon,
+  mapa: MapPinnedIcon,
+  servicios: FileTextIcon,
+  telefonos: PhoneIcon,
+  transparencia: ScaleIcon,
+};
+
 /**
- * Ícono de sección en el estilo del isotipo 3D, sobre una ficha blanca (el
- * fondo de la ilustración también es blanco), igual en modo claro y oscuro.
- * Es decorativo: el título de la tarjeta ya dice qué es.
+ * Pictograma de sección, como una señal informativa de la calle: figura
+ * blanca sobre una placa azul, con su filete interior. Es decorativo: el
+ * título que lo acompaña ya dice qué es. Igual en modo claro y oscuro.
  */
 export function SectionIcon({
   name,
@@ -29,21 +48,17 @@ export function SectionIcon({
   name: SectionIconName;
   className?: string;
 }) {
+  const Glyph = glyphs[name];
   return (
     <span
+      aria-hidden="true"
       className={cn(
-        "flex size-14 shrink-0 items-center justify-center overflow-hidden rounded-2xl border bg-white",
+        "relative flex size-14 shrink-0 items-center justify-center rounded-md bg-brand-navy text-white",
         className
       )}
     >
-      <Image
-        src={`/brand/iconos/${name}.webp`}
-        alt=""
-        width={200}
-        height={200}
-        unoptimized
-        className="size-full object-contain"
-      />
+      <span className="absolute inset-[3px] rounded-[3px] border border-white/45" />
+      <Glyph className="size-[48%]" strokeWidth={1.75} />
     </span>
   );
 }

@@ -1,7 +1,6 @@
 import Link from "next/link";
 
 import { Logo } from "@/components/layout/logo";
-import { WaveDivider } from "@/components/layout/wave-divider";
 import { listPublicCommunes, type CommuneConfig } from "@/config/communes";
 import { communeNav } from "@/config/nav";
 import { siteConfig } from "@/config/site";
@@ -16,18 +15,17 @@ export function SiteFooter({ commune }: { commune?: CommuneConfig }) {
     : listPublicCommunes().map((c) => ({ title: c.name, href: `/${c.id}` }));
 
   return (
-    <footer>
-      <WaveDivider variant="navy" />
+    <footer className="mt-16 border-t-4 border-brand-amber">
       <div className="bg-brand-navy text-brand-ivory">
-        <div className="mx-auto grid max-w-6xl gap-10 px-4 pt-4 pb-12 md:grid-cols-3">
+        <div className="mx-auto grid max-w-6xl gap-10 px-4 pt-12 pb-12 md:grid-cols-[1fr_1.1fr_1.3fr]">
           <div className="space-y-3">
             <Logo variant="inverse" />
-            <p className="max-w-xs text-sm text-brand-ivory/70">
+            <p className="max-w-xs text-sm text-brand-ivory/75">
               {siteConfig.lema}. {siteConfig.sublema}
             </p>
           </div>
           <nav className="space-y-2" aria-label="Secciones">
-            <p className="text-sm font-bold tracking-wide text-brand-sky uppercase">
+            <p className="font-display text-base font-bold text-white">
               {commune ? "Secciones" : "Comunas"}
             </p>
             <ul className="grid grid-cols-2 gap-1 text-sm">
@@ -35,7 +33,7 @@ export function SiteFooter({ commune }: { commune?: CommuneConfig }) {
                 <li key={item.href}>
                   <Link
                     href={item.href}
-                    className="text-brand-ivory/80 hover:text-brand-ivory hover:underline"
+                    className="inline-flex min-h-8 items-center text-brand-ivory/85 underline-offset-4 hover:text-white hover:underline"
                   >
                     {item.title}
                   </Link>
@@ -44,7 +42,7 @@ export function SiteFooter({ commune }: { commune?: CommuneConfig }) {
               <li>
                 <Link
                   href="/nosotros"
-                  className="text-brand-ivory/80 hover:text-brand-ivory hover:underline"
+                  className="inline-flex min-h-8 items-center text-brand-ivory/85 underline-offset-4 hover:text-white hover:underline"
                 >
                   Nosotros
                 </Link>
@@ -52,18 +50,18 @@ export function SiteFooter({ commune }: { commune?: CommuneConfig }) {
             </ul>
           </nav>
           <div className="space-y-2 text-sm">
-            <p className="text-sm font-bold tracking-wide text-brand-sky uppercase">
+            <p className="font-display text-base font-bold text-white">
               {commune && !commune.isDemo ? `Sobre ${siteConfig.name}` : "Sobre la plataforma"}
             </p>
             {commune ? (
               commune.isDemo ? (
-                <p className="text-brand-ivory/70">
+                <p className="text-brand-ivory/75">
                   {commune.name} es una comuna de ejemplo: sus datos son
                   ficticios y sirven para probar funcionalidades. Nada de lo que
                   se ingresa aquí llega a un municipio.
                 </p>
               ) : (
-                <p className="text-brand-ivory/70">
+                <p className="text-brand-ivory/75">
                   {siteConfig.name} es un sitio ciudadano independiente: no es
                   el sitio oficial de la Municipalidad de {commune.name} ni de
                   sus corporaciones. Publicamos información pública con fuente
@@ -72,7 +70,7 @@ export function SiteFooter({ commune }: { commune?: CommuneConfig }) {
                 </p>
               )
             ) : (
-              <p className="text-brand-ivory/70">
+              <p className="text-brand-ivory/75">
                 Plataforma ciudadana independiente y multicomuna. Publicamos
                 información pública con su fuente y fecha de verificación, y
                 enlazamos a los sitios oficiales para cada trámite.
@@ -81,7 +79,7 @@ export function SiteFooter({ commune }: { commune?: CommuneConfig }) {
           </div>
         </div>
         <div className="border-t border-brand-ivory/15 py-4">
-          <div className="mx-auto flex max-w-6xl flex-wrap items-center justify-between gap-2 px-4 text-xs text-brand-ivory/60">
+          <div className="mx-auto flex max-w-6xl flex-wrap items-center justify-between gap-2 px-4 text-xs text-brand-ivory/70">
             <span>
               {siteConfig.name} · {new Date().getFullYear()}
             </span>

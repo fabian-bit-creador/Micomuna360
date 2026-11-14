@@ -2,15 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { ArrowRightIcon } from "lucide-react";
 
-import { BrandMark3D } from "@/components/layout/brand-mark-3d";
-import { Badge } from "@/components/ui/badge";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
+import { CommuneSilhouette } from "@/components/shared/commune-silhouette";
 import { listPublicCommunes } from "@/config/communes";
 import { siteConfig } from "@/config/site";
 import { portalMetadata } from "@/lib/seo";
@@ -25,81 +17,109 @@ export const metadata: Metadata = {
   title: { absolute: "MiComuna360 — Tu comuna en un solo lugar" },
 };
 
+const principles = [
+  {
+    title: "Cada dato con su fuente",
+    description:
+      "La institución que lo publicó y la fecha en que lo revisamos, junto al dato.",
+  },
+  {
+    title: "Sin cuenta ni datos personales",
+    description:
+      "No pedimos registro, RUT ni clave para buscar, llamar o ubicarte en el mapa.",
+  },
+  {
+    title: "Independiente",
+    description:
+      "No es el sitio de ninguna municipalidad: cada trámite te lleva a su sitio oficial.",
+  },
+];
+
 export default function PortalPage() {
   const communes = listPublicCommunes();
 
   return (
     <>
-      {/* Hero del portal */}
-      <section className="border-b bg-gradient-to-b from-accent to-background">
-        <div className="mx-auto max-w-6xl px-4 py-14 text-center md:py-20">
-          <BrandMark3D priority className="mx-auto mb-6 size-36 md:size-48" />
-          <h1 className="mx-auto max-w-3xl text-4xl font-bold tracking-tight md:text-6xl">
-            Tu comuna en <span className="text-brand-teal-ink">un solo lugar</span>
-          </h1>
-          <p className="mx-auto mt-5 max-w-2xl text-lg text-muted-foreground">
-            {siteConfig.sublema} Una plataforma ciudadana e independiente que
-            reúne la información útil de cada comuna.
-          </p>
+      {/* Placa del portal: el lema y, al lado, las comunas publicadas */}
+      <section className="bg-brand-navy text-brand-ivory">
+        <div className="mx-auto grid max-w-6xl items-center gap-x-14 gap-y-10 px-4 pt-10 pb-12 md:pt-16 md:pb-16 lg:grid-cols-[minmax(0,1fr)_minmax(0,26rem)]">
+          <div>
+            <p className="text-sm font-semibold text-brand-ivory/80">
+              {siteConfig.name}
+            </p>
+            <h1 className="mt-2 text-[clamp(2.7rem,10vw,5.5rem)] leading-[0.94] font-extrabold tracking-[-0.02em] text-white [font-stretch:76%]">
+              Tu comuna en un solo lugar
+            </h1>
+            <span
+              aria-hidden="true"
+              className="mt-6 block h-1.5 w-16 bg-brand-amber"
+            />
+            <p className="mt-6 max-w-xl text-lg text-brand-ivory/90">
+              Trámites, beneficios, teléfonos, lugares y cifras de cada
+              comuna, reunidos por una plataforma ciudadana e independiente.
+            </p>
+          </div>
+
+          <div>
+            <h2 className="text-lg font-bold text-white">Elige tu comuna</h2>
+            <ul className="mt-3 grid gap-2">
+              {communes.map((commune) => (
+                <li key={commune.id}>
+                  <Link
+                    href={`/${commune.id}`}
+                    className="group flex items-center gap-4 rounded-lg bg-card px-4 py-4 text-card-foreground outline-none focus-visible:ring-[3px] focus-visible:ring-white/70"
+                  >
+                    <CommuneSilhouette communeId={commune.id} />
+                    <span className="min-w-0 flex-1">
+                      <span className="block font-display text-2xl leading-tight font-extrabold text-primary group-hover:underline group-hover:underline-offset-4">
+                        {commune.name}
+                      </span>
+                      <span className="block text-sm text-muted-foreground">
+                        {commune.region}
+                        {commune.isDemo ? " · datos ficticios" : ""}
+                      </span>
+                    </span>
+                    <ArrowRightIcon
+                      aria-hidden="true"
+                      className="size-5 shrink-0 text-muted-foreground transition-transform group-hover:translate-x-1 group-hover:text-primary"
+                    />
+                  </Link>
+                </li>
+              ))}
+            </ul>
+            <p className="mt-4 text-sm text-brand-ivory/80">
+              ¿Quieres ver {siteConfig.name} en tu comuna?{" "}
+              <Link
+                href="/nosotros"
+                className="font-semibold text-white underline underline-offset-4"
+              >
+                Conoce el proyecto
+              </Link>
+            </p>
+          </div>
         </div>
       </section>
 
-      {/* Selector de comunas */}
-      <section className="mx-auto max-w-4xl px-4 py-14">
-        <h2 className="text-center text-2xl font-bold md:text-3xl">
-          Elige tu comuna
-        </h2>
-        <div
-          className={
-            communes.length > 1
-              ? "mt-8 grid gap-4 md:grid-cols-2"
-              : "mx-auto mt-8 grid max-w-md gap-4"
-          }
-        >
-          {communes.map((commune) => (
-            <Link
-              key={commune.id}
-              href={`/${commune.id}`}
-              className="group block h-full"
-            >
-              <Card className="h-full gap-2 py-6 transition-all group-hover:-translate-y-0.5 group-hover:shadow-md">
-                <CardHeader className="gap-2">
-                  <Badge
-                    variant="secondary"
-                    className={
-                      commune.isDemo
-                        ? "w-fit bg-brand-teal/15 text-brand-teal-ink"
-                        : "w-fit bg-brand-terracotta/15 text-brand-terracotta-ink"
-                    }
-                  >
-                    {commune.isDemo
-                      ? "Datos ficticios"
-                      : "Información pública verificada"}
-                  </Badge>
-                  <CardTitle className="flex items-center justify-between text-2xl text-primary">
-                    {commune.name}
-                    <ArrowRightIcon className="size-5 text-muted-foreground transition-transform group-hover:translate-x-1" />
-                  </CardTitle>
-                  <CardDescription className="text-base">
-                    {commune.tagline}
-                  </CardDescription>
-                </CardHeader>
-                <CardContent className="text-sm text-muted-foreground">
-                  {commune.region}
-                </CardContent>
-              </Card>
-            </Link>
+      {/* Cómo se publica */}
+      <section className="mx-auto max-w-6xl px-4 pt-12 md:pt-16">
+        <h2 className="sr-only">Cómo trabajamos</h2>
+        <dl className="grid gap-x-10 md:grid-cols-3">
+          {principles.map((item) => (
+            <div key={item.title} className="border-t-2 border-primary py-4">
+              <dt className="font-display text-lg font-bold text-primary">
+                {item.title}
+              </dt>
+              <dd className="mt-1 text-muted-foreground">{item.description}</dd>
+            </div>
           ))}
-        </div>
-        <p className="mt-8 text-center text-sm text-muted-foreground">
-          ¿Quieres ver MiComuna360 en tu comuna?{" "}
-          <Link
-            href="/nosotros"
-            className="font-semibold text-brand-teal-ink hover:underline"
-          >
-            Conoce el proyecto
-          </Link>
-        </p>
+        </dl>
+        <Link
+          href="/nosotros#como-trabajamos"
+          className="mt-2 inline-flex min-h-9 items-center gap-1 text-sm font-semibold text-brand-teal-ink underline-offset-4 hover:underline"
+        >
+          Las reglas con que publicamos
+          <ArrowRightIcon aria-hidden="true" className="size-4" />
+        </Link>
       </section>
     </>
   );

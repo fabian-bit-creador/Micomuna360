@@ -4,13 +4,16 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { ChevronDownIcon } from "lucide-react";
 
-import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import {
+  navLinkActiveClass,
+  navLinkClass,
+} from "@/components/layout/nav-link";
 import type { NavItem } from "@/config/nav";
 import { cn } from "@/lib/utils";
 
@@ -22,15 +25,15 @@ export function MoreNav({ items }: { items: NavItem[] }) {
   );
   return (
     <DropdownMenu>
-      <DropdownMenuTrigger asChild>
-        <Button
-          variant="ghost"
-          size="sm"
-          className={cn(active && "bg-accent text-accent-foreground")}
-        >
-          Más
-          <ChevronDownIcon aria-hidden="true" />
-        </Button>
+      <DropdownMenuTrigger
+        className={cn(
+          navLinkClass,
+          "cursor-pointer gap-1",
+          active && navLinkActiveClass
+        )}
+      >
+        Más
+        <ChevronDownIcon aria-hidden="true" className="size-4" />
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end" className="w-56">
         {items.map((item) => {

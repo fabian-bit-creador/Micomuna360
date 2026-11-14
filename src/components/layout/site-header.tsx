@@ -20,18 +20,19 @@ export function SiteHeader({ commune }: { commune: CommuneConfig }) {
   });
 
   return (
-    <header className="sticky top-0 z-40 w-full border-b bg-background/90 backdrop-blur">
+    <header className="sticky top-0 z-40 w-full border-b bg-card">
       <SkipLink />
       <div className="mx-auto flex h-16 max-w-6xl items-center justify-between gap-3 px-4">
-        <div className="flex min-w-0 items-center gap-2.5">
+        <div className="flex min-w-0 items-center gap-2 sm:gap-3">
           <Logo href={`/${commune.id}`} compactOnMobile />
+          <span aria-hidden="true" className="h-6 w-px bg-border" />
           <CommuneSwitcher
             current={option(commune)}
             communes={listPublicCommunes().map(option)}
           />
         </div>
         <nav
-          className="hidden items-center gap-0.5 lg:flex"
+          className="hidden items-stretch gap-0.5 self-stretch lg:flex"
           aria-label="Principal"
         >
           {visible.map((item) => (
@@ -50,7 +51,7 @@ export function SiteHeader({ commune }: { commune: CommuneConfig }) {
             ]}
           />
           {report && (
-            <Button size="sm" className="ml-2" asChild>
+            <Button size="sm" className="ml-2 self-center" asChild>
               <Link href={report}>Reportar</Link>
             </Button>
           )}

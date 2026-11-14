@@ -98,7 +98,7 @@ export default async function ComunidadPage({
       <div className="grid gap-4 sm:grid-cols-2">
         {doors.map((door) => (
           <Link key={door.href} href={door.href} className="group">
-            <Card className="h-full gap-0 py-6 transition-all group-hover:-translate-y-0.5 group-hover:shadow-md">
+            <Card className="h-full gap-0 py-6 transition-colors group-hover:border-primary/60">
               <CardHeader className="gap-2">
                 <div className="flex items-center justify-between">
                   <span
