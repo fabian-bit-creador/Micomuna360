@@ -5,7 +5,7 @@ import { culturalEvents } from "./events-cultura";
 /**
  * Agenda comunal. Las funciones de la Corporación Cultural salen de su
  * cartelera (events-cultura.ts, generado; se renueva cada mes con
- * docs/fuentes/la-pintana-agenda-<aaaa-mm>/). Las actividades de la
+ * docs/fuentes/la-pintana-agenda-<aaaa-mm>/, la última es la que vale). Las actividades de la
  * Corporación Municipal de Deportes se cargan aquí. Las actividades pasadas
  * dejan de mostrarse solas (getUpcomingEvents). Horas en horario de verano
  * de Chile continental (-03:00).

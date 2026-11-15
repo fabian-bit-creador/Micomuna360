@@ -1,0 +1,5 @@
+d385045bd1e74b7ac6bcff122d3d780c7e588c6d82c034d945f9922f80de5723  cartelera.txt
+3cbabf48390fe6c72a54b955525cb3c816d0fb5acb60917a7e0d895c4a19b562  fichas/banda-sinfonica-pdi.txt
+4cca7637b25b91cd4be799549fa7992cff13ea56a10d082d69f5baac64db354a  fichas/festicrin-2026-la-pintana.txt
+99f3c4763687e33e08e528334aaf922c3dda4c371d59d7039e70794e84c55a62  fichas/protocolo-n-e-m-o.txt
+4f9371681ad431cdbd1bb3b7c6cb5df29fc585afe6a920b76a04a6e2818d379e  agenda.csv
